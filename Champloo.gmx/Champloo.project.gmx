@@ -5,9 +5,26 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
+  <sprites name="sprites">
+    <sprite>sprites\spr_Player</sprite>
+    <sprite>sprites\spr_Wall</sprite>
+  </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\scr_get_input.gml</script>
+    <script>scripts\scr_player_normal.gml</script>
+    <script>scripts\scr_player_inair.gml</script>
+    <script>scripts\scr_player_wallriding.gml</script>
+    <script>scripts\scr_move_collide.gml</script>
+  </scripts>
+  <objects name="objects">
+    <object>objects\obj_Player</object>
+    <object>objects\obj_Wall</object>
+  </objects>
+  <rooms name="rooms">
+    <room>rooms\rm_Test</room>
+  </rooms>
   <help>
     <rtf>help.rtf</rtf>
   </help>
