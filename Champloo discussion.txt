@@ -1,0 +1,275 @@
+
+so theres Argh, then I'm thinking of taking the feedback I've gotten about it and making a new game which will have a Champloo-esque system to it. I want swords and I want them swinging somehow
+samurai hip-hop style thing
+I want to have that blood smear thing like when blood drips on the blocks
+
+
+
+when I think samurai champloo I think nujabes and acrobatic sword fighting
+all acrobatic and shit
+yeah
+that immediately makes me think Melee in some capacity
+
+https://www.youtube.com/watch?v=ByMZYcDk18M
+
+Melee is all about movement, the moves are secondary somewhat
+
+I think the system I have in place in Argh will be able to work rather nicely here
+
+
+so red is constantly moving and slicing. pretty continuous approach and bouncing off of walls to facilitate that
+blue is simply positioning around that
+except the opening I suppose
+it goes back and forth
+
+
+
+one guy gets advantage and presses but red clearly swings more
+it is possible and impressive to have both [fast pace and precision]
+
+thats what makes Melee so fucking good
+
+when a player does cool shit fast it is impressive
+
+
+https://gfycat.com/GroundedLiveAmericanwirehair
+
+
+so then the whole experience we're aiming for is to have a fast paced and precise combat
+yeah, that seems about it. The question is how to not have it be samurai gunn
+
+ok so the relevant systems in broad strokes to such a game. Movement, Characters, Attacks, stages
+
+characters are how the player is depicted, it could actually be relevant if a player has a specific foot forward
+
+
+movement could be instant, have acceleration, have different systems
+so say a character sprite has two legs that are considered different, depending on stance it could denote a character's specific options
+
+
+I guess that gets into the next section. Attacks
+Could be street fighter style, multiple buttons denoting a specific attack
+or smash, one button + direction + timing
+i want to keep player input relatively simple. ideally an easy to learn hard to master kind of thing
+Oh, for positioning and stances. Nidhogg has what I'm talking about
+
+
+
+easy to learn hard to master means simple inputs, complicated/deep system
+
+
+ok, so to me that says stances in a nidhogg sense
+nidhogg is relatively deep
+
+oh shit, you know what this makes me think of a little. Samurai Shodown
+thats the health system I want
+unlike nidhogg or samurai gunn where it's a one touch death thing
+shodown has healthbars and attacks which do large amounts, with street fighter style button stuff
+I don't necessarily want sf button layout. but I like how it manged the health system to make it challenging but not stark
+Samurai Gunn and Nidhogg are sort of points based if you get what I mean
+
+
+you win an interaction, get a point/run forward
+new interaction
+what I like about shodown is that it allows for longer sets of interaction. You win a little, get a play advantage, and then get a point advantage
+it allows for interplay. I didn't realize thats what I don't like about Nidhogg despite it being fun
+
+
+so what is the maximum number of buttons that it would take to remain simple to learn
+so I was just about to get to that actually
+I think the game needs to be, at least in the first iteration, as simple as possible
+I want the current controls, along with down, attack, and block
+down i'm debating
+
+but as far as maximum simplicity, attack and block are relevant now, I would like a jump button, but that isn't strictly necessary and would be a design decision
+oh i meant jump
+jump is in there
+
+
+up vs jump is later
+or rather, up = jump vs up & jump being seperate
+
+
+well I think the thing I'm saying is that I want depth to come not from control differences but from mastery of the movement system
+
+
+i think the thing I'm trying to say is that I don't really want multiple attacks?
+like, I don't want multiple moves, I want the player to be able to know the entire control space within 20 minutes
+actually 10
+
+
+
+
+I would like at least 2. The issue with no separate attacks means that a health system isn't a ton different from a point system
+There isn't interplay over what moves work in a situation. But in that case the question is how sophisticated you want the movement, otherwise it is just samurai gunn
+
+
+maybe we could have it so that the attack you're performing goes in the direction you're moving
+so say you're going down, your sword would hit whatever is below you
+then you have to use the movement as a form of attack variance
+whereas samurai gunn has 4-way attack right?
+this is enforced movement towards the opponent?
+if you want to attack
+you could not move backwards and swing forwards
+
+
+we could have two separate attack where one is forward and one is backward
+If you're willing to have heavy and weak attacks there is a lot to do with that
+as in a heavy attack, a weak attack
+attack strength could be based on time held, similar to smash
+the whole wind-up mechanic
+yeah with charge smashes
+that actually works really well
+should we keep the movement based attack like I was talking about?
+in smash you can do forward attacks while moving back, not cleanly
+yes
+a good player uses the c-stick to have moves be independent of movement, but it isn't drastic to do it otherwise
+having a windup makes movement direction actually relevant
+because you could only do weak attacks while moving back quickly
+going back to samurai champloo  red is constanly swinging and moving. there are moments where blue pauses walking to swing harder
+definitely
+so for charging attacks, should the movement be cancelled entirely? or should it just slow?
+character should slide
+slow to a halt
+depending on character speed. This would encourage proper fast movement as well
+what about midair attacks?
+initial reaction is to make it lock your direction. If you do an attack in midair you lose the ability to manuver
+should it slow, halt, or slow to a halt?
+aerial wise?
+yeah
+neither. you keep your momentum but can't change it
+so swinging on the ground makes you slide, swinging in the air makes you not be able to manuver
+hmm, sounds good
+and if we have a block button it means you're flying towards an opponent with no ability to defend yourself cause you're swinging
+hmm
+I like that
+after the attack is done though if you're in the air you can block after you're done, which keeps the charging aspect intact
+for sure
+so do we want block to be universal block or directional too?
+oooh
+Directional block actually sounds dope
+
+
+
+
+
+
+hadn't considered blocking not being universal
+that brings risk to dash dancing, aka moving in and out of your opponent's range to bait an attack
+do we want blocking to be the same mechanic as attacking? as in, a forward and a backward?
+if we are doing directional yes
+
+
+alternate option if we are doing health, blocking the wrong way could do half damage
+
+
+how does blocking affect movement
+if we want to incentivize movement and attacking a lot
+
+
+blocking in smash makes you immobile, movement is really important in smash, blocking is only alright
+bad in a lot of situations
+this incentivizes movement
+blocking  in traditional fighting games is really good
+except for marvel and games with insane offense
+
+so I think I want to make blocking meet in the middle with this
+
+you don't move a ton in traditional fighting games like street fighter
+have it slow more than attacking, but not completely stop
+but with marvel you move a lot because offense is so important
+ok that sounds good but I want to think about that more
+
+so movement
+movement
+
+If we can't go 3d, to simulate the fast pace of champloo stuff we want large, wide stages
+you need space to run around in
+
+
+
+but maybe not too tall if we want the characters to be around human size in relation to environment and sword attacks
+
+
+cause red does crazy shit, but he can't jump super high
+Movement and environment seem pretty linked
+
+so starting with the obvious Teahouse, would you want any other stage or is a one stage game overall?
+of course starting out with only one stage
+one stage to start is good
+we can move on from there
+
+
+
+So what are your initial impressions on ways to move? I can think of jumping, vaulting, and sliding depending on how you want to go about it
+I kinda also want to have throwing tables but that would be complicated to explain
+context based attacks
+
+for sure
+
+
+I think for now there's going to be moving left/right, jumping into the air, and walljumping
+how about sliding?
+hold down and jump
+and hit jump
+
+i think just holding down would work fine for sliding
+hold down and run
+similar to how attacks stop movement
+maybe less maybe more
+
+
+can you attack from a slide? can you block?
+I like attacks that go upward as a counter to jumping, but that brings in complications with blocking
+for sure
+i think sliding would mechanically be a dodge
+so no attacking/blocking from a slide
+at least not yet
+
+
+
+
+I liken it to a wavedash but yeah thats a later thing
+wavedashing in melee lets you move quick at the expense of a short startup
+but lets you act out
+regardless that is a later thing
+for sure
+so jump, walljump, slide
+yup
+are walljumps at a stuck angle?
+can you influence it?
+that was something I *want* to do
+but I'm not sure how to achieve a user input walljump direction without it being awkward as fuck
+that is a later thing. if you want it, it's a thing to work on
+
+
+
+
+I assume you can't jump super high or overly influence your momentum once jumped
+cause samurai champloo
+
+
+I like that as a good baseline though. You can slow down or speed up a little, but it is mostly determined by your speed when you jump
+do you want a run button? or alternatively a dash button
+nah not at the moment
+
+ok  in that case I like you accelerating when starting to run
+if movement is to be important, then moving a lot is good, and slowing down is bad
+this makes quick attacks better because they don't slow you down too much
+and turning around once going fast shouldn't slow overly
+this forces players to keep running
+walljumps could increase speed or keep it the same to make them better + higher risk than simple turning arounds
+
+
+stages are set as 1 and can be fleshed out later
+this is a super later thing, how do you feel about different characters?
+possibly
+right now I want a mechanically even playing field
+
+
+
+
+
+
+
+
