@@ -4,15 +4,24 @@ move = key_left + key_right;
 vsp = min(vsp + grav, maxgrav);
 
 var acceleration = 1.5*(30/room_speed);
+
+//holding jump key stops movement input and slows
+if(key_jump_held) move = 0;
+
 hsp = clamp(hsp + move*acceleration, -maxspeed, maxspeed);
 
 if(hsp != 0)
 {
     var ground_friction = 0;
     if(move == 0)
-        ground_friction = 1.5*(30/room_speed);
+    {
+        if(!key_jump_held)
+            ground_friction = acceleration;
+        else
+            ground_friction = 0.5*acceleration;
+    }
     else if(sign(move) != sign(hsp))
-        ground_friction = 2.5*(30/room_speed);
+        ground_friction = 2*acceleration;
         
     var hsptest = hsp - sign(hsp)*ground_friction;
     if(sign(hsptest) != sign(hsp))
@@ -27,7 +36,19 @@ if(hsp != 0)
 
 if(key_jump)
 {
-    vsp = key_jump * -jumpspeed;
+    //vsp = key_jump * -jumpspeed;
+    
+    //move the player in the direction of stick
+    if(vertical_amount > 0)
+    {
+        var dir = point_direction(x,y,x + horizontal_amount, y + vertical_amount);
+        hsp = lengthdir_x(jumpspeed, dir);
+        vsp = lengthdir_y(jumpspeed, dir);
+    }
+    else
+    {
+        vsp = key_jump * -jumpspeed;
+    }
 }
 
 scr_move_collide();

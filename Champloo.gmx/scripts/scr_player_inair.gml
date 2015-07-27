@@ -10,9 +10,9 @@ if(hsp != 0)
 {
     var air_friction = 0;
     if(move == 0 || sign(move) == sign(hsp))
-        air_friction = 0.4*(30/room_speed);
+        air_friction = 0.4*acceleration;
     else
-        air_friction = 0.6*(30/room_speed);
+        air_friction = 0.6*acceleration;
     
     var hsptest = hsp - sign(hsp)*air_friction;
     if(sign(hsptest) != sign(hsp))

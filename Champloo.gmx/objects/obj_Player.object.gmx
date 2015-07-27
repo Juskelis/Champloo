@@ -36,6 +36,7 @@ hsp = 0;
 vsp = 0;
 
 jumpspeed = 15*(30/room_speed);
+movespeed = 0;
 
 right_input = vk_right;
 left_input = vk_left;
