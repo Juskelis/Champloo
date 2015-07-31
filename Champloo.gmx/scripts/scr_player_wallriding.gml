@@ -3,6 +3,8 @@ scr_get_input();
 move = key_left + key_right;
 vsp = min(vsp + grav, maxgrav);
 
+if(key_jump_held) move = 0;
+
 var wall_left = place_meeting(x - 1, y, obj_Wall);
 var wall_right = place_meeting(x + 1, y, obj_Wall);
 var walldir = wall_right - wall_left;
