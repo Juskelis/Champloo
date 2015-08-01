@@ -1,7 +1,7 @@
 scr_get_input();
 
 move = key_left + key_right;
-vsp = min(vsp + grav, maxgrav);
+vsp = min(vsp + grav, maxgrav/2);
 
 if(key_jump_held) move = 0;
 
@@ -21,6 +21,7 @@ hsp = movespeed;
 
 if(key_jump)
 {
+    /*
     if(sign(move) == sign(walldir))
     {
         hsp = (-walldir)*maxspeed*0.5;
@@ -30,6 +31,19 @@ if(key_jump)
     {
         hsp = (-walldir)*maxspeed;
         vsp = -jumpspeed*0.8;
+    }
+    */
+    
+    //move the player in the direction of stick
+    if(abs(horizontal_amount) + abs(vertical_amount) > 0.25)
+    {
+        var dir = point_direction(x,y,x + horizontal_amount, y + vertical_amount);
+        hsp = lengthdir_x(jumpspeed, dir);
+        vsp = lengthdir_y(jumpspeed, dir);
+    }
+    else
+    {
+        vsp = key_jump * -jumpspeed;
     }
 }
 

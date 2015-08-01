@@ -5,7 +5,7 @@
 
 horizontal_amount = gamepad_axis_value(player_number, gp_axislh);
 vertical_amount = gamepad_axis_value(player_number, gp_axislv);
-if(vertical_amount < 0.5) vertical_amount = 0;
+//if(vertical_amount > 0.5) vertical_amount = 0;
 
 key_right = max(0, horizontal_amount);
 if(key_right < 0.5) key_right = 0;

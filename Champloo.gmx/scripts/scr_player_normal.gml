@@ -39,7 +39,7 @@ if(key_jump)
     //vsp = key_jump * -jumpspeed;
     
     //move the player in the direction of stick
-    if(vertical_amount > 0)
+    if(abs(horizontal_amount) + abs(vertical_amount) > 0.25)
     {
         var dir = point_direction(x,y,x + horizontal_amount, y + vertical_amount);
         hsp = lengthdir_x(jumpspeed, dir);
