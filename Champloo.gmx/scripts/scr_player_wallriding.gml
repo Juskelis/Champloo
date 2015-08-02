@@ -34,16 +34,23 @@ if(key_jump)
     }
     */
     
+    if(sign(move) == sign(walldir))
+    {
+        hsp = (-walldir)*maxspeed*0.5;
+        vsp = -jumpspeed;
+    }
+    else
+    {
+        hsp = (-walldir)*maxspeed;
+        vsp = -jumpspeed*0.8;
+    }
+    
     //move the player in the direction of stick
-    if(abs(horizontal_amount) + abs(vertical_amount) > 0.25)
+    if(jumpstate == JumpStates.Held && vertical_amount > 0)
     {
         var dir = point_direction(x,y,x + horizontal_amount, y + vertical_amount);
         hsp = lengthdir_x(jumpspeed, dir);
         vsp = lengthdir_y(jumpspeed, dir);
-    }
-    else
-    {
-        vsp = key_jump * -jumpspeed;
     }
 }
 
@@ -63,3 +70,5 @@ if(!place_meeting(x + 1, y, obj_Wall) && !place_meeting(x - 1, y, obj_Wall))
         state = States.Normal;
     }
 }
+
+scr_jumpstate_next();

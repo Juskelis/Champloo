@@ -37,3 +37,5 @@ if(place_meeting(x - 1,y,obj_Wall) || place_meeting(x + 1,y,obj_Wall))
 {
     state = States.WallRiding;
 }
+
+scr_jumpstate_next();

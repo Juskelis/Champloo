@@ -3,10 +3,10 @@ scr_get_input();
 move = key_left + key_right;
 vsp = min(vsp + grav, maxgrav);
 
-var acceleration = 1.5*(30/room_speed);
+var acceleration = 1.25*(30/room_speed);
 
 //holding jump key stops movement input and slows
-if(key_jump_held) move = 0;
+if(jumpstate == JumpStates.Held) move = 0;
 
 hsp = clamp(hsp + move*acceleration, -maxspeed, maxspeed);
 
@@ -39,7 +39,7 @@ if(key_jump)
     //vsp = key_jump * -jumpspeed;
     
     //move the player in the direction of stick
-    if(abs(horizontal_amount) + abs(vertical_amount) > 0.25)
+    if(jumpstate == JumpStates.Held && abs(horizontal_amount) + abs(vertical_amount) > 0.25)
     {
         var dir = point_direction(x,y,x + horizontal_amount, y + vertical_amount);
         hsp = lengthdir_x(jumpspeed, dir);
@@ -63,3 +63,5 @@ if(place_meeting(x - 1,y,obj_Wall) || place_meeting(x + 1,y,obj_Wall))
 {
     state = States.WallRiding;
 }
+
+scr_jumpstate_next();
