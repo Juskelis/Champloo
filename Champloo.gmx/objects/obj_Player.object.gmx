@@ -36,8 +36,8 @@ maxspeed = 20*(30/room_speed);
 hsp = 0;
 vsp = 0;
 
-press_time = -1;
-hold_delay = 5; //in seconds
+press_time = -1; //this is technically in microseconds
+hold_delay = 0.1; //in seconds
 jumpspeed = 15*(30/room_speed);
 movespeed = 0;
 
