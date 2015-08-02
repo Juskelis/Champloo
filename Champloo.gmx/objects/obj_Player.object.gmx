@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>///create variables
 state = States.Normal;
+jumpstate = JumpStates.Normal;
 
 grav = 0.75*(30/room_speed);
 maxgrav = 20*(30/room_speed);
@@ -35,6 +36,8 @@ maxspeed = 20*(30/room_speed);
 hsp = 0;
 vsp = 0;
 
+press_time = -1;
+hold_delay = 5; //in seconds
 jumpspeed = 15*(30/room_speed);
 movespeed = 0;
 
@@ -102,6 +105,12 @@ enum States
     InAir,
     WallRiding
 }
+
+enum JumpStates
+{
+    Normal,
+    Held
+}
 </string>
           </argument>
         </arguments>
@@ -139,7 +148,7 @@ enum States
           <argument>
             <kind>1</kind>
             <string>///show jump aiming
-if(key_jump_held)
+if(jumpstate == JumpStates.Held)
 {
     var len = 20;
     draw_line_width(x,y,x + horizontal_amount*len, y + vertical_amount*len, 3);
