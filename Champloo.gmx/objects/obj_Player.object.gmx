@@ -80,6 +80,52 @@ switch(state)
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///attacks
+if(key_attack_normal)
+{
+    var attack_dir = image_xscale*180;
+    scr_sword_create(self, AttackStyles.Swing, 1, attack_dir);
+    /*
+    var sword = instance_create(x,y, obj_Sword);
+    with(sword)
+    {
+        show_debug_message("Assigning");
+        player = other;
+        attack_style = AttackStyles.Swing;
+        attack_speed = 1;
+        if(other.xprevious != other.x || other.yprevious != other.y)
+            attack_direction = point_direction(other.xprevious,other.yprevious,other.x,other.y);
+        else
+            attack_direction = other.image_xscale*180;
+        
+        current_direction = start_direction;
+            
+        direction_step = (end_direction - start_direction)/(attack_speed*room_speed);
+        alarm[0] = attack_speed*room_speed;
+        show_debug_message("Done assigning");
+    }
+    */
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="7" enumb="2">
       <action>
