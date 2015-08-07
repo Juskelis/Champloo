@@ -76,6 +76,10 @@ switch(state)
     case States.WallRiding: scr_player_wallriding(); break;
 }
 
+//change image scale based on direction
+var previous_xscale = image_xscale
+image_xscale = sign(x - xprevious);
+if(image_xscale == 0) image_xscale = previous_xscale;
 </string>
           </argument>
         </arguments>
