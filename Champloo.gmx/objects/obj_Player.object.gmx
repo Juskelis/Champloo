@@ -37,7 +37,7 @@ hsp = 0;
 vsp = 0;
 
 press_time = -1; //this is technically in microseconds
-hold_delay = 0.1; //in seconds
+hold_delay = 0.25; //in seconds
 jumpspeed = 15*(30/room_speed);
 movespeed = 0;
 
@@ -68,6 +68,9 @@ player_number = 0;
             <kind>1</kind>
             <string>///create sword
 my_sword = instance_create(x,y, obj_Sword);
+sword_speed = 0.1;
+sword_offset_x = sprite_width/2;
+sword_offset_y = 0;
 </string>
           </argument>
         </arguments>
@@ -129,11 +132,43 @@ if(key_attack_normal)
     if(point_distance(xprevious, yprevious, x,y) == 0)
         attack_dir = 90 - image_xscale*90;
     
+    
+    sword_offset_x = lengthdir_x(sprite_width/2, attack_dir);
+    if(attack_dir &gt; 90 &amp;&amp; attack_dir &lt; 270)
+        sword_offset_x *= -1;
+        
+    sword_offset_y = lengthdir_y(sprite_height/2, attack_dir);
+    //if(attack_dir &lt; 0 || attack_dir &gt; 180)
+        //sword_offset_y *= -1;
+        
+    
+    instance_activate_object(my_sword);
     with(my_sword)
     {
+        attack_style = AttackStyles.Swing;
+        attack_speed = other.sword_speed;
+        attack_direction = attack_dir;
+        
+        if(attack_direction &lt; 90 || attack_direction &gt; 270)
+        {
+            start_direction = attack_direction + 45;
+            end_direction = start_direction - 90;
+        }
+        else
+        {
+            start_direction = attack_direction - 45;
+            end_direction = start_direction + 90;
+        }
+        current_direction = start_direction;
+        
+        direction_step = (end_direction - start_direction)/(attack_speed*room_speed);
+        alarm[0] = attack_speed*room_speed;
+        
+        image_angle = current_direction;
     }
     
 }
+//show_debug_message(sword_offset_x);
 </string>
           </argument>
         </arguments>
@@ -154,7 +189,36 @@ if(key_attack_normal)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//relocate sword
+            <string>///relocate sword
+my_sword.x = x + sword_offset_x;
+my_sword.y = y + sword_offset_y;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Sword">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check for hit
+if(other.id != my_sword.id)
+{
+    //hit happens!
+}
 </string>
           </argument>
         </arguments>

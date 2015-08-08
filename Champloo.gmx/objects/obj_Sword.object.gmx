@@ -64,8 +64,8 @@ image_speed = image_speed/attack_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///destroy the instance
-instance_destroy();
+            <string>///deactivate the instance
+instance_deactivate_object(self);
 </string>
           </argument>
         </arguments>
