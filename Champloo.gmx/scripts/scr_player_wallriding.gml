@@ -46,7 +46,7 @@ if(key_jump)
     }
     
     //move the player in the direction of stick
-    if(jumpstate == JumpStates.Held && vertical_amount > 0)
+    if(jumpstate == JumpStates.Held)//&& vertical_amount > 0)
     {
         var dir = point_direction(x,y,x + horizontal_amount, y + vertical_amount);
         hsp = lengthdir_x(jumpspeed, dir);

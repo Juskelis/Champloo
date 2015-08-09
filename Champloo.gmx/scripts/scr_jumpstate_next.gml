@@ -13,3 +13,4 @@ if(press_time > 0 && get_timer() - press_time > hold_delay*1000000)
 {
     jumpstate = JumpStates.Held;
 }
+jumpstate = JumpStates.Held;
