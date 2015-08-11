@@ -19,6 +19,11 @@ else
 }
 hsp = movespeed;
 
+/*
+hsp = 0;
+vsp = 0;
+*/
+
 if(key_jump)
 {
     /*

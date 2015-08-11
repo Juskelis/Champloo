@@ -34,6 +34,11 @@ if(hsp != 0)
     }
 }
 
+/*
+hsp = 0;
+vsp = 0;
+*/
+
 if(key_jump)
 {
     //vsp = key_jump * -jumpspeed;
