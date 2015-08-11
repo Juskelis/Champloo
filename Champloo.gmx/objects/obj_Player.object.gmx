@@ -25,6 +25,29 @@
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///create global settings
+death_time = 1;
+default_room_speed = 60;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///create variables
 state = States.Normal;
 jumpstate = JumpStates.Normal;
@@ -68,12 +91,54 @@ player_number = 0;
             <kind>1</kind>
             <string>///create sword
 my_sword = instance_create(x,y, obj_Sword);
+with(my_sword)
+{
+    player = other;
+}
 sword_speed = 0.1;
 sword_offset_x = sprite_width/2;
 sword_offset_y = 0;
 </string>
           </argument>
         </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///reset room speed
+room_speed = default_room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>223</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_current_room</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="3" enumb="0">
@@ -145,6 +210,7 @@ if(key_attack_normal)
     instance_activate_object(my_sword);
     with(my_sword)
     {
+        player_number = other.player_number;
         attack_style = AttackStyles.Swing;
         attack_speed = other.sword_speed;
         attack_direction = attack_dir;
@@ -218,6 +284,9 @@ my_sword.y = y + sword_offset_y;
 if(other.id != my_sword.id)
 {
     //hit happens!
+    show_debug_message(string(other.player.player_number + 1) + " hit " + string(player_number + 1));
+    room_speed = default_room_speed/2;
+    alarm[0] = death_time*room_speed;
 }
 </string>
           </argument>
