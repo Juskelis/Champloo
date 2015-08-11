@@ -56,6 +56,12 @@ if(key_jump)
     }
 }
 
+if(key_jump_high)
+{
+    vsp = key_jump_high*-jumpspeed;
+}
+
+
 scr_move_collide();
 
 ///check state
