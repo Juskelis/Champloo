@@ -191,15 +191,21 @@ if(image_xscale == 0) image_xscale = previous_xscale;
           <argument>
             <kind>1</kind>
             <string>///attacks
-if(key_attack_normal)
+if(key_attack_normal || key_attack_back)
 {
     var attack_dir = point_direction(xprevious, yprevious, x, y);
     if(point_distance(xprevious, yprevious, x,y) == 0)
         attack_dir = 90 - image_xscale*90;
+        
+    if(key_attack_back)
+        attack_dir = (attack_dir+180)%360;
     
     
     sword_offset_x = lengthdir_x(sprite_width/2, attack_dir);
     if(attack_dir &gt; 90 &amp;&amp; attack_dir &lt; 270)
+        sword_offset_x *= -1;
+    
+    if(key_attack_back)
         sword_offset_x *= -1;
         
     sword_offset_y = lengthdir_y(sprite_height/2, attack_dir);
