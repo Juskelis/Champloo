@@ -10,6 +10,7 @@
     <sprite>sprites\spr_Wall</sprite>
     <sprite>sprites\spr_Sword</sprite>
     <sprite>sprites\spr_StaticSword</sprite>
+    <sprite>sprites\spr_Bullet</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -30,6 +31,7 @@
     <object>objects\obj_Player</object>
     <object>objects\obj_Wall</object>
     <object>objects\obj_Sword</object>
+    <object>objects\obj_Bullet</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Test</room>
