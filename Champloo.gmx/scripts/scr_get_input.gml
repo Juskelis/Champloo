@@ -19,3 +19,5 @@ key_jump_high = gamepad_button_check(player_number, gp_face3);
 
 key_attack_normal = gamepad_button_check_pressed(player_number, gp_shoulderr);
 key_attack_back = gamepad_button_check_pressed(player_number, gp_shoulderl);
+
+key_shoot = gamepad_button_check_pressed(player_number, gp_shoulderrb);
