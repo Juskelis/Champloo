@@ -49,6 +49,9 @@ default_room_speed = 60;
           <argument>
             <kind>1</kind>
             <string>///create variables
+respawning = false;
+attacking = false;
+
 state = States.Normal;
 jumpstate = JumpStates.Normal;
 
@@ -96,8 +99,33 @@ with(my_sword)
     player = other;
 }
 sword_speed = 0.1;
+sword_attack_delay = sword_speed*2;
 sword_offset_x = sprite_width/2;
 sword_offset_y = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///turn off attacking
+attacking = false;
 </string>
           </argument>
         </arguments>
@@ -120,25 +148,13 @@ sword_offset_y = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///reset room speed
-room_speed = default_room_speed;
+            <string>///reset
+respawning = false;
+x = xstart;
+y = ystart;
 </string>
           </argument>
         </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>223</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_current_room</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="3" enumb="0">
@@ -159,17 +175,20 @@ room_speed = default_room_speed;
           <argument>
             <kind>1</kind>
             <string>///movement
-switch(state)
+if(!respawning)
 {
-    case States.Normal: scr_player_normal(); break;
-    case States.InAir: scr_player_inair(); break;
-    case States.WallRiding: scr_player_wallriding(); break;
+    switch(state)
+    {
+        case States.Normal: scr_player_normal(); break;
+        case States.InAir: scr_player_inair(); break;
+        case States.WallRiding: scr_player_wallriding(); break;
+    }
+    
+    //change image scale based on direction
+    var previous_xscale = image_xscale
+    image_xscale = sign(x - xprevious);
+    if(image_xscale == 0) image_xscale = previous_xscale;
 }
-
-//change image scale based on direction
-var previous_xscale = image_xscale
-image_xscale = sign(x - xprevious);
-if(image_xscale == 0) image_xscale = previous_xscale;
 </string>
           </argument>
         </arguments>
@@ -191,12 +210,23 @@ if(image_xscale == 0) image_xscale = previous_xscale;
           <argument>
             <kind>1</kind>
             <string>///attacks
-if(key_attack_normal || key_attack_back)
+if(!respawning &amp;&amp; !attacking &amp;&amp; (key_attack_normal || key_attack_back))
 {
+    attacking = true;
+    alarm[1] = sword_attack_delay*room_speed;
+    /*
     var attack_dir = point_direction(xprevious, yprevious, x, y);
     if(point_distance(xprevious, yprevious, x,y) == 0)
         attack_dir = 90 - image_xscale*90;
-        
+    */
+    
+    var deadzone = 0.1;
+    var attack_dir = point_direction(x,y,x+horizontal_amount,y+vertical_amount);
+    if(abs(horizontal_amount) &lt; deadzone &amp;&amp; abs(vertical_amount) &lt; deadzone)
+    {
+        attack_dir = 90 - image_xscale*90;
+    }
+    
     if(key_attack_back)
         attack_dir = (attack_dir+180)%360;
     
@@ -291,7 +321,7 @@ if(other.id != my_sword.id)
 {
     //hit happens!
     show_debug_message(string(other.player.player_number + 1) + " hit " + string(player_number + 1));
-    room_speed = default_room_speed/2;
+    respawning = true;
     alarm[0] = death_time*room_speed;
 }
 </string>
@@ -371,6 +401,28 @@ if(jumpstate == JumpStates.Held)
     var len = 20;
     draw_line_width(x,y,x + horizontal_amount*len, y + vertical_amount*len, 3);
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw player number
+draw_text(x,y,string(player_number));
 </string>
           </argument>
         </arguments>
