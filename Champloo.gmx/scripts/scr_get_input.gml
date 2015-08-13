@@ -13,7 +13,9 @@ key_left = min(horizontal_amount, 0);
 if(abs(key_left) < 0.5) key_left = 0;
 
 key_jump_pressed = gamepad_button_check_pressed(player_number, gp_face1);
-key_jump = gamepad_button_check_released(player_number, gp_face1);
+key_jump = gamepad_button_check_pressed(player_number, gp_face1);
 key_jump_held = gamepad_button_check(player_number, gp_face1);
+key_jump_high = gamepad_button_check(player_number, gp_face3);
 
-key_attack_normal = gamepad_button_check_pressed(player_number, gp_face2);
+key_attack_normal = gamepad_button_check_pressed(player_number, gp_shoulderr);
+key_attack_back = gamepad_button_check_pressed(player_number, gp_shoulderl);

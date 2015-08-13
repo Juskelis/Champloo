@@ -25,7 +25,33 @@
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///create global settings
+death_time = 1;
+default_room_speed = 60;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///create variables
+respawning = false;
+attacking = false;
+
 state = States.Normal;
 jumpstate = JumpStates.Normal;
 
@@ -37,7 +63,7 @@ hsp = 0;
 vsp = 0;
 
 press_time = -1; //this is technically in microseconds
-hold_delay = 0.1; //in seconds
+hold_delay = 0.25; //in seconds
 jumpspeed = 15*(30/room_speed);
 movespeed = 0;
 
@@ -46,6 +72,86 @@ left_input = vk_left;
 jump_input = vk_up;
 
 player_number = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///create sword
+my_sword = instance_create(x,y, obj_Sword);
+with(my_sword)
+{
+    player = other;
+}
+sword_speed = 0.1;
+sword_attack_delay = sword_speed*2;
+sword_offset_x = sprite_width/2;
+sword_offset_y = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///turn off attacking
+attacking = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///reset
+respawning = false;
+x = xstart;
+y = ystart;
 </string>
           </argument>
         </arguments>
@@ -69,17 +175,20 @@ player_number = 0;
           <argument>
             <kind>1</kind>
             <string>///movement
-switch(state)
+if(!respawning)
 {
-    case States.Normal: scr_player_normal(); break;
-    case States.InAir: scr_player_inair(); break;
-    case States.WallRiding: scr_player_wallriding(); break;
+    switch(state)
+    {
+        case States.Normal: scr_player_normal(); break;
+        case States.InAir: scr_player_inair(); break;
+        case States.WallRiding: scr_player_wallriding(); break;
+    }
+    
+    //change image scale based on direction
+    var previous_xscale = image_xscale
+    image_xscale = sign(x - xprevious);
+    if(image_xscale == 0) image_xscale = previous_xscale;
 }
-
-//change image scale based on direction
-var previous_xscale = image_xscale
-image_xscale = sign(x - xprevious);
-if(image_xscale == 0) image_xscale = previous_xscale;
 </string>
           </argument>
         </arguments>
@@ -101,30 +210,119 @@ if(image_xscale == 0) image_xscale = previous_xscale;
           <argument>
             <kind>1</kind>
             <string>///attacks
-if(key_attack_normal)
+if(!respawning &amp;&amp; !attacking &amp;&amp; (key_attack_normal || key_attack_back))
 {
-    var attack_dir = image_xscale*180;
-    scr_sword_create(self, AttackStyles.Swing, 1, attack_dir);
+    attacking = true;
+    alarm[1] = sword_attack_delay*room_speed;
     /*
-    var sword = instance_create(x,y, obj_Sword);
-    with(sword)
+    var attack_dir = point_direction(xprevious, yprevious, x, y);
+    if(point_distance(xprevious, yprevious, x,y) == 0)
+        attack_dir = 90 - image_xscale*90;
+    */
+    
+    var deadzone = 0.1;
+    var attack_dir = point_direction(x,y,x+horizontal_amount,y+vertical_amount);
+    if(abs(horizontal_amount) &lt; deadzone &amp;&amp; abs(vertical_amount) &lt; deadzone)
     {
-        show_debug_message("Assigning");
-        player = other;
-        attack_style = AttackStyles.Swing;
-        attack_speed = 1;
-        if(other.xprevious != other.x || other.yprevious != other.y)
-            attack_direction = point_direction(other.xprevious,other.yprevious,other.x,other.y);
-        else
-            attack_direction = other.image_xscale*180;
+        attack_dir = 90 - image_xscale*90;
+    }
+    
+    if(key_attack_back)
+        attack_dir = (attack_dir+180)%360;
+    
+    
+    sword_offset_x = lengthdir_x(sprite_width/2, attack_dir);
+    if(attack_dir &gt; 90 &amp;&amp; attack_dir &lt; 270)
+        sword_offset_x *= -1;
+    
+    if(key_attack_back)
+        sword_offset_x *= -1;
         
+    sword_offset_y = lengthdir_y(sprite_height/2, attack_dir);
+    //if(attack_dir &lt; 0 || attack_dir &gt; 180)
+        //sword_offset_y *= -1;
+        
+    
+    instance_activate_object(my_sword);
+    with(my_sword)
+    {
+        player_number = other.player_number;
+        attack_style = AttackStyles.Swing;
+        attack_speed = other.sword_speed;
+        attack_direction = attack_dir;
+        
+        if(attack_direction &lt; 90 || attack_direction &gt; 270)
+        {
+            start_direction = attack_direction + 45;
+            end_direction = start_direction - 90;
+        }
+        else
+        {
+            start_direction = attack_direction - 45;
+            end_direction = start_direction + 90;
+        }
         current_direction = start_direction;
-            
+        
         direction_step = (end_direction - start_direction)/(attack_speed*room_speed);
         alarm[0] = attack_speed*room_speed;
-        show_debug_message("Done assigning");
+        
+        image_angle = current_direction;
     }
-    */
+    
+}
+//show_debug_message(sword_offset_x);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///relocate sword
+my_sword.x = x + sword_offset_x;
+my_sword.y = y + sword_offset_y;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Sword">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check for hit
+if(other.id != my_sword.id)
+{
+    //hit happens!
+    show_debug_message(string(other.player.player_number + 1) + " hit " + string(player_number + 1));
+    respawning = true;
+    alarm[0] = death_time*room_speed;
 }
 </string>
           </argument>
@@ -203,6 +401,28 @@ if(jumpstate == JumpStates.Held)
     var len = 20;
     draw_line_width(x,y,x + horizontal_amount*len, y + vertical_amount*len, 3);
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw player number
+draw_text(x,y,string(player_number));
 </string>
           </argument>
         </arguments>

@@ -6,7 +6,7 @@ vsp = min(vsp + grav, maxgrav);
 var acceleration = 1.25*(30/room_speed);
 
 //holding jump key stops movement input and slows
-if(jumpstate == JumpStates.Held) move = 0;
+//if(jumpstate == JumpStates.Held) move = 0;
 
 hsp = clamp(hsp + move*acceleration, -maxspeed, maxspeed);
 
@@ -34,12 +34,17 @@ if(hsp != 0)
     }
 }
 
+/*
+hsp = 0;
+vsp = 0;
+*/
+
 if(key_jump)
 {
     //vsp = key_jump * -jumpspeed;
-    
+    var deadzone = 0.25;
     //move the player in the direction of stick
-    if(jumpstate == JumpStates.Held && abs(horizontal_amount) + abs(vertical_amount) > 0.25)
+    if(jumpstate == JumpStates.Held && abs(horizontal_amount) + abs(vertical_amount) > deadzone)
     {
         var dir = point_direction(x,y,x + horizontal_amount, y + vertical_amount);
         hsp = lengthdir_x(jumpspeed, dir);
@@ -50,6 +55,12 @@ if(key_jump)
         vsp = key_jump * -jumpspeed;
     }
 }
+
+if(key_jump_high)
+{
+    vsp = key_jump_high*-jumpspeed;
+}
+
 
 scr_move_collide();
 
