@@ -33,6 +33,7 @@
     <object>objects\obj_Wall</object>
     <object>objects\obj_Sword</object>
     <object>objects\obj_Bullet</object>
+    <object>objects\obj_Score</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Test</room>
