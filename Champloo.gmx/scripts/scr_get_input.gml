@@ -5,7 +5,7 @@
 
 horizontal_amount = gamepad_axis_value(player_number, gp_axislh);
 vertical_amount = gamepad_axis_value(player_number, gp_axislv);
-//if(vertical_amount > 0.5) vertical_amount = 0;
+aim_direction = point_direction(x,y, x+horizontal_amount*2,y+vertical_amount*2);
 
 key_right = max(0, horizontal_amount);
 if(key_right < 0.5) key_right = 0;
@@ -21,3 +21,5 @@ key_attack_normal = gamepad_button_check_pressed(player_number, gp_shoulderr);
 key_attack_back = gamepad_button_check_pressed(player_number, gp_shoulderl);
 
 key_shoot = gamepad_button_check_pressed(player_number, gp_shoulderrb);
+
+key_block = gamepad_button_check(player_number, gp_face2);

@@ -11,6 +11,7 @@
     <sprite>sprites\spr_Sword</sprite>
     <sprite>sprites\spr_StaticSword</sprite>
     <sprite>sprites\spr_Bullet</sprite>
+    <sprite>sprites\spr_Block</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
