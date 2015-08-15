@@ -48,7 +48,9 @@ if(key_jump)
     {
         var dir = point_direction(x,y,x + horizontal_amount, y + vertical_amount);
         hsp = lengthdir_x(jumpspeed, dir);
-        vsp = lengthdir_y(jumpspeed, dir);
+        
+        if(dir > 270) dir -= 360;
+        vsp = lengthdir_y(jumpspeed, (dir+90)/2);
     }
     else
     {
