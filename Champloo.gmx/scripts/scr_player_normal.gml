@@ -31,6 +31,8 @@ if(key_jump)
         if(dir > 270) dir -= 360; //mapping from -180 to 180
         vsp = lengthdir_y(jumpspeed, (dir+90)/2);
     }
+    else
+        vsp = -jumpspeed;
 }
 
 scr_move_collide();
