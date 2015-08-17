@@ -53,23 +53,37 @@ respawning = false;
 attacking = false;
 
 state = States.Normal;
-jumpstate = JumpStates.Normal;
 
 grav = 0.75*(30/room_speed);
 maxgrav = 20*(30/room_speed);
 maxspeed = 20*(30/room_speed);
 
+jumping_deadzone = 0.25;
+movement_deadzone = 0.5
+
+
+
+//ground settings
+acceleration = 1.25*(30/room_speed);
+
+moving_friction = 0;
+stopping_friction = acceleration;
+turning_friction = 2*acceleration;
+
+
+
+//air settings
+air_acceleration = 1*(30/room_speed);
+air_moving_friction = 0.4*air_acceleration;
+air_turning_friction = 0.6*air_acceleration;
+
+
+
 hsp = 0;
 vsp = 0;
 
-press_time = -1; //this is technically in microseconds
-hold_delay = 0.25; //in seconds
 jumpspeed = 15*(30/room_speed);
 movespeed = 0;
-
-right_input = vk_right;
-left_input = vk_left;
-jump_input = vk_up;
 
 player_number = 0;
 </string>
@@ -233,82 +247,68 @@ if(!respawning)
             <kind>1</kind>
             <string>///attacks
 var deadzone = 0.1;
-if(!respawning &amp;&amp; !attacking &amp;&amp; (key_attack_normal || key_attack_back))
-{
-    attacking = true;
-    alarm[1] = sword_attack_delay*room_speed;
-    /*
-    var attack_dir = point_direction(xprevious, yprevious, x, y);
-    if(point_distance(xprevious, yprevious, x,y) == 0)
-        attack_dir = 90 - image_xscale*90;
-    */
-    
-    var attack_dir = aim_direction
-    if(abs(horizontal_amount) &lt; deadzone &amp;&amp; abs(vertical_amount) &lt; deadzone)
-    {
-        attack_dir = 90 - image_xscale*90;
-    }
-    
-    if(key_attack_back)
-        attack_dir = (attack_dir+180)%360;
-    
-    
-    sword_offset_x = lengthdir_x(sprite_width/2, attack_dir);
-    if(attack_dir &gt; 90 &amp;&amp; attack_dir &lt; 270)
-        sword_offset_x *= -1;
-    
-    if(key_attack_back)
-        sword_offset_x *= -1;
-        
-    sword_offset_y = lengthdir_y(sprite_height/2, attack_dir);
-    //if(attack_dir &lt; 0 || attack_dir &gt; 180)
-        //sword_offset_y *= -1;
-        
-    
-    instance_activate_object(my_sword);
-    with(my_sword)
-    {
-        player_number = other.player_number;
-        attack_style = AttackStyles.Swing;
-        attack_speed = other.sword_speed;
-        attack_direction = attack_dir;
-        
-        if(attack_direction &lt; 90 || attack_direction &gt; 270)
-        {
-            start_direction = attack_direction + 45;
-            end_direction = start_direction - 90;
-        }
-        else
-        {
-            start_direction = attack_direction - 45;
-            end_direction = start_direction + 90;
-        }
-        current_direction = start_direction;
-        
-        direction_step = (end_direction - start_direction)/(attack_speed*room_speed);
-        alarm[0] = attack_speed*room_speed;
-        
-        image_angle = current_direction;
-    }
-    
-}
 
 
-if(!attacking &amp;&amp; key_shoot)
+if(!respawning &amp;&amp; !attacking)
 {
-    var bullet = instance_create(x,y, obj_Bullet);
-    var attack_dir = aim_direction
+    var attack_dir = aim_direction;
     if(abs(horizontal_amount) &lt; deadzone &amp;&amp; abs(vertical_amount) &lt; deadzone)
-    {
         attack_dir = 90 - image_xscale*90;
-    }
-    bullet.direction = attack_dir;
-    with(bullet)
+    
+    if(key_attack_normal || key_attack_back)
     {
-        number = other.player_number;
+        attacking = true;
+        alarm[1] = sword_attack_delay * room_speed;
+        
+        //invert if back attack
+        if(key_attack_back)
+            attack_dir = (attack_dir+180)%360;
+        
+        //set offsets
+        sword_offset_x = lengthdir_x(sprite_width/2, attack_dir);
+        if(attack_dir &gt; 90 &amp;&amp; attack_dir &lt; 270)
+            sword_offset_x *= -1;
+        
+        sword_offset_y = lengthdir_y(sprite_height/2, attack_dir);
+        
+        //setup sword
+        instance_activate_object(my_sword);
+        with(my_sword)
+        {
+            player_number = other.player_number;
+            attack_style = AttackStyles.Swing;
+            attack_speed = other.sword_speed;
+            attack_direction = attack_dir;
+            
+            if(attack_direction &lt; 90 || attack_direction &gt; 270)
+            {
+                start_direction = attack_direction + 45;
+                end_direction = start_direction - 90;
+            }
+            else
+            {
+                start_direction = attack_direction - 45;
+                end_direction = start_direction + 90;
+            }
+            current_direction = start_direction;
+            
+            direction_step = (end_direction - start_direction)/(attack_speed*room_speed);
+            alarm[0] = attack_speed*room_speed;
+            
+            image_angle = current_direction;
+        }
+    }
+    else if(key_shoot)
+    {
+        attacking = true;
+        var bullet = instance_create(x,y, obj_Bullet);
+        bullet.direction = attack_dir;
+        with(bullet)
+        {
+            number = other.player_number;
+        }
     }
 }
-//show_debug_message(sword_offset_x);
 </string>
           </argument>
         </arguments>
@@ -430,7 +430,8 @@ my_sword.y = y + sword_offset_y;
 if(other.id != my_sword.id)
 {
     //check for block
-    var dir_to_sword = point_direction(x,y, other.x,other.y);
+    //  note that block check is based on PLAYER position, NOT SWORD position
+    var dir_to_sword = point_direction(x,y, other.player.x,other.player.y);
     if(!key_block || aim_direction &gt; block_angle)
     {
         //hit happens!
@@ -476,12 +477,6 @@ enum States
     InAir,
     WallRiding
 }
-
-enum JumpStates
-{
-    Normal,
-    Held
-}
 </string>
           </argument>
         </arguments>
@@ -518,12 +513,9 @@ enum JumpStates
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///show jump aiming
-if(jumpstate == JumpStates.Held)
-{
-    var len = 20;
-    draw_line_width(x,y,x + horizontal_amount*len, y + vertical_amount*len, 3);
-}
+            <string>///show aiming
+var len = 20;
+draw_line_width(x,y,x + horizontal_amount*len, y + vertical_amount*len, 3);
 </string>
           </argument>
         </arguments>

@@ -3,29 +3,18 @@ scr_get_input();
 move = key_left + key_right;
 vsp = min(vsp + grav, maxgrav);
 
-var acceleration = 1*(30/room_speed);
-hsp = clamp(hsp + move*acceleration, -maxspeed, maxspeed);
+hsp = clamp(hsp + move*air_acceleration, -maxspeed, maxspeed);
 
 if(hsp != 0)
 {
-    var air_friction = 0;
-    if(move == 0 || sign(move) == sign(hsp))
-        air_friction = 0.4*acceleration;
-    else
-        air_friction = 0.6*acceleration;
+    var air_friction = air_moving_friction;
+    if(move != 0 && sign(move) != sign(hsp))
+        air_friction = air_turning_friction;
     
-    var hsptest = hsp - sign(hsp)*air_friction;
-    if(sign(hsptest) != sign(hsp))
-    {
-        hsp = 0;
-    }
-    else
-    {
-        hsp = hsptest;
-    }
+    hsp = scr_apply_friction(hsp, air_friction)
 }
 
-if(key_jump_released || key_jump_high_released)
+if(key_jump_released)
 {
     if(vsp < 0) vsp = 0;
 }
@@ -42,5 +31,3 @@ if(place_meeting(x - 1,y,obj_Wall) || place_meeting(x + 1,y,obj_Wall))
 {
     state = States.WallRiding;
 }
-
-scr_jumpstate_next();

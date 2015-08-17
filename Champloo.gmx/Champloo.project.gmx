@@ -22,10 +22,12 @@
       <script>scripts\scr_player_inair.gml</script>
       <script>scripts\scr_player_wallriding.gml</script>
       <script>scripts\scr_move_collide.gml</script>
-      <script>scripts\scr_jumpstate_next.gml</script>
     </scripts>
     <scripts name="Constructors">
       <script>scripts\scr_sword_create.gml</script>
+    </scripts>
+    <scripts name="Helpers">
+      <script>scripts\scr_apply_friction.gml</script>
     </scripts>
   </scripts>
   <objects name="objects">
