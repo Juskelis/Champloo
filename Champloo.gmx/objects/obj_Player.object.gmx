@@ -260,7 +260,7 @@ var deadzone = 0.25;
 
 if(!respawning &amp;&amp; !attacking)
 {
-    var attack_dir = aim_direction;
+    var attack_dir = abs(aim_direction);
     if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
         attack_dir = 90 - image_xscale*90;
     
@@ -271,15 +271,12 @@ if(!respawning &amp;&amp; !attacking)
         
         //invert if back attack
         if(key_attack_back)
-            attack_dir = (attack_dir+180)%360;
+            attack_dir = (attack_dir+180);
         
         //set offsets
         sword_offset_x = lengthdir_x(sprite_width/2, attack_dir);
-        if(attack_dir &gt; 90 &amp;&amp; attack_dir &lt; 270)
-            sword_offset_x *= -1;
-        
-        if(key_attack_back)
-            sword_offset_x *= -1;
+        if(image_xscale &lt; 0)
+            sword_offset_x = lengthdir_x(sprite_width/2, attack_dir - 180);
         
         sword_offset_y = lengthdir_y(sprite_height/2, attack_dir);
         
