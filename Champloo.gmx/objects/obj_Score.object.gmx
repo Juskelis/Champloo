@@ -26,8 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>///scores for each player
-scores[0] = 0;
-scores[1] = 0;
+player_count = 0;
+for(player_count = 0; player_count &lt; instance_number(obj_Player); player_count += 1)
+{
+    scores[instance_find(obj_Player, player_count).player_number] = 0;
+}
 </string>
           </argument>
         </arguments>
@@ -51,12 +54,15 @@ scores[1] = 0;
           <argument>
             <kind>1</kind>
             <string>///draw scores
+
 draw_set_colour(c_white);
-draw_set_valign(fa_top);
 draw_set_halign(fa_left);
-draw_text(0,0,string(scores[0]));
-draw_set_halign(fa_right);
-draw_text(room_width, 0, string(scores[1]));
+draw_set_valign(fa_top);
+for(var i = 0; i &lt; player_count; i+=1)
+{
+    draw_text(x,y + i*20, "Player " + string(i) + ": " + string(scores[i]));
+    
+}
 draw_set_colour(c_black);
 </string>
           </argument>
