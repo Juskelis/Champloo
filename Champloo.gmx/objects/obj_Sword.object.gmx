@@ -44,6 +44,10 @@ alarm[0] = attack_speed*room_speed;
 image_speed = image_speed/attack_speed;
 
 damage = 5;
+
+min_size = 0.5
+max_size = 2;
+size_gap = max_size - min_size;
 </string>
           </argument>
         </arguments>
@@ -92,6 +96,28 @@ instance_deactivate_object(self);
             <kind>1</kind>
             <string>///move
 image_angle += direction_step;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///resize
+image_xscale = (min_size + size_gap/2) + (size_gap/2)*(-sin(degtorad(image_angle)));
 </string>
           </argument>
         </arguments>

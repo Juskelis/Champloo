@@ -113,7 +113,7 @@ with(my_sword)
     player = other;
 }
 sword_speed = 0.1;
-sword_attack_delay = sword_speed*2;
+sword_attack_delay = sword_speed*3;
 sword_offset_x = sprite_width/2;
 sword_offset_y = 0;
 
@@ -308,6 +308,7 @@ if(!respawning &amp;&amp; !attacking)
             alarm[0] = attack_speed*room_speed;
             
             image_angle = current_direction;
+            image_xscale = (min_size + size_gap/2) + (size_gap/2)*(-sin(degtorad(image_angle)));
         }
     }
     else if(key_shoot)
