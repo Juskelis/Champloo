@@ -12,6 +12,7 @@
     <sprite>sprites\spr_StaticSword</sprite>
     <sprite>sprites\spr_Bullet</sprite>
     <sprite>sprites\spr_Block</sprite>
+    <sprite>sprites\spr_Spawn</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -29,6 +30,7 @@
     <scripts name="Helpers">
       <script>scripts\scr_apply_friction.gml</script>
       <script>scripts\scr_block_check.gml</script>
+      <script>scripts\scr_furthest_spawn.gml</script>
     </scripts>
   </scripts>
   <objects name="objects">
@@ -37,6 +39,7 @@
     <object>objects\obj_Sword</object>
     <object>objects\obj_Bullet</object>
     <object>objects\obj_Score</object>
+    <object>objects\obj_Spawn</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Test</room>
