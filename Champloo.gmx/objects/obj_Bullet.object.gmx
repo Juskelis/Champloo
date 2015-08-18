@@ -28,6 +28,7 @@
             <string>///create objects
 number = 0;
 speed = 10;
+damage = 10;
 </string>
           </argument>
         </arguments>

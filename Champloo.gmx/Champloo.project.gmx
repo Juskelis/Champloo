@@ -28,6 +28,7 @@
     </scripts>
     <scripts name="Helpers">
       <script>scripts\scr_apply_friction.gml</script>
+      <script>scripts\scr_block_check.gml</script>
     </scripts>
   </scripts>
   <objects name="objects">

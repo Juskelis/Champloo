@@ -255,13 +255,13 @@ if(!respawning)
           <argument>
             <kind>1</kind>
             <string>///attacks
-var deadzone = 0.1;
+var deadzone = 0.25;
 
 
 if(!respawning &amp;&amp; !attacking)
 {
     var attack_dir = aim_direction;
-    if(abs(horizontal_amount) &lt; deadzone &amp;&amp; abs(vertical_amount) &lt; deadzone)
+    if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
         attack_dir = 90 - image_xscale*90;
     
     if(key_attack_normal || key_attack_back)
@@ -366,10 +366,13 @@ my_sword.y = y + sword_offset_y;
           <argument>
             <kind>1</kind>
             <string>///deplete blocking
-block_level = min(block_level + blocking_grow_step, max_block);
 if(key_block)
 {
     block_level = max(0, block_level - blocking_shrink_step);
+}
+else
+{
+    block_level = min(block_level + blocking_grow_step, max_block);
 }
 </string>
           </argument>
@@ -395,7 +398,8 @@ if(key_block)
             <kind>1</kind>
             <string>if(player_number != other.number)
 {
-    if(!respawning &amp;&amp; !key_block)
+    var blocked = scr_block_check(other.damage);
+    if(!respawning &amp;&amp; !blocked)
     {
         respawning = true;
         alarm[0] = death_time*room_speed;
@@ -436,7 +440,9 @@ if(key_block)
             <string>///check for hit
 if(other.id != my_sword.id)
 {
-    if(!key_block)
+    var blocked = scr_block_check(other.damage);
+    
+    if(!blocked)
     {
         //hit happens!
         show_debug_message(string(other.player.player_number + 1) + " hit " + string(player_number + 1));
@@ -563,7 +569,7 @@ draw_text(x,y,string(player_number));
           <argument>
             <kind>1</kind>
             <string>///draw block
-//if(key_block)
+if(key_block &amp;&amp; !attacking)
 {
     var block_radius = sprite_width;
     var block_size = (block_level/max_block);
