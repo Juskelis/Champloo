@@ -42,6 +42,8 @@ direction_step = (end_direction - start_direction)/(attack_speed*room_speed);
 alarm[0] = attack_speed*room_speed;
 
 image_speed = image_speed/attack_speed;
+
+damage = 5;
 </string>
           </argument>
         </arguments>

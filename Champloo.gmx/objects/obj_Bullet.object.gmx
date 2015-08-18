@@ -28,7 +28,7 @@
             <string>///create objects
 number = 0;
 speed = 10;
-show_debug_message("end of bullet create");
+damage = 10;
 </string>
           </argument>
         </arguments>
