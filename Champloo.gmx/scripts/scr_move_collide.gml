@@ -8,6 +8,7 @@ if(place_meeting(x+sign(hsp),y, obj_Wall) || place_meeting(x + hsp, y, obj_Wall)
 }
 x += hsp;
 
+prev_vsp = vsp;
 if(place_meeting(x,y+sign(vsp), obj_Wall) || place_meeting(x, y + vsp, obj_Wall))
 {
     while(!place_meeting(x, y + sign(vsp), obj_Wall))

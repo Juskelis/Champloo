@@ -79,10 +79,15 @@ air_turning_friction = 0.6*air_acceleration;
 
 
 
+//ceiling settings
+ceiling_stopping_friction = 2*acceleration;
+
+
+
 hsp = 0;
 vsp = 0;
 
-jumpspeed = 15*(30/room_speed);
+jumpspeed = 20*(30/room_speed);
 movespeed = 0;
 
 player_number = 0;
@@ -230,6 +235,7 @@ if(!respawning)
         case States.Normal: scr_player_normal(); break;
         case States.InAir: scr_player_inair(); break;
         case States.WallRiding: scr_player_wallriding(); break;
+        case States.Ceiling: scr_player_ceiling(); break;
     }
     
     //change image scale based on direction
@@ -486,7 +492,8 @@ enum States
 {
     Normal,
     InAir,
-    WallRiding
+    WallRiding,
+    Ceiling
 }
 </string>
           </argument>

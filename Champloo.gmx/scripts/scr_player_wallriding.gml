@@ -7,7 +7,7 @@ var wall_left = place_meeting(x - 1, y, obj_Wall);
 var wall_right = place_meeting(x + 1, y, obj_Wall);
 var walldir = wall_right - wall_left;
 
-if(!place_meeting(x,y+1, obj_Wall)
+if((!place_meeting(x,y+1, obj_Wall) && !place_meeting(x, y - 1, obj_Wall))
     && (move == 0 || sign(move) == sign(walldir)))
 {
     movespeed = walldir;
@@ -44,14 +44,19 @@ scr_move_collide();
 //get next state
 if(!place_meeting(x + 1, y, obj_Wall) && !place_meeting(x - 1, y, obj_Wall))
 {
-    if(!place_meeting(x, y + 1, obj_Wall))
+    if(place_meeting(x, y + 1, obj_Wall))
     {
         movespeed = 0;
-        state = States.InAir;
+        state = States.Normal;
+    }
+    else if(place_meeting(x, y - 1, obj_Wall))
+    {
+        movespeed = 0;
+        state = States.Ceiling;
     }
     else
     {
         movespeed = 0;
-        state = States.Normal;
+        state = States.InAir;
     }
 }

@@ -29,7 +29,7 @@ if(key_jump)
         hsp = lengthdir_x(jumpspeed, dir);
         
         if(dir > 270) dir -= 360; //mapping from -180 to 180
-        vsp = lengthdir_y(jumpspeed, (dir+90)/2);
+        vsp = lengthdir_y(jumpspeed, (dir+90)/2); //average between normal and dir
     }
     else
         vsp = -jumpspeed;
@@ -38,7 +38,11 @@ if(key_jump)
 scr_move_collide();
 
 ///check state
-if(!place_meeting(x, y + 1, obj_Wall))
+if(place_meeting(x, y - 1, obj_Wall))
+{
+    state = States.Ceiling;
+}
+else if(!place_meeting(x, y + 1, obj_Wall))
 {
     state = States.InAir;
 }
