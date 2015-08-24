@@ -16,3 +16,14 @@ key_attack_back = gamepad_button_check_pressed(player_number, gp_shoulderl) && !
 key_shoot = gamepad_button_check_pressed(player_number, gp_shoulderrb) && !key_block;
 
 key_block = gamepad_button_check(player_number, gp_face2) && !attacking;
+
+if(key_jump)
+{
+    jump_input_time = jump_input_delay;
+}
+else
+{
+    jump_input_time = max(0, jump_input_time - 1);
+}
+
+key_jump = key_jump || jump_input_time > 0;
