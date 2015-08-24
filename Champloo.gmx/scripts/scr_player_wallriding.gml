@@ -56,11 +56,6 @@ if(!place_meeting(x + 1, y, obj_Wall) && !place_meeting(x - 1, y, obj_Wall))
         movespeed = 0;
         state = States.Normal;
     }
-    else if(place_meeting(x, y - 1, obj_Wall))
-    {
-        movespeed = 0;
-        state = States.Ceiling;
-    }
     else
     {
         movespeed = 0;

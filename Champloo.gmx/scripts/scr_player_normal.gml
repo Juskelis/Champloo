@@ -38,11 +38,7 @@ if(key_jump)
 scr_move_collide();
 
 ///check state
-if(place_meeting(x, y - 1, obj_Wall))
-{
-    state = States.Ceiling;
-}
-else if(!place_meeting(x, y + 1, obj_Wall))
+if(!place_meeting(x, y + 1, obj_Wall))
 {
     state = States.InAir;
 }
