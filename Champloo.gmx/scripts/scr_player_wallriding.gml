@@ -7,16 +7,23 @@ var wall_left = place_meeting(x - 1, y, obj_Wall);
 var wall_right = place_meeting(x + 1, y, obj_Wall);
 var walldir = wall_right - wall_left;
 
-if((!place_meeting(x,y+1, obj_Wall) && !place_meeting(x, y - 1, obj_Wall))
-    && (move == 0 || sign(move) == sign(walldir)))
+if(move == 0 || sign(move) == sign(walldir))
 {
     movespeed = walldir;
+    hsp = movespeed;
 }
 else
 {
     movespeed = movespeed + (sign(move)*(1/(0.2*room_speed)));
+    hsp = movespeed;
 }
-hsp = movespeed;
+
+
+if(place_meeting(x,y+1, obj_Wall) || place_meeting(x, y - 1, obj_Wall))
+{
+    movespeed = move;
+}
+
 
 if(key_jump)
 {
