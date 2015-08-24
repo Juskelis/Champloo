@@ -3,7 +3,7 @@ scr_get_input();
 move = key_left + key_right;
 vsp = min(vsp + grav, maxgrav);
 
-hsp = clamp(hsp + move*acceleration, -maxspeed, maxspeed);
+hsp = clamp(hsp + move*acceleration, -ground_maxspeed, ground_maxspeed);
 
 if(hsp != 0)
 {

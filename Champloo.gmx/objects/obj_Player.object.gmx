@@ -64,6 +64,7 @@ movement_deadzone = 0.5
 
 
 //ground settings
+ground_maxspeed = maxspeed*0.65;
 acceleration = 1.25*(30/room_speed);
 
 moving_friction = 0;
