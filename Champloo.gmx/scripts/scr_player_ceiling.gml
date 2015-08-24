@@ -4,7 +4,7 @@ scr_get_input();
 move = key_left + key_right;
 
 vsp = min(vsp + grav, maxgrav);
-if(prev_vsp < 0) vsp = min(prev_vsp + grav, maxgrav);
+if(prev_vsp < 0) vsp = min(prev_vsp + ceiling_stick, maxgrav);
 
 if(hsp != 0)
 {

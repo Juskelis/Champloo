@@ -80,7 +80,8 @@ air_turning_friction = 0.6*air_acceleration;
 
 
 //ceiling settings
-ceiling_stopping_friction = 2*acceleration;
+ceiling_stopping_friction = 0.5*acceleration;
+ceiling_stick = grav;
 
 
 
