@@ -23,7 +23,7 @@ if(hsp != 0)
 
 if(key_jump)
 {
-    if(abs(horizontal_amount) + abs(vertical_amount) > jumping_deadzone)
+    if(false && abs(horizontal_amount) + abs(vertical_amount) > jumping_deadzone)
     {
         var dir = aim_direction;
         hsp = lengthdir_x(jumpspeed, dir);
