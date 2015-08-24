@@ -113,7 +113,7 @@ with(my_sword)
     player = other;
 }
 sword_speed = 0.1;
-sword_attack_delay = sword_speed*3;
+sword_attack_delay = sword_speed*5;
 sword_offset_x = sprite_width/2;
 sword_offset_y = 0;
 
