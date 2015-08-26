@@ -33,6 +33,8 @@ if(key_jump)
     }
     else
         vsp = -jumpspeed;
+        
+    jump_input_time = 0;
 }
 
 scr_move_collide();

@@ -44,6 +44,7 @@ if(key_jump)
             vsp = lengthdir_y(jumpspeed, aim_direction);
         }
     }
+    jump_input_time = 0;
 }
 
 scr_move_collide();
