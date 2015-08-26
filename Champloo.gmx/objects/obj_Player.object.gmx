@@ -141,6 +141,7 @@ gun_attack_delay = 5;
           <argument>
             <kind>1</kind>
             <string>///create blocking
+
 max_block = 100;
 blocking_shrink_time = 1; //seconds for block to deplete completely
 blocking_grow_time = 5; //seconds for block to restore completely
@@ -173,6 +174,46 @@ block_level = max_block;
 jump_input_time = 0;
 jump_input_delay = 0.2*room_speed; //frame delay
 
+hit = noone;
+block_window = 0.2*room_speed; //frames for incorrect timing window for blocking
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check for hit
+if(hit != noone)
+{
+    if(!respawning)
+    {
+        respawning = true;
+        alarm[0] = death_time * room_speed;
+        var othernum = hit.player.player_number;
+        with(obj_Score)
+        {
+            scores[othernum]++;
+        }
+    }
+    hit = noone;
+}
 </string>
           </argument>
         </arguments>
@@ -405,6 +446,36 @@ else
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check blocking for hitwindow
+
+if(hit != noone)
+{
+    var blocked = scr_block_check(hit.damage);
+    if(blocked)
+    {
+        hit = noone;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="4" ename="obj_Bullet">
       <action>
@@ -465,6 +536,14 @@ else
           <argument>
             <kind>1</kind>
             <string>///check for hit
+
+if(other.id != my_sword.id &amp;&amp; hit == noone)
+{
+    hit = other.id;
+    alarm[2] = block_window;
+}
+
+/*
 if(other.id != my_sword.id)
 {
     var blocked = scr_block_check(other.damage);
@@ -485,6 +564,7 @@ if(other.id != my_sword.id)
         }
     }
 }
+*/
 </string>
           </argument>
         </arguments>
