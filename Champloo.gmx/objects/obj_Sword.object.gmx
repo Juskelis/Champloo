@@ -46,7 +46,7 @@ image_speed = image_speed/attack_speed;
 damage = 5;
 
 min_size = 0.5;
-max_size = 2;
+max_size = 1.5;
 size_gap = max_size - min_size;
 </string>
           </argument>
@@ -129,7 +129,7 @@ if(abs(player.hsp) + abs(player.vsp) &lt; 0.1)
 var aim_mod = cos(degtorad(player_momentum_dir - attack_direction))*0.5 + 0.5;
 var vertical_mod = -sin(degtorad(attack_direction))*0.5 + 0.5;
 
-image_xscale = min_size + ((aim_mod + vertical_mod*3)/4)*size_gap;
+image_xscale = min_size + ((aim_mod*3 + vertical_mod)/4)*size_gap;
 /*
 var aim_mod = -sin(degtorad(image_angle))*0.5 + 0.5;
 
