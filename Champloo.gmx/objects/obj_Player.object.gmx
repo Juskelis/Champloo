@@ -112,7 +112,7 @@ player_number = 0;
 my_sword = instance_create(x,y, obj_Sword);
 with(my_sword)
 {
-    player = other;
+    player = other.id;
 }
 sword_speed = 0.1;
 sword_attack_delay = sword_speed*5;
@@ -354,6 +354,7 @@ if(!respawning &amp;&amp; !attacking)
         instance_activate_object(my_sword);
         with(my_sword)
         {
+            player = other.id;
             player_number = other.player_number;
             attack_style = AttackStyles.Swing;
             attack_speed = other.sword_speed;

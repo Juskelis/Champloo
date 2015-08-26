@@ -117,7 +117,24 @@ image_angle += direction_step;
           <argument>
             <kind>1</kind>
             <string>///resize
-image_xscale = (min_size + size_gap/2) + (size_gap/2)*(-sin(degtorad(image_angle)));
+//image_xscale = (min_size + size_gap/2) + (size_gap/2)*(-sin(degtorad(image_angle))) + max_size*vertical_mod;
+
+var player_momentum_dir = point_direction(x,y, x + player.hsp,y + player.vsp);
+if(abs(player.hsp) + abs(player.vsp) &lt; 0.1)
+{
+    player_momentum_dir = 90 - 90*player.image_xscale;
+}
+
+// this is basically dot product
+var aim_mod = cos(degtorad(player_momentum_dir - attack_direction))*0.5 + 0.5;
+var vertical_mod = -sin(degtorad(attack_direction))*0.5 + 0.5;
+
+image_xscale = min_size + ((aim_mod + vertical_mod*3)/4)*size_gap;
+/*
+var aim_mod = -sin(degtorad(image_angle))*0.5 + 0.5;
+
+image_xscale = min_size + ((aim_mod + vertical_mod)/2)*size_gap;
+*/
 </string>
           </argument>
         </arguments>
