@@ -36,13 +36,13 @@ if(key_jump)
     {
         hsp = (-walldir)*maxspeed;
         vsp = -jumpspeed*0.8;
-    }
     
-    //move the player in the direction of stick
-    if(vertical_amount > jumping_deadzone/2)
-    {
-        hsp = lengthdir_x(jumpspeed, aim_direction);
-        vsp = lengthdir_y(jumpspeed, aim_direction);
+        //move the player in the direction of stick
+        if(vertical_amount > jumping_deadzone/2)
+        {
+            hsp = lengthdir_x(jumpspeed, aim_direction);
+            vsp = lengthdir_y(jumpspeed, aim_direction);
+        }
     }
 }
 
