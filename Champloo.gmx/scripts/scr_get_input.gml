@@ -10,10 +10,10 @@ if(abs(key_left) < movement_deadzone) key_left = 0;
 key_jump = gamepad_button_check_pressed(player_number, gp_face1);
 key_jump_released = gamepad_button_check_released(player_number, gp_face1);
 
-key_attack_normal = gamepad_button_check_pressed(player_number, gp_shoulderr) && !key_block;
-key_attack_back = gamepad_button_check_pressed(player_number, gp_shoulderl) && !key_block;
+key_attack_normal = gamepad_button_check_pressed(player_number, gp_face3) && !key_block;
 
-key_shoot = gamepad_button_check_pressed(player_number, gp_shoulderrb) && !key_block;
+key_shoot_press = gamepad_button_check_pressed(player_number, gp_shoulderrb) && !key_block;
+key_shoot_release = gamepad_button_check_released(player_number, gp_shoulderrb) && !key_block;
 
 key_block = gamepad_button_check(player_number, gp_face2) && !attacking;
 

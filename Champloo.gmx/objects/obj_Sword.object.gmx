@@ -31,6 +31,7 @@ player = noone;
 attack_style = AttackStyles.Swing;
 
 attack_speed = 0.1; //in seconds
+attack_delay = attack_speed * 5;
 
 attack_direction = 0;
 start_direction = 45;
@@ -48,6 +49,7 @@ damage = 5;
 min_size = 0.5;
 max_size = 1.5;
 size_gap = max_size - min_size;
+offset = 0;
 </string>
           </argument>
         </arguments>
@@ -95,6 +97,9 @@ instance_deactivate_object(self);
           <argument>
             <kind>1</kind>
             <string>///move
+x = player.x + lengthdir_x(offset, attack_direction);
+y = player.y + lengthdir_y(offset, attack_direction);
+
 image_angle += direction_step;
 </string>
           </argument>
