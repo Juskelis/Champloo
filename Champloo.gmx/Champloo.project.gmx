@@ -13,6 +13,7 @@
     <sprite>sprites\spr_Bullet</sprite>
     <sprite>sprites\spr_Block</sprite>
     <sprite>sprites\spr_Spawn</sprite>
+    <sprite>sprites\spr_NoAttackIndicator</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -34,15 +35,16 @@
     </scripts>
   </scripts>
   <objects name="objects">
+    <objects name="Nonvisual">
+      <object>objects\obj_Score</object>
+      <object>objects\obj_Timescale</object>
+    </objects>
     <object>objects\obj_Player</object>
     <object>objects\obj_Wall</object>
     <object>objects\obj_Sword</object>
     <object>objects\obj_Bullet</object>
     <object>objects\obj_Spawn</object>
-    <objects name="Nonvisual">
-      <object>objects\obj_Score</object>
-      <object>objects\obj_Timescale</object>
-    </objects>
+    <object>objects\obj_ThrownSword</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Test</room>

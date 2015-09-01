@@ -53,6 +53,7 @@ image_speed = 0;
             <string>///create variables
 respawning = false;
 attacking = false;
+has_sword = true;
 
 state = States.Normal;
 
@@ -230,7 +231,10 @@ attacking = false;
             <kind>1</kind>
             <string>///reset
 respawning = false;
-
+has_sword = true;
+attacking = false;
+hsp = 0;
+vsp = 0;
 
 var spawn = scr_furthest_spawn(self);
 x = spawn.x;
@@ -295,7 +299,7 @@ if(!respawning)
             <string>///attacks
 var deadzone = 0.1;
 
-if(!respawning &amp;&amp; !attacking)
+if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
 {
     if(key_attack_normal)
     {
@@ -359,7 +363,29 @@ if(!respawning &amp;&amp; !attacking)
           <argument>
             <kind>1</kind>
             <string>///throw sword
-
+if(key_shoot_release &amp;&amp; has_sword)
+{
+    has_sword = false;
+    
+    var attack_dir = abs(aim_direction);
+    if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
+    {
+        attack_dir = 0;
+        if(image_xscale &lt; 0)
+        {
+            attack_dir += 180;
+        }
+    }
+    
+    var thrown = instance_create(x,y,obj_ThrownSword);
+    with(thrown)
+    {
+        player = other.id;
+        attack_direction = attack_dir;
+        
+        image_angle = attack_direction;
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -417,6 +443,47 @@ if(hit != noone)
     if(blocked)
     {
         hit = noone;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_ThrownSword">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check if valid and needed
+if(!has_sword &amp;&amp; other.movespeed &lt;= 0)
+{
+    has_sword = true;
+    with(other)
+    {
+        instance_destroy();
+    }
+}
+else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawning)
+{
+    respawning = true;
+    alarm[0] = death_time * room_speed;
+    var othernum = other.player.player_number;
+    with(obj_Score)
+    {
+        scores[othernum]++;
     }
 }
 </string>
