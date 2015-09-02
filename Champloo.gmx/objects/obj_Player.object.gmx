@@ -168,7 +168,7 @@ block_window = 0.2*room_speed; //frames for incorrect timing window for blocking
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///check for hit
+            <string>///validate hit
 if(hit != noone)
 {
     if(!respawning)
@@ -180,6 +180,7 @@ if(hit != noone)
         {
             scores[othernum]++;
         }
+        scr_spawn_blood(random_range(5,20));
     }
     hit = noone;
 }
@@ -485,6 +486,7 @@ else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawn
     {
         scores[othernum]++;
     }
+    scr_spawn_blood(random_range(10,30));
 }
 </string>
           </argument>

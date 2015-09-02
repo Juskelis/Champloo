@@ -65,6 +65,7 @@
     <instance objName="obj_Spawn" x="288" y="512" name="inst_6CAD4437" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Spawn" x="736" y="512" name="inst_6AD7D05E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Timescale" x="512" y="352" name="inst_6B1D194B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_BloodSurface" x="480" y="224" name="inst_D47492B0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

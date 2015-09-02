@@ -14,6 +14,7 @@
     <sprite>sprites\spr_Block</sprite>
     <sprite>sprites\spr_Spawn</sprite>
     <sprite>sprites\spr_NoAttackIndicator</sprite>
+    <sprite>sprites\spr_Blood</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -32,6 +33,7 @@
       <script>scripts\scr_apply_friction.gml</script>
       <script>scripts\scr_block_check.gml</script>
       <script>scripts\scr_furthest_spawn.gml</script>
+      <script>scripts\scr_spawn_blood.gml</script>
     </scripts>
   </scripts>
   <objects name="objects">
@@ -45,6 +47,8 @@
     <object>objects\obj_Bullet</object>
     <object>objects\obj_Spawn</object>
     <object>objects\obj_ThrownSword</object>
+    <object>objects\obj_BloodSurface</object>
+    <object>objects\obj_Blood</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Test</room>
