@@ -3,7 +3,7 @@ scr_get_input();
 move = key_left + key_right;
 vsp = min(vsp + grav, maxgrav);
 
-hsp = clamp(hsp + move*acceleration, -maxspeed, maxspeed);
+hsp = clamp(hsp + move*acceleration, -ground_maxspeed, ground_maxspeed);
 
 if(hsp != 0)
 {
@@ -23,7 +23,7 @@ if(hsp != 0)
 
 if(key_jump)
 {
-    if(abs(horizontal_amount) + abs(vertical_amount) > jumping_deadzone)
+    if(false && abs(horizontal_amount) + abs(vertical_amount) > jumping_deadzone)
     {
         var dir = aim_direction;
         hsp = lengthdir_x(jumpspeed, dir);
@@ -33,16 +33,14 @@ if(key_jump)
     }
     else
         vsp = -jumpspeed;
+        
+    jump_input_time = 0;
 }
 
 scr_move_collide();
 
 ///check state
-if(place_meeting(x, y - 1, obj_Wall))
-{
-    state = States.Ceiling;
-}
-else if(!place_meeting(x, y + 1, obj_Wall))
+if(!place_meeting(x, y + 1, obj_Wall))
 {
     state = States.InAir;
 }

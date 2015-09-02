@@ -26,10 +26,6 @@ if(place_meeting(x, y + 1, obj_Wall))
 {
     state = States.Normal;
 }
-else if(place_meeting(x, y - 1, obj_Wall))
-{
-    state = States.Ceiling;
-}
 
 if(place_meeting(x - 1,y,obj_Wall) || place_meeting(x + 1,y,obj_Wall))
 {

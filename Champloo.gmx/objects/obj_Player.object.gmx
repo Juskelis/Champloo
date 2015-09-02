@@ -28,6 +28,8 @@
             <string>///create global settings
 death_time = 1;
 default_room_speed = 60;
+
+image_speed = 0;
 </string>
           </argument>
         </arguments>
@@ -51,6 +53,7 @@ default_room_speed = 60;
             <string>///create variables
 respawning = false;
 attacking = false;
+has_sword = true;
 
 state = States.Normal;
 
@@ -64,6 +67,7 @@ movement_deadzone = 0.5
 
 
 //ground settings
+ground_maxspeed = maxspeed*0.65;
 acceleration = 1.25*(30/room_speed);
 
 moving_friction = 0;
@@ -75,14 +79,7 @@ turning_friction = 2*acceleration;
 //air settings
 air_acceleration = 1*(30/room_speed);
 air_moving_friction = 0.4*air_acceleration;
-air_turning_friction = 0.6*air_acceleration;
-
-
-
-//ceiling settings
-ceiling_stopping_friction = 0.5*acceleration;
-ceiling_stick = grav;
-
+air_turning_friction = 1*air_acceleration;
 
 
 hsp = 0;
@@ -112,18 +109,16 @@ player_number = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///create sword
-my_sword = instance_create(x,y, obj_Sword);
-with(my_sword)
-{
-    player = other;
-}
-sword_speed = 0.1;
-sword_attack_delay = sword_speed*3;
-sword_offset_x = sprite_width/2;
-sword_offset_y = 0;
+            <string>///create blocking
 
-gun_attack_delay = 5;
+max_block = 100;
+blocking_shrink_time = 1; //seconds for block to deplete completely
+blocking_grow_time = 5; //seconds for block to restore completely
+
+blocking_shrink_step = max_block / (blocking_shrink_time * room_speed);
+blocking_grow_step = max_block / (blocking_grow_time * room_speed);
+
+block_level = max_block;
 </string>
           </argument>
         </arguments>
@@ -144,15 +139,50 @@ gun_attack_delay = 5;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///create blocking
-max_block = 100;
-blocking_shrink_time = 1; //seconds for block to deplete completely
-blocking_grow_time = 5; //seconds for block to restore completely
+            <string>///create input delay variables
+jump_input_time = 0;
+jump_input_delay = 0.2*room_speed; //frame delay
 
-blocking_shrink_step = max_block / (blocking_shrink_time * room_speed);
-blocking_grow_step = max_block / (blocking_grow_time * room_speed);
+hit = noone;
+block_window = 0.2*room_speed; //frames for incorrect timing window for blocking
 
-block_level = max_block;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check for hit
+if(hit != noone)
+{
+    if(!respawning)
+    {
+        respawning = true;
+        alarm[0] = death_time * room_speed;
+        var othernum = hit.player.player_number;
+        with(obj_Score)
+        {
+            scores[othernum]++;
+        }
+    }
+    hit = noone;
+}
 </string>
           </argument>
         </arguments>
@@ -201,7 +231,10 @@ attacking = false;
             <kind>1</kind>
             <string>///reset
 respawning = false;
-
+has_sword = true;
+attacking = false;
+hsp = 0;
+vsp = 0;
 
 var spawn = scr_furthest_spawn(self);
 x = spawn.x;
@@ -236,7 +269,6 @@ if(!respawning)
         case States.Normal: scr_player_normal(); break;
         case States.InAir: scr_player_inair(); break;
         case States.WallRiding: scr_player_wallriding(); break;
-        case States.Ceiling: scr_player_ceiling(); break;
     }
     
     //change image scale based on direction
@@ -265,38 +297,26 @@ if(!respawning)
           <argument>
             <kind>1</kind>
             <string>///attacks
-var deadzone = 0.25;
+var deadzone = 0.1;
 
-
-if(!respawning &amp;&amp; !attacking)
+if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
 {
-    var attack_dir = abs(aim_direction);
-    if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
-        attack_dir = 90 - image_xscale*90;
-    
-    if(key_attack_normal || key_attack_back)
+    if(key_attack_normal)
     {
-        attacking = true;
-        alarm[1] = sword_attack_delay * room_speed;
-        
-        //invert if back attack
-        if(key_attack_back)
-            attack_dir = (attack_dir+180);
-        
-        //set offsets
-        sword_offset_x = lengthdir_x(sprite_width/2, attack_dir);
-        if(image_xscale &lt; 0)
-            sword_offset_x = lengthdir_x(sprite_width/2, attack_dir - 180);
-        
-        sword_offset_y = lengthdir_y(sprite_height/2, attack_dir);
-        
-        //setup sword
-        instance_activate_object(my_sword);
-        with(my_sword)
+        var attack_dir = abs(aim_direction);
+        if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
         {
-            player_number = other.player_number;
-            attack_style = AttackStyles.Swing;
-            attack_speed = other.sword_speed;
+            attack_dir = 0;
+            if(image_xscale &lt; 0)
+            {
+                attack_dir += 180;
+            }
+        }
+        
+        var sword = instance_create(x,y, obj_Sword);
+        with(sword)
+        {
+            player = other.id;
             attack_direction = attack_dir;
             
             if(attack_direction &lt; 90 || attack_direction &gt; 270)
@@ -316,18 +336,10 @@ if(!respawning &amp;&amp; !attacking)
             
             image_angle = current_direction;
             image_xscale = (min_size + size_gap/2) + (size_gap/2)*(-sin(degtorad(image_angle)));
+            offset = abs(other.sprite_width/2);
         }
-    }
-    else if(key_shoot)
-    {
         attacking = true;
-        alarm[1] = gun_attack_delay * room_speed;
-        var bullet = instance_create(x,y, obj_Bullet);
-        bullet.direction = attack_dir;
-        with(bullet)
-        {
-            number = other.player_number;
-        }
+        alarm[1] = sword.attack_delay * room_speed;
     }
 }
 </string>
@@ -350,9 +362,30 @@ if(!respawning &amp;&amp; !attacking)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///relocate sword
-my_sword.x = x + sword_offset_x;
-my_sword.y = y + sword_offset_y;
+            <string>///throw sword
+if(key_shoot_release &amp;&amp; has_sword)
+{
+    has_sword = false;
+    
+    var attack_dir = abs(aim_direction);
+    if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
+    {
+        attack_dir = 0;
+        if(image_xscale &lt; 0)
+        {
+            attack_dir += 180;
+        }
+    }
+    
+    var thrown = instance_create(x,y,obj_ThrownSword);
+    with(thrown)
+    {
+        player = other.id;
+        attack_direction = attack_dir;
+        
+        image_angle = attack_direction;
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -386,6 +419,77 @@ else
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check blocking for hitwindow
+
+if(hit != noone)
+{
+    var blocked = scr_block_check(hit.damage);
+    if(blocked)
+    {
+        hit = noone;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_ThrownSword">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check if valid and needed
+if(!has_sword &amp;&amp; other.movespeed &lt;= 0)
+{
+    has_sword = true;
+    with(other)
+    {
+        instance_destroy();
+    }
+}
+else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawning)
+{
+    respawning = true;
+    alarm[0] = death_time * room_speed;
+    var othernum = other.player.player_number;
+    with(obj_Score)
+    {
+        scores[othernum]++;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="4" ename="obj_Bullet">
       <action>
@@ -404,7 +508,8 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(player_number != other.number)
+            <string>/*
+if(player_number != other.number)
 {
     var blocked = scr_block_check(other.damage);
     if(!respawning &amp;&amp; !blocked)
@@ -423,6 +528,7 @@ else
         instance_destroy();
     }
 }
+*/
 </string>
           </argument>
         </arguments>
@@ -446,26 +552,13 @@ else
           <argument>
             <kind>1</kind>
             <string>///check for hit
-if(other.id != my_sword.id)
+
+if(other.player != id &amp;&amp; hit == noone)
 {
-    var blocked = scr_block_check(other.damage);
-    
-    if(!blocked)
-    {
-        //hit happens!
-        show_debug_message(string(other.player.player_number + 1) + " hit " + string(player_number + 1));
-        if(!respawning)
-        {
-            respawning = true;
-            alarm[0] = death_time*room_speed;
-            var othernum = other.player.player_number;
-            with(obj_Score)
-            {
-                scores[othernum]++;
-            }
-        }
-    }
+    hit = other.id;
+    alarm[2] = block_window;
 }
+
 </string>
           </argument>
         </arguments>
@@ -493,8 +586,7 @@ enum States
 {
     Normal,
     InAir,
-    WallRiding,
-    Ceiling
+    WallRiding
 }
 </string>
           </argument>
@@ -584,6 +676,34 @@ if(key_block &amp;&amp; !attacking)
     var block_size = (block_level/max_block);
     //draw_circle(x,y, block_radius*(block_level/max_block), false);
     draw_sprite_ext(spr_Block, 0, x,y, block_size,block_size, 0, c_white, 1);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw reloading indication
+if(attacking)
+{
+    var timeleft = alarm[1];
+    var sprite_num = sprite_get_number(spr_NoAttackIndicator);
+    var frame = sprite_num - min(timeleft, sprite_num);
+    draw_sprite(spr_NoAttackIndicator, frame, x,y - sprite_height/2);
 }
 </string>
           </argument>
