@@ -8,6 +8,87 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///create variables
+target_timescale = 1;
+timescale_delta_step = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//alter timescale
+if(abs(timescale_delta_step) &gt; 0
+    &amp;&amp; abs(target_timescale - global.timescale) &gt; abs(timescale_delta_step))
+{
+    global.timescale += timescale_delta_step;
+}
+else
+{
+    global.timescale = target_timescale;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///set up timescale variable
+global.timescale = 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="9" enumb="18">
       <action>
         <libid>1</libid>
@@ -25,8 +106,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///change roomspeed
-room_speed = 60;
+            <string>///normal uh, mo.
+global.timescale = 1;
+//room_speed = 60;
 </string>
           </argument>
         </arguments>
@@ -49,8 +131,9 @@ room_speed = 60;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///change roomspeed
-room_speed = 30;
+            <string>///slow mo
+global.timescale = 0.5;
+//room_speed = 30;
 </string>
           </argument>
         </arguments>
