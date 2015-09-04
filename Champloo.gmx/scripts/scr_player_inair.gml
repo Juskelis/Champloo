@@ -1,9 +1,13 @@
 scr_get_input();
 
 move = key_left + key_right;
-vsp = min(vsp + grav, maxgrav);
+vsp = min(vsp + grav*global.timescale, maxgrav*global.timescale);
 
-hsp = clamp(hsp + move*air_acceleration, -maxspeed, maxspeed);
+hsp = clamp(
+    hsp + move*air_acceleration*global.timescale,
+    -maxspeed*global.timescale,
+    maxspeed*global.timescale
+);
 
 if(hsp != 0)
 {
@@ -11,7 +15,7 @@ if(hsp != 0)
     if(move != 0 && sign(move) != sign(hsp))
         air_friction = air_turning_friction;
     
-    hsp = scr_apply_friction(hsp, air_friction)
+    hsp = scr_apply_friction(hsp, air_friction*global.timescale)
 }
 
 if(key_jump_released)

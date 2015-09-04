@@ -151,6 +151,54 @@ block_window = 0.2*room_speed; //frames for incorrect timing window for blocking
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///throw shit!
+
+scr_set_timescale(1, 0);
+
+has_sword = false;
+
+var attack_dir = 90 - image_xscale*90;
+/*
+var attack_dir = abs(aim_direction);
+if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
+{
+    attack_dir = 0;
+    if(image_xscale &lt; 0)
+    {
+        attack_dir += 180;
+    }
+}
+*/
+var thrown = instance_create(x,y,obj_ThrownSword);
+with(thrown)
+{
+    player = other.id;
+    attack_direction = attack_dir;
+    
+    image_angle = attack_direction;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="2">
       <action>
         <libid>1</libid>
@@ -366,6 +414,9 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
             <string>///throw sword
 if(key_shoot_release &amp;&amp; has_sword)
 {
+    alarm[3] = room_speed;
+    scr_set_timescale(0.25, 0.25);
+    /*
     has_sword = false;
     
     var attack_dir = 90 - image_xscale*90;
@@ -449,6 +500,29 @@ if(hit != noone)
         hit = noone;
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///spawn blood
+if(respawning)
+    scr_spawn_blood(1);
 </string>
           </argument>
         </arguments>

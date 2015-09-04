@@ -100,7 +100,7 @@ instance_deactivate_object(self);
 x = player.x + lengthdir_x(offset, attack_direction);
 y = player.y + lengthdir_y(offset, attack_direction);
 
-image_angle += direction_step;
+image_angle += direction_step*global.timescale;
 </string>
           </argument>
         </arguments>

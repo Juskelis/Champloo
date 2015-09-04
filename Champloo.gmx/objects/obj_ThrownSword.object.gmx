@@ -101,8 +101,8 @@ if(movespeed &gt; 0)
     }
     else
     {
-        x += lengthdir_x(movespeed, attack_direction);
-        y += lengthdir_y(movespeed, attack_direction);
+        x += lengthdir_x(movespeed, attack_direction)*global.timescale;
+        y += lengthdir_y(movespeed, attack_direction)*global.timescale;
     }
 }
 </string>
