@@ -368,6 +368,8 @@ if(key_shoot_release &amp;&amp; has_sword)
 {
     has_sword = false;
     
+    var attack_dir = 90 - image_xscale*90;
+    /*
     var attack_dir = abs(aim_direction);
     if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
     {
@@ -386,6 +388,7 @@ if(key_shoot_release &amp;&amp; has_sword)
         
         image_angle = attack_direction;
     }
+    */
 }
 </string>
           </argument>

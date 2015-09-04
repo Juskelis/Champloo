@@ -29,7 +29,7 @@
 attack_direction = 0;
 player = noone;
 
-movespeed = 20; // delta change PER STEP
+movespeed = 40; // delta change PER STEP
 
 opacity = 1;
 opacity_decay_time = 5; // time in seconds
