@@ -29,7 +29,7 @@
 grav = 0.75*(30/room_speed);
 maxgrav = 20*(30/room_speed);
 surface_maxgrav = maxgrav/10;
-maxspeed = 20*(30/room_speed);
+maxspeed = 10*(30/room_speed);
 
 fric = random_range(maxspeed/(room_speed*5), maxspeed/(room_speed*4));
 surface_fric = random_range(maxspeed/(room_speed*2), maxspeed/(room_speed/4));
@@ -38,9 +38,9 @@ var dir = random(360);
 var spd = random_range(maxspeed/4, maxspeed);
 
 hsp = lengthdir_x(spd, dir);
-vsp = lengthdir_y(spd, dir);
+vsp = lengthdir_y(spd*2, dir);
 
-alarm[0] = random_range(room_speed*2, room_speed*4);
+alarm[0] = random_range(room_speed*0.1, room_speed*2);
 </string>
           </argument>
         </arguments>

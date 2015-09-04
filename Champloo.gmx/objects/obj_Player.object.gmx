@@ -563,7 +563,7 @@ else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawn
     {
         scores[othernum]++;
     }
-    scr_spawn_blood(random_range(10,30));
+    scr_spawn_blood(random_range(5,20));
 }
 </string>
           </argument>
