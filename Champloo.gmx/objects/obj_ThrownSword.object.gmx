@@ -32,7 +32,7 @@ player = noone;
 movespeed = 40; // delta change PER STEP
 
 opacity = 1;
-opacity_decay_time = 5; // time in seconds
+opacity_decay_time = 1; // time in seconds
 opacity_decay_step = 1/(opacity_decay_time*room_speed);
 </string>
           </argument>
@@ -147,7 +147,7 @@ if(movespeed &gt; 0)
 if(opacity &gt; 0)
 {
     draw_set_alpha(opacity);
-    draw_line_width_colour(xstart,ystart,x,y,10, c_white, c_white);
+    draw_line_width_colour(xstart,ystart,x,y,5, c_white, c_white);
     draw_set_alpha(1);
     opacity -= opacity_decay_step;
 }
