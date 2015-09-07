@@ -53,6 +53,7 @@ image_speed = 0;
             <string>///create variables
 respawning = false;
 attacking = false;
+throwing = false;
 has_sword = true;
 
 state = States.Normal;
@@ -172,9 +173,11 @@ block_window = 0.2*room_speed; //frames for incorrect timing window for blocking
 
 scr_set_timescale(1, 0);
 
+var attack_dir = 90 - image_xscale*90;
+
 has_sword = false;
 
-var attack_dir = 90 - image_xscale*90;
+throwing = false;
 /*
 var attack_dir = abs(aim_direction);
 if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
@@ -412,10 +415,12 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
           <argument>
             <kind>1</kind>
             <string>///throw sword
-if(key_shoot_release &amp;&amp; has_sword)
+if(key_shoot_press &amp;&amp; has_sword &amp;&amp; !throwing)
 {
     alarm[3] = room_speed;
     scr_set_timescale(0.25, 0.25);
+    
+    throwing = true;
     /*
     has_sword = false;
     
