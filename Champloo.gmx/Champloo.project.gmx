@@ -10,7 +10,7 @@
     <sprite>sprites\spr_Wall</sprite>
     <sprite>sprites\spr_Sword</sprite>
     <sprite>sprites\spr_StaticSword</sprite>
-    <sprite>sprites\spr_Bullet</sprite>
+    <sprite>sprites\spr_Dust</sprite>
     <sprite>sprites\spr_Block</sprite>
     <sprite>sprites\spr_Spawn</sprite>
     <sprite>sprites\spr_NoAttackIndicator</sprite>
@@ -35,12 +35,14 @@
       <script>scripts\scr_furthest_spawn.gml</script>
       <script>scripts\scr_spawn_blood.gml</script>
       <script>scripts\scr_set_timescale.gml</script>
+      <script>scripts\scr_create_many.gml</script>
     </scripts>
   </scripts>
   <objects name="objects">
     <objects name="Nonvisual">
       <object>objects\obj_Score</object>
       <object>objects\obj_Timescale</object>
+      <object>objects\obj_Spawner</object>
     </objects>
     <object>objects\obj_Player</object>
     <object>objects\obj_Wall</object>
@@ -50,6 +52,7 @@
     <object>objects\obj_ThrownSword</object>
     <object>objects\obj_BloodSurface</object>
     <object>objects\obj_Blood</object>
+    <object>objects\obj_Dust</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Test</room>
