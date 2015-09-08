@@ -444,11 +444,11 @@ if(key_shoot_press &amp;&amp; has_sword &amp;&amp; !throwing)
             <string>///deplete blocking
 if(key_block)
 {
-    block_level = max(0, block_level - blocking_shrink_step);
+    block_level = max(0, block_level - blocking_shrink_step*global.timescale);
 }
 else
 {
-    block_level = min(block_level + blocking_grow_step, max_block);
+    block_level = min(block_level + blocking_grow_step*global.timescale, max_block);
 }
 </string>
           </argument>
