@@ -21,6 +21,7 @@
   <scripts name="scripts">
     <scripts name="Player Movement">
       <script>scripts\scr_get_input.gml</script>
+      <script>scripts\scr_filter_input.gml</script>
       <script>scripts\scr_player_normal.gml</script>
       <script>scripts\scr_player_inair.gml</script>
       <script>scripts\scr_player_wallriding.gml</script>
