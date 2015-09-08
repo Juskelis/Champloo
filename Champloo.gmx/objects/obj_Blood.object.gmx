@@ -156,7 +156,7 @@ y += vsp*global.timescale;
           <argument>
             <kind>1</kind>
             <string>///draw to blood surface
-if(instance_exists(obj_BloodSurface))
+if(instance_exists(obj_BloodSurface) &amp;&amp; place_meeting(x,y, obj_Wall))
 {
     surface_set_target(obj_BloodSurface.surf);
     
