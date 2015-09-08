@@ -50,7 +50,56 @@ timescale_delta_step = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//alter timescale
+            <string>///check for in-air slowmo
+
+var slowmo = false;
+var inairdist = 128;
+
+for(var i = 0; i &lt; instance_number(obj_Player) - 1; i++)
+{
+    for(var j = i+1; j &lt; instance_number(obj_Player); j++)
+    {
+        var playerI = instance_find(obj_Player, i);
+        var playerJ = instance_find(obj_Player, j);
+        if(playerI.state == States.InAir &amp;&amp; playerJ.state == States.InAir)
+        {
+            if(point_distance(playerI.x, playerI.y, playerJ.x, playerJ.y) &lt; inairdist)
+            {
+                slowmo = true;
+            }
+        }
+    }
+}
+
+if(slowmo)
+{
+    scr_set_timescale(0.25, 0.25);
+}
+else
+{
+    scr_set_timescale(1, 0.25);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///alter timescale
 if(abs(timescale_delta_step) &gt; 0
     &amp;&amp; abs(target_timescale - global.timescale) &gt; abs(timescale_delta_step))
 {
