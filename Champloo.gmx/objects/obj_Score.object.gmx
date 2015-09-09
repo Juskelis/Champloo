@@ -58,9 +58,16 @@ for(player_count = 0; player_count &lt; instance_number(obj_Player); player_coun
 draw_set_colour(c_white);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
-for(var i = 0; i &lt; player_count; i+=1)
+
+var height = 20;
+
+var bottom = display_get_gui_height();
+var top = bottom - height*player_count;
+var left = 0;
+
+for(var i = 0; i &lt; player_count; i++)
 {
-    draw_text(x,y + i*20, "Player " + string(i) + ": " + string(scores[i]));
+    draw_text(left,(top + i*height), "Player " + string(i) + ": " + string(scores[i]));
     
 }
 draw_set_colour(c_black);

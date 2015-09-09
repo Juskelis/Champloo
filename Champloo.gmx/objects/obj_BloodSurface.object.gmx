@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>///create blood surface
-surf = surface_create(room_width, room_height);
+surf = surface_create(surface_get_width(application_surface), surface_get_height(application_surface));
 
 
 surface_set_target(surf);
@@ -91,7 +91,8 @@ if(surface_exists(surf))
 else
 {
     //this happens when you resize the screen
-    surf = surface_create(room_width, room_height);
+    //surf = surface_create(room_width, room_height);
+    event_perform(ev_create, 0);
 }
 </string>
           </argument>
