@@ -41,18 +41,19 @@
     </scripts>
   </scripts>
   <objects name="objects">
+    <objects name="Player Stuff">
+      <object>objects\obj_Player</object>
+      <object>objects\obj_ThrownSword</object>
+      <object>objects\obj_Sword</object>
+    </objects>
     <objects name="Nonvisual">
       <object>objects\obj_Score</object>
       <object>objects\obj_Timescale</object>
       <object>objects\obj_Spawner</object>
       <object>objects\obj_Fullscreen</object>
     </objects>
-    <object>objects\obj_Player</object>
     <object>objects\obj_Wall</object>
-    <object>objects\obj_Sword</object>
-    <object>objects\obj_Bullet</object>
     <object>objects\obj_Spawn</object>
-    <object>objects\obj_ThrownSword</object>
     <object>objects\obj_BloodSurface</object>
     <object>objects\obj_Blood</object>
     <object>objects\obj_Dust</object>
