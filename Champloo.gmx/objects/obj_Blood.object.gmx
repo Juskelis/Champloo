@@ -35,7 +35,7 @@ fric = random_range(maxspeed/(room_speed*5), maxspeed/(room_speed*4));
 surface_fric = random_range(maxspeed/(room_speed*2), maxspeed/(room_speed/4));
 
 var dir = random(360);
-var spd = random_range(maxspeed/4, maxspeed);
+spd = random_range(maxspeed/4, maxspeed);
 
 hsp = lengthdir_x(spd, dir);
 vsp = lengthdir_y(spd*2, dir);
