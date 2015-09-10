@@ -528,6 +528,66 @@ if(hit != noone)
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///check if KLANG happened
+if(hit != noone)
+{
+    if(hit.player.hit != noone)
+    {
+        if(hit.player.hit.player == id)
+        {
+            //slow mo
+            global.timescale = 0.25;
+            scr_set_timescale(1,0.25);
+            
+            //set the knockback
+            var other_player_x = hit.player.x;
+            var other_player_y = hit.player.y;
+            
+            var my_push_dir = point_direction(other_player_x,other_player_y, x,y);
+            var other_push_dir = point_direction(x,y, other_player_x,other_player_y);
+            
+            hsp = lengthdir_x(maxspeed, my_push_dir);
+            vsp = lengthdir_y(maxspeed, (my_push_dir*3 + other_push_dir)/4);
+            with(hit.player)
+            {
+                hsp = lengthdir_x(maxspeed, other_push_dir);
+                vsp = lengthdir_y(maxspeed, (other_push_dir*3 + my_push_dir)/4);
+            }
+            
+            //destroy both swords so that we don't double down on this
+            with(hit.player.hit)
+            {
+                instance_destroy();
+            }
+            hit.player.hit = noone;
+            with(hit)
+            {
+                instance_destroy();
+            }
+            hit = noone;
+        }
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///spawn blood
 if(respawning)
     scr_spawn_blood(1, spurt_direction, scatter);
@@ -654,7 +714,6 @@ else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawn
     spurt_direction = point_direction(x,y, other.x, other.y);
     scr_spawn_blood(random_range(30,60), 0, 180);
 }
-
 </string>
           </argument>
         </arguments>
