@@ -151,6 +151,29 @@ block_window = 0.2*room_speed; //frames for incorrect timing window for blocking
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///blood settings
+spurt_direction = 0;
+scatter = 10;
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="2" enumb="3">
       <action>
@@ -231,7 +254,12 @@ if(hit != noone)
         {
             scores[othernum]++;
         }
-        scr_spawn_blood(random_range(5,20));
+        spurt_direction = (point_direction(x,y, hit.player.x,hit.player.y)*3
+                        + point_direction(hit.player.x,hit.player.y, x,y))/4;
+        
+        if(state == States.Normal)
+            spurt_direction = spurt_direction%180;
+        scr_spawn_blood(random_range(20,30), random(360), 180);
     }
     hit = noone;
 }
@@ -502,7 +530,7 @@ if(hit != noone)
             <kind>1</kind>
             <string>///spawn blood
 if(respawning)
-    scr_spawn_blood(1);
+    scr_spawn_blood(1, spurt_direction, scatter);
 </string>
           </argument>
         </arguments>
@@ -558,6 +586,36 @@ if(throwing)
         </arguments>
       </action>
     </event>
+    <event eventtype="4" ename="obj_Sword">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check for hit
+
+if(other.player != id &amp;&amp; hit == noone)
+{
+    hit = other.id;
+    alarm[2] = block_window;
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="4" ename="obj_ThrownSword">
       <action>
         <libid>1</libid>
@@ -593,36 +651,8 @@ else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawn
     {
         scores[othernum]++;
     }
-    scr_spawn_blood(random_range(5,20));
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_Sword">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///check for hit
-
-if(other.player != id &amp;&amp; hit == noone)
-{
-    hit = other.id;
-    alarm[2] = block_window;
+    spurt_direction = point_direction(x,y, other.x, other.y);
+    scr_spawn_blood(random_range(30,60), 0, 180);
 }
 
 </string>
