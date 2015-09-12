@@ -15,6 +15,10 @@
     <sprite>sprites\spr_Spawn</sprite>
     <sprite>sprites\spr_NoAttackIndicator</sprite>
     <sprite>sprites\spr_Blood</sprite>
+    <sprites name="Button Elements">
+      <sprite>sprites\spr_Button_Corner</sprite>
+      <sprite>sprites\spr_Button_Edge</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -41,6 +45,7 @@
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>
+      <script>scripts\scr_goto_room.gml</script>
     </scripts>
   </scripts>
   <objects name="objects">
