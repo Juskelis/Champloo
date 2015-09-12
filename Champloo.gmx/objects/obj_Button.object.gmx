@@ -95,12 +95,18 @@ if(mouse_x &gt;= top_left_x &amp;&amp; mouse_x &lt;= bot_right_x)
           <argument>
             <kind>1</kind>
             <string>///draw button
-var top_left_x = x - width*anchor_x;
-var top_left_y = y - height*anchor_y;
-var bot_right_x = top_left_x + width;
-var bot_right_y = top_left_y + height;
+var edge_width = sprite_get_width(spr_Button_Corner);
+var edge_height = sprite_get_height(spr_Button_Corner);
 
+var top_left_x = x - width*anchor_x + edge_width;
+var top_left_y = y - height*anchor_y + edge_height;
+var bot_right_x = top_left_x + width - edge_width*2;
+var bot_right_y = top_left_y + height - edge_height*2;
 
+var inner_width = bot_right_x - top_left_x;
+var inner_height = bot_right_y - top_left_y;
+
+//draw the inside of the button
 draw_rectangle_colour(
     top_left_x,top_left_y,
     bot_right_x,bot_right_y,
@@ -111,9 +117,43 @@ draw_rectangle_colour(
     false
 );
 
+//draw the corners
+draw_sprite_ext(spr_Button_Corner, 0, top_left_x, top_left_y, 1,1, 0, c_white, 1);
+draw_sprite_ext(spr_Button_Corner, 0, top_left_x, bot_right_y, 1,1, 90, c_white, 1);
+draw_sprite_ext(spr_Button_Corner, 0, bot_right_x, bot_right_y, 1,1, 180, c_white, 1);
+draw_sprite_ext(spr_Button_Corner, 0, bot_right_x, top_left_y, 1,1, 270, c_white, 1);
+
+//draw the edges
+var edge_scale_x = inner_width/sprite_get_width(spr_Button_Edge);
+var edge_scale_y = inner_height/sprite_get_width(spr_Button_Edge);
+draw_sprite_ext(
+    spr_Button_Edge, 0,
+    top_left_x + inner_width/2, top_left_y,
+    edge_scale_x, 1, 0,
+    c_white, 1
+);
+draw_sprite_ext(
+    spr_Button_Edge, 0,
+    top_left_x, top_left_y + inner_height/2,
+    edge_scale_y, 1, 90,
+    c_white, 1
+);
+draw_sprite_ext(
+    spr_Button_Edge, 0,
+    top_left_x + inner_width/2, bot_right_y,
+    edge_scale_x, 1, 180,
+    c_white, 1
+);
+draw_sprite_ext(
+    spr_Button_Edge, 0,
+    bot_right_x, top_left_y + inner_height/2,
+    edge_scale_y, 1, 270,
+    c_white, 1
+);
+
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
-draw_text(top_left_x + width/2, top_left_y + height/2, label);
+draw_text(top_left_x + inner_width/2, top_left_y + inner_height/2, label);
 </string>
           </argument>
         </arguments>
