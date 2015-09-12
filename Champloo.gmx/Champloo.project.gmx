@@ -39,6 +39,9 @@
       <script>scripts\scr_create_many.gml</script>
       <script>scripts\scr_distance_to_line_segment_squared.gml</script>
     </scripts>
+    <scripts name="Button Calls">
+      <script>scripts\scr_example.gml</script>
+    </scripts>
   </scripts>
   <objects name="objects">
     <objects name="Player Stuff">
@@ -57,8 +60,10 @@
     <object>objects\obj_BloodSurface</object>
     <object>objects\obj_Blood</object>
     <object>objects\obj_Dust</object>
+    <object>objects\obj_Button</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_Start</room>
     <room>rooms\rm_Test</room>
   </rooms>
   <help>
