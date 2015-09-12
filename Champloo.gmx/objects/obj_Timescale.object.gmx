@@ -50,8 +50,8 @@ timescale_delta_step = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///check for in-air slowmo
-
+            <string>///check for in-air slowmo (COMMENTED)
+/*
 var slowmo = false;
 var inairdist = 128;
 
@@ -79,6 +79,7 @@ else
 {
     scr_set_timescale(1, 0.25);
 }
+*/
 </string>
           </argument>
         </arguments>

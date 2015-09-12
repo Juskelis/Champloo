@@ -113,7 +113,7 @@ player_number = 0;
             <string>///create blocking
 
 max_block = 100;
-blocking_shrink_time = 1; //seconds for block to deplete completely
+blocking_shrink_time = 2.5; //seconds for block to deplete completely
 blocking_grow_time = 5; //seconds for block to restore completely
 
 blocking_shrink_step = max_block / (blocking_shrink_time * room_speed);
@@ -260,6 +260,9 @@ if(hit != noone)
         if(state == States.Normal)
             spurt_direction = spurt_direction%180;
         scr_spawn_blood(random_range(20,30), random(360), 180);
+        
+        //turn on slow mo
+        scr_set_timescale(0.25, death_time*0.5);
     }
     hit = noone;
 }
@@ -319,6 +322,9 @@ vsp = 0;
 var spawn = scr_furthest_spawn(self);
 x = spawn.x;
 y = spawn.y;
+
+//turn off slow_mo
+scr_set_timescale(1,0);
 </string>
           </argument>
         </arguments>
@@ -446,6 +452,7 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
 if(key_shoot_press &amp;&amp; has_sword &amp;&amp; !throwing)
 {
     alarm[3] = room_speed;
+    //event_perform(ev_alarm, 3);
     
     throwing = true;
 }
