@@ -65,7 +65,10 @@
     <object>objects\obj_BloodSurface</object>
     <object>objects\obj_Blood</object>
     <object>objects\obj_Dust</object>
-    <object>objects\obj_Button</object>
+    <objects name="UI">
+      <object>objects\obj_Button</object>
+      <object>objects\obj_Text</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Start</room>
