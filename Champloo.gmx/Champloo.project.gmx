@@ -18,6 +18,7 @@
     <sprites name="Button Elements">
       <sprite>sprites\spr_Button_Corner</sprite>
       <sprite>sprites\spr_Button_Edge</sprite>
+      <sprite>sprites\spr_Selection_Indicator</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background"/>
@@ -42,12 +43,18 @@
       <script>scripts\scr_set_timescale.gml</script>
       <script>scripts\scr_create_many.gml</script>
       <script>scripts\scr_distance_to_line_segment_squared.gml</script>
+      <script>scripts\scr_angle_diff.gml</script>
+      <script>scripts\scr_reflect_angle.gml</script>
+      <script>scripts\scr_cc.gml</script>
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>
       <script>scripts\scr_goto_room.gml</script>
     </scripts>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\ft_Bored_64</font>
+  </fonts>
   <objects name="objects">
     <objects name="Player Stuff">
       <object>objects\obj_Player</object>
@@ -66,13 +73,14 @@
     <object>objects\obj_Blood</object>
     <object>objects\obj_Dust</object>
     <objects name="UI">
-      <object>objects\obj_Button</object>
-      <object>objects\obj_Text</object>
+      <object>objects\obj_UI_Element</object>
+      <object>objects\obj_Controller_Button</object>
+      <object>objects\obj_Controller_Selection</object>
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_Start</room>
     <room>rooms\rm_Test</room>
+    <room>rooms\rm_Start</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

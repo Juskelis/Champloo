@@ -51,10 +51,10 @@
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
   </views>
   <instances>
-    <instance objName="obj_Spawner" x="128" y="160" name="inst_EB76DEC2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Timescale" x="224" y="128" name="inst_C4590128" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Button" x="512" y="384" name="inst_531E2530" locked="0" code="width = 300;&#xA;height = 100;&#xA;label = &quot;Start&quot;;&#xA;&#xA;on_click = scr_goto_room;&#xA;&#xA;arguments[0] = rm_Test;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Text" x="512" y="128" name="inst_7F15FF07" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Spawner" x="128" y="160" name="inst_EB76DEC2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Controller_Selection" x="64" y="128" name="inst_065635FF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Controller_Button" x="512" y="384" name="inst_C15765FB" locked="0" code="with(instance_nearest(x,y, obj_Controller_Selection))&#xA;{&#xA;    buttons[0] = other.id;&#xA;    num_elements++;&#xA;}&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
