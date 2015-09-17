@@ -432,28 +432,20 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
         {
             attack_direction = attack_dir;
             start_direction = image_angle;
+            if(start_direction &lt; 0) start_direction += 360;
+            start_direction = start_direction%360;
             
-            
-            var delta_direction = 1;
-            if(!scr_cc(start_direction, attack_direction))
+            var delta_direction = -1;
+            if(dsin(attack_direction - start_direction) &gt; 0)
             {
-                end_direction = attack_direction - swipe_amount/2
-                delta_direction = -1;
-            }
-            else
-            {
-                end_direction = attack_direction + swipe_amount/2
                 delta_direction = 1;
             }
-                
-            end_direction %= 360;
-            if(end_direction &lt; 0)
-                end_direction += 360;
-            
-            direction_step = scr_angle_diff(start_direction, end_direction)
+            direction_step = scr_angle_diff(start_direction, attack_direction)+swipe_amount/2;
             direction_step = direction_step/(attack_speed*room_speed);
             direction_step *= delta_direction;
             
+            
+            current_direction = start_direction;
             
             alarm[0] = attack_speed*room_speed;
             
@@ -462,34 +454,6 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
             
             active = true;
         }
-        
-        /*
-        var sword = instance_create(x,y, obj_Sword);
-        with(sword)
-        {
-            player = other.id;
-            attack_direction = attack_dir;
-            
-            if(attack_direction &lt; 90 || attack_direction &gt; 270)
-            {
-                start_direction = attack_direction + 45;
-                end_direction = start_direction - 90;
-            }
-            else
-            {
-                start_direction = attack_direction - 45;
-                end_direction = start_direction + 90;
-            }
-            current_direction = start_direction;
-            
-            direction_step = (end_direction - start_direction)/(attack_speed*room_speed);
-            alarm[0] = attack_speed*room_speed;
-            
-            image_angle = current_direction;
-            image_xscale = (min_size + size_gap/2) + (size_gap/2)*(-sin(degtorad(image_angle)));
-            offset = abs(other.sprite_width/2);
-        }
-        */
         attacking = true;
         alarm[1] = my_sword.attack_delay * room_speed;
     }
