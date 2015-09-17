@@ -52,9 +52,6 @@ image_speed = 0;
             <kind>1</kind>
             <string>///create variables
 respawning = false;
-attacking = false;
-throwing = false;
-has_sword = true;
 
 state = States.Normal;
 
@@ -90,6 +87,38 @@ jumpspeed = 20*(30/room_speed);
 movespeed = 0;
 
 player_number = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///create sword variables
+attacking = false;
+throwing = false;
+has_sword = true;
+
+my_sword = instance_create(x,y, obj_Sword);
+with(my_sword)
+{
+    player = other.id;
+    image_angle -= swipe_amount/2;
+    offset = abs(other.sprite_width/2);
+}
 </string>
           </argument>
         </arguments>
@@ -262,7 +291,7 @@ if(hit != noone)
         scr_spawn_blood(random_range(20,30), random(360), 180);
         
         //turn on slow mo
-        scr_set_timescale(0.25, death_time*0.5);
+        scr_set_timescale(0.5, death_time*0.5);
     }
     hit = noone;
 }
@@ -399,6 +428,42 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
             }
         }
         
+        with(my_sword)
+        {
+            attack_direction = attack_dir;
+            start_direction = image_angle;
+            
+            
+            var delta_direction = 1;
+            if(!scr_cc(start_direction, attack_direction))
+            {
+                end_direction = attack_direction - swipe_amount/2
+                delta_direction = -1;
+            }
+            else
+            {
+                end_direction = attack_direction + swipe_amount/2
+                delta_direction = 1;
+            }
+                
+            end_direction %= 360;
+            if(end_direction &lt; 0)
+                end_direction += 360;
+            
+            direction_step = scr_angle_diff(start_direction, end_direction)
+            direction_step = direction_step/(attack_speed*room_speed);
+            direction_step *= delta_direction;
+            
+            
+            alarm[0] = attack_speed*room_speed;
+            
+            image_angle = current_direction;
+            image_xscale = (min_size + size_gap/2) + (size_gap/2)*(-sin(degtorad(image_angle)));
+            
+            active = true;
+        }
+        
+        /*
         var sword = instance_create(x,y, obj_Sword);
         with(sword)
         {
@@ -424,8 +489,9 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
             image_xscale = (min_size + size_gap/2) + (size_gap/2)*(-sin(degtorad(image_angle)));
             offset = abs(other.sprite_width/2);
         }
+        */
         attacking = true;
-        alarm[1] = sword.attack_delay * room_speed;
+        alarm[1] = my_sword.attack_delay * room_speed;
     }
 }
 </string>
@@ -672,7 +738,7 @@ if(throwing)
             <kind>1</kind>
             <string>///check for hit
 
-if(other.player != id &amp;&amp; hit == noone)
+if(other.active &amp;&amp; other.player != id &amp;&amp; hit == noone)
 {
     hit = other.id;
     alarm[2] = block_window;
