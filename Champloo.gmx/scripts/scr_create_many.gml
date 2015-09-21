@@ -1,3 +1,4 @@
+///scr_create_many(obj, minx,miny, maxx,maxy, num)
 //argument0 : object to create
 //argument1 : min x
 //argument2 : min y

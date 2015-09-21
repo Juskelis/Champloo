@@ -1,3 +1,4 @@
+///scr_distance_to_line_segment_squared(startx,starty, endx,endy, pointx,pointy)
 /*
     calculates distance point p is from line defined by ab
     0 - a.x

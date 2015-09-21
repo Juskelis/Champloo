@@ -1,6 +1,7 @@
-///argument0 - number of blood splats to make
-///argument1 - direction to "aim" them in
-///argument2 - scatter from direction
+///scr_spawn_blood(num_splats, aim_direction, aim_spread)
+//argument0 - number of blood splats to make
+//argument1 - direction to "aim" them in
+//argument2 - scatter from direction
 var num_blood_splats = argument0;
 var blood_inst;
 for(var i = 0; i < num_blood_splats; i++)

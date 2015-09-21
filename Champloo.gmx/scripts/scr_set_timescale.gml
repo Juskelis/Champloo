@@ -1,3 +1,4 @@
+///scr_set_timescale(target_timescale, transition_time)
 // argument0 - target timescale
 // argument1 - time to reach the target (easing)
 
