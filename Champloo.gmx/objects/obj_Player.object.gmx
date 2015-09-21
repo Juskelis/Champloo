@@ -591,12 +591,12 @@ if(hit != noone)
             //destroy both swords so that we don't double down on this
             with(hit.player.hit)
             {
-                instance_destroy();
+                active = false;
             }
             hit.player.hit = noone;
             with(hit)
             {
-                instance_destroy();
+                active = false;
             }
             hit = noone;
         }
