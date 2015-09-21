@@ -32,24 +32,24 @@
       <script>scripts\scr_player_wallriding.gml</script>
       <script>scripts\scr_move_collide.gml</script>
     </scripts>
-    <scripts name="Constructors">
-      <script>scripts\scr_sword_create.gml</script>
-    </scripts>
     <scripts name="Helpers">
-      <script>scripts\scr_apply_friction.gml</script>
       <script>scripts\scr_block_check.gml</script>
       <script>scripts\scr_furthest_spawn.gml</script>
       <script>scripts\scr_spawn_blood.gml</script>
       <script>scripts\scr_set_timescale.gml</script>
       <script>scripts\scr_create_many.gml</script>
-      <script>scripts\scr_distance_to_line_segment_squared.gml</script>
-      <script>scripts\scr_angle_diff.gml</script>
-      <script>scripts\scr_reflect_angle.gml</script>
-      <script>scripts\scr_cc.gml</script>
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>
       <script>scripts\scr_goto_room.gml</script>
+    </scripts>
+    <scripts name="Math">
+      <script>scripts\scr_distance_to_line_segment_squared.gml</script>
+      <script>scripts\scr_angle_diff.gml</script>
+      <script>scripts\scr_approach.gml</script>
+      <script>scripts\scr_apply_friction.gml</script>
+      <script>scripts\scr_clockwise_angle.gml</script>
+      <script>scripts\scr_approach_angle.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">
