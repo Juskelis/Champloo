@@ -6,7 +6,7 @@ if(place_meeting(x+sign(hsp),y, obj_Wall) || place_meeting(x + hsp, y, obj_Wall)
     }
     hsp = 0;
 }
-x += hsp;
+x += hsp*global.timescale;
 
 prev_vsp = vsp;
 if(place_meeting(x,y+sign(vsp), obj_Wall) || place_meeting(x, y + vsp, obj_Wall))
@@ -17,4 +17,4 @@ if(place_meeting(x,y+sign(vsp), obj_Wall) || place_meeting(x, y + vsp, obj_Wall)
     }
     vsp = 0;
 }
-y += vsp;
+y += vsp*global.timescale;

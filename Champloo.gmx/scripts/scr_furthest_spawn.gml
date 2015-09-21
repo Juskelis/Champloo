@@ -1,3 +1,4 @@
+///scr_furthest_spawn(player)
 //argument0 = player we're spawning
 var play_num = argument0.player_number;
 

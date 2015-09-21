@@ -1,4 +1,4 @@
-//argument0 - damage level
+///scr_block_check(damage)
 
 if(attacking)
     return false;

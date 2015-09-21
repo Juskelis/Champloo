@@ -10,44 +10,77 @@
     <sprite>sprites\spr_Wall</sprite>
     <sprite>sprites\spr_Sword</sprite>
     <sprite>sprites\spr_StaticSword</sprite>
-    <sprite>sprites\spr_Bullet</sprite>
+    <sprite>sprites\spr_Dust</sprite>
     <sprite>sprites\spr_Block</sprite>
     <sprite>sprites\spr_Spawn</sprite>
     <sprite>sprites\spr_NoAttackIndicator</sprite>
+    <sprite>sprites\spr_Blood</sprite>
+    <sprites name="Button Elements">
+      <sprite>sprites\spr_Button_Corner</sprite>
+      <sprite>sprites\spr_Button_Edge</sprite>
+      <sprite>sprites\spr_Selection_Indicator</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="Player Movement">
       <script>scripts\scr_get_input.gml</script>
+      <script>scripts\scr_filter_input.gml</script>
       <script>scripts\scr_player_normal.gml</script>
       <script>scripts\scr_player_inair.gml</script>
       <script>scripts\scr_player_wallriding.gml</script>
       <script>scripts\scr_move_collide.gml</script>
     </scripts>
-    <scripts name="Constructors">
-      <script>scripts\scr_sword_create.gml</script>
-    </scripts>
     <scripts name="Helpers">
-      <script>scripts\scr_apply_friction.gml</script>
       <script>scripts\scr_block_check.gml</script>
       <script>scripts\scr_furthest_spawn.gml</script>
+      <script>scripts\scr_spawn_blood.gml</script>
+      <script>scripts\scr_set_timescale.gml</script>
+      <script>scripts\scr_create_many.gml</script>
+    </scripts>
+    <scripts name="Button Calls">
+      <script>scripts\scr_example.gml</script>
+      <script>scripts\scr_goto_room.gml</script>
+    </scripts>
+    <scripts name="Math">
+      <script>scripts\scr_distance_to_line_segment_squared.gml</script>
+      <script>scripts\scr_angle_diff.gml</script>
+      <script>scripts\scr_approach.gml</script>
+      <script>scripts\scr_apply_friction.gml</script>
+      <script>scripts\scr_clockwise_angle.gml</script>
+      <script>scripts\scr_approach_angle.gml</script>
     </scripts>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\ft_Bored_64</font>
+  </fonts>
   <objects name="objects">
+    <objects name="Player Stuff">
+      <object>objects\obj_Player</object>
+      <object>objects\obj_ThrownSword</object>
+      <object>objects\obj_Sword</object>
+    </objects>
     <objects name="Nonvisual">
       <object>objects\obj_Score</object>
       <object>objects\obj_Timescale</object>
+      <object>objects\obj_Spawner</object>
+      <object>objects\obj_Fullscreen</object>
     </objects>
-    <object>objects\obj_Player</object>
     <object>objects\obj_Wall</object>
-    <object>objects\obj_Sword</object>
-    <object>objects\obj_Bullet</object>
     <object>objects\obj_Spawn</object>
-    <object>objects\obj_ThrownSword</object>
+    <object>objects\obj_BloodSurface</object>
+    <object>objects\obj_Blood</object>
+    <object>objects\obj_Dust</object>
+    <objects name="UI">
+      <object>objects\obj_UI_Element</object>
+      <object>objects\obj_Controller_Button</object>
+      <object>objects\obj_Controller_Selection</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Test</room>
+    <room>rooms\rm_Start</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

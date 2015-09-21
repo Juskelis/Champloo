@@ -35,6 +35,117 @@ for(player_count = 0; player_count &lt; instance_number(obj_Player); player_coun
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///create variables
+end_slow = 1;
+timeout = 5*60; ///in seconds
+
+alarm[0] = timeout * room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///end
+show_debug_message("end");
+room_goto(rm_Start);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///SUDDEN DEATH
+room_goto(rm_Start);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check for victory
+var victory = false;
+for(var i = 0; i &lt; player_count; i++)
+{
+    if(scores[i] &gt;= 10)
+    {
+        victory = true;
+    }
+}
+
+if(victory &amp;&amp; alarm[1] &lt;= 0)
+{
+    scr_set_timescale(0.25, 0.25);
+    alarm[1] = room_speed*end_slow;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="8" enumb="64">
       <action>
@@ -58,12 +169,70 @@ for(player_count = 0; player_count &lt; instance_number(obj_Player); player_coun
 draw_set_colour(c_white);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
-for(var i = 0; i &lt; player_count; i+=1)
+
+var height = 20;
+
+var bottom = display_get_gui_height();
+var top = bottom - height*player_count;
+var left = 0;
+
+for(var i = 0; i &lt; player_count; i++)
 {
-    draw_text(x,y + i*20, "Player " + string(i) + ": " + string(scores[i]));
+    draw_text(left,(top + i*height), "Player " + string(i) + ": " + string(scores[i]));
     
 }
 draw_set_colour(c_black);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw timer
+
+draw_set_colour(c_white);
+draw_set_halign(fa_middle);
+draw_set_valign(fa_top);
+
+var total_seconds = alarm[0]/room_speed;
+
+var minutes = string(floor(total_seconds/60));
+if(string_length(minutes) == 0)
+{
+    minutes = "00";
+}
+else if(string_length(minutes) == 1)
+{
+    minutes = "0" + minutes;
+}
+
+var seconds = string(floor(total_seconds%60));
+if(string_length(seconds) == 0)
+{
+    seconds = "00";
+}
+else if(string_length(seconds) == 1)
+{
+    seconds = "0" + seconds;
+}
+
+var time = minutes + ":" + seconds;
+
+draw_text(room_width/2, 10, time);
 </string>
           </argument>
         </arguments>

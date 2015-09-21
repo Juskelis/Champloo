@@ -3,7 +3,7 @@
   <spriteName>spr_StaticSword</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-1000</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,31 +25,77 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///create variables
-player = noone;
-
-attack_style = AttackStyles.Swing;
-
+            <string>///stat variables
 attack_speed = 0.1; //in seconds
-attack_delay = attack_speed * 5;
-
-attack_direction = 0;
-start_direction = 45;
-end_direction = -45;
-
-current_direction = start_direction;
-direction_step = (end_direction - start_direction)/(attack_speed*room_speed);
-
-alarm[0] = attack_speed*room_speed;
-
-image_speed = image_speed/attack_speed;
+attack_delay = attack_speed * 5; //in seconds
 
 damage = 5;
 
 min_size = 0.5;
 max_size = 1.5;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///movement variables
+active = false;
+
+//how far to swipe AFTER passing aim
+swipe_amount = 135;
+
+//how fast to move the sword when not attacking
+re_aim_speed = 5;
+
+start_direction = swipe_amount/2;
+
+direction_step = 0;
+
+alarm[0] = 0;
+
 size_gap = max_size - min_size;
 offset = 0;
+
+attack_direction = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///misc variables
+player = noone;
+
+image_speed = image_speed/attack_speed;
 </string>
           </argument>
         </arguments>
@@ -73,7 +119,8 @@ offset = 0;
           <argument>
             <kind>1</kind>
             <string>///deactivate the instance
-instance_deactivate_object(self);
+//instance_deactivate_object(self);
+active = false;
 </string>
           </argument>
         </arguments>
@@ -97,10 +144,22 @@ instance_deactivate_object(self);
           <argument>
             <kind>1</kind>
             <string>///move
-x = player.x + lengthdir_x(offset, attack_direction);
-y = player.y + lengthdir_y(offset, attack_direction);
 
-image_angle += direction_step;
+if(active)
+{
+    image_angle += direction_step*global.timescale;
+}
+else
+{
+    var target_angle = player.aim_direction - swipe_amount;
+    if(scr_clockwise_angle(image_angle, player.aim_direction))
+        target_angle = player.aim_direction + swipe_amount;
+    
+    image_angle = scr_approach_angle(image_angle, target_angle, re_aim_speed);
+}
+
+x = player.x + lengthdir_x(offset, image_angle);
+y = player.y + lengthdir_y(offset, image_angle);
 </string>
           </argument>
         </arguments>
@@ -134,7 +193,11 @@ if(abs(player.hsp) + abs(player.vsp) &lt; 0.1)
 var aim_mod = cos(degtorad(player_momentum_dir - attack_direction))*0.5 + 0.5;
 var vertical_mod = -sin(degtorad(attack_direction))*0.5 + 0.5;
 
-image_xscale = min_size + ((aim_mod*3 + vertical_mod)/4)*size_gap;
+if(active)
+    image_xscale = min_size + ((aim_mod*3 + vertical_mod)/4)*size_gap;
+else
+    image_xscale = scr_approach(image_xscale, 1, 0.01);
+//image_xscale = 1;
 /*
 var aim_mod = -sin(degtorad(image_angle))*0.5 + 0.5;
 
