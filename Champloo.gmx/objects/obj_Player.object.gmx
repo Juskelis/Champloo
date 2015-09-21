@@ -50,7 +50,7 @@ image_speed = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///create variables
+            <string>///create movement variables
 respawning = false;
 
 state = States.Normal;
@@ -411,7 +411,7 @@ if(!respawning)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///attacks
+            <string>///swing sword
 var deadzone = 0.1;
 
 if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
