@@ -436,20 +436,17 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
             start_direction = start_direction%360;
             
             var delta_direction = -1;
-            if(dsin(attack_direction - start_direction) &gt; 0)
+            if(!scr_clockwise_angle(start_direction, attack_direction))
             {
                 delta_direction = 1;
             }
-            direction_step = scr_angle_diff(start_direction, attack_direction)+swipe_amount/2;
+            direction_step = scr_angle_diff(start_direction, attack_direction);
+            direction_step += swipe_amount;
             direction_step = direction_step/(attack_speed*room_speed);
             direction_step *= delta_direction;
             
-            
-            current_direction = start_direction;
-            
             alarm[0] = attack_speed*room_speed;
             
-            image_angle = current_direction;
             image_xscale = (min_size + size_gap/2) + (size_gap/2)*(-sin(degtorad(image_angle)));
             
             active = true;
