@@ -165,6 +165,7 @@ if(active)
             }
         }
     }
+    image_angle = next_image_angle;
     
 }
 else
