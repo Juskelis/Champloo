@@ -57,11 +57,20 @@ if(num_elements &gt; 0)
 {
     if(gamepad_button_check_pressed(0, gp_padu))
     {
-        current_selected = (current_selected + 1)%num_elements;
+        current_selected = (current_selected - 1)%num_elements;
+        if(current_selected &lt; 0) current_selected += num_elements;
     }
     else if(gamepad_button_check_pressed(0, gp_padd))
     {
-        current_selected = (current_selected - 1)%num_elements;
+        current_selected = (current_selected + 1)%num_elements;
+    }
+    
+    if(gamepad_button_check_pressed(0, gp_face1))
+    {
+        with(buttons[current_selected])
+        {
+            script_execute(on_select, on_select_args);
+        }
     }
 }
 </string>

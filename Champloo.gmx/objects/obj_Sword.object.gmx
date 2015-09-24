@@ -147,7 +147,26 @@ active = false;
 
 if(active)
 {
-    image_angle += direction_step*global.timescale;
+    var next_image_angle = image_angle;
+    next_image_angle += direction_step*global.timescale;
+    if(next_image_angle &lt; 0) next_image_angle += 360;
+    next_image_angle %= 360;
+    
+    for(image_angle = image_angle; scr_angle_diff(image_angle, next_image_angle) &gt; 0.1; image_angle = scr_approach_angle(image_angle, next_image_angle, 0.1))
+    {
+        x = player.x + lengthdir_x(offset, image_angle);
+        y = player.y + lengthdir_y(offset, image_angle);
+        var coll = instance_place(x,y, obj_Player)
+        if(coll != noone)
+        {
+            with(coll)
+            {
+                event_perform(ev_collision, object_index);
+            }
+        }
+    }
+    image_angle = next_image_angle;
+    
 }
 else
 {
