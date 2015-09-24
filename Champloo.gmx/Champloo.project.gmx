@@ -38,6 +38,7 @@
       <script>scripts\scr_spawn_blood.gml</script>
       <script>scripts\scr_set_timescale.gml</script>
       <script>scripts\scr_create_many.gml</script>
+      <script>scripts\scr_sleep.gml</script>
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>
