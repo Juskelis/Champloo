@@ -39,6 +39,7 @@
       <script>scripts\scr_set_timescale.gml</script>
       <script>scripts\scr_create_many.gml</script>
       <script>scripts\scr_sleep.gml</script>
+      <script>scripts\scr_touching.gml</script>
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>
@@ -68,7 +69,6 @@
       <object>objects\obj_Spawner</object>
       <object>objects\obj_Fullscreen</object>
     </objects>
-    <object>objects\obj_Wall</object>
     <object>objects\obj_Spawn</object>
     <object>objects\obj_BloodSurface</object>
     <object>objects\obj_Blood</object>
@@ -77,6 +77,10 @@
       <object>objects\obj_UI_Element</object>
       <object>objects\obj_Controller_Button</object>
       <object>objects\obj_Controller_Selection</object>
+    </objects>
+    <objects name="Surfaces">
+      <object>objects\obj_Wall</object>
+      <object>objects\obj_Moving_Wall</object>
     </objects>
   </objects>
   <rooms name="rooms">
