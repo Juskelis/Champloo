@@ -72,7 +72,7 @@ moving_friction = 0;
 stopping_friction = acceleration;
 turning_friction = 2*acceleration;
 
-
+blocking_friction = acceleration/4;
 
 //air settings
 air_acceleration = 1*(30/room_speed);
@@ -142,13 +142,16 @@ with(my_sword)
             <string>///create blocking
 
 max_block = 100;
-blocking_shrink_time = 2.5; //seconds for block to deplete completely
-blocking_grow_time = 5; //seconds for block to restore completely
+blocking_shrink_time = 4; //seconds for block to deplete completely
+blocking_grow_time = 6; //seconds for block to restore completely
 
 blocking_shrink_step = max_block / (blocking_shrink_time * room_speed);
 blocking_grow_step = max_block / (blocking_grow_time * room_speed);
 
 block_level = max_block;
+
+post_block_delay = 0.1;
+block_slow = false;
 </string>
           </argument>
         </arguments>
@@ -174,7 +177,7 @@ jump_input_time = 0;
 jump_input_delay = 0.2*room_speed; //frame delay
 
 hit = noone;
-block_window = 0.2*room_speed; //frames for incorrect timing window for blocking
+block_window = 0.1*room_speed; //frames for incorrect timing window for blocking
 
 </string>
           </argument>
@@ -199,6 +202,30 @@ block_window = 0.2*room_speed; //frames for incorrect timing window for blocking
             <string>///blood settings
 spurt_direction = 0;
 scatter = 10;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///turn off blocking stun
+block_slow = false;
 </string>
           </argument>
         </arguments>
@@ -414,7 +441,7 @@ if(!respawning)
             <string>///swing sword
 var deadzone = 0.1;
 
-if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
+if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword &amp;&amp; !block_slow)
 {
     if(key_attack_normal)
     {
@@ -506,7 +533,9 @@ if(key_shoot_press &amp;&amp; has_sword &amp;&amp; !throwing)
             <string>///deplete blocking
 if(key_block)
 {
+    block_slow = true;
     block_level = max(0, block_level - blocking_shrink_step*global.timescale);
+    alarm[4] = post_block_delay*room_speed;
 }
 else
 {
@@ -572,7 +601,6 @@ if(hit != noone)
             //slow mo
             global.timescale = 0.25;
             scr_set_timescale(1,0.25);
-            
             
             /*
             //set the knockback
