@@ -844,7 +844,7 @@ draw_line_width(x,y,x + horizontal_amount*len, y + vertical_amount*len, 3);
           <argument>
             <kind>1</kind>
             <string>///draw player number
-draw_text(x,y,string(player_number));
+//draw_text(x,y,string(player_number));
 </string>
           </argument>
         </arguments>

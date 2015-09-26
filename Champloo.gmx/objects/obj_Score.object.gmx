@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-1000</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -52,7 +52,7 @@ for(player_count = 0; player_count &lt; instance_number(obj_Player); player_coun
           <argument>
             <kind>1</kind>
             <string>///create variables
-end_slow = 1;
+end_slow = 2;
 timeout = 5*60; ///in seconds
 
 alarm[0] = timeout * room_speed;
@@ -147,7 +147,7 @@ if(victory &amp;&amp; alarm[1] &lt;= 0)
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="64">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -166,15 +166,17 @@ if(victory &amp;&amp; alarm[1] &lt;= 0)
             <kind>1</kind>
             <string>///draw scores
 
+draw_set_font(ft_Normal_24);
+
 draw_set_colour(c_white);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
-var height = 20;
+var height = string_height("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890:abcdefghijklmnopqrstuvwxyz");
 
-var bottom = display_get_gui_height();
+var bottom = view_hview[0];
 var top = bottom - height*player_count;
-var left = 0;
+var left = 5;
 
 for(var i = 0; i &lt; player_count; i++)
 {
@@ -204,6 +206,8 @@ draw_set_colour(c_black);
             <kind>1</kind>
             <string>///draw timer
 
+draw_set_font(ft_Normal_24);
+
 draw_set_colour(c_white);
 draw_set_halign(fa_middle);
 draw_set_valign(fa_top);
@@ -232,7 +236,7 @@ else if(string_length(seconds) == 1)
 
 var time = minutes + ":" + seconds;
 
-draw_text(room_width/2, 10, time);
+draw_text(view_wview[0]/2, 10, time);
 </string>
           </argument>
         </arguments>
