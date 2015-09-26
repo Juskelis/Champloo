@@ -20,7 +20,7 @@ if(hsp != 0)
 
 if(key_jump_released)
 {
-    if(vsp < 0) vsp = 0;
+    if(vsp < 0) vsp *= 0.25;
 }
 
 scr_move_collide();

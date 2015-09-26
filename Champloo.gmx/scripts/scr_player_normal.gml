@@ -12,7 +12,11 @@ hsp = clamp(
 if(hsp != 0)
 {
     var ground_friction = 0;
-    if(move == 0)
+    if(block_slow)
+    {
+        ground_friction = blocking_friction;
+    }
+    else if(move == 0)
         ground_friction = stopping_friction;
     else
     {
