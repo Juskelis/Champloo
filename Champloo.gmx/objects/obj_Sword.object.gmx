@@ -26,8 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>///stat variables
-attack_speed = 0.1; //in seconds
-attack_delay = attack_speed * 5; //in seconds
+attack_speed = 0.05; //in seconds
+attack_delay = 0.5; //in seconds
 
 damage = 5;
 
@@ -247,7 +247,7 @@ image_xscale = min_size + ((aim_mod + vertical_mod)/2)*size_gap;
             <string>if(active &amp;&amp; other.active)
 {
     var our_mid_x = x + lengthdir_x(sprite_width, image_angle);
-    var out_mid_y = y + lengthdir_y(sprite_width, image_angle);
+    var our_mid_y = y + lengthdir_y(sprite_width, image_angle);
     var other_mid_x = other.x + lengthdir_x(sprite_width, other.image_angle);
     var other_mid_y = other.y + lengthdir_y(sprite_width, other.image_angle);
     instance_create((our_mid_x + other_mid_x)/2, (our_mid_y + other_mid_y)/2, obj_Flash);
