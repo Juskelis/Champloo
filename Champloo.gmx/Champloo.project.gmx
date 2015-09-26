@@ -56,6 +56,7 @@
   </scripts>
   <fonts name="fonts">
     <font>fonts\ft_Bored_64</font>
+    <font>fonts\ft_Normal_24</font>
   </fonts>
   <objects name="objects">
     <objects name="Player Stuff">
