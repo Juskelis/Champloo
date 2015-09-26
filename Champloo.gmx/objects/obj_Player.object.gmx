@@ -573,6 +573,8 @@ if(hit != noone)
             global.timescale = 0.25;
             scr_set_timescale(1,0.25);
             
+            
+            /*
             //set the knockback
             var other_player_x = hit.player.x;
             var other_player_y = hit.player.y;
@@ -587,6 +589,7 @@ if(hit != noone)
                 hsp = lengthdir_x(maxspeed, other_push_dir);
                 vsp = lengthdir_y(maxspeed, (other_push_dir*3 + my_push_dir)/4);
             }
+            */
             
             //destroy both swords so that we don't double down on this
             with(hit.player.hit)
