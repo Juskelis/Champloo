@@ -63,6 +63,7 @@
       <object>objects\obj_Player</object>
       <object>objects\obj_ThrownSword</object>
       <object>objects\obj_Sword</object>
+      <object>objects\obj_Spawn</object>
     </objects>
     <objects name="Nonvisual">
       <object>objects\obj_Score</object>
@@ -70,18 +71,20 @@
       <object>objects\obj_Spawner</object>
       <object>objects\obj_Fullscreen</object>
     </objects>
-    <object>objects\obj_Spawn</object>
-    <object>objects\obj_BloodSurface</object>
-    <object>objects\obj_Blood</object>
-    <object>objects\obj_Dust</object>
     <objects name="UI">
       <object>objects\obj_UI_Element</object>
       <object>objects\obj_Controller_Button</object>
       <object>objects\obj_Controller_Selection</object>
     </objects>
-    <objects name="Surfaces">
+    <objects name="Walls">
       <object>objects\obj_Wall</object>
       <object>objects\obj_Moving_Wall</object>
+    </objects>
+    <objects name="Effects">
+      <object>objects\obj_Dust</object>
+      <object>objects\obj_Blood</object>
+      <object>objects\obj_BloodSurface</object>
+      <object>objects\obj_Flash</object>
     </objects>
   </objects>
   <rooms name="rooms">
