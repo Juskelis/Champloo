@@ -20,8 +20,17 @@ if(hsp != 0)
 
 if(key_jump_released)
 {
-    if(vsp < 0) vsp = 0;
+    if(vsp < 0) vsp *= 0.25;
 }
+
+//apply forces
+vsp = min(vsp + force_y*global.timescale, maxgrav*global.timescale);
+
+hsp = clamp(
+    hsp + force_x*global.timescale,
+    -maxspeed*global.timescale,
+    maxspeed*global.timescale
+);
 
 scr_move_collide();
 

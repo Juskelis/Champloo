@@ -22,3 +22,10 @@ else
 }
 
 key_jump = key_jump || jump_input_time > 0;
+
+if(key_block)
+{
+    key_jump = false;
+    key_right = 0;
+    key_left = 0;
+}

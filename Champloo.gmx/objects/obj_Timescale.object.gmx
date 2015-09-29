@@ -28,6 +28,11 @@
             <string>///create variables
 target_timescale = 1;
 timescale_delta_step = 0;
+
+//this is necessary for alarms because alarms are ints (no fractions)
+//  so in order to slow them down, we need to instead change their
+//  time once every 1/timescale frames
+next_alarm_push = 0;
 </string>
           </argument>
         </arguments>
@@ -101,6 +106,8 @@ else
           <argument>
             <kind>1</kind>
             <string>///alter timescale
+
+/*
 if(abs(timescale_delta_step) &gt; 0
     &amp;&amp; abs(target_timescale - global.timescale) &gt; abs(timescale_delta_step))
 {
@@ -109,6 +116,80 @@ if(abs(timescale_delta_step) &gt; 0
 else
 {
     global.timescale = target_timescale;
+}
+*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///correct all alarms
+
+if(global.timescale &lt; 1)
+{
+    next_alarm_push += global.timescale;
+    if(next_alarm_push &gt;= 1)
+    {
+        with(obj_Sword)
+        {
+            for(var i = 0; i &lt; 12; i++)
+            {
+                if(alarm[i] &gt; 0)
+                {
+                    alarm[i]++;
+                }
+            }
+        }
+        next_alarm_push -= 1;
+    }
+}
+else
+{
+    next_alarm_push = 0;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///force slow (debug)
+if(keyboard_check(vk_alt))
+{
+    global.timescale = 0.5;
+}
+else
+{
+    global.timescale = 1;
 }
 </string>
           </argument>

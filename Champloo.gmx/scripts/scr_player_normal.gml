@@ -12,7 +12,11 @@ hsp = clamp(
 if(hsp != 0)
 {
     var ground_friction = 0;
-    if(move == 0)
+    if(block_slow)
+    {
+        ground_friction = blocking_friction;
+    }
+    else if(move == 0)
         ground_friction = stopping_friction;
     else
     {
@@ -42,6 +46,15 @@ if(key_jump)
         
     jump_input_time = 0;
 }
+
+//apply forces
+vsp = min(vsp + force_y*global.timescale, maxgrav*global.timescale);
+hsp = clamp(
+    hsp + force_x*global.timescale,
+    -ground_maxspeed*global.timescale,
+    ground_maxspeed*global.timescale
+);
+
 
 scr_move_collide();
 

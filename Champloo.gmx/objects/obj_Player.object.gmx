@@ -62,7 +62,10 @@ maxspeed = 20*(30/room_speed);
 jumping_deadzone = 0.25;
 movement_deadzone = 0.5
 
-
+//external forces (explosion blasts, etc)
+force_x = 0;
+force_y = 0;
+force_decay = 0.1;
 
 //ground settings
 ground_maxspeed = maxspeed*0.65;
@@ -72,7 +75,7 @@ moving_friction = 0;
 stopping_friction = acceleration;
 turning_friction = 2*acceleration;
 
-
+blocking_friction = acceleration/4;
 
 //air settings
 air_acceleration = 1*(30/room_speed);
@@ -142,13 +145,16 @@ with(my_sword)
             <string>///create blocking
 
 max_block = 100;
-blocking_shrink_time = 2.5; //seconds for block to deplete completely
-blocking_grow_time = 5; //seconds for block to restore completely
+blocking_shrink_time = 4; //seconds for block to deplete completely
+blocking_grow_time = 6; //seconds for block to restore completely
 
 blocking_shrink_step = max_block / (blocking_shrink_time * room_speed);
 blocking_grow_step = max_block / (blocking_grow_time * room_speed);
 
 block_level = max_block;
+
+post_block_delay = 0.1;
+block_slow = false;
 </string>
           </argument>
         </arguments>
@@ -174,7 +180,7 @@ jump_input_time = 0;
 jump_input_delay = 0.2*room_speed; //frame delay
 
 hit = noone;
-block_window = 0.2*room_speed; //frames for incorrect timing window for blocking
+block_window = 0.1*room_speed; //frames for incorrect timing window for blocking
 
 </string>
           </argument>
@@ -199,6 +205,30 @@ block_window = 0.2*room_speed; //frames for incorrect timing window for blocking
             <string>///blood settings
 spurt_direction = 0;
 scatter = 10;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///turn off blocking stun
+block_slow = false;
 </string>
           </argument>
         </arguments>
@@ -386,6 +416,10 @@ if(!respawning)
         case States.WallRiding: scr_player_wallriding(); break;
     }
     
+    //decay forces
+    force_x = scr_approach(force_x, 0, force_decay);
+    force_y = scr_approach(force_y, 0, force_decay);
+    
     //change image scale based on direction
     var previous_xscale = image_xscale
     image_xscale = sign(x - xprevious);
@@ -414,7 +448,7 @@ if(!respawning)
             <string>///swing sword
 var deadzone = 0.1;
 
-if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword)
+if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword &amp;&amp; !block_slow)
 {
     if(key_attack_normal)
     {
@@ -506,7 +540,9 @@ if(key_shoot_press &amp;&amp; has_sword &amp;&amp; !throwing)
             <string>///deplete blocking
 if(key_block)
 {
+    block_slow = true;
     block_level = max(0, block_level - blocking_shrink_step*global.timescale);
+    alarm[4] = post_block_delay*room_speed;
 }
 else
 {
@@ -563,6 +599,17 @@ if(hit != noone)
           <argument>
             <kind>1</kind>
             <string>///check if KLANG happened
+
+if(gamepad_button_check_pressed(player_number, gp_face2))
+{
+    var random_direction = 135;//random(360);
+    var force_amount = 1.5;
+    show_debug_message("Dir: " + string(random_direction));
+    force_x = lengthdir_x(force_amount, random_direction);
+    force_y = lengthdir_y(force_amount, random_direction);
+}
+
+
 if(hit != noone)
 {
     if(hit.player.hit != noone)
@@ -580,6 +627,15 @@ if(hit != noone)
             var my_push_dir = point_direction(other_player_x,other_player_y, x,y);
             var other_push_dir = point_direction(x,y, other_player_x,other_player_y);
             
+            force_x = lengthdir_x(maxspeed, my_push_dir);
+            force_y = lengthdir_y(maxspeed, my_push_dir);
+            with(hit.player)
+            {
+                force_x = lengthdir_x(maxspeed, my_push_dir);
+                force_y = lengthdir_y(maxspeed, my_push_dir);
+            }
+            
+            /*
             hsp = lengthdir_x(maxspeed, my_push_dir);
             vsp = lengthdir_y(maxspeed, (my_push_dir*3 + other_push_dir)/4);
             with(hit.player)
@@ -587,6 +643,7 @@ if(hit != noone)
                 hsp = lengthdir_x(maxspeed, other_push_dir);
                 vsp = lengthdir_y(maxspeed, (other_push_dir*3 + my_push_dir)/4);
             }
+            */
             
             //destroy both swords so that we don't double down on this
             with(hit.player.hit)
@@ -703,6 +760,13 @@ if(other.active &amp;&amp; other.player != id &amp;&amp; hit == noone)
 {
     hit = other.id;
     alarm[2] = block_window;
+    
+    var angle = point_direction(x,y, hit.player.x,hit.player.y);
+    with(hit)
+    {
+        draw_sprite_ext(sprite_index, image_index, x,y, image_xscale, image_yscale, angle, c_white, 1);
+        scr_sleep(1000);
+    }
 }
 
 </string>
@@ -837,7 +901,7 @@ draw_line_width(x,y,x + horizontal_amount*len, y + vertical_amount*len, 3);
           <argument>
             <kind>1</kind>
             <string>///draw player number
-draw_text(x,y,string(player_number));
+//draw_text(x,y,string(player_number));
 </string>
           </argument>
         </arguments>
