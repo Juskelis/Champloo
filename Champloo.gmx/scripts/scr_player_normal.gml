@@ -47,6 +47,15 @@ if(key_jump)
     jump_input_time = 0;
 }
 
+//apply forces
+vsp = min(vsp + force_y*global.timescale, maxgrav*global.timescale);
+hsp = clamp(
+    hsp + force_x*global.timescale,
+    -ground_maxspeed*global.timescale,
+    ground_maxspeed*global.timescale
+);
+
+
 scr_move_collide();
 
 ///check state

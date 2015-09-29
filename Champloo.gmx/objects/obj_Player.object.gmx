@@ -62,7 +62,10 @@ maxspeed = 20*(30/room_speed);
 jumping_deadzone = 0.25;
 movement_deadzone = 0.5
 
-
+//external forces (explosion blasts, etc)
+force_x = 0;
+force_y = 0;
+force_decay = 0.1;
 
 //ground settings
 ground_maxspeed = maxspeed*0.65;
@@ -413,6 +416,10 @@ if(!respawning)
         case States.WallRiding: scr_player_wallriding(); break;
     }
     
+    //decay forces
+    force_x = scr_approach(force_x, 0, force_decay);
+    force_y = scr_approach(force_y, 0, force_decay);
+    
     //change image scale based on direction
     var previous_xscale = image_xscale
     image_xscale = sign(x - xprevious);
@@ -592,6 +599,17 @@ if(hit != noone)
           <argument>
             <kind>1</kind>
             <string>///check if KLANG happened
+
+if(gamepad_button_check_pressed(player_number, gp_face2))
+{
+    var random_direction = 135;//random(360);
+    var force_amount = 1.5;
+    show_debug_message("Dir: " + string(random_direction));
+    force_x = lengthdir_x(force_amount, random_direction);
+    force_y = lengthdir_y(force_amount, random_direction);
+}
+
+
 if(hit != noone)
 {
     if(hit.player.hit != noone)
@@ -602,7 +620,6 @@ if(hit != noone)
             global.timescale = 0.25;
             scr_set_timescale(1,0.25);
             
-            /*
             //set the knockback
             var other_player_x = hit.player.x;
             var other_player_y = hit.player.y;
@@ -610,6 +627,15 @@ if(hit != noone)
             var my_push_dir = point_direction(other_player_x,other_player_y, x,y);
             var other_push_dir = point_direction(x,y, other_player_x,other_player_y);
             
+            force_x = lengthdir_x(maxspeed, my_push_dir);
+            force_y = lengthdir_y(maxspeed, my_push_dir);
+            with(hit.player)
+            {
+                force_x = lengthdir_x(maxspeed, my_push_dir);
+                force_y = lengthdir_y(maxspeed, my_push_dir);
+            }
+            
+            /*
             hsp = lengthdir_x(maxspeed, my_push_dir);
             vsp = lengthdir_y(maxspeed, (my_push_dir*3 + other_push_dir)/4);
             with(hit.player)
