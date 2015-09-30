@@ -635,6 +635,8 @@ if(hit != noone)
                 force_y = lengthdir_y(maxspeed, my_push_dir);
             }
             
+            instance_create((x+other_player_x)/2,(y+other_player_y)/2, obj_Flash);
+            
             /*
             hsp = lengthdir_x(maxspeed, my_push_dir);
             vsp = lengthdir_y(maxspeed, (my_push_dir*3 + other_push_dir)/4);
