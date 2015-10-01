@@ -278,8 +278,11 @@ if(active)
     //how many degrees should each triangle be?
     var step_delta = 5;
     
+    var default_whoosh = abs(direction_step*2);
+    var long_whoosh = scr_angle_diff(image_angle, start_direction);
+    
     //how far around should we draw in degrees?
-    var segment_angle = abs(direction_step*2);
+    var segment_angle = max(default_whoosh, long_whoosh);
     
     draw_primitive_begin(pr_trianglefan);
     draw_vertex(x,y);
