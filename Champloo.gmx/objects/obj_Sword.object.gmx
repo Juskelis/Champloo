@@ -31,8 +31,8 @@ attack_delay = 0.5; //in seconds
 
 damage = 5;
 
-min_size = 0.5;
-max_size = 1.5;
+min_size = 0.75;
+max_size = 1.25;
 </string>
           </argument>
         </arguments>
