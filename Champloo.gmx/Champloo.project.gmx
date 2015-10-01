@@ -15,7 +15,7 @@
     <sprite>sprites\spr_Spawn</sprite>
     <sprite>sprites\spr_NoAttackIndicator</sprite>
     <sprite>sprites\spr_Blood</sprite>
-    <sprites name="Button Elements">
+    <sprites name="UI Elements">
       <sprite>sprites\spr_Button_Corner</sprite>
       <sprite>sprites\spr_Button_Edge</sprite>
       <sprite>sprites\spr_Selection_Indicator</sprite>
@@ -70,6 +70,7 @@
       <object>objects\obj_Timescale</object>
       <object>objects\obj_Spawner</object>
       <object>objects\obj_Fullscreen</object>
+      <object>objects\obj_ViewController</object>
     </objects>
     <objects name="UI">
       <object>objects\obj_UI_Element</object>
@@ -88,8 +89,8 @@
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_Test</room>
     <room>rooms\rm_Start</room>
+    <room>rooms\rm_Test</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
