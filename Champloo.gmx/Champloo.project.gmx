@@ -38,6 +38,8 @@
       <script>scripts\scr_spawn_blood.gml</script>
       <script>scripts\scr_set_timescale.gml</script>
       <script>scripts\scr_create_many.gml</script>
+      <script>scripts\scr_sleep.gml</script>
+      <script>scripts\scr_touching.gml</script>
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>
@@ -54,12 +56,14 @@
   </scripts>
   <fonts name="fonts">
     <font>fonts\ft_Bored_64</font>
+    <font>fonts\ft_Normal_24</font>
   </fonts>
   <objects name="objects">
     <objects name="Player Stuff">
       <object>objects\obj_Player</object>
       <object>objects\obj_ThrownSword</object>
       <object>objects\obj_Sword</object>
+      <object>objects\obj_Spawn</object>
     </objects>
     <objects name="Nonvisual">
       <object>objects\obj_Score</object>
@@ -67,20 +71,25 @@
       <object>objects\obj_Spawner</object>
       <object>objects\obj_Fullscreen</object>
     </objects>
-    <object>objects\obj_Wall</object>
-    <object>objects\obj_Spawn</object>
-    <object>objects\obj_BloodSurface</object>
-    <object>objects\obj_Blood</object>
-    <object>objects\obj_Dust</object>
     <objects name="UI">
       <object>objects\obj_UI_Element</object>
       <object>objects\obj_Controller_Button</object>
       <object>objects\obj_Controller_Selection</object>
     </objects>
+    <objects name="Walls">
+      <object>objects\obj_Wall</object>
+      <object>objects\obj_Moving_Wall</object>
+    </objects>
+    <objects name="Effects">
+      <object>objects\obj_Dust</object>
+      <object>objects\obj_Blood</object>
+      <object>objects\obj_BloodSurface</object>
+      <object>objects\obj_Flash</object>
+    </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_Start</room>
     <room>rooms\rm_Test</room>
+    <room>rooms\rm_Start</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
