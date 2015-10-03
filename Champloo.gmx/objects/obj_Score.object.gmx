@@ -56,6 +56,9 @@ end_slow = 2;
 timeout = 5*60; ///in seconds
 
 alarm[0] = timeout * room_speed;
+
+default_width = view_wview;
+default_height = view_hview;
 </string>
           </argument>
         </arguments>
@@ -172,15 +175,24 @@ draw_set_colour(c_white);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
-var height = string_height("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890:abcdefghijklmnopqrstuvwxyz");
+var xscale = view_wview/default_width;
+var yscale = view_hview/default_height;
 
-var bottom = view_hview[0];
+var height = string_height("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890:abcdefghijklmnopqrstuvwxyz");
+height = height*yscale;
+var bottom = view_yview + view_hview[0];
 var top = bottom - height*player_count;
-var left = 5;
+var left = view_xview + 5*xscale;
 
 for(var i = 0; i &lt; player_count; i++)
 {
-    draw_text(left,(top + i*height), "Player " + string(i) + ": " + string(scores[i]));
+    draw_text_transformed(
+        left,(top + i*height),
+        "Player " + string(i) + ": " + string(scores[i]),
+        xscale,
+        yscale,
+        0
+    );
     
 }
 draw_set_colour(c_black);
@@ -236,7 +248,17 @@ else if(string_length(seconds) == 1)
 
 var time = minutes + ":" + seconds;
 
-draw_text(view_wview[0]/2, 10, time);
+var xscale = view_wview/default_width;
+var yscale = view_hview/default_height;
+
+draw_text_transformed(
+    view_xview + view_wview[0]/2,
+    view_yview + 10*yscale,
+    time,
+    xscale,
+    yscale,
+    0
+);
 </string>
           </argument>
         </arguments>
