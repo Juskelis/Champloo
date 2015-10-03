@@ -20,6 +20,7 @@
       <sprite>sprites\spr_Button_Edge</sprite>
       <sprite>sprites\spr_Selection_Indicator</sprite>
     </sprites>
+    <sprite>sprites\spr_FootDust</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -86,6 +87,7 @@
       <object>objects\obj_Blood</object>
       <object>objects\obj_BloodSurface</object>
       <object>objects\obj_Flash</object>
+      <object>objects\obj_FootDust</object>
     </objects>
   </objects>
   <rooms name="rooms">

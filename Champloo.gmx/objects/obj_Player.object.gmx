@@ -77,6 +77,8 @@ turning_friction = 2*acceleration;
 
 blocking_friction = acceleration/4;
 
+previously_on_ground = false;
+
 //air settings
 air_acceleration = 1*(30/room_speed);
 air_moving_friction = 0.4*air_acceleration;
@@ -445,6 +447,33 @@ if(!respawning)
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///check for foot dust
+if(!previously_on_ground &amp;&amp; place_meeting(x,y+1, obj_Wall))
+{
+    scr_create_many(obj_FootDust, bbox_left, bbox_bottom, bbox_right, bbox_bottom, 30); 
+    previously_on_ground = true;
+}
+previously_on_ground = place_meeting(x, y+1, obj_Wall);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///swing sword
 var deadzone = 0.1;
 
@@ -616,15 +645,14 @@ if(hit != noone)
             var my_push_dir = point_direction(other_player_x,other_player_y, x,y);
             var other_push_dir = point_direction(x,y, other_player_x,other_player_y);
             
-            var force_amount = maxspeed*abs(dot_product_normalised(hsp,vsp, hit.player.hsp, hit.player.vsp));
-            
+            //var force_amount = maxspeed*abs(dot_product_normalised(hsp,vsp, hit.player.hsp, hit.player.vsp));
+            var force_amount = maxspeed;
             force_x = lengthdir_x(force_amount, my_push_dir);
             force_y = lengthdir_y(force_amount, my_push_dir);
-            with(hit.player)
-            {
-                force_x = lengthdir_x(force_amount, other_push_dir);
-                force_y = lengthdir_y(force_amount, other_push_dir);
-            }
+            
+            //force_amount = point_distance(0,0, hit.player.hsp*2, hit.player.vsp*2);
+            hit.player.force_x = lengthdir_x(force_amount, other_push_dir);
+            hit.player.force_y = lengthdir_y(force_amount, other_push_dir);
             
             instance_create((x+other_player_x)/2,(y+other_player_y)/2, obj_Flash);
             
