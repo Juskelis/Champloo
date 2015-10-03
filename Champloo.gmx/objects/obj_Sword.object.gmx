@@ -31,8 +31,8 @@ attack_delay = 0.5; //in seconds
 
 damage = 5;
 
-min_size = 0.5;
-max_size = 1.5;
+min_size = 0.75;
+max_size = 1.25;
 </string>
           </argument>
         </arguments>
@@ -227,36 +227,6 @@ image_xscale = min_size + ((aim_mod + vertical_mod)/2)*size_gap;
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_Sword">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if(active &amp;&amp; other.active)
-{
-    var our_mid_x = x + lengthdir_x(sprite_width, image_angle);
-    var our_mid_y = y + lengthdir_y(sprite_width, image_angle);
-    var other_mid_x = other.x + lengthdir_x(sprite_width, other.image_angle);
-    var other_mid_y = other.y + lengthdir_y(sprite_width, other.image_angle);
-    instance_create((our_mid_x + other_mid_x)/2, (our_mid_y + other_mid_y)/2, obj_Flash);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="7" enumb="2">
       <action>
         <libid>1</libid>
@@ -308,8 +278,11 @@ if(active)
     //how many degrees should each triangle be?
     var step_delta = 5;
     
+    var default_whoosh = abs(direction_step*2);
+    var long_whoosh = scr_angle_diff(image_angle, start_direction);
+    
     //how far around should we draw in degrees?
-    var segment_angle = abs(direction_step*2);
+    var segment_angle = max(default_whoosh, long_whoosh);
     
     draw_primitive_begin(pr_trianglefan);
     draw_vertex(x,y);
@@ -329,17 +302,28 @@ if(active)
       </action>
       <action>
         <libid>1</libid>
-        <id>500</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
+        <useapplyto>-1</useapplyto>
         <exetype>2</exetype>
         <functionname></functionname>
-        <codestring>draw_self();</codestring>
+        <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw self
+if(active)
+{
+    draw_self();
+}
+</string>
+          </argument>
+        </arguments>
       </action>
     </event>
   </events>

@@ -65,7 +65,7 @@ movement_deadzone = 0.5
 //external forces (explosion blasts, etc)
 force_x = 0;
 force_y = 0;
-force_decay = 0.1;
+force_decay = 0.5;
 
 //ground settings
 ground_maxspeed = maxspeed*0.65;
@@ -599,17 +599,6 @@ if(hit != noone)
           <argument>
             <kind>1</kind>
             <string>///check if KLANG happened
-
-if(gamepad_button_check_pressed(player_number, gp_face2))
-{
-    var random_direction = 135;//random(360);
-    var force_amount = 1.5;
-    show_debug_message("Dir: " + string(random_direction));
-    force_x = lengthdir_x(force_amount, random_direction);
-    force_y = lengthdir_y(force_amount, random_direction);
-}
-
-
 if(hit != noone)
 {
     if(hit.player.hit != noone)
@@ -617,8 +606,8 @@ if(hit != noone)
         if(hit.player.hit.player == id)
         {
             //slow mo
-            global.timescale = 0.25;
-            scr_set_timescale(1,0.25);
+            //global.timescale = 0.25;
+            //scr_set_timescale(1,0.25);
             
             //set the knockback
             var other_player_x = hit.player.x;
@@ -627,13 +616,17 @@ if(hit != noone)
             var my_push_dir = point_direction(other_player_x,other_player_y, x,y);
             var other_push_dir = point_direction(x,y, other_player_x,other_player_y);
             
-            force_x = lengthdir_x(maxspeed, my_push_dir);
-            force_y = lengthdir_y(maxspeed, my_push_dir);
+            var force_amount = maxspeed*abs(dot_product_normalised(hsp,vsp, hit.player.hsp, hit.player.vsp));
+            
+            force_x = lengthdir_x(force_amount, my_push_dir);
+            force_y = lengthdir_y(force_amount, my_push_dir);
             with(hit.player)
             {
-                force_x = lengthdir_x(maxspeed, my_push_dir);
-                force_y = lengthdir_y(maxspeed, my_push_dir);
+                force_x = lengthdir_x(force_amount, other_push_dir);
+                force_y = lengthdir_y(force_amount, other_push_dir);
             }
+            
+            instance_create((x+other_player_x)/2,(y+other_player_y)/2, obj_Flash);
             
             /*
             hsp = lengthdir_x(maxspeed, my_push_dir);
