@@ -386,6 +386,8 @@ y = spawn.y;
 
 //turn off slow_mo
 scr_set_timescale(1,0);
+
+hit = noone;
 </string>
           </argument>
         </arguments>

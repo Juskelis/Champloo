@@ -32,7 +32,7 @@ y = room_height/2;
 original_width = view_wview;
 original_height = view_hview;
 
-min_size = 0.5;
+min_size = 0.75;
 
 max_width = original_width;
 max_height = original_height;
@@ -99,12 +99,6 @@ if(count &gt; 0)
         max_x = max(curr_player.x + player_padding, max_x);
         max_y = max(curr_player.y + player_padding, max_y);
     }
-    /*
-    min_x = max(0, min_x);
-    max_x = min(max_x, room_width);
-    min_y = max(0, min_y);
-    max_y = min(max_y, room_height);
-    */
     
     var default_width = max_x - min_x;
     var clamped_width = clamp(default_width, min_width, max_width);
@@ -166,50 +160,6 @@ if(count &gt; 0)
     
     view_wview = max_x - min_x;
     view_hview = max_y - min_y;
-    
-    /*
-    if(max_x - min_x &lt; min_width)
-    {
-        if(max_x == room_width)
-        {
-            min_x = max_x - min_width;
-        }
-        else
-        {
-            max_x = min_x + min_width;
-        }
-    }
-    
-    if(max_y - min_y &lt; min_height)
-    {
-        if(max_y == room_height)
-        {
-            min_y = max_y - min_height;
-        }
-        else
-        {
-            max_y = min_y + min_height;
-        }
-    }
-    
-    var new_width = (original_width/original_height)*(max_y - min_y);
-    var new_height = (original_height/original_width)*(max_x - min_x);
-    
-    if(new_height &gt; max_y - min_y)
-    {
-        new_width = (original_width/original_height)*new_height;
-    }
-    else
-    {
-        new_height = (original_height/original_width)*new_width;
-    }
-    
-    view_wview = max(new_width, min_width);
-    view_hview = max(new_height, min_height);
-    
-    view_xview = max(0, x - view_wview/2);
-    view_yview = max(0, y - view_hview/2);
-    */
 }
 </string>
           </argument>
