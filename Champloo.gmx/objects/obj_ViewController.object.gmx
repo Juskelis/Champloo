@@ -69,20 +69,6 @@ var count = instance_number(obj_Player);
 
 if(count &gt; 0)
 {
-    //find center
-    var total_x = 0;
-    var total_y = 0;
-    
-    with(obj_Player)
-    {
-        total_x += x;
-        total_y += y;
-    }
-    
-    x = total_x/count;
-    y = total_y/count;
-    
-    
     //find bounds
     min_x = room_width + 1;
     max_x = -1;
@@ -159,54 +145,27 @@ if(count &gt; 0)
     //smooth if zooming in
     var view_scale = view_wview/original_width;
     var next_view_scale = (max_x - min_x)/original_width;
-    view_scale = scr_approach(view_scale, next_view_scale, 0.001);
+    view_scale = scr_approach(view_scale, next_view_scale, 0.005);
     
     view_wview = original_width * view_scale;
     view_hview = original_height * view_scale;
     
-    //view_xview = clamp(scr_approach(view_xview, min_x, 2), 0, room_width - view_wview);
-    //view_yview = clamp(scr_approach(view_yview, min_y, 2), 0, room_height - view_hview);
     
-    var wannabe_middle_x = min_x + (max_x - min_x)/2;
-    var wannabe_middle_y = min_y + (max_y - min_y)/2;
-    view_xview = clamp(wannabe_middle_x - view_wview/2, min_x, max_x);
-    view_yview = clamp(wannabe_middle_y - view_hview/2, min_y, max_y);
+    //find center
+    var total_x = 0;
+    var total_y = 0;
     
-    /*
-    var view_scale = view_wview/original_width;
-    var next_view_scale = (max_x - min_x)/original_width;
-    view_scale = scr_approach(view_scale, next_view_scale, 0.001);
-    
-    view_wview = original_width * view_scale;
-    view_hview = original_height * view_scale;
-        
-    view_xview = min_x;
-    view_yview = min_y;
-    */
-    
-    /*
-    if(max_x - min_x &lt; view_wview)
+    with(obj_Player)
     {
-        view_wview = scr_approach(view_wview, max_x - min_x, 1);
-        view_xview = scr_approach(view_xview, min_x, 1);
-    }
-    else
-    {
-        view_wview = max_x - min_x;
-        view_xview = min_x;
+        total_x += x;
+        total_y += y;
     }
     
-    if(max_y - min_y &lt; view_hview)
-    {
-        view_hview = scr_approach(view_hview, max_y - min_y, 1);
-        view_yview = scr_approach(view_yview, min_y, 1);
-    }
-    else
-    {
-        view_hview = max_y - min_y;
-        view_yview = min_y;
-    }
-    */
+    x = clamp(total_x/count, view_wview/2, room_width - view_wview/2);
+    y = clamp(total_y/count, view_hview/2, room_height - view_hview/2);
+    
+    view_xview = x - view_wview/2;
+    view_yview = y - view_hview/2;
 }
 </string>
           </argument>
