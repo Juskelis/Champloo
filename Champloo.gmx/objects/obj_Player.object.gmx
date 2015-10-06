@@ -452,7 +452,7 @@ if(!respawning)
             <string>///check for foot dust
 if(!previously_on_ground &amp;&amp; place_meeting(x,y+1, obj_Wall))
 {
-    scr_create_many(obj_FootDust, bbox_left, bbox_bottom, bbox_right, bbox_bottom, 30); 
+    scr_create_many(obj_FootDust, bbox_left, bbox_bottom, bbox_right, bbox_bottom, 5); 
     previously_on_ground = true;
 }
 previously_on_ground = place_meeting(x, y+1, obj_Wall);

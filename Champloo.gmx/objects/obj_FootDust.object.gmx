@@ -26,12 +26,17 @@
           <argument>
             <kind>1</kind>
             <string>///resize
-var min_scale = 12/sprite_width;
-var max_scale = 32/sprite_width;
+image_speed = 0;
+image_index = choose(0,0,1);
+
+var min_scale = 0.75;
+var max_scale = 1.25;
+
 image_xscale = random_range(min_scale, max_scale);
 image_yscale = random_range(min_scale, max_scale);
 
-image_angle = random(360);
+hsp = random_range(-1,1);
+vsp = random_range(-1,1);
 </string>
           </argument>
         </arguments>
@@ -55,16 +60,18 @@ image_angle = random(360);
           <argument>
             <kind>1</kind>
             <string>///move/fade
+image_alpha = scr_approach(image_alpha, 0, 0.05);
+
+image_xscale = scr_approach(image_xscale, 0, 0.005);
+image_yscale = scr_approach(image_yscale, 0, 0.005);
+
+hsp = scr_approach(hsp, 0, 0.025);
+vsp = scr_approach(vsp, 0, 0.025);
+
 if(image_alpha == 0) instance_destroy();
-image_alpha = scr_approach(image_alpha, 0, 0.01);
 
-image_xscale += random_range(-0.1, 0.1);
-image_yscale += random_range(-0.1, 0.1);
-
-image_angle += random_range(-1, 1);
-
-//x += random_range(-10, 10);
-//y += random_range(-10, 10);
+x += hsp;
+y += vsp;
 </string>
           </argument>
         </arguments>
