@@ -117,7 +117,7 @@ attacking = false;
 throwing = false;
 has_sword = true;
 
-my_sword = instance_create(x,y, obj_Sword);
+my_sword = instance_create(x,y, obj_StaticSword);
 with(my_sword)
 {
     player = other.id;
@@ -204,9 +204,12 @@ block_window = 0.1*room_speed; //frames for incorrect timing window for blocking
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///blood settings
+            <string>///effects settings
 spurt_direction = 0;
 scatter = 10;
+
+footstep_frames = 0.1*room_speed;
+current_frame = 0;
 </string>
           </argument>
         </arguments>
@@ -456,6 +459,18 @@ if(!previously_on_ground &amp;&amp; place_meeting(x,y+1, obj_Wall))
     previously_on_ground = true;
 }
 previously_on_ground = place_meeting(x, y+1, obj_Wall);
+
+if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed)
+{
+    if(current_frame &gt;= footstep_frames)
+    {
+        //scr_create_many( obj_FootDust, bbox_left, bbox_bottom, bbox_right, bbox_bottom, 1);
+        instance_create(x, bbox_bottom, obj_FootDust);
+        
+        current_frame -= footstep_frames;
+    }
+    current_frame++;
+}
 </string>
           </argument>
         </arguments>

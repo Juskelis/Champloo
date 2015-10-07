@@ -9,6 +9,7 @@
     <sprite>sprites\spr_Player</sprite>
     <sprite>sprites\spr_Wall</sprite>
     <sprite>sprites\spr_Sword</sprite>
+    <sprite>sprites\spr_SwordHitBox</sprite>
     <sprite>sprites\spr_StaticSword</sprite>
     <sprite>sprites\spr_Dust</sprite>
     <sprite>sprites\spr_Block</sprite>
@@ -65,6 +66,7 @@
       <object>objects\obj_ThrownSword</object>
       <object>objects\obj_Sword</object>
       <object>objects\obj_Spawn</object>
+      <object>objects\obj_StaticSword</object>
     </objects>
     <objects name="Nonvisual">
       <object>objects\obj_Score</object>
