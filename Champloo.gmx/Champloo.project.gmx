@@ -69,7 +69,6 @@
       <object>objects\obj_StaticSword</object>
     </objects>
     <objects name="Nonvisual">
-      <object>objects\obj_Score</object>
       <object>objects\obj_Timescale</object>
       <object>objects\obj_Spawner</object>
       <object>objects\obj_Fullscreen</object>
@@ -79,6 +78,8 @@
       <object>objects\obj_UI_Element</object>
       <object>objects\obj_Controller_Button</object>
       <object>objects\obj_Controller_Selection</object>
+      <object>objects\obj_Timer</object>
+      <object>objects\obj_Score</object>
     </objects>
     <objects name="Walls">
       <object>objects\obj_Wall</object>

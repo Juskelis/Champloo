@@ -76,7 +76,7 @@ with(obj_Controller_Selection)
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -93,7 +93,7 @@ with(obj_Controller_Selection)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///draw label to position
+            <string>///draw at center
 draw_set_font(our_font);
 draw_set_color(our_color);
 draw_set_halign(fa_center);

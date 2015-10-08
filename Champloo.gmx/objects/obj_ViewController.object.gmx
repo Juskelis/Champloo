@@ -29,8 +29,8 @@
 x = room_width/2;
 y = room_height/2;
 
-original_width = view_wview;
-original_height = view_hview;
+original_width = view_wport;
+original_height = view_hport;
 
 min_size = 0.5;
 
@@ -69,6 +69,10 @@ var count = instance_number(obj_Player);
 
 if(count &gt; 0)
 {
+    //update default scale
+    original_width = view_wport;
+    original_height = view_hport;
+    
     //find bounds
     min_x = room_width + 1;
     max_x = -1;
