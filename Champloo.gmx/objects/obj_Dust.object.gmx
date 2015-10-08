@@ -26,30 +26,10 @@
           <argument>
             <kind>1</kind>
             <string>///create variables
-movespeed = random_range(0.1, 0.5);
-movedirection = random(360);
-directionvariance = 5;
+movespeed = random_range(0.5, 1);
+movedirection = random_range(225 - 10,225 + 10);
+directionvariance = 0;
 </string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>112</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_wrap</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>4</kind>
-            <string>2</string>
           </argument>
         </arguments>
       </action>
@@ -75,6 +55,30 @@ directionvariance = 5;
 movedirection += random_range(-directionvariance, directionvariance);
 x += lengthdir_x(movespeed, movedirection)*global.timescale;
 y += lengthdir_y(movespeed, movedirection)*global.timescale;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///move back to the top
+move_wrap(true,true,0);
 </string>
           </argument>
         </arguments>
