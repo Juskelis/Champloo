@@ -792,7 +792,7 @@ if(throwing)
           <argument>
             <kind>1</kind>
             <string>///dash
-if(!attacking)
+if(!attacking)// &amp;&amp; false)
 {
     if(gamepad_button_check_pressed(player_number, gp_face3))
     {
@@ -906,7 +906,7 @@ else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawn
           <argument>
             <kind>1</kind>
             <string>///check if I lost
-if(!respawning &amp;&amp; !other.respawning)
+if(!respawning &amp;&amp; !other.respawning)// &amp;&amp; false)
 {
     if(other.y &lt; y - sprite_height/4)
     {

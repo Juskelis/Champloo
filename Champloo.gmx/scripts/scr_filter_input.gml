@@ -7,7 +7,7 @@
         
 */
 
-if(true || attacking || throwing || !has_sword)
+if(attacking || throwing || !has_sword || true)
 {
     key_block = false;
     key_attack_normal = false;
