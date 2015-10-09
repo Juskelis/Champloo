@@ -1,4 +1,13 @@
-if(attacking || throwing || !has_sword)
+/*
+    flags/states:
+        swinging (attacking)
+        recharging attack
+        blocking
+        coming out of block (can block again, but cannot attack)
+        
+*/
+
+if(true || attacking || throwing || !has_sword)
 {
     key_block = false;
     key_attack_normal = false;

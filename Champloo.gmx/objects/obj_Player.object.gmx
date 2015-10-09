@@ -260,12 +260,13 @@ block_slow = false;
 
 scr_set_timescale(1, 0);
 
-var attack_dir = 90 - image_xscale*90;
+//var attack_dir = 90 - image_xscale*90;
 
 has_sword = false;
 
 throwing = false;
-/*
+
+var deadzone = 0.1;
 var attack_dir = abs(aim_direction);
 if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
 {
@@ -275,7 +276,7 @@ if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
         attack_dir += 180;
     }
 }
-*/
+
 var thrown = instance_create(x,y,obj_ThrownSword);
 with(thrown)
 {
@@ -558,7 +559,7 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword &amp;&amp; !block_slow
             <string>///throw sword
 if(key_shoot_press &amp;&amp; has_sword &amp;&amp; !throwing)
 {
-    alarm[3] = room_speed;
+    alarm[3] = 1;//room_speed;
     //event_perform(ev_alarm, 3);
     
     throwing = true;
@@ -849,6 +850,62 @@ else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawn
     }
     spurt_direction = point_direction(x,y, other.x, other.y);
     scr_spawn_blood(random_range(30,60), 0, 180);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Player">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check if I lost
+if(!respawning &amp;&amp; !other.respawning)
+{
+    if(other.y &lt; y - sprite_height/4)
+    {
+        //they are above us enough to count as a loss
+        respawning = true;
+        alarm[0] = death_time * room_speed;
+        var othernum = other.player_number;
+        with(obj_Score)
+        {
+            scores[othernum]++;
+        }
+        spurt_direction = (point_direction(x,y,other.x,other.y)*3
+                            + point_direction(other.x,other.y,x,y))/4;
+        
+        if(state == States.Normal)
+            spurt_direction = spurt_direction%180;
+        scr_spawn_blood(random_range(20,30), random(360), 180);
+    }
+    else if(other.y &gt; y + sprite_height/4)
+    {
+        //we win
+        vsp = -jumpspeed;
+    }
+    else
+    {
+        //they are in the window between win/loss
+        var my_push_dir = point_direction(other.x,other.y,x,y);
+        var force_amount = maxspeed/2;
+        force_x = lengthdir_x(force_amount, my_push_dir);
+        force_y = lengthdir_y(force_amount, my_push_dir);
+    }
 }
 </string>
           </argument>
