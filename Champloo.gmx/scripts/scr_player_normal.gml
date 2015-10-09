@@ -31,17 +31,6 @@ if(hsp != 0)
 
 if(key_jump)
 {
-    /*
-    if(false && abs(horizontal_amount) + abs(vertical_amount) > jumping_deadzone)
-    {
-        var dir = aim_direction;
-        hsp = lengthdir_x(jumpspeed*(1/global.timescale), dir);
-        
-        if(dir > 270) dir -= 360; //mapping from -180 to 180
-        vsp = lengthdir_y(jumpspeed*(1/global.timescale), (dir+90)/2); //average between normal and dir
-    }
-    else
-    */
     vsp = -jumpspeed;
         
     jump_input_time = 0;
