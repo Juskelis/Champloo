@@ -800,7 +800,7 @@ if(!attacking)// &amp;&amp; false)
         vsp = lengthdir_y(maxspeed, aim_direction);
         
         attacking = true;
-        alarm[1] = 2 * room_speed;
+        alarm[1] = 0.25 * room_speed;
     }
 }
 </string>
