@@ -1,22 +1,79 @@
-if(place_meeting(x+sign(hsp),y, obj_Wall) || place_meeting(x + hsp, y, obj_Wall))
-{
-    while(!place_meeting(x + sign(hsp), y, obj_Wall))
-    {
-        x+=sign(hsp);
-    }
-    hsp = 0;
-    force_x = 0;
-}
-x += hsp*global.timescale;
+scr_apply_forces();
 
-prev_vsp = vsp;
-if(place_meeting(x,y+sign(vsp), obj_Wall) || place_meeting(x, y + vsp, obj_Wall))
+repeat(abs(hsp))
 {
-    while(!place_meeting(x, y + sign(vsp), obj_Wall))
+    if(!place_meeting(x + sign(hsp), y, obj_Wall)
+        && !place_meeting(x + sign(hsp), y, obj_Player))
+    {
+        x += sign(hsp);
+    }
+    else
+    {
+        if(place_meeting(x + sign(hsp), y, obj_Player))
+        {
+            var other_player = instance_place(x + sign(hsp), y, obj_Player);
+            if(!other_player.respawning)
+                force_x = -sign(hsp) * maxspeed;
+            with(other_player)
+            {
+                force_x = -other.force_x;
+            }
+        }
+        else
+        {
+            hsp = 0;
+            force_x = 0;
+        }
+        break;
+    }
+}
+
+repeat(abs(vsp))
+{
+    if(!place_meeting(x, y + sign(vsp), obj_Wall)
+        && !place_meeting(x, y + sign(vsp), obj_Player))
     {
         y += sign(vsp);
     }
-    vsp = 0;
-    force_y = 0;
+    else
+    {
+        if(place_meeting(x, y + sign(vsp), obj_Player))
+        {
+            var other_player = instance_place(x, y + sign(vsp), obj_Player);
+            if(!other_player.respawning)
+            {
+                if(y < other_player.y)
+                {
+                    //win
+                    vsp = -jumpspeed;
+                    with(other_player)
+                    {
+                        respawning = true;
+                        alarm[0] = death_time * room_speed;
+                        spurt_direction = (point_direction(x,y,other.x,other.y)*3
+                            + point_direction(other.x, other.y, x,y))/4;
+                        
+                        if(state == States.Normal)
+                            spurt_direction = spurt_direction%180;
+                        scr_spawn_blood(random_range(20,30), random(360), 180);
+                    }
+                    
+                    with(obj_Score)
+                    {
+                        scores[other.player_number]++;
+                    }
+                }
+                else
+                {
+                    //lose
+                }
+            }
+        }
+        else
+        {
+            vsp = 0;
+            force_y = 0;
+        }
+        break;
+    }
 }
-y += vsp*global.timescale;

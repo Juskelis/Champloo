@@ -908,7 +908,13 @@ else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawn
             <string>///check if I lost
 if(!respawning &amp;&amp; !other.respawning)// &amp;&amp; false)
 {
-    if(other.y &lt; y - sprite_height/4)
+    var cardinal_dir = scr_quadrant(other, sprite_width/6);
+    if(vsp &gt; 0 &amp;&amp; (cardinal_dir == 8 || cardinal_dir == 0 || cardinal_dir == 1))
+    {
+        //we win
+        vsp = -jumpspeed;
+    }
+    else if(other.vsp &gt; 0 &amp;&amp; (cardinal_dir == 3 || cardinal_dir == 4 || cardinal_dir == 5))
     {
         //they are above us enough to count as a loss
         respawning = true;
@@ -924,11 +930,6 @@ if(!respawning &amp;&amp; !other.respawning)// &amp;&amp; false)
         if(state == States.Normal)
             spurt_direction = spurt_direction%180;
         scr_spawn_blood(random_range(20,30), random(360), 180);
-    }
-    else if(other.y &gt; y + sprite_height/4)
-    {
-        //we win
-        vsp = -jumpspeed;
     }
     else
     {
