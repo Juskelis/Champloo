@@ -1,7 +1,11 @@
 scr_get_input();
 
 move = key_left + key_right;
-vsp = min(vsp + grav*global.timescale, maxgrav*global.timescale);
+vsp = clamp(
+    vsp + grav*global.timescale,
+    -maxgrav*global.timescale,
+    maxgrav*global.timescale
+);
 
 hsp = clamp(
     hsp + move*acceleration*global.timescale,

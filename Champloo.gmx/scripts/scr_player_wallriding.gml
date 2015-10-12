@@ -1,7 +1,11 @@
 scr_get_input();
 
 move = key_left + key_right;
-vsp = min(vsp + grav*global.timescale, (maxgrav*global.timescale)/2);
+vsp = clamp(
+    vsp + grav*global.timescale,
+    -(maxgrav*global.timescale)/2,
+    (maxgrav*global.timescale)/2
+);
 
 var wall_left = place_meeting(x - 1, y, obj_Wall);
 var wall_right = place_meeting(x + 1, y, obj_Wall);
