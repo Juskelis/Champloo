@@ -384,6 +384,9 @@ attacking = false;
 hsp = 0;
 vsp = 0;
 
+force_x = 0;
+force_y = 0;
+
 var spawn = scr_furthest_spawn(self);
 x = spawn.x;
 y = spawn.y;
@@ -488,7 +491,77 @@ if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///swing sword
+            <string>///dash
+if(!attacking)// &amp;&amp; false)
+{
+    if(gamepad_button_check_pressed(player_number, gp_face3))
+    {
+        force_x = lengthdir_x(maxspeed, aim_direction);
+        force_y = lengthdir_y(maxspeed, aim_direction);
+        
+        attacking = true;
+        alarm[1] = 0.25 * room_speed;
+        scr_create_many(obj_FootDust, bbox_left, bbox_top, bbox_right, bbox_bottom, 10);
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>408</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>-1</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_if</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>0</kind>
+            <string>false</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>422</id>
+        <kind>1</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///commented out events (in order)
+
+
+///swing sword
 var deadzone = 0.1;
 
 if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword &amp;&amp; !block_slow)
@@ -532,27 +605,8 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword &amp;&amp; !block_slow
         alarm[1] = my_sword.attack_delay * room_speed;
     }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///throw sword
+
+///throw sword
 if(key_shoot_press &amp;&amp; has_sword &amp;&amp; !throwing)
 {
     alarm[3] = 1;//room_speed;
@@ -560,27 +614,38 @@ if(key_shoot_press &amp;&amp; has_sword &amp;&amp; !throwing)
     
     throwing = true;
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///deplete blocking
+
+///check for slow mo for throwing
+if(throwing)
+{
+    var slowdown = false;
+    scr_set_timescale(1, 0);
+    //check for anyone in the way
+    var endx = x + room_width*image_xscale;
+    var endy = y;
+    with(obj_Player)
+    {
+        if(id != other.id)
+        {
+            var dst = sqrt(scr_distance_to_line_segment_squared(
+                other.x, other.y,
+                endx, endy,
+                x,y
+            ));
+            if(dst &lt; abs(sprite_width*2))
+            {
+                slowdown = true;
+            }
+        }
+    }
+    
+    if(slowdown)
+    {
+        scr_set_timescale(0.25, 0.25);
+    }
+}
+
+///deplete blocking
 if(key_block)
 {
     block_slow = true;
@@ -591,28 +656,8 @@ else
 {
     block_level = min(block_level + blocking_grow_step*global.timescale, max_block);
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///check blocking for hitwindow
 
+///check blocking for hitwindow
 if(hit != noone)
 {
     var blocked = scr_block_check(hit.damage);
@@ -621,27 +666,8 @@ if(hit != noone)
         hit = noone;
     }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///check if KLANG happened
+
+///check if KLANG happened
 if(hit != noone)
 {
     if(hit.player.hit != noone)
@@ -694,27 +720,8 @@ if(hit != noone)
         }
     }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///spawn blood
+
+///spawn blood
 if(respawning)
     scr_spawn_blood(1, spurt_direction, scatter);
 </string>
@@ -723,85 +730,17 @@ if(respawning)
       </action>
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>424</id>
+        <kind>2</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
         <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///check for slow mo for throwing
-
-if(throwing)
-{
-    var slowdown = false;
-    scr_set_timescale(1, 0);
-    //check for anyone in the way
-    var endx = x + room_width*image_xscale;
-    var endy = y;
-    with(obj_Player)
-    {
-        if(id != other.id)
-        {
-            var dst = sqrt(scr_distance_to_line_segment_squared(
-                other.x, other.y,
-                endx, endy,
-                x,y
-            ));
-            if(dst &lt; abs(sprite_width*2))
-            {
-                slowdown = true;
-            }
-        }
-    }
-    
-    if(slowdown)
-    {
-        scr_set_timescale(0.25, 0.25);
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///dash
-if(!attacking)// &amp;&amp; false)
-{
-    if(gamepad_button_check_pressed(player_number, gp_face3))
-    {
-        force_x = lengthdir_x(maxspeed, aim_direction);
-        vsp = lengthdir_y(maxspeed, aim_direction);
-        
-        attacking = true;
-        alarm[1] = 0.25 * room_speed;
-    }
-}
-</string>
-          </argument>
-        </arguments>
       </action>
     </event>
     <event eventtype="4" ename="obj_Sword">
@@ -901,7 +840,9 @@ else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawn
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///check if I lost
+            <string>///check if I lost (commented out)
+
+/*
 if(!respawning &amp;&amp; !other.respawning)// &amp;&amp; false)
 {
     var cardinal_dir = scr_quadrant(other, sprite_width/6);
@@ -936,6 +877,7 @@ if(!respawning &amp;&amp; !other.respawning)// &amp;&amp; false)
         force_y = lengthdir_y(force_amount, my_push_dir);
     }
 }
+*/
 </string>
           </argument>
         </arguments>
