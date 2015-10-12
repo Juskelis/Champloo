@@ -65,7 +65,7 @@ movement_deadzone = 0.5
 //external forces (explosion blasts, etc)
 force_x = 0;
 force_y = 0;
-force_decay = 0.5;
+force_decay = 3;
 
 //ground settings
 ground_maxspeed = maxspeed*0.65;
@@ -423,10 +423,6 @@ if(!respawning)
         case States.InAir: scr_player_inair(); break;
         case States.WallRiding: scr_player_wallriding(); break;
     }
-    
-    //decay forces
-    force_x = scr_approach(force_x, 0, force_decay);
-    force_y = scr_approach(force_y, 0, force_decay);
     
     //change image scale based on direction
     var previous_xscale = image_xscale

@@ -32,7 +32,7 @@ y = room_height/2;
 original_width = view_wport;
 original_height = view_hport;
 
-min_size = 0.5;
+min_size = 0.3;
 
 max_width = original_width;
 max_height = original_height;
