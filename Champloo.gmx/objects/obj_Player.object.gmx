@@ -504,7 +504,9 @@ if(!respawning)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///check for foot dust
+            <string>///check for effects
+
+//foot dust
 if(!previously_on_ground &amp;&amp; place_meeting(x,y+1, obj_Wall))
 {
     scr_create_many(obj_FootDust, bbox_left, bbox_bottom, bbox_right, bbox_bottom, 5); 
@@ -522,6 +524,13 @@ if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed)
         current_frame -= footstep_frames;
     }
     current_frame++;
+}
+
+
+//blood
+if(respawning)
+{
+    scr_spawn_blood(random_range(1,2), 0, 180);
 }
 </string>
           </argument>
