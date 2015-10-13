@@ -9,6 +9,35 @@ repeat(abs(hsp))
     }
     else
     {
+    
+        var hit_players = scr_player_collision(x + sign(hsp), y);
+        var stopping = place_meeting(x + sign(hsp), y, obj_Wall);
+        if(array_length_1d(hit_players) > 0)
+        {
+            var other_player;
+            for(var i = 0; i < array_length_1d(hit_players); i++)
+            {
+                other_player = hit_players[i];
+                if(dash_force_x != 0 || dash_force_y != 0)
+                {
+                    with(other_player)
+                    {
+                        stunned = true;
+                        alarm[2] = 5*room_speed;
+                    }
+                }
+            }
+            stopping = true;
+        }
+        
+        if(stopping)
+        {
+            hsp = 0;
+            force_x = 0;
+            break;
+        }
+        
+        /*
         if(place_meeting(x + sign(hsp), y, obj_Player))
         {
             var other_player = instance_place(x + sign(hsp), y, obj_Player);
@@ -24,7 +53,7 @@ repeat(abs(hsp))
             hsp = 0;
             force_x = 0;
         }
-        break;
+        */
     }
 }
 

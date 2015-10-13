@@ -38,3 +38,8 @@ if(key_block)
     key_right = 0;
     key_left = 0;
 }
+
+if(stunned)
+{
+    key_jump = false;
+}
