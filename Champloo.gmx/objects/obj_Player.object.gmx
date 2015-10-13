@@ -214,6 +214,34 @@ current_frame = 0;
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///create dash variables
+dash_force = maxspeed*1.5;
+can_dash = false;
+dash_direction = 0;
+
+dash_force_x = 0;
+dash_force_y = 0;
+dash_decay = 5;
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="2" enumb="4">
       <action>
@@ -353,8 +381,9 @@ if(hit != noone)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///turn off attacking
+            <string>///turn off dashing
 attacking = false;
+dashing = false;
 </string>
           </argument>
         </arguments>
@@ -492,17 +521,23 @@ if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed)
           <argument>
             <kind>1</kind>
             <string>///dash
-if(!attacking)// &amp;&amp; false)
+if(can_dash)// &amp;&amp; false)
 {
     if(gamepad_button_check_pressed(player_number, gp_face3))
     {
-        force_x = lengthdir_x(maxspeed, aim_direction);
-        force_y = lengthdir_y(maxspeed, aim_direction);
+        dash_direction = aim_direction;
+        dash_force_x = lengthdir_x(maxspeed, aim_direction);
+        dash_force_y = lengthdir_y(maxspeed, aim_direction);
         
-        attacking = true;
-        alarm[1] = 0.25 * room_speed;
+        can_dash = false;
+        //alarm[1] = 0.25 * room_speed;
         scr_create_many(obj_FootDust, bbox_left, bbox_top, bbox_right, bbox_bottom, 10);
     }
+}
+
+if(dash_force_x == 0 &amp;&amp; dash_force_y == 0)
+{
+    can_dash = true;
 }
 </string>
           </argument>
