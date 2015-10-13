@@ -544,7 +544,7 @@ if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed)
           <argument>
             <kind>1</kind>
             <string>///dash
-if(can_dash &amp;&amp; !stunned)// &amp;&amp; false)
+if(can_dash)// &amp;&amp; !stunned)// &amp;&amp; false)
 {
     if(gamepad_button_check_pressed(player_number, gp_face3))
     {

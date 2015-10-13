@@ -39,7 +39,7 @@ if(key_block)
     key_left = 0;
 }
 
-if(stunned)
+if(stunned && false)
 {
     key_jump = false;
 }
