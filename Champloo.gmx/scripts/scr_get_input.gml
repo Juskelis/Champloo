@@ -12,7 +12,9 @@ key_block = gamepad_button_check(player_number, gp_shoulderr);
 
 key_attack_normal = gamepad_button_check_pressed(player_number, gp_face3);
 
-key_shoot_press = gamepad_button_check_pressed(player_number, gp_face4);
-key_shoot_release = gamepad_button_check_released(player_number, gp_face4) ;
+key_shoot_press = gamepad_button_check_pressed(player_number, gp_shoulderl);
+key_shoot_release = gamepad_button_check_released(player_number, gp_shoulderl);
+
+key_dash = gamepad_button_check_pressed(player_number, gp_face4);
 
 scr_filter_input();

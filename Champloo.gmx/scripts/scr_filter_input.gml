@@ -7,14 +7,14 @@
         
 */
 
-if(attacking || throwing || !has_sword || true)
+if(attacking || throwing || !has_sword)// || true)
 {
     key_block = false;
     key_attack_normal = false;
     key_shoot_press = false;
     key_shoot_release = false;
 }
-key_shoot_press = false;
+//key_shoot_press = false;
 
 
 if(key_right < movement_deadzone) key_right = 0;
@@ -39,7 +39,9 @@ if(key_block)
     key_left = 0;
 }
 
-if(stunned && false)
+if(stunned)// && false)
 {
     key_jump = false;
+    key_right = 0;
+    key_left = 0;
 }
