@@ -120,6 +120,7 @@ if(movespeed &gt; 0)
         x += lengthdir_x(sprite_width/4, attack_direction);
         y += lengthdir_y(sprite_width/4, attack_direction);
         movespeed = 0;
+        alarm[0] = decay_time * room_speed;
     }
     else
     {
