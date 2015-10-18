@@ -41,6 +41,7 @@
     <scripts name="Helpers">
       <script>scripts\scr_block_check.gml</script>
       <script>scripts\scr_furthest_spawn.gml</script>
+      <script>scripts\scr_furthest_spawn_all.gml</script>
       <script>scripts\scr_spawn_blood.gml</script>
       <script>scripts\scr_set_timescale.gml</script>
       <script>scripts\scr_create_many.gml</script>
@@ -48,6 +49,7 @@
       <script>scripts\scr_touching.gml</script>
       <script>scripts\scr_quadrant.gml</script>
       <script>scripts\scr_player_collision.gml</script>
+      <script>scripts\scr_spawn_player.gml</script>
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>
@@ -73,6 +75,7 @@
       <object>objects\obj_Sword</object>
       <object>objects\obj_Spawn</object>
       <object>objects\obj_StaticSword</object>
+      <object>objects\obj_Player_Spawner</object>
     </objects>
     <objects name="Nonvisual">
       <object>objects\obj_Timescale</object>
