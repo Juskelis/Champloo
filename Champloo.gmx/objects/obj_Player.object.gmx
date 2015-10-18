@@ -498,7 +498,7 @@ hit = noone;
           <argument>
             <kind>1</kind>
             <string>///movement
-if(!respawning)
+if(!respawning &amp;&amp; !my_sword.active)
 {
     switch(state)
     {
