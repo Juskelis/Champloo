@@ -47,6 +47,7 @@ if(key_jump)
             hsp = lengthdir_x(jumpspeed, aim_direction);
             vsp = lengthdir_y(jumpspeed, aim_direction);
         }
+        audio_play_sound(snd_Jump, 0, false);
     }
     jump_input_time = 0;
 }

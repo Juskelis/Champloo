@@ -38,6 +38,8 @@ if(key_jump)
     vsp = -jumpspeed;
         
     jump_input_time = 0;
+    
+    audio_play_sound(snd_Jump, 0, false);
 }
 
 scr_move_collide();

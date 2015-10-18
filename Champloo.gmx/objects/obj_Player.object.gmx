@@ -386,7 +386,7 @@ with(thrown)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///validate hit (turned off)
+            <string>///validate hit
 if(hit != noone)// &amp;&amp; false)
 {
     if(!respawning)
@@ -663,6 +663,7 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword &amp;&amp; !block_slow
         }
         attacking = true;
         alarm[1] = my_sword.attack_delay * room_speed;
+        audio_play_sound(snd_Sword_Swipe, 0, false);
     }
 }
 
