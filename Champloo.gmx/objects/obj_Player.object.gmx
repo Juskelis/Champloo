@@ -54,6 +54,8 @@ image_speed = 0;
 respawning = false;
 stunned = false;
 
+stun_delay = 0.5;
+
 state = States.Normal;
 
 grav = 0.75*(30/room_speed);
@@ -458,6 +460,7 @@ attacking = false;
 respawning = false;
 has_sword = true;
 attacking = false;
+stunned = false;
 hsp = 0;
 vsp = 0;
 
@@ -851,15 +854,25 @@ if(!has_sword &amp;&amp; other.movespeed &lt;= 0)
 }
 else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawning)
 {
-    respawning = true;
-    alarm[0] = death_time * room_speed;
-    var othernum = other.player.player_number;
-    with(obj_Score)
+    if(!scr_block_check(0))
     {
-        scores[othernum]++;
+        respawning = true;
+        alarm[0] = death_time * room_speed;
+        var othernum = other.player.player_number;
+        with(obj_Score)
+        {
+            scores[othernum]++;
+        }
+        spurt_direction = point_direction(x,y, other.x, other.y);
+        scr_spawn_blood(random_range(30,60), 0, 180);
     }
-    spurt_direction = point_direction(x,y, other.x, other.y);
-    scr_spawn_blood(random_range(30,60), 0, 180);
+    else
+    {
+        with(other)
+        {
+            instance_destroy();
+        }
+    }
 }
 </string>
           </argument>

@@ -8,13 +8,13 @@ key_left = min(horizontal_amount, 0);
 key_jump = gamepad_button_check_pressed(player_number, gp_face1);
 key_jump_released = gamepad_button_check_released(player_number, gp_face1);
 
-key_block = gamepad_button_check(player_number, gp_shoulderr);
+key_block = gamepad_button_check(player_number, gp_shoulderl);
 
-key_attack_normal = gamepad_button_check_pressed(player_number, gp_face3);
+key_attack_normal = gamepad_button_check_pressed(player_number, gp_shoulderr);
 
-key_shoot_press = gamepad_button_check_pressed(player_number, gp_shoulderl);
-key_shoot_release = gamepad_button_check_released(player_number, gp_shoulderl);
+key_shoot_press = gamepad_button_check_pressed(player_number, gp_face4);
+key_shoot_release = gamepad_button_check_released(player_number, gp_face4);
 
-key_dash = gamepad_button_check_pressed(player_number, gp_face4);
+key_dash = gamepad_button_check_pressed(player_number, gp_face3);
 
 scr_filter_input();

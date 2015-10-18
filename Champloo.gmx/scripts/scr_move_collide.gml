@@ -22,13 +22,13 @@ repeat(abs(hsp))
                     with(other_player)
                     {
                         stunned = true;
-                        alarm[6] = 5*room_speed;
+                        alarm[6] = stun_delay * room_speed;
                     }
                 }
                 else if(!other_player.can_dash)
                 {
                     stunned = true;
-                    alarm[6] = 5 * room_speed;
+                    alarm[6] = stun_delay * room_speed;
                 }
                 
                 with(other_player)
