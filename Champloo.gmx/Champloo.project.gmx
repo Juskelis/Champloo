@@ -6,7 +6,10 @@
   <NewExtensions/>
   <sounds name="sound">
     <sound>sound\snd_Jump</sound>
+    <sound>sound\snd_Jump_Small</sound>
     <sound>sound\snd_Sword_Swipe</sound>
+    <sound>sound\snd_Footstep</sound>
+    <sound>sound\snd_Wall_Slide</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_Player</sprite>

@@ -35,6 +35,7 @@ if(key_jump)
     {
         hsp = (-walldir)*maxspeed*0.5;
         vsp = -jumpspeed;
+        audio_play_sound(snd_Jump_Small, 0, false);
     }
     else
     {
