@@ -42,6 +42,11 @@ if(key_jump)
     audio_play_sound(snd_Jump, 0, false);
 }
 
+if(abs(dash_force_x) == 0 && abs(dash_force_y) == 0)
+{
+    available_dashes = max_dashes;
+}
+
 scr_move_collide();
 
 ///check state

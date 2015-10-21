@@ -239,6 +239,8 @@ current_frame_sound = 0;
             <string>///create dash variables
 dash_force = maxspeed*1.5;
 can_dash = true;
+max_dashes = 3;
+available_dashes = max_dashes;
 dash_direction = 0;
 
 dash_force_x = 0;
@@ -636,7 +638,7 @@ if(respawning)
           <argument>
             <kind>1</kind>
             <string>///dash
-if(can_dash &amp;&amp; key_dash &amp;&amp; !stunned)// &amp;&amp; false)
+if(can_dash &amp;&amp; key_dash &amp;&amp; !stunned &amp;&amp; available_dashes &gt; 0)// &amp;&amp; false)
 {
     dash_direction = aim_direction;
     dash_force_x = lengthdir_x(maxspeed, aim_direction);
@@ -645,6 +647,8 @@ if(can_dash &amp;&amp; key_dash &amp;&amp; !stunned)// &amp;&amp; false)
     can_dash = false;
     alarm[5] = 0.25 * room_speed;
     scr_create_many(obj_FootDust, bbox_left, bbox_top, bbox_right, bbox_bottom, 10);
+    
+    available_dashes -= 1;
 }
 
 /*
