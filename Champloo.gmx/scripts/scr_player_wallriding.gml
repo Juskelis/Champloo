@@ -53,6 +53,11 @@ if(key_jump)
     jump_input_time = 0;
 }
 
+if(abs(dash_force_x) == 0 && abs(dash_force_y) == 0)
+{
+    available_dashes = max_dashes;
+}
+
 scr_move_collide();
 
 //get next state
