@@ -55,7 +55,7 @@ if(key_jump)
 
 if(abs(dash_force_x) == 0 && abs(dash_force_y) == 0)
 {
-    available_dashes = max_dashes;
+    available_dashes = max(available_dashes, 1);
 }
 
 scr_move_collide();
