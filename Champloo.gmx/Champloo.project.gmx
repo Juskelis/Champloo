@@ -10,6 +10,7 @@
     <sound>sound\snd_Sword_Swipe</sound>
     <sound>sound\snd_Footstep</sound>
     <sound>sound\snd_Wall_Slide</sound>
+    <sound>sound\snd_Dash</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_Player</sprite>
