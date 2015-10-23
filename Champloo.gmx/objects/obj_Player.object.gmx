@@ -1176,6 +1176,40 @@ if(attacking)
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw dash count
+var indicator_spacing = abs(sprite_width/max_dashes);
+for(var i = 0; i &lt; max_dashes; i++)
+{
+    if(available_dashes &gt; i)
+        draw_set_colour(c_white);
+    else
+        draw_set_colour(c_black);
+    draw_circle(
+        x - abs(sprite_width/2) + indicator_spacing/2 + i*indicator_spacing,
+        y - abs(sprite_height), indicator_spacing/2,
+        false
+    );
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
   </events>
   <PhysicsObject>0</PhysicsObject>
