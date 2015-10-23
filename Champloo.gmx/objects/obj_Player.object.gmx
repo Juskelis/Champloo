@@ -663,8 +663,16 @@ if(respawning)
 if(can_dash &amp;&amp; key_dash &amp;&amp; !stunned &amp;&amp; available_dashes &gt; 0)// &amp;&amp; false)
 {
     dash_direction = aim_direction;
-    dash_force_x = lengthdir_x(maxspeed, aim_direction);
-    dash_force_y = lengthdir_y(maxspeed, aim_direction);
+    if(point_distance(0,0,horizontal_amount,vertical_amount) &gt; 0.2)
+    {
+        dash_force_x = lengthdir_x(maxspeed, aim_direction);
+        dash_force_y = lengthdir_y(maxspeed, aim_direction);
+    }
+    else
+    {
+        dash_force_x = maxspeed * image_xscale;
+        dash_force_y = 0;
+    }
     
     can_dash = false;
     alarm[5] = 0.25 * room_speed;
