@@ -92,7 +92,6 @@ if(surface_exists(surf))
 }
 else
 {
-    show_debug_message("oh no");
     //this happens when you resize the screen
     //surf = surface_create(room_width, room_height);
     event_perform(ev_create, 0);

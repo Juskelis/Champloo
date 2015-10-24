@@ -1,7 +1,11 @@
 scr_get_input();
 
 move = key_left + key_right;
-vsp = min(vsp + grav*global.timescale, (maxgrav*global.timescale)/2);
+vsp = clamp(
+    vsp + grav*global.timescale,
+    -(maxgrav*global.timescale)/2,
+    (maxgrav*global.timescale)/2
+);
 
 var wall_left = place_meeting(x - 1, y, obj_Wall);
 var wall_right = place_meeting(x + 1, y, obj_Wall);
@@ -31,6 +35,7 @@ if(key_jump)
     {
         hsp = (-walldir)*maxspeed*0.5;
         vsp = -jumpspeed;
+        audio_play_sound(snd_Jump_Small, 0, false);
     }
     else
     {
@@ -43,18 +48,15 @@ if(key_jump)
             hsp = lengthdir_x(jumpspeed, aim_direction);
             vsp = lengthdir_y(jumpspeed, aim_direction);
         }
+        audio_play_sound(snd_Jump, 0, false);
     }
     jump_input_time = 0;
 }
 
-//apply forces
-vsp = min(vsp + force_y*global.timescale, maxgrav*global.timescale);
-
-hsp = clamp(
-    hsp + force_x*global.timescale,
-    -maxspeed*global.timescale,
-    maxspeed*global.timescale
-);
+if(abs(dash_force_x) == 0 && abs(dash_force_y) == 0)
+{
+    available_dashes = max(available_dashes, 1);
+}
 
 scr_move_collide();
 

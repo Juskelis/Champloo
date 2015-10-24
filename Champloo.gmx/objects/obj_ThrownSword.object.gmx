@@ -29,14 +29,34 @@
 attack_direction = 0;
 player = noone;
 
-movespeed = 40; // delta change PER STEP
+movespeed = 20; // delta change PER STEP
 
 opacity = 1;
 opacity_decay_time = 1; // time in seconds
 opacity_decay_step = 1/(opacity_decay_time*room_speed);
+
+decay_time = 2;//how long (in seconds) to stay stuck in a wall
+
+spin = 0;
 </string>
           </argument>
         </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>203</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_kill_object</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="3" enumb="0">
@@ -76,6 +96,7 @@ if(movespeed &gt; 0)
         var dy = lengthdir_y(1, attack_direction);
         while(!place_meeting(x + dx, y + dy, obj_Wall))
         {
+            /*
             with(obj_Player)
             {
                 if(other.player != id &amp;&amp; !respawning)
@@ -92,12 +113,14 @@ if(movespeed &gt; 0)
                     }
                 }
             }
+            */
             x += dx;
             y += dy;
         }
         x += lengthdir_x(sprite_width/4, attack_direction);
         y += lengthdir_y(sprite_width/4, attack_direction);
         movespeed = 0;
+        alarm[0] = decay_time * room_speed;
     }
     else
     {
@@ -144,6 +167,7 @@ if(movespeed &gt; 0)
           <argument>
             <kind>1</kind>
             <string>///draw line
+
 if(opacity &gt; 0)
 {
     draw_set_alpha(opacity);
@@ -151,23 +175,40 @@ if(opacity &gt; 0)
     draw_set_alpha(1);
     opacity -= opacity_decay_step;
 }
+
 </string>
           </argument>
         </arguments>
       </action>
       <action>
         <libid>1</libid>
-        <id>500</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
+        <useapplyto>-1</useapplyto>
         <exetype>2</exetype>
         <functionname></functionname>
-        <codestring>draw_self();</codestring>
+        <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw spun sprite
+if(movespeed &gt; 0)
+{
+    spin += 45;
+    draw_sprite_ext(sprite_index, image_index, x,y, image_xscale, image_yscale, spin, c_white, 1);
+}
+else
+{
+    draw_self();
+}
+</string>
+          </argument>
+        </arguments>
       </action>
     </event>
   </events>

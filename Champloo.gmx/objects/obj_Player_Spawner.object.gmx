@@ -2,8 +2,8 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
-  <depth>-1000</depth>
+  <visible>0</visible>
+  <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -26,25 +26,23 @@
           <argument>
             <kind>1</kind>
             <string>///create variables
-width = 300;
-height = 20;
+//pool is an array of timers
+//  each index indicated a player's respawn time
+//  if they are not spawned already
+pool = noone;
 
-anchor_x = 0.5;
-anchor_y = 0.5;
+var num_players = 2;
 
-//where on the screen, from 0,0 (top left) to 1,1 (bottom_right)
-relative_x = x/display_get_gui_width();
-relative_y = y/display_get_gui_height();
-
-on_select = scr_example;
-on_select_args[0] = "this is a";
-on_select_args[1] = "test";
+for(var i = 0; i &lt; num_players; i++)
+{
+    pool[i] = 0;
+}
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="1" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -61,14 +59,14 @@ on_select_args[1] = "test";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x = display_get_gui_width()*relative_x;
-y = display_get_gui_height()*relative_y;
+            <string>///destroy list
+ds_list_destroy(pool);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="74">
+    <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -85,31 +83,20 @@ y = display_get_gui_height()*relative_y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///set GUI scale
-display_set_gui_size(view_wport, view_hport);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///do nothing!
+            <string>///check for spawning
+with(obj_Player)
+{
+    other.pool[player_number] = -1;
+}
+
+for(var i = 0; i &lt; array_length_1d(pool); i++)
+{
+    if(pool[i] == 0)
+    {
+        scr_spawn_player(i);
+    }
+    pool[i]--;
+}
 </string>
           </argument>
         </arguments>
