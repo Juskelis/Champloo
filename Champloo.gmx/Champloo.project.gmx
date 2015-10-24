@@ -4,11 +4,19 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\snd_Jump</sound>
+    <sound>sound\snd_Jump_Small</sound>
+    <sound>sound\snd_Sword_Swipe</sound>
+    <sound>sound\snd_Footstep</sound>
+    <sound>sound\snd_Wall_Slide</sound>
+    <sound>sound\snd_Dash</sound>
+  </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_Player</sprite>
     <sprite>sprites\spr_Wall</sprite>
     <sprite>sprites\spr_Sword</sprite>
+    <sprite>sprites\spr_SwordHitBox</sprite>
     <sprite>sprites\spr_StaticSword</sprite>
     <sprite>sprites\spr_Dust</sprite>
     <sprite>sprites\spr_Block</sprite>
@@ -20,6 +28,7 @@
       <sprite>sprites\spr_Button_Edge</sprite>
       <sprite>sprites\spr_Selection_Indicator</sprite>
     </sprites>
+    <sprite>sprites\spr_FootDust</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -30,16 +39,21 @@
       <script>scripts\scr_player_normal.gml</script>
       <script>scripts\scr_player_inair.gml</script>
       <script>scripts\scr_player_wallriding.gml</script>
+      <script>scripts\scr_apply_forces.gml</script>
       <script>scripts\scr_move_collide.gml</script>
     </scripts>
     <scripts name="Helpers">
       <script>scripts\scr_block_check.gml</script>
       <script>scripts\scr_furthest_spawn.gml</script>
+      <script>scripts\scr_furthest_spawn_all.gml</script>
       <script>scripts\scr_spawn_blood.gml</script>
       <script>scripts\scr_set_timescale.gml</script>
       <script>scripts\scr_create_many.gml</script>
       <script>scripts\scr_sleep.gml</script>
       <script>scripts\scr_touching.gml</script>
+      <script>scripts\scr_quadrant.gml</script>
+      <script>scripts\scr_player_collision.gml</script>
+      <script>scripts\scr_spawn_player.gml</script>
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>
@@ -64,9 +78,10 @@
       <object>objects\obj_ThrownSword</object>
       <object>objects\obj_Sword</object>
       <object>objects\obj_Spawn</object>
+      <object>objects\obj_StaticSword</object>
+      <object>objects\obj_Player_Spawner</object>
     </objects>
     <objects name="Nonvisual">
-      <object>objects\obj_Score</object>
       <object>objects\obj_Timescale</object>
       <object>objects\obj_Spawner</object>
       <object>objects\obj_Fullscreen</object>
@@ -76,6 +91,8 @@
       <object>objects\obj_UI_Element</object>
       <object>objects\obj_Controller_Button</object>
       <object>objects\obj_Controller_Selection</object>
+      <object>objects\obj_Timer</object>
+      <object>objects\obj_Score</object>
     </objects>
     <objects name="Walls">
       <object>objects\obj_Wall</object>
@@ -86,6 +103,7 @@
       <object>objects\obj_Blood</object>
       <object>objects\obj_BloodSurface</object>
       <object>objects\obj_Flash</object>
+      <object>objects\obj_FootDust</object>
     </objects>
   </objects>
   <rooms name="rooms">

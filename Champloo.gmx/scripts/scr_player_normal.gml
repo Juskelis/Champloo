@@ -1,7 +1,11 @@
 scr_get_input();
 
 move = key_left + key_right;
-vsp = min(vsp + grav*global.timescale, maxgrav*global.timescale);
+vsp = clamp(
+    vsp + grav*global.timescale,
+    -maxgrav*global.timescale,
+    maxgrav*global.timescale
+);
 
 hsp = clamp(
     hsp + move*acceleration*global.timescale,
@@ -31,30 +35,17 @@ if(hsp != 0)
 
 if(key_jump)
 {
-    /*
-    if(false && abs(horizontal_amount) + abs(vertical_amount) > jumping_deadzone)
-    {
-        var dir = aim_direction;
-        hsp = lengthdir_x(jumpspeed*(1/global.timescale), dir);
-        
-        if(dir > 270) dir -= 360; //mapping from -180 to 180
-        vsp = lengthdir_y(jumpspeed*(1/global.timescale), (dir+90)/2); //average between normal and dir
-    }
-    else
-    */
     vsp = -jumpspeed;
         
     jump_input_time = 0;
+    
+    audio_play_sound(snd_Jump, 0, false);
 }
 
-//apply forces
-vsp = min(vsp + force_y*global.timescale, maxgrav*global.timescale);
-hsp = clamp(
-    hsp + force_x*global.timescale,
-    -ground_maxspeed*global.timescale,
-    ground_maxspeed*global.timescale
-);
-
+if(abs(dash_force_x) == 0 && abs(dash_force_y) == 0)
+{
+    available_dashes = max_dashes;
+}
 
 scr_move_collide();
 

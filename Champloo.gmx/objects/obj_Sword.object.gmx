@@ -317,7 +317,7 @@ if(active)
           <argument>
             <kind>1</kind>
             <string>///draw self
-if(active)
+//if(active)
 {
     draw_self();
 }

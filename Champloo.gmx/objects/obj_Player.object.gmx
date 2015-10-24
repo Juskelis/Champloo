@@ -52,6 +52,9 @@ image_speed = 0;
             <kind>1</kind>
             <string>///create movement variables
 respawning = false;
+stunned = false;
+
+stun_delay = 0.5;
 
 state = States.Normal;
 
@@ -65,7 +68,7 @@ movement_deadzone = 0.5
 //external forces (explosion blasts, etc)
 force_x = 0;
 force_y = 0;
-force_decay = 0.5;
+force_decay = 3;
 
 //ground settings
 ground_maxspeed = maxspeed*0.65;
@@ -76,6 +79,8 @@ stopping_friction = acceleration;
 turning_friction = 2*acceleration;
 
 blocking_friction = acceleration/4;
+
+previously_on_ground = false;
 
 //air settings
 air_acceleration = 1*(30/room_speed);
@@ -115,7 +120,7 @@ attacking = false;
 throwing = false;
 has_sword = true;
 
-my_sword = instance_create(x,y, obj_Sword);
+my_sword = instance_create(x,y, obj_StaticSword);
 with(my_sword)
 {
     player = other.id;
@@ -202,9 +207,125 @@ block_window = 0.1*room_speed; //frames for incorrect timing window for blocking
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///blood settings
+            <string>///effects settings
 spurt_direction = 0;
 scatter = 10;
+
+footstep_frames = 0.1*room_speed;
+footstep_frames_sound = 0.2*room_speed;
+footstep_frames_wall = footstep_frames/2;
+current_frame = 0;
+current_frame_sound = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///create dash variables
+dash_force = maxspeed*1.5;
+can_dash = true;
+max_dashes = 3;
+available_dashes = max_dashes;
+dash_direction = 0;
+
+dash_force_x = 0;
+dash_force_y = 0;
+dash_decay = 5;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>with(my_sword)
+{
+    instance_destroy();
+}
+
+with(obj_Player_Spawner)
+{
+    pool[other.player_number] = death_time * room_speed;
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="6">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///turn off stun
+stunned = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///reallow dashing
+can_dash = true;
 </string>
           </argument>
         </arguments>
@@ -255,12 +376,13 @@ block_slow = false;
 
 scr_set_timescale(1, 0);
 
-var attack_dir = 90 - image_xscale*90;
+//var attack_dir = 90 - image_xscale*90;
 
 has_sword = false;
 
 throwing = false;
-/*
+
+var deadzone = 0.1;
 var attack_dir = abs(aim_direction);
 if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
 {
@@ -270,7 +392,7 @@ if(abs(horizontal_amount) + abs(vertical_amount) &lt; deadzone)
         attack_dir += 180;
     }
 }
-*/
+
 var thrown = instance_create(x,y,obj_ThrownSword);
 with(thrown)
 {
@@ -302,7 +424,7 @@ with(thrown)
           <argument>
             <kind>1</kind>
             <string>///validate hit
-if(hit != noone)
+if(hit != noone)// &amp;&amp; false)
 {
     if(!respawning)
     {
@@ -375,8 +497,12 @@ attacking = false;
 respawning = false;
 has_sword = true;
 attacking = false;
+stunned = false;
 hsp = 0;
 vsp = 0;
+
+force_x = 0;
+force_y = 0;
 
 var spawn = scr_furthest_spawn(self);
 x = spawn.x;
@@ -384,6 +510,8 @@ y = spawn.y;
 
 //turn off slow_mo
 scr_set_timescale(1,0);
+
+hit = noone;
 </string>
           </argument>
         </arguments>
@@ -407,7 +535,7 @@ scr_set_timescale(1,0);
           <argument>
             <kind>1</kind>
             <string>///movement
-if(!respawning)
+if(!respawning &amp;&amp; !my_sword.active)
 {
     switch(state)
     {
@@ -415,10 +543,6 @@ if(!respawning)
         case States.InAir: scr_player_inair(); break;
         case States.WallRiding: scr_player_wallriding(); break;
     }
-    
-    //decay forces
-    force_x = scr_approach(force_x, 0, force_decay);
-    force_y = scr_approach(force_y, 0, force_decay);
     
     //change image scale based on direction
     var previous_xscale = image_xscale
@@ -445,7 +569,150 @@ if(!respawning)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///swing sword
+            <string>///check for effects
+
+//foot dust
+if(!previously_on_ground &amp;&amp; place_meeting(x,y+1, obj_Wall))
+{
+    scr_create_many(obj_FootDust, bbox_left, bbox_bottom, bbox_right, bbox_bottom, 5); 
+    previously_on_ground = true;
+}
+previously_on_ground = place_meeting(x, y+1, obj_Wall);
+
+if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed)
+{
+    if(current_frame &gt;= footstep_frames)
+    {
+        //scr_create_many( obj_FootDust, bbox_left, bbox_bottom, bbox_right, bbox_bottom, 1);
+        instance_create(x, bbox_bottom, obj_FootDust);
+        
+        current_frame -= footstep_frames;
+    }
+    current_frame++;
+    
+    if(current_frame_sound &gt;= footstep_frames_sound)
+    {
+        audio_play_sound(snd_Footstep, 0, false);
+        current_frame_sound -= footstep_frames_sound;
+    }
+    current_frame_sound++;
+}
+
+if(state == States.WallRiding &amp;&amp; abs(vsp) &gt;= grav/2)
+{
+    if(current_frame &gt;= footstep_frames_wall)
+    {
+        if(place_meeting(x - 1, y, obj_Wall))
+            instance_create(bbox_left, y, obj_FootDust);
+        else
+            instance_create(bbox_right, y, obj_FootDust);
+        current_frame -= footstep_frames_wall;
+    }
+    current_frame++;
+}
+
+
+//blood
+if(respawning)
+{
+    scr_spawn_blood(random_range(1,2), 0, 180);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///sounds
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///dash
+if(can_dash &amp;&amp; key_dash &amp;&amp; !stunned &amp;&amp; available_dashes &gt; 0)// &amp;&amp; false)
+{
+    dash_direction = aim_direction;
+    if(point_distance(0,0,horizontal_amount,vertical_amount) &gt; 0.2)
+    {
+        dash_force_x = lengthdir_x(maxspeed, aim_direction);
+        dash_force_y = lengthdir_y(maxspeed, aim_direction);
+    }
+    else
+    {
+        dash_force_x = maxspeed * image_xscale;
+        dash_force_y = 0;
+    }
+    
+    can_dash = false;
+    alarm[5] = 0.25 * room_speed;
+    scr_create_many(obj_FootDust, bbox_left, bbox_top, bbox_right, bbox_bottom, 10);
+    
+    available_dashes -= 1;
+    
+    audio_play_sound(snd_Dash, 0, false);
+}
+
+/*
+if(dash_force_x == 0 &amp;&amp; dash_force_y == 0)
+{
+    can_dash = true;
+}
+*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///commented out events (in order)
+
+
+///swing sword
 var deadzone = 0.1;
 
 if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword &amp;&amp; !block_slow)
@@ -487,216 +754,20 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword &amp;&amp; !block_slow
         }
         attacking = true;
         alarm[1] = my_sword.attack_delay * room_speed;
+        audio_play_sound(snd_Sword_Swipe, 0, false);
     }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///throw sword
+
+///throw sword
 if(key_shoot_press &amp;&amp; has_sword &amp;&amp; !throwing)
 {
-    alarm[3] = room_speed;
+    alarm[3] = 1;//room_speed;
     //event_perform(ev_alarm, 3);
     
     throwing = true;
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///deplete blocking
-if(key_block)
-{
-    block_slow = true;
-    block_level = max(0, block_level - blocking_shrink_step*global.timescale);
-    alarm[4] = post_block_delay*room_speed;
-}
-else
-{
-    block_level = min(block_level + blocking_grow_step*global.timescale, max_block);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///check blocking for hitwindow
 
-if(hit != noone)
-{
-    var blocked = scr_block_check(hit.damage);
-    if(blocked)
-    {
-        hit = noone;
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///check if KLANG happened
-if(hit != noone)
-{
-    if(hit.player.hit != noone)
-    {
-        if(hit.player.hit.player == id)
-        {
-            //slow mo
-            //global.timescale = 0.25;
-            //scr_set_timescale(1,0.25);
-            
-            //set the knockback
-            var other_player_x = hit.player.x;
-            var other_player_y = hit.player.y;
-            
-            var my_push_dir = point_direction(other_player_x,other_player_y, x,y);
-            var other_push_dir = point_direction(x,y, other_player_x,other_player_y);
-            
-            var force_amount = maxspeed*abs(dot_product_normalised(hsp,vsp, hit.player.hsp, hit.player.vsp));
-            
-            force_x = lengthdir_x(force_amount, my_push_dir);
-            force_y = lengthdir_y(force_amount, my_push_dir);
-            with(hit.player)
-            {
-                force_x = lengthdir_x(force_amount, other_push_dir);
-                force_y = lengthdir_y(force_amount, other_push_dir);
-            }
-            
-            instance_create((x+other_player_x)/2,(y+other_player_y)/2, obj_Flash);
-            
-            /*
-            hsp = lengthdir_x(maxspeed, my_push_dir);
-            vsp = lengthdir_y(maxspeed, (my_push_dir*3 + other_push_dir)/4);
-            with(hit.player)
-            {
-                hsp = lengthdir_x(maxspeed, other_push_dir);
-                vsp = lengthdir_y(maxspeed, (other_push_dir*3 + my_push_dir)/4);
-            }
-            */
-            
-            //destroy both swords so that we don't double down on this
-            with(hit.player.hit)
-            {
-                active = false;
-            }
-            hit.player.hit = noone;
-            with(hit)
-            {
-                active = false;
-            }
-            hit = noone;
-        }
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///spawn blood
-if(respawning)
-    scr_spawn_blood(1, spurt_direction, scatter);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///check for slow mo for throwing
-
+///check for slow mo for throwing
 if(throwing)
 {
     var slowdown = false;
@@ -725,6 +796,86 @@ if(throwing)
         scr_set_timescale(0.25, 0.25);
     }
 }
+
+///deplete blocking
+if(key_block)
+{
+    block_slow = true;
+    block_level = max(0, block_level - blocking_shrink_step*global.timescale);
+    alarm[4] = post_block_delay*room_speed;
+}
+else
+{
+    block_level = min(block_level + blocking_grow_step*global.timescale, max_block);
+}
+
+///check blocking for hitwindow
+if(hit != noone)
+{
+    var blocked = scr_block_check(hit.damage);
+    if(blocked)
+    {
+        hit = noone;
+    }
+}
+
+///check if KLANG happened
+if(hit != noone)
+{
+    if(hit.player.hit != noone)
+    {
+        if(hit.player.hit.player == id)
+        {
+            //slow mo
+            //global.timescale = 0.25;
+            //scr_set_timescale(1,0.25);
+            
+            //set the knockback
+            var other_player_x = hit.player.x;
+            var other_player_y = hit.player.y;
+            
+            var my_push_dir = point_direction(other_player_x,other_player_y, x,y);
+            var other_push_dir = point_direction(x,y, other_player_x,other_player_y);
+            
+            //var force_amount = maxspeed*abs(dot_product_normalised(hsp,vsp, hit.player.hsp, hit.player.vsp));
+            var force_amount = maxspeed;
+            force_x = lengthdir_x(force_amount, my_push_dir);
+            force_y = lengthdir_y(force_amount, my_push_dir);
+            
+            //force_amount = point_distance(0,0, hit.player.hsp*2, hit.player.vsp*2);
+            hit.player.force_x = lengthdir_x(force_amount, other_push_dir);
+            hit.player.force_y = lengthdir_y(force_amount, other_push_dir);
+            
+            instance_create((x+other_player_x)/2,(y+other_player_y)/2, obj_Flash);
+            
+            /*
+            hsp = lengthdir_x(maxspeed, my_push_dir);
+            vsp = lengthdir_y(maxspeed, (my_push_dir*3 + other_push_dir)/4);
+            with(hit.player)
+            {
+                hsp = lengthdir_x(maxspeed, other_push_dir);
+                vsp = lengthdir_y(maxspeed, (other_push_dir*3 + my_push_dir)/4);
+            }
+            */
+            
+            //destroy both swords so that we don't double down on this
+            with(hit.player.hit)
+            {
+                active = false;
+            }
+            hit.player.hit = noone;
+            with(hit)
+            {
+                active = false;
+            }
+            hit = noone;
+        }
+    }
+}
+
+///spawn blood
+if(respawning)
+    scr_spawn_blood(1, spurt_direction, scatter);
 </string>
           </argument>
         </arguments>
@@ -795,16 +946,86 @@ if(!has_sword &amp;&amp; other.movespeed &lt;= 0)
 }
 else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawning)
 {
-    respawning = true;
-    alarm[0] = death_time * room_speed;
-    var othernum = other.player.player_number;
-    with(obj_Score)
+    if(!scr_block_check(0))
     {
-        scores[othernum]++;
+        respawning = true;
+        alarm[0] = death_time * room_speed;
+        var othernum = other.player.player_number;
+        with(obj_Score)
+        {
+            scores[othernum]++;
+        }
+        spurt_direction = point_direction(x,y, other.x, other.y);
+        scr_spawn_blood(random_range(30,60), 0, 180);
     }
-    spurt_direction = point_direction(x,y, other.x, other.y);
-    scr_spawn_blood(random_range(30,60), 0, 180);
+    else
+    {
+        with(other)
+        {
+            instance_destroy();
+        }
+    }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Player">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check if I lost (commented out)
+
+/*
+if(!respawning &amp;&amp; !other.respawning)// &amp;&amp; false)
+{
+    var cardinal_dir = scr_quadrant(other, sprite_width/6);
+    if(vsp &gt; 0 &amp;&amp; (cardinal_dir == 8 || cardinal_dir == 0 || cardinal_dir == 1))
+    {
+        //we win
+        vsp = -jumpspeed;
+    }
+    else if(other.vsp &gt; 0 &amp;&amp; (cardinal_dir == 3 || cardinal_dir == 4 || cardinal_dir == 5))
+    {
+        //they are above us enough to count as a loss
+        respawning = true;
+        alarm[0] = death_time * room_speed;
+        var othernum = other.player_number;
+        with(obj_Score)
+        {
+            scores[othernum]++;
+        }
+        spurt_direction = (point_direction(x,y,other.x,other.y)*3
+                            + point_direction(other.x,other.y,x,y))/4;
+        
+        if(state == States.Normal)
+            spurt_direction = spurt_direction%180;
+        scr_spawn_blood(random_range(20,30), random(360), 180);
+    }
+    else
+    {
+        //they are in the window between win/loss
+        var my_push_dir = point_direction(other.x,other.y,x,y);
+        var force_amount = maxspeed/2;
+        force_x = lengthdir_x(force_amount, my_push_dir);
+        force_y = lengthdir_y(force_amount, my_push_dir);
+    }
+}
+*/
 </string>
           </argument>
         </arguments>
@@ -870,9 +1091,13 @@ enum States
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///show aiming
+            <string>///show aiming (commented)
+
+/*
 var len = 20;
+draw_set_colour(c_black);
 draw_line_width(x,y,x + horizontal_amount*len, y + vertical_amount*len, 3);
+*/
 </string>
           </argument>
         </arguments>
@@ -893,7 +1118,7 @@ draw_line_width(x,y,x + horizontal_amount*len, y + vertical_amount*len, 3);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///draw player number
+            <string>///draw player number (commented out)
 //draw_text(x,y,string(player_number));
 </string>
           </argument>
@@ -950,6 +1175,40 @@ if(attacking)
     var sprite_num = sprite_get_number(spr_NoAttackIndicator);
     var frame = sprite_num - min(timeleft, sprite_num);
     draw_sprite(spr_NoAttackIndicator, frame, x,y - sprite_height/2);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw dash count
+var indicator_spacing = abs(sprite_width/max_dashes);
+for(var i = 0; i &lt; max_dashes; i++)
+{
+    if(available_dashes &gt; i)
+        draw_set_colour(c_white);
+    else
+        draw_set_colour(c_black);
+    draw_circle(
+        x - abs(sprite_width/2) + indicator_spacing/2 + i*indicator_spacing,
+        y - abs(sprite_height), indicator_spacing/2,
+        false
+    );
 }
 </string>
           </argument>
