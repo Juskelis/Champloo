@@ -89,6 +89,7 @@
       <object>objects\obj_Spawner</object>
       <object>objects\obj_Fullscreen</object>
       <object>objects\obj_ViewController</object>
+      <object>objects\obj_Global_Settings</object>
     </objects>
     <objects name="UI">
       <object>objects\obj_UI_Element</object>
