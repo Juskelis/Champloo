@@ -61,7 +61,8 @@ on_select_args[1] = "test";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x = display_get_gui_width()*relative_x;
+            <string>///relocate position properly
+x = display_get_gui_width()*relative_x;
 y = display_get_gui_height()*relative_y;
 </string>
           </argument>
