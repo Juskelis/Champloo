@@ -96,6 +96,7 @@
       <object>objects\obj_Controller_Selection</object>
       <object>objects\obj_Timer</object>
       <object>objects\obj_Score</object>
+      <object>objects\obj_Label</object>
     </objects>
     <objects name="Walls">
       <object>objects\obj_Wall</object>
