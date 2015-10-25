@@ -97,6 +97,7 @@
       <object>objects\obj_Timer</object>
       <object>objects\obj_Score</object>
       <object>objects\obj_Label</object>
+      <object>objects\obj_Toggle</object>
     </objects>
     <objects name="Walls">
       <object>objects\obj_Wall</object>
@@ -112,6 +113,7 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Start</room>
+    <room>rooms\rm_Graphics_Options</room>
     <room>rooms\rm_Test</room>
   </rooms>
   <help>
