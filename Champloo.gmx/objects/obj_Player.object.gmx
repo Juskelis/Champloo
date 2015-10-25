@@ -592,7 +592,7 @@ if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed)
     
     if(current_frame_sound &gt;= footstep_frames_sound)
     {
-        audio_play_sound(snd_Footstep, 0, false);
+     //   audio_play_sound(snd_Footstep, 0, false);
         current_frame_sound -= footstep_frames_sound;
     }
     current_frame_sound++;
@@ -638,7 +638,35 @@ if(respawning)
           <argument>
             <kind>1</kind>
             <string>///sounds
+if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed/2)
+{
+    if(!audio_is_playing(snd_Footstep))
+    {
+        audio_play_sound(snd_Footstep, 0, false);
+    }
+    else if(audio_is_paused(snd_Footstep))
+    {
+        audio_resume_sound(snd_Footstep);
+    }
+}
 
+if(state != States.Normal)
+{
+  if(audio_is_playing(snd_Footstep))
+  {
+    audio_pause_sound(snd_Footstep);
+  }
+}
+
+/*
+if(abs(hsp) == 0)
+{
+  if(audio_is_playing(snd_Footstep))
+  {
+    audio_pause_sound(snd_Footstep);
+  }
+}
+*/
 </string>
           </argument>
         </arguments>
