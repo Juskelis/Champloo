@@ -60,6 +60,7 @@
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>
+      <script>scripts\scr_slider_example.gml</script>
       <script>scripts\scr_goto_room.gml</script>
       <script>scripts\scr_toggle_blood.gml</script>
     </scripts>
@@ -100,6 +101,7 @@
       <object>objects\obj_Score</object>
       <object>objects\obj_Label</object>
       <object>objects\obj_Toggle</object>
+      <object>objects\obj_Slider</object>
     </objects>
     <objects name="Walls">
       <object>objects\obj_Wall</object>
