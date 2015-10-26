@@ -63,6 +63,7 @@
       <script>scripts\scr_slider_example.gml</script>
       <script>scripts\scr_goto_room.gml</script>
       <script>scripts\scr_toggle_blood.gml</script>
+      <script>scripts\scr_change_volume.gml</script>
     </scripts>
     <scripts name="Math">
       <script>scripts\scr_distance_to_line_segment_squared.gml</script>
@@ -118,6 +119,7 @@
   <rooms name="rooms">
     <room>rooms\rm_Start</room>
     <room>rooms\rm_Graphics_Options</room>
+    <room>rooms\rm_Audio</room>
     <room>rooms\rm_Test</room>
   </rooms>
   <help>
