@@ -63,6 +63,7 @@
       <script>scripts\scr_slider_example.gml</script>
       <script>scripts\scr_goto_room.gml</script>
       <script>scripts\scr_change_volume.gml</script>
+      <script>scripts\scr_quit.gml</script>
       <script>scripts\scr_toggle_motion_sick.gml</script>
       <script>scripts\scr_toggle_blood.gml</script>
       <script>scripts\scr_toggle_fullscreen.gml</script>
