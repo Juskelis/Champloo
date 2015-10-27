@@ -42,7 +42,7 @@
             <string>///create variables
 value = 1;
 
-slider_width = 100;
+slider_width = 300;
 </string>
           </argument>
         </arguments>
@@ -72,18 +72,18 @@ draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
 
 var text_width = string_width(label);
-var total_width = text_width + slider_width;
 var slider_line_width = 10;
+var total_width = text_width + slider_width;
 
 draw_line_width(
-    x - total_width/2 + text_width,
+    x - total_width/2 + text_width + slider_line_width*2,
     y,
-    x + total_width/2,
+    x + total_width/2 + slider_line_width*2,
     y,
     slider_line_width
 );
 
-var slider_position = x - total_width/2 + text_width;
+var slider_position = x - total_width/2 + text_width + slider_line_width*2;
 slider_position += value * slider_width;
 draw_circle(slider_position, y, slider_line_width*2, false);
 
