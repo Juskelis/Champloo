@@ -60,7 +60,13 @@
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>
+      <script>scripts\scr_slider_example.gml</script>
       <script>scripts\scr_goto_room.gml</script>
+      <script>scripts\scr_change_volume.gml</script>
+      <script>scripts\scr_quit.gml</script>
+      <script>scripts\scr_toggle_motion_sick.gml</script>
+      <script>scripts\scr_toggle_blood.gml</script>
+      <script>scripts\scr_toggle_fullscreen.gml</script>
     </scripts>
     <scripts name="Math">
       <script>scripts\scr_distance_to_line_segment_squared.gml</script>
@@ -89,6 +95,7 @@
       <object>objects\obj_Spawner</object>
       <object>objects\obj_Fullscreen</object>
       <object>objects\obj_ViewController</object>
+      <object>objects\obj_Global_Settings</object>
     </objects>
     <objects name="UI">
       <object>objects\obj_UI_Element</object>
@@ -96,6 +103,9 @@
       <object>objects\obj_Controller_Selection</object>
       <object>objects\obj_Timer</object>
       <object>objects\obj_Score</object>
+      <object>objects\obj_Label</object>
+      <object>objects\obj_Toggle</object>
+      <object>objects\obj_Slider</object>
     </objects>
     <objects name="Walls">
       <object>objects\obj_Wall</object>
@@ -111,6 +121,8 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Start</room>
+    <room>rooms\rm_Graphics</room>
+    <room>rooms\rm_Audio</room>
     <room>rooms\rm_Test</room>
   </rooms>
   <help>

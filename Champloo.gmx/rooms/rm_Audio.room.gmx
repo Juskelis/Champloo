@@ -54,13 +54,10 @@
     <instance objName="obj_Timescale" x="224" y="128" name="inst_C4590128" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Spawner" x="128" y="160" name="inst_EB76DEC2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Controller_Selection" x="416" y="96" name="inst_065635FF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Controller_Button" x="512" y="256" name="inst_C15765FB" locked="0" code="label = &quot;Start&quot;;&#xA;&#xA;on_select = scr_goto_room;&#xA;on_select_args[0] = rm_Test;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Controller_Button" x="512" y="384" name="inst_2030A821" locked="0" code="label = &quot;Graphics&quot;;&#xA;&#xA;on_select = scr_goto_room;&#xA;on_select_args[0] = rm_Graphics;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Fullscreen" x="128" y="224" name="inst_B8F44976" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Label" x="512" y="96" name="inst_76B01D58" locked="0" code="label = &quot;champloo&quot;;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Controller_Button" x="512" y="512" name="inst_B26F85B1" locked="0" code="label = &quot;Audio&quot;;&#xA;&#xA;on_select = scr_goto_room;&#xA;on_select_args[0] = rm_Audio;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Global_Settings" x="32" y="32" name="inst_EEFB477A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Controller_Button" x="512" y="640" name="inst_CBF79A92" locked="0" code="label = &quot;quit&quot;;&#xA;&#xA;on_select = scr_quit;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Label" x="512" y="96" name="inst_76B01D58" locked="0" code="label = &quot;Audio Options&quot;;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Controller_Button" x="512" y="512" name="inst_B26F85B1" locked="0" code="label = &quot;Return&quot;;&#xA;&#xA;on_select = scr_goto_room;&#xA;on_select_args[0] = rm_Start;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Slider" x="512" y="256" name="inst_A21F286F" locked="0" code="label = &quot;Audio&quot;;&#xA;&#xA;on_change = scr_change_volume;&#xA;on_change_args[1] = 0.1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
