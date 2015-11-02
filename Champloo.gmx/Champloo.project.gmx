@@ -20,6 +20,7 @@
     <sprite>sprites\spr_Player_Hit</sprite>
     <sprite>sprites\spr_Player_WallRiding</sprite>
     <sprite>sprites\spr_Player_Idle</sprite>
+    <sprite>sprites\spr_Player_InAir</sprite>
     <sprite>sprites\spr_Wall</sprite>
     <sprite>sprites\spr_Sword</sprite>
     <sprite>sprites\spr_SwordHitBox</sprite>
