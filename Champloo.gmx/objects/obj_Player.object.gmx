@@ -28,8 +28,6 @@
             <string>///create global settings
 death_time = 1;
 default_room_speed = 60;
-
-image_speed = 0;
 </string>
           </argument>
         </arguments>
@@ -743,6 +741,53 @@ if(dash_force_x == 0 &amp;&amp; dash_force_y == 0)
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///figure out which sprite to use
+image_speed = 10/room_speed;
+
+
+if(respawning)
+{
+    sprite_index = spr_Player_Hit;
+    image_speed = 10/room_speed;
+}
+else
+{
+    switch(state)
+    {
+        case States.Normal:
+            if(abs(hsp) &lt;= ground_maxspeed/8)
+                sprite_index = spr_Player_Idle;
+            else
+                sprite_index = spr_Player;
+            break;
+        case States.InAir:
+            sprite_index = spr_Player_InAir;
+            break;
+        case States.WallRiding:
+            sprite_index = spr_Player_WallRiding;
+            break;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///commented out events (in order)
 
 
@@ -1243,6 +1288,31 @@ for(var i = 0; i &lt; max_dashes; i++)
         y - abs(sprite_height), indicator_spacing/2,
         false
     );
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw sword
+if(has_sword)
+{
+    draw_sprite_ext(spr_Sword, 0, x,y, image_xscale,image_yscale, 0, c_white, 1);
 }
 </string>
           </argument>
