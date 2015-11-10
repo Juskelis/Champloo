@@ -56,10 +56,10 @@
     <instance objName="obj_Controller_Selection" x="416" y="96" name="inst_065635FF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Fullscreen" x="128" y="224" name="inst_B8F44976" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Label" x="512" y="96" name="inst_76B01D58" locked="0" code="label = &quot;Graphics Options&quot;;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Toggle" x="512" y="256" name="inst_FD4B4DE6" locked="0" code="label = &quot;Blood&quot;;&#xA;&#xA;on_select = scr_toggle_blood;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Toggle" x="512" y="384" name="inst_B8A2FD02" locked="0" code="label = &quot;Motion Sick Mode&quot;;&#xA;enabled = false;&#xA;on_select = scr_toggle_motion_sick;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Toggle" x="512" y="256" name="inst_FD4B4DE6" locked="0" code="label = &quot;Blood&quot;;&#xA;&#xA;on_select = scr_toggle_blood;&#xA;&#xA;enabled = global.blood_enabled;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Toggle" x="512" y="384" name="inst_B8A2FD02" locked="0" code="label = &quot;Motion Sick Mode&quot;;&#xA;enabled = global.motion_sick_mode;&#xA;on_select = scr_toggle_motion_sick;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Toggle" x="512" y="512" name="inst_B44C7364" locked="0" code="label = &quot;fullscreen&quot;;&#xA;&#xA;enabled = window_get_fullscreen();&#xA;on_select = scr_toggle_fullscreen;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Controller_Button" x="512" y="640" name="inst_B26F85B1" locked="0" code="label = &quot;Return&quot;;&#xA;&#xA;on_select = scr_goto_room;&#xA;on_select_args[0] = rm_Start;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Controller_Button" x="512" y="640" name="inst_B26F85B1" locked="0" code="label = &quot;Return&quot;;&#xA;&#xA;on_select = scr_goto_room;&#xA;on_select_args[0] = rm_Options;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
