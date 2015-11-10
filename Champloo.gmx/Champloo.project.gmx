@@ -123,6 +123,7 @@
       <object>objects\obj_BloodSurface</object>
       <object>objects\obj_Flash</object>
       <object>objects\obj_FootDust</object>
+      <object>objects\obj_Pause</object>
     </objects>
   </objects>
   <rooms name="rooms">
