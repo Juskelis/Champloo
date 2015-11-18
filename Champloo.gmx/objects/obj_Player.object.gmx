@@ -214,6 +214,7 @@ footstep_frames_sound = 0.2*room_speed;
 footstep_frames_wall = footstep_frames/2;
 current_frame = 0;
 current_frame_sound = 0;
+footIndex = audio_play_sound(snd_Footstep, 1, true);
 </string>
           </argument>
         </arguments>
@@ -642,35 +643,64 @@ if(respawning)
           <argument>
             <kind>1</kind>
             <string>///sounds
-if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed/2)
+if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed/5)
 {
-    if(!audio_is_playing(snd_Footstep))
+    
+    if(audio_is_paused(footIndex))
     {
-        audio_play_sound(snd_Footstep, 0, false);
+        audio_resume_sound(footIndex);
     }
-    else if(audio_is_paused(snd_Footstep))
+    else if(!audio_is_playing(footIndex))
     {
-        audio_resume_sound(snd_Footstep);
+        audio_play_sound(footIndex, 1, true);
     }
+    
+    //setting volume based on footspeed
+   // audio_sound_gain(footIndex, abs(hsp)/ground_maxspeed ,0);
+    
 }
 
+//if(state != States.Normal &amp;&amp; state != States.Wallriding)
 if(state != States.Normal)
 {
-  if(audio_is_playing(snd_Footstep))
+ 
+  if(audio_is_playing(footIndex))
   {
-    audio_pause_sound(snd_Footstep);
+    audio_pause_sound(footIndex);
+  }
+}
+//deals with on-ground wallriding state
+/*
+if (state == States.Wallriding &amp;&amp; this.y &gt; 0)
+{
+  if(audio_is_playing(footIndex))
+  {
+    audio_pause_sound(footIndex);
   }
 }
 
-/*
-if(abs(hsp) == 0)
+else if (state == States.Wallriding &amp;&amp; this.y == 0)
 {
-  if(audio_is_playing(snd_Footstep))
+  if(abs(hsp) &gt;= ground_maxspeed/5)
   {
-    audio_pause_sound(snd_Footstep);
+    if(audio_is_paused(footIndex))
+    {
+        audio_resume_sound(footIndex);
+    }
+    else if(!audio_is_playing(footIndex))
+    {
+        audio_play_sound(footIndex, 1, true);
+    }
   }
 }
 */
+if(abs(hsp) &lt; ground_maxspeed/5)
+{
+  if(audio_is_playing(footIndex))
+  {
+    audio_pause_sound(footIndex);
+  }
+}
 </string>
           </argument>
         </arguments>
