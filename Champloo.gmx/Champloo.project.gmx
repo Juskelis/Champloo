@@ -34,6 +34,7 @@
       <sprite>sprites\spr_Button_Corner</sprite>
       <sprite>sprites\spr_Button_Edge</sprite>
       <sprite>sprites\spr_Selection_Indicator</sprite>
+      <sprite>sprites\spr_Controls</sprite>
     </sprites>
     <sprite>sprites\spr_FootDust</sprite>
   </sprites>
@@ -110,6 +111,7 @@
       <object>objects\obj_Label</object>
       <object>objects\obj_Toggle</object>
       <object>objects\obj_Slider</object>
+      <object>objects\obj_Controls_Image</object>
     </objects>
     <objects name="Walls">
       <object>objects\obj_Wall</object>
@@ -121,12 +123,15 @@
       <object>objects\obj_BloodSurface</object>
       <object>objects\obj_Flash</object>
       <object>objects\obj_FootDust</object>
+      <object>objects\obj_Pause</object>
     </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Start</room>
+    <room>rooms\rm_Options</room>
     <room>rooms\rm_Graphics</room>
     <room>rooms\rm_Audio</room>
+    <room>rooms\rm_Controls</room>
     <room>rooms\rm_Test</room>
   </rooms>
   <help>

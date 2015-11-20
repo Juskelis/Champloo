@@ -55,11 +55,15 @@
     <instance objName="obj_Spawner" x="128" y="160" name="inst_EB76DEC2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Controller_Selection" x="416" y="96" name="inst_065635FF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Fullscreen" x="128" y="224" name="inst_B8F44976" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Label" x="512" y="96" name="inst_76B01D58" locked="0" code="label = &quot;Graphics Options&quot;;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Toggle" x="512" y="256" name="inst_FD4B4DE6" locked="0" code="label = &quot;Blood&quot;;&#xA;&#xA;on_select = scr_toggle_blood;&#xA;&#xA;enabled = global.blood_enabled;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Toggle" x="512" y="384" name="inst_B8A2FD02" locked="0" code="label = &quot;Motion Sick Mode&quot;;&#xA;enabled = global.motion_sick_mode;&#xA;on_select = scr_toggle_motion_sick;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Toggle" x="512" y="512" name="inst_B44C7364" locked="0" code="label = &quot;fullscreen&quot;;&#xA;&#xA;enabled = window_get_fullscreen();&#xA;on_select = scr_toggle_fullscreen;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Controller_Button" x="512" y="640" name="inst_B26F85B1" locked="0" code="label = &quot;Return&quot;;&#xA;&#xA;on_select = scr_goto_room;&#xA;on_select_args[0] = rm_Options;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Label" x="512" y="96" name="inst_76B01D58" locked="0" code="label = &quot;Controls&quot;;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Controller_Button" x="512" y="704" name="inst_B26F85B1" locked="0" code="label = &quot;Return&quot;;&#xA;&#xA;on_select = scr_goto_room;&#xA;on_select_args[0] = rm_Start;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Controls_Image" x="32" y="384" name="inst_23E5DE09" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Label" x="736" y="192" name="inst_5847DC89" locked="0" code="label = &quot;block&quot;;&#xA;&#xA;our_font = ft_Normal_24;&#xA;&#xA;horizontal_align = fa_left;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Label" x="736" y="256" name="inst_4D55DEA0" locked="0" code="label = &quot;attack&quot;;&#xA;&#xA;our_font = ft_Normal_24;&#xA;&#xA;horizontal_align = fa_left;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Label" x="736" y="480" name="inst_FA9969C7" locked="0" code="label = &quot;jump&quot;;&#xA;&#xA;our_font = ft_Normal_24;&#xA;&#xA;horizontal_align = fa_left;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Label" x="736" y="608" name="inst_49DE4FA9" locked="0" code="label = &quot;move/aim&quot;;&#xA;&#xA;our_font = ft_Normal_24;&#xA;&#xA;horizontal_align = fa_left;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Label" x="736" y="384" name="inst_AD9286C7" locked="0" code="label = &quot;Throw&quot;&#xA;&#xA;our_font = ft_Normal_24;&#xA;&#xA;horizontal_align = fa_left;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Label" x="736" y="320" name="inst_8562199A" locked="0" code="label = &quot;dash&quot;;&#xA;&#xA;our_font = ft_Normal_24;&#xA;&#xA;horizontal_align = fa_left;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
