@@ -28,8 +28,6 @@
             <string>///create global settings
 death_time = 1;
 default_room_speed = 60;
-
-image_speed = 0;
 </string>
           </argument>
         </arguments>
@@ -216,6 +214,7 @@ footstep_frames_sound = 0.2*room_speed;
 footstep_frames_wall = footstep_frames/2;
 current_frame = 0;
 current_frame_sound = 0;
+footIndex = audio_play_sound(snd_Footstep, 1, true);
 </string>
           </argument>
         </arguments>
@@ -544,6 +543,12 @@ if(!respawning &amp;&amp; !my_sword.active)
         case States.WallRiding: scr_player_wallriding(); break;
     }
     
+    //override states for dash
+    if(!can_dash || dash_force_x != 0 || dash_force_y != 0)
+    {
+        state = States.InAir;
+    }
+    
     //change image scale based on direction
     var previous_xscale = image_xscale
     image_xscale = sign(x - xprevious);
@@ -638,35 +643,64 @@ if(respawning)
           <argument>
             <kind>1</kind>
             <string>///sounds
-if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed/2)
+if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed/5)
 {
-    if(!audio_is_playing(snd_Footstep))
+    
+    if(audio_is_paused(footIndex))
     {
-        audio_play_sound(snd_Footstep, 0, false);
+        audio_resume_sound(footIndex);
     }
-    else if(audio_is_paused(snd_Footstep))
+    else if(!audio_is_playing(footIndex))
     {
-        audio_resume_sound(snd_Footstep);
+        audio_play_sound(footIndex, 1, true);
     }
+    
+    //setting volume based on footspeed
+   // audio_sound_gain(footIndex, abs(hsp)/ground_maxspeed ,0);
+    
 }
 
+//if(state != States.Normal &amp;&amp; state != States.Wallriding)
 if(state != States.Normal)
 {
-  if(audio_is_playing(snd_Footstep))
+ 
+  if(audio_is_playing(footIndex))
   {
-    audio_pause_sound(snd_Footstep);
+    audio_pause_sound(footIndex);
+  }
+}
+//deals with on-ground wallriding state
+/*
+if (state == States.Wallriding &amp;&amp; this.y &gt; 0)
+{
+  if(audio_is_playing(footIndex))
+  {
+    audio_pause_sound(footIndex);
   }
 }
 
-/*
-if(abs(hsp) == 0)
+else if (state == States.Wallriding &amp;&amp; this.y == 0)
 {
-  if(audio_is_playing(snd_Footstep))
+  if(abs(hsp) &gt;= ground_maxspeed/5)
   {
-    audio_pause_sound(snd_Footstep);
+    if(audio_is_paused(footIndex))
+    {
+        audio_resume_sound(footIndex);
+    }
+    else if(!audio_is_playing(footIndex))
+    {
+        audio_play_sound(footIndex, 1, true);
+    }
   }
 }
 */
+if(abs(hsp) &lt; ground_maxspeed/5)
+{
+  if(audio_is_playing(footIndex))
+  {
+    audio_pause_sound(footIndex);
+  }
+}
 </string>
           </argument>
         </arguments>
@@ -717,6 +751,53 @@ if(dash_force_x == 0 &amp;&amp; dash_force_y == 0)
     can_dash = true;
 }
 */
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///figure out which sprite to use
+image_speed = 10/room_speed;
+
+
+if(respawning)
+{
+    sprite_index = spr_Player_Hit;
+    image_speed = 10/room_speed;
+}
+else
+{
+    switch(state)
+    {
+        case States.Normal:
+            if(abs(hsp) &lt;= ground_maxspeed/8)
+                sprite_index = spr_Player_Idle;
+            else
+                sprite_index = spr_Player;
+            break;
+        case States.InAir:
+            sprite_index = spr_Player_InAir;
+            break;
+        case States.WallRiding:
+            sprite_index = spr_Player_WallRiding;
+            break;
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -1237,6 +1318,31 @@ for(var i = 0; i &lt; max_dashes; i++)
         y - abs(sprite_height), indicator_spacing/2,
         false
     );
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw sword
+if(has_sword)
+{
+    draw_sprite_ext(spr_Sword, 0, x,y, image_xscale,image_yscale, 0, c_white, 1);
 }
 </string>
           </argument>

@@ -44,6 +44,9 @@ label = "label";
 
 our_font = ft_Bored_64;
 our_color = c_white;
+
+horizontal_align = fa_center;
+vertical_align = fa_middle;
 </string>
           </argument>
         </arguments>
@@ -69,8 +72,8 @@ our_color = c_white;
             <string>///draw label
 draw_set_font(our_font);
 draw_set_color(our_color);
-draw_set_halign(fa_center);
-draw_set_valign(fa_middle);
+draw_set_halign(horizontal_align);
+draw_set_valign(vertical_align);
 draw_text(x,y, label);
 </string>
           </argument>
