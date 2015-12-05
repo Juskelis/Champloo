@@ -71,7 +71,6 @@
       <script>scripts\scr_quit.gml</script>
       <script>scripts\scr_toggle_motion_sick.gml</script>
       <script>scripts\scr_toggle_blood.gml</script>
-      <script>scripts\scr_toggle_fullscreen.gml</script>
     </scripts>
     <scripts name="Math">
       <script>scripts\scr_distance_to_line_segment_squared.gml</script>
@@ -80,6 +79,98 @@
       <script>scripts\scr_apply_friction.gml</script>
       <script>scripts\scr_clockwise_angle.gml</script>
       <script>scripts\scr_approach_angle.gml</script>
+    </scripts>
+    <scripts name="UI">
+      <scripts name="component model">
+        <scripts name="components operations">
+          <script>scripts\_component_shift_by.gml</script>
+          <script>scripts\_enter_container.gml</script>
+          <script>scripts\component_resize.gml</script>
+          <script>scripts\component_shift_by.gml</script>
+          <script>scripts\component_shift_to.gml</script>
+          <script>scripts\enter_container.gml</script>
+          <script>scripts\leave_container.gml</script>
+        </scripts>
+        <scripts name="containers operations">
+          <script>scripts\container_add.gml</script>
+          <script>scripts\container_arrange.gml</script>
+          <script>scripts\container_foreach.gml</script>
+          <script>scripts\container_remove.gml</script>
+        </scripts>
+        <scripts name="layout building">
+          <script>scripts\lb_add.gml</script>
+          <script>scripts\lb_begin.gml</script>
+          <script>scripts\lb_clean.gml</script>
+          <script>scripts\lb_end.gml</script>
+          <script>scripts\lb_init.gml</script>
+        </scripts>
+        <scripts name="navigation">
+          <script>scripts\lb_nav_init.gml</script>
+          <script>scripts\navigate_to.gml</script>
+        </scripts>
+      </scripts>
+      <scripts name="duplicates">
+        <script>scripts\_instance_destroy.gml</script>
+      </scripts>
+      <scripts name="oop wannabe">
+        <script>scripts\get_method.gml</script>
+        <script>scripts\is.gml</script>
+        <script>scripts\new.gml</script>
+        <script>scripts\new_at.gml</script>
+      </scripts>
+      <scripts name="methods">
+        <scripts name="components">
+          <script>scripts\_obj_label_init.gml</script>
+          <script>scripts\_obj_test_init.gml</script>
+          <script>scripts\_par_component_resize.gml</script>
+          <scripts name="containers">
+            <script>scripts\_par_container_init.gml</script>
+            <scripts name="list based">
+              <scripts name="par_list_container methods">
+                <script>scripts\_par_list_container_add.gml</script>
+                <script>scripts\_par_list_container_foreach.gml</script>
+                <script>scripts\_par_list_container_remove.gml</script>
+              </scripts>
+              <script>scripts\_obj_horizontal_container_arrange.gml</script>
+              <script>scripts\_obj_vertical_container_arrange.gml</script>
+            </scripts>
+            <scripts name="grid based">
+              <scripts name="par_grid_container methods">
+                <script>scripts\_par_grid_container_add.gml</script>
+                <script>scripts\_par_grid_container_foreach.gml</script>
+                <script>scripts\_par_grid_container_init.gml</script>
+                <script>scripts\_par_grid_container_remove.gml</script>
+              </scripts>
+              <script>scripts\_obj_align_container_arrange.gml</script>
+              <script>scripts\_obj_align_container_init.gml</script>
+            </scripts>
+          </scripts>
+          <scripts name="interactive">
+            <script>scripts\_obj_button_activate.gml</script>
+            <script>scripts\_obj_button_hover.gml</script>
+            <script>scripts\_obj_button_init.gml</script>
+            <script>scripts\_obj_toggle_activate.gml</script>
+            <script>scripts\_obj_toggle_init.gml</script>
+          </scripts>
+        </scripts>
+        <scripts name="navigation">
+          <script>scripts\_obj_navigation_navigate_to.gml</script>
+        </scripts>
+        <scripts name="select callbacks">
+          <scripts name="toggle">
+            <script>scripts\scr_toggle_fullscreen.gml</script>
+          </scripts>
+          <scripts name="button">
+            <script>scripts\scr_destroy_menu.gml</script>
+            <script>scripts\scr_load_menu.gml</script>
+            <script>scripts\scr_print_message.gml</script>
+            <script>scripts\scr_transition_menu.gml</script>
+          </scripts>
+        </scripts>
+      </scripts>
+      <scripts name="miscellaneous">
+        <script>scripts\err.gml</script>
+      </scripts>
     </scripts>
   </scripts>
   <fonts name="fonts">
@@ -103,15 +194,40 @@
       <object>objects\obj_Global_Settings</object>
     </objects>
     <objects name="UI">
-      <object>objects\obj_UI_Element</object>
-      <object>objects\obj_Controller_Button</object>
-      <object>objects\obj_Controller_Selection</object>
       <object>objects\obj_Timer</object>
       <object>objects\obj_Score</object>
-      <object>objects\obj_Label</object>
-      <object>objects\obj_Toggle</object>
-      <object>objects\obj_Slider</object>
-      <object>objects\obj_Controls_Image</object>
+      <objects name="Templates">
+        <object>objects\par_template</object>
+        <object>objects\template_example</object>
+        <object>objects\template_othermenu</object>
+      </objects>
+      <objects name="Components">
+        <object>objects\par_component</object>
+        <objects name="Interactive">
+          <object>objects\par_navigation</object>
+          <object>objects\obj_button</object>
+          <object>objects\obj_toggle</object>
+        </objects>
+        <objects name="Non-Interactive">
+          <object>objects\obj_label</object>
+          <object>objects\obj_test</object>
+        </objects>
+        <objects name="Containers">
+          <object>objects\par_container</object>
+          <objects name="List Containers">
+            <object>objects\par_list_container</object>
+            <object>objects\obj_horizontal_container</object>
+            <object>objects\obj_vertical_container</object>
+          </objects>
+          <objects name="Grid Containers">
+            <object>objects\par_grid_container</object>
+            <object>objects\obj_align_container</object>
+          </objects>
+        </objects>
+      </objects>
+      <objects name="Navigation">
+        <object>objects\obj_navigation</object>
+      </objects>
     </objects>
     <objects name="Walls">
       <object>objects\obj_Wall</object>
@@ -128,12 +244,16 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Start</room>
-    <room>rooms\rm_Options</room>
-    <room>rooms\rm_Graphics</room>
-    <room>rooms\rm_Audio</room>
-    <room>rooms\rm_Controls</room>
     <room>rooms\rm_Test</room>
   </rooms>
+  <constants number="6">
+    <constant name="ha_left">0</constant>
+    <constant name="ha_center">1</constant>
+    <constant name="ha_right">2</constant>
+    <constant name="va_top">0</constant>
+    <constant name="va_middle">1</constant>
+    <constant name="va_bottom">2</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>

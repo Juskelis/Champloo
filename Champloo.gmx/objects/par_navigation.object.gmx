@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>par_component</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -39,15 +39,17 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///create variables
-timeout = 5*60; //in seconds
-alarm[0] = timeout * room_speed;
+            <string>///Setting up basic variables
+
+//default to self (no navigation)
+up = id;
+down = id;
+left = id;
+right = id;
 </string>
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -64,70 +66,8 @@ alarm[0] = timeout * room_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///SUDDEN DEATH MODE
-room_goto(rm_Start);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///draw timer
+            <string>///Storing methods for later use
 
-draw_set_font(ft_Normal_24);
-
-draw_set_colour(c_white);
-draw_set_halign(fa_middle);
-draw_set_valign(fa_top);
-
-var total_seconds = alarm[0]/room_speed;
-
-var minutes = string(floor(total_seconds/60));
-if(string_length(minutes) == 0)
-{
-    minutes = "00";
-}
-else if(string_length(minutes) == 1)
-{
-    minutes = "0" + minutes;
-}
-
-var seconds = string(floor(total_seconds%60));
-if(string_length(seconds) == 0)
-{
-    seconds = "00";
-}
-else if(string_length(seconds) == 1)
-{
-    seconds = "0" + seconds;
-}
-
-var time = minutes + ":" + seconds;
-
-//var xscale = view_wview/default_width;
-//var yscale = view_hview/default_height;
-
-draw_text(
-    display_get_gui_width()*0.5,
-    5,
-    time
-);
 </string>
           </argument>
         </arguments>
