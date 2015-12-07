@@ -166,6 +166,7 @@
             <script>scripts\scr_transition_menu.gml</script>
             <script>scripts\scr_quit.gml</script>
             <script>scripts\scr_goto_room.gml</script>
+            <script>scripts\scr_resume.gml</script>
           </scripts>
         </scripts>
       </scripts>
@@ -199,6 +200,8 @@
         <object>objects\par_template</object>
         <object>objects\template_example</object>
         <object>objects\template_othermenu</object>
+        <object>objects\template_start</object>
+        <object>objects\template_pause</object>
       </objects>
       <objects name="Components">
         <object>objects\par_component</object>

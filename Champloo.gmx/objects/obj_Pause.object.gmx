@@ -67,20 +67,12 @@ if(pressed_pause)
 {
     if(!paused)
     {
-        paused_surf = surface_create(
-            surface_get_width(application_surface),
-            surface_get_height(application_surface)
-        );
-        surface_copy(paused_surf, 0, 0, application_surface);
-        
-        instance_deactivate_all(true);
+        event_perform(ev_other, ev_user0);
     }
     else
     {
-        instance_activate_all();
-        surface_free(paused_surf);
+        event_perform(ev_other, ev_user1);
     }
-    paused = !paused;
 }
 </string>
           </argument>
@@ -105,9 +97,13 @@ if(pressed_pause)
           <argument>
             <kind>1</kind>
             <string>///user resumes
+paused = false;
 surface_free(pause_surf);
 instance_activate_all();
-paused = false;
+with(par_template)
+{
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>
@@ -132,17 +128,21 @@ paused = false;
             <kind>1</kind>
             <string>///user pauses (pause menu basically)
 paused = true;
+paused_surf = surface_create(
+    surface_get_width(application_surface),
+    surface_get_height(application_surface)
+);
+surface_copy(paused_surf, 0, 0, application_surface);
 
-surface_copy(pause_surf, 0,0, application_surface);
 instance_deactivate_all(true);
-draw_set_color(c_white);
-draw_text(0,0, "hello");
+
+instance_create(0,0,template_pause);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="75">
+    <event eventtype="8" enumb="74">
       <action>
         <libid>1</libid>
         <id>603</id>
