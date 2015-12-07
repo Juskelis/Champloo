@@ -17,11 +17,11 @@ color = ds_list_find_value(_args,2);
 draw_set_font(font);
 if(string_width(label) > width)
 {
-    width = string_width(label);
+    width = string_width(label) + 20;
 }
 if(string_height(label) > height)
 {
-    height = string_height(label);
+    height = string_height(label) + 6;
 }
 
 if(sprite_index != -1)

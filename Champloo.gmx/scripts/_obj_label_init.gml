@@ -9,5 +9,5 @@ font = ds_list_find_value(_args, 1);
 color = ds_list_find_value(_args, 2);
 
 draw_set_font(font);
-width = string_width(label);
-height = string_height(label);
+width = string_width(label) + 20;
+height = string_height(label) + 6;

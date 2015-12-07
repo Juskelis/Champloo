@@ -97,7 +97,7 @@ if(selected)
 {
         draw_rectangle_colour(
             x,y,
-            x+width,y+height,
+            x+width-1,y+height-1,
             c_gray,c_gray,c_gray,c_gray,
             false
         );
@@ -112,7 +112,7 @@ else
     {
         draw_rectangle_colour(
             x,y,
-            x+width,y+height,
+            x+width-1,y+height-1,
             c_white,c_white,c_white,c_white,
             false
         );
