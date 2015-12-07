@@ -91,6 +91,31 @@ leave_container();
         </arguments>
       </action>
     </event>
+    <event eventtype="8" enumb="74">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///set GUI scale
+//display_set_gui_size(view_wport, view_hport);
+display_set_gui_maximise(1,1);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
@@ -111,13 +136,22 @@ leave_container();
             <string>///Some debug drawing
 //You are free to delete it when you feel you don't need it!
 
+/*
 draw_set_alpha(0.1);
 draw_set_color(c_black);
-draw_rectangle_colour(x, y, x+width-1, y+height-1, c_white,c_white,c_white,c_white, false);
+draw_rectangle_colour(
+    x,
+    y,
+    x+width-1,
+    y+height-1,
+    c_white,c_white,c_white,c_white,
+    false
+);
 
 draw_set_alpha(1);
 if (sprite_index &gt; -1)
     draw_self();
+*/
 </string>
           </argument>
         </arguments>

@@ -195,8 +195,6 @@
       <object>objects\obj_Global_Settings</object>
     </objects>
     <objects name="UI">
-      <object>objects\obj_Timer</object>
-      <object>objects\obj_Score</object>
       <objects name="Templates">
         <object>objects\par_template</object>
         <object>objects\template_example</object>
@@ -213,6 +211,8 @@
           <object>objects\obj_label</object>
           <object>objects\obj_image</object>
           <object>objects\obj_test</object>
+          <object>objects\obj_Score</object>
+          <object>objects\obj_Timer</object>
         </objects>
         <objects name="Containers">
           <object>objects\par_container</object>
