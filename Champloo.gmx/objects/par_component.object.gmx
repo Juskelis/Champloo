@@ -91,7 +91,7 @@ leave_container();
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -113,7 +113,7 @@ leave_container();
 
 draw_set_alpha(0.1);
 draw_set_color(c_black);
-draw_rectangle(x, y, x+width-1, y+height-1, false);
+draw_rectangle_colour(x, y, x+width-1, y+height-1, c_white,c_white,c_white,c_white, false);
 
 draw_set_alpha(1);
 if (sprite_index &gt; -1)

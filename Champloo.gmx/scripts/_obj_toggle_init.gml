@@ -11,12 +11,14 @@ if(ds_list_empty(_args))
 }
 
 label = ds_list_find_value(_args, 0);
+font = ds_list_find_value(_args, 1);
+color = ds_list_find_value(_args, 2);
 height = max(height, string_height(label));
 width = max(width, string_width(label) + height);
 
-on_press = ds_list_find_value(_args, 1);
-if(ds_list_size(_args) > 1) {
-    for(var i = 2; i < ds_list_size(_args); i++) {
-        on_press_args[i-2] = ds_list_find_value(_args, i);
+on_press = ds_list_find_value(_args, 3);
+if(ds_list_size(_args) > 3) {
+    for(var i = 4; i < ds_list_size(_args); i++) {
+        on_press_args[i-4] = ds_list_find_value(_args, i);
     }
 }

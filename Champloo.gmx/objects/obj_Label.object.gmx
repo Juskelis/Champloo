@@ -41,12 +41,14 @@
             <kind>1</kind>
             <string>///Setting label
 label = "label";
+font = ft_Normal_24;
+color = c_black;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -66,6 +68,8 @@ label = "label";
             <string>///Drawing text
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
+draw_set_font(font);
+draw_set_color(color);
 draw_text(x,y,label);
 </string>
           </argument>
