@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_button</parentName>
+  <parentName>par_navigation</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -40,7 +40,36 @@
           <argument>
             <kind>1</kind>
             <string>///Setting up basic variables
-active = false;
+selected = false;
+
+label = "test";
+font = ft_Normal_24;
+color = c_black;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Storing methods for later use
+
+//note: all of these can be changed if desired
+on_press = noone
+on_press_args[0] = "test";
 </string>
           </argument>
         </arguments>
@@ -63,26 +92,38 @@ active = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Drawing toggle
-/*
-    assume toggle is meant to be 1:1
-        O label
-*/
-if(!selected)
-    draw_rectangle_colour(x + height,y, x+width,y+height, c_white,c_white,c_white,c_white, false);
+            <string>///Drawing highlight or not
+if(selected)
+{
+        draw_rectangle_colour(
+            x,y,
+            x+width-1,y+height-1,
+            c_gray,c_gray,c_gray,c_gray,
+            false
+        );
+}
 else
-    draw_rectangle_colour(x + height,y, x+width,y+height, c_gray,c_gray,c_gray,c_gray, false); 
+{
+    if(sprite_index != -1)
+    {
+        draw_self();
+    }
+    else
+    {
+        draw_rectangle_colour(
+            x,y,
+            x+width-1,y+height-1,
+            c_white,c_white,c_white,c_white,
+            false
+        );
+    }
+}
 
-draw_rectangle_colour(x,y, x+height,y+height, c_gray,c_gray,c_gray,c_gray, false);
-if(active)
-    draw_rectangle_colour(x,y, x+height,y+height, c_white,c_white,c_white,c_white, false);
-draw_rectangle(x,y,x+height,y+height, true);
-
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
+draw_set_halign(fa_center);
+draw_set_valign(fa_middle);
 draw_set_font(font);
 draw_set_color(color);
-draw_text(x + height, y, label);
+draw_text(bbox_left + width/2, bbox_top + height/2, label);
 </string>
           </argument>
         </arguments>

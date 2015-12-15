@@ -2,27 +2,13 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_button</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>604</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_inherited</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -40,13 +26,13 @@
           <argument>
             <kind>1</kind>
             <string>///Setting up basic variables
-active = false;
+component = noone;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="64">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -63,26 +49,53 @@ active = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Drawing toggle
-/*
-    assume toggle is meant to be 1:1
-        O label
-*/
-if(!selected)
-    draw_rectangle_colour(x + height,y, x+width,y+height, c_white,c_white,c_white,c_white, false);
-else
-    draw_rectangle_colour(x + height,y, x+width,y+height, c_gray,c_gray,c_gray,c_gray, false); 
+            <string>///Navigating
 
-draw_rectangle_colour(x,y, x+height,y+height, c_gray,c_gray,c_gray,c_gray, false);
-if(active)
-    draw_rectangle_colour(x,y, x+height,y+height, c_white,c_white,c_white,c_white, false);
-draw_rectangle(x,y,x+height,y+height, true);
-
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
-draw_set_font(font);
-draw_set_color(color);
-draw_text(x + height, y, label);
+//to change what triggers navigation, change this script
+if(gamepad_button_check_pressed(0, gp_padu))
+{
+    navigate_to(component.up);
+}
+if(gamepad_button_check_pressed(0, gp_padd))
+{
+     navigate_to(component.down);
+}
+if(gamepad_button_check_pressed(0, gp_padl))
+{
+    navigate_to(component.left);
+}
+if(gamepad_button_check_pressed(0, gp_padr))
+{
+    navigate_to(component.right);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Activating Component
+if(gamepad_button_check_pressed(0, gp_face1))
+{
+    with(component)
+    {
+        script_execute(get_method(object_index, "activate"));
+    }
+}
 </string>
           </argument>
         </arguments>

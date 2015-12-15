@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_button</parentName>
+  <parentName>par_template</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -39,50 +39,42 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Setting up basic variables
-active = false;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Drawing toggle
-/*
-    assume toggle is meant to be 1:1
-        O label
-*/
-if(!selected)
-    draw_rectangle_colour(x + height,y, x+width,y+height, c_white,c_white,c_white,c_white, false);
-else
-    draw_rectangle_colour(x + height,y, x+width,y+height, c_gray,c_gray,c_gray,c_gray, false); 
+            <string>///Layout building
+lb_init();
 
-draw_rectangle_colour(x,y, x+height,y+height, c_gray,c_gray,c_gray,c_gray, false);
-if(active)
-    draw_rectangle_colour(x,y, x+height,y+height, c_white,c_white,c_white,c_white, false);
-draw_rectangle(x,y,x+height,y+height, true);
+menu = new(obj_align_container, room_width, room_height);
+lb_begin(menu);
+    lb_begin( new(obj_vertical_container), ha_center, va_middle );
+        //lb_add( new(obj_image, spr_Controls) );
+        lb_add( new(
+            obj_label,
+            "Champloo",
+            ft_Bored_64,
+            c_white
+        ));
+        var button = 
+            new(
+                obj_button,
+                "Start",
+                ft_Normal_24,
+                c_white,
+                scr_goto_room,
+                rm_Test
+            );
+        lb_add( button );
+        lb_add( new(
+                obj_toggle,
+                "Fullscreen",
+                ft_Normal_24,
+                c_black,
+                scr_toggle_fullscreen
+        ));
+    lb_end(true);
+lb_end();
 
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
-draw_set_font(font);
-draw_set_color(color);
-draw_text(x + height, y, label);
+lb_nav_init(button);
+
+lb_clean();
 </string>
           </argument>
         </arguments>

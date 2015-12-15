@@ -5,24 +5,10 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_button</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>604</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_inherited</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -40,7 +26,91 @@
           <argument>
             <kind>1</kind>
             <string>///Setting up basic variables
-active = false;
+
+width = sprite_width;
+height = sprite_height;
+
+contained_by = noone;   //points to the container where this component belongs
+
+is_destroyed = false;   //true when destroying procedure was started
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Storing methods for later use
+
+resize = get_method(object_index, "resize");
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Marking as being destroyed, leaving container
+
+is_destroyed = true;
+
+leave_container();
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="74">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///set GUI scale
+//display_set_gui_size(view_wport, view_hport);
+display_set_gui_maximise(1,1);
 </string>
           </argument>
         </arguments>
@@ -63,26 +133,25 @@ active = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Drawing toggle
+            <string>///Some debug drawing
+//You are free to delete it when you feel you don't need it!
+
 /*
-    assume toggle is meant to be 1:1
-        O label
+draw_set_alpha(0.1);
+draw_set_color(c_black);
+draw_rectangle_colour(
+    x,
+    y,
+    x+width-1,
+    y+height-1,
+    c_white,c_white,c_white,c_white,
+    false
+);
+
+draw_set_alpha(1);
+if (sprite_index &gt; -1)
+    draw_self();
 */
-if(!selected)
-    draw_rectangle_colour(x + height,y, x+width,y+height, c_white,c_white,c_white,c_white, false);
-else
-    draw_rectangle_colour(x + height,y, x+width,y+height, c_gray,c_gray,c_gray,c_gray, false); 
-
-draw_rectangle_colour(x,y, x+height,y+height, c_gray,c_gray,c_gray,c_gray, false);
-if(active)
-    draw_rectangle_colour(x,y, x+height,y+height, c_white,c_white,c_white,c_white, false);
-draw_rectangle(x,y,x+height,y+height, true);
-
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
-draw_set_font(font);
-draw_set_color(color);
-draw_text(x + height, y, label);
 </string>
           </argument>
         </arguments>
