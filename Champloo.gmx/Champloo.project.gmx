@@ -203,6 +203,8 @@
         <object>objects\template_othermenu</object>
         <object>objects\template_start</object>
         <object>objects\template_pause</object>
+        <object>objects\template_audio</object>
+        <object>objects\template_graphics</object>
       </objects>
       <objects name="Components">
         <object>objects\par_component</object>
