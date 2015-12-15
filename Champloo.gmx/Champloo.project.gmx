@@ -158,6 +158,7 @@
             <script>scripts\scr_toggle_fullscreen.gml</script>
             <script>scripts\scr_toggle_motion_sick.gml</script>
             <script>scripts\scr_toggle_blood.gml</script>
+            <script>scripts\scr_toggle_audio.gml</script>
           </scripts>
           <scripts name="button">
             <script>scripts\scr_destroy_menu.gml</script>
