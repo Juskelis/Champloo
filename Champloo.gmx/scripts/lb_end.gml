@@ -13,7 +13,6 @@ var closing = ds_stack_pop(containers_stack);
 
 if(argument_count > 0 && argument[0])
 {
-    show_debug_message("----HOOKING UP NAVIGATION----");
     with(closing)
     {
         if(is(par_list_container))
