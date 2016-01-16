@@ -16,11 +16,14 @@
     <sound>sound\snd_Dash</sound>
   </sounds>
   <sprites name="sprites">
-    <sprite>sprites\spr_Player</sprite>
-    <sprite>sprites\spr_Player_Hit</sprite>
-    <sprite>sprites\spr_Player_WallRiding</sprite>
-    <sprite>sprites\spr_Player_Idle</sprite>
-    <sprite>sprites\spr_Player_InAir</sprite>
+    <sprites name="Player">
+      <sprite>sprites\spr_Player</sprite>
+      <sprite>sprites\spr_Player_Hit</sprite>
+      <sprite>sprites\spr_Player_WallRiding</sprite>
+      <sprite>sprites\spr_Player_Idle</sprite>
+      <sprite>sprites\spr_Player_InAir</sprite>
+      <sprite>sprites\spr_Player_Corpse</sprite>
+    </sprites>
     <sprite>sprites\spr_Wall</sprite>
     <sprite>sprites\spr_Sword</sprite>
     <sprite>sprites\spr_SwordHitBox</sprite>
@@ -188,6 +191,7 @@
       <object>objects\obj_Spawn</object>
       <object>objects\obj_StaticSword</object>
       <object>objects\obj_Player_Spawner</object>
+      <object>objects\obj_Corpse</object>
     </objects>
     <objects name="Nonvisual">
       <object>objects\obj_Timescale</object>
@@ -195,6 +199,7 @@
       <object>objects\obj_Fullscreen</object>
       <object>objects\obj_ViewController</object>
       <object>objects\obj_Global_Settings</object>
+      <object>objects\obj_Pause</object>
     </objects>
     <objects name="UI">
       <objects name="Templates">
@@ -247,7 +252,6 @@
       <object>objects\obj_BloodSurface</object>
       <object>objects\obj_Flash</object>
       <object>objects\obj_FootDust</object>
-      <object>objects\obj_Pause</object>
     </objects>
   </objects>
   <rooms name="rooms">

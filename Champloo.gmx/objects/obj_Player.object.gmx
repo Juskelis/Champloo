@@ -267,14 +267,26 @@ dash_decay = 5;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with(my_sword)
+            <string>///delete player
+with(my_sword)
 {
     instance_destroy();
 }
 
 with(obj_Player_Spawner)
 {
-    pool[other.player_number] = death_time * room_speed;
+    pool[other.player_number] = other.death_time * room_speed;
+}
+
+var flyfactor = 20;
+with(instance_create(x,y,obj_Corpse))
+{
+    hsp = other.hsp + lengthdir_x(flyfactor,other.spurt_direction + 180);
+    vsp = other.vsp + lengthdir_y(flyfactor,other.spurt_direction + 180);
+    
+    maxgrav = other.maxgrav;
+    maxspeed = other.maxspeed;
+    
 }
 
 </string>
@@ -441,8 +453,7 @@ if(hit != noone)// &amp;&amp; false)
             spurt_direction = spurt_direction%180;
         scr_spawn_blood(random_range(20,30), random(360), 180);
         
-        //turn on slow mo
-        scr_set_timescale(0.5, death_time*0.5);
+        instance_destroy();
     }
     hit = noone;
 }
@@ -1066,6 +1077,7 @@ else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawn
         }
         spurt_direction = point_direction(x,y, other.x, other.y);
         scr_spawn_blood(random_range(30,60), 0, 180);
+        instance_destroy();
     }
     else
     {
