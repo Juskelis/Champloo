@@ -1077,6 +1077,7 @@ else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawn
         }
         spurt_direction = point_direction(x,y, other.x, other.y);
         scr_spawn_blood(random_range(30,60), 0, 180);
+        instance_destroy();
     }
     else
     {
