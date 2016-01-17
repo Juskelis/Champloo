@@ -1,4 +1,4 @@
-///
+///scr_example(args_array)
 /*
     just prints that you pressed the button, wow!
     

@@ -39,6 +39,10 @@ relative_y = y/display_get_gui_height();
 on_select = scr_example;
 on_select_args[0] = "this is a";
 on_select_args[1] = "test";
+
+on_change = scr_slider_example;
+on_change_args[0] = true;
+on_change_args[1] = 0;
 </string>
           </argument>
         </arguments>
@@ -61,7 +65,8 @@ on_select_args[1] = "test";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x = display_get_gui_width()*relative_x;
+            <string>///relocate position properly
+x = display_get_gui_width()*relative_x;
 y = display_get_gui_height()*relative_y;
 </string>
           </argument>

@@ -69,7 +69,6 @@ with(obj_Controller_Selection)
 {
     buttons[num_elements] = other.id;
     num_elements++;
-    show_debug_message(num_elements);
 }
 </string>
           </argument>
@@ -99,6 +98,9 @@ draw_set_color(our_color);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
 draw_text(x, y, label);
+
+width = string_width(label);
+height = string_height(label);
 </string>
           </argument>
         </arguments>

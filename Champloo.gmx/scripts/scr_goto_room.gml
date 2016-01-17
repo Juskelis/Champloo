@@ -1,3 +1,4 @@
+///scr_goto_room([room_id])
 /*
     navigate to room
     

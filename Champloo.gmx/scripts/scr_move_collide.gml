@@ -73,6 +73,7 @@ repeat(abs(vsp))
                         alarm[0] = death_time * room_speed;
                         spurt_direction = 0;
                         scr_spawn_blood(random_range(20,30), 0, 180);
+                        instance_destroy();
                     }
                     with(obj_Score)
                     {
@@ -95,6 +96,7 @@ repeat(abs(vsp))
                     {
                         scores[other_player.player_number]++;
                     }
+                    instance_destroy();
                 }
                 
                 if(!died)
