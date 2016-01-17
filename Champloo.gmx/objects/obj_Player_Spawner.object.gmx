@@ -31,9 +31,9 @@
 //  if they are not spawned already
 pool = noone;
 
-var num_players = 2;
+global.num_players = 2;
 
-for(var i = 0; i &lt; num_players; i++)
+for(var i = 0; i &lt; global.num_players; i++)
 {
     pool[i] = 0;
 }
@@ -89,7 +89,7 @@ with(obj_Player)
     other.pool[player_number] = -1;
 }
 
-for(var i = 0; i &lt; array_length_1d(pool); i++)
+for(var i = 0; i &lt; global.num_players; i++)
 {
     if(pool[i] == 0)
     {
