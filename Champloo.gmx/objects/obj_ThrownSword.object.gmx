@@ -96,37 +96,23 @@ if(movespeed &gt; 0)
         var dy = lengthdir_y(1, attack_direction);
         while(!place_meeting(x + dx, y + dy, obj_Wall))
         {
-            /*
-            with(obj_Player)
-            {
-                if(other.player != id &amp;&amp; !respawning)
-                {
-                    if(place_meeting(x,y, other))
-                    {
-                        respawning = true;
-                        alarm[0] = death_time * room_speed;
-                        var othernum = other.player.player_number;
-                        with(obj_Score)
-                        {
-                            scores[othernum]++;
-                        }
-                    }
-                }
-            }
-            */
             x += dx;
             y += dy;
         }
         x += lengthdir_x(sprite_width/4, attack_direction);
         y += lengthdir_y(sprite_width/4, attack_direction);
         movespeed = 0;
-        alarm[0] = decay_time * room_speed;
+        //alarm[0] = decay_time * room_speed;
     }
     else
     {
         x += lengthdir_x(movespeed, attack_direction)*global.timescale;
         y += lengthdir_y(movespeed, attack_direction)*global.timescale;
     }
+}
+else if(instance_number(obj_ThrownSword) &gt; global.num_players)
+{
+    instance_destroy();
 }
 </string>
           </argument>
