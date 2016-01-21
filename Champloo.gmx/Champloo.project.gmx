@@ -260,7 +260,6 @@
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_Air</room>
     <room>rooms\rm_Start</room>
     <room>rooms\rm_Test</room>
   </rooms>
