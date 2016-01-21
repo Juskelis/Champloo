@@ -44,47 +44,38 @@ lb_init();
 
 menu = new(obj_vertical_container, room_width, room_height);
 lb_begin(menu);
+
     lb_add( new(
         obj_label,
-        "Champloo",
+        "Room Select",
         ft_Bored_64,
         c_white
     ));
-    var button = new (
+    var currRoom = room_next(room);
+    while(room_exists(currRoom))
+    {
+        lb_add( new(
+            obj_button,
+            room_get_name(currRoom),
+            ft_Normal_24,
+            c_black,
+            scr_goto_room,
+            currRoom
+        ));
+        currRoom = room_next(currRoom);
+    }
+    
+    button = new(
         obj_button,
-        "Start",
+        "Return",
         ft_Normal_24,
         c_black,
         scr_transition_menu,
         menu,
-        template_room_select
+        template_start
     );
-    lb_add( button );
-    lb_add( new(
-        obj_button,
-        "Audio",
-        ft_Normal_24,
-        c_black,
-        scr_transition_menu,
-        menu,
-        template_audio
-    ));
-    lb_add( new(
-        obj_button,
-        "Graphics",
-        ft_Normal_24,
-        c_black,
-        scr_transition_menu,
-        menu,
-        template_graphics
-    ));
-    lb_add( new(
-        obj_button,
-        "Quit",
-        ft_Normal_24,
-        c_black,
-        scr_quit
-    ));
+    lb_add(button);
+
 lb_end(true);
 
 lb_nav_init(button);
