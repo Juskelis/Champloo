@@ -43,7 +43,7 @@
 player_count = 0;
 for(player_count = 0; player_count &lt; instance_number(obj_Player); player_count += 1)
 {
-    scores[instance_find(obj_Player, player_count).player_number] = 0;
+    scores[player_count] = 0;
 }
 </string>
           </argument>

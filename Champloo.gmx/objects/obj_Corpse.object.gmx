@@ -105,7 +105,7 @@ repeat(abs(vsp))
     if(place_meeting(x, y + sign(vsp), obj_Wall))
     {
         vsp = -(scr_approach(vsp, 0, vsp_bounce_factor));
-        if(abs(vsp) &lt;= 1)
+        if(abs(vsp) &lt;= vsp_bounce_factor)
         {
             vsp = 0;
             break;
