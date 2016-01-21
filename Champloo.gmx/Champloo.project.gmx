@@ -244,7 +244,11 @@
     </objects>
     <objects name="Walls">
       <object>objects\obj_Wall</object>
-      <object>objects\obj_Moving_Wall</object>
+      <objects name="Moving Walls">
+        <object>objects\obj_Moving_Wall</object>
+        <object>objects\obj_Circle_Wall</object>
+        <object>objects\obj_Line_Wall</object>
+      </objects>
     </objects>
     <objects name="Effects">
       <object>objects\obj_Dust</object>
@@ -255,6 +259,7 @@
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_Air</room>
     <room>rooms\rm_Start</room>
     <room>rooms\rm_Test</room>
   </rooms>

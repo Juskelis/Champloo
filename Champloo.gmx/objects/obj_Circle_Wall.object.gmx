@@ -5,12 +5,26 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_Wall</parentName>
+  <parentName>obj_Moving_Wall</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -25,23 +39,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///movement variables
-spd = 1;
-angle = 0;
+            <string>///create circular variables
+var revolutions_per_second = 0.1;
+angle_speed = (360*revolutions_per_second)/room_speed; //delta per step
 
-calc_target = true;
+radius = 300;
 
-target_x = x;
-target_y = y;
-
-remainder_x = 0;
-remainder_y = 0;
+calc_target = false;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="2">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -58,66 +68,51 @@ remainder_y = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///set destination if calc_target is true
-if(calc_target)
-{
-    target_x = x + lengthdir_x(spd, angle);
-    target_y = y + lengthdir_y(spd, angle);
-}
+            <string>///update movement variables
+angle += angle_speed;
+target_x = xstart + lengthdir_x(radius, angle);
+target_y = ystart + lengthdir_y(radius, angle);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw path
+draw_circle(xstart + sprite_width/2,ystart + sprite_height/2,radius,true);
 </string>
           </argument>
         </arguments>
       </action>
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>500</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
+        <useapplyto>0</useapplyto>
         <exetype>2</exetype>
         <functionname></functionname>
-        <codestring></codestring>
+        <codestring>draw_self();</codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///move
-remainder_x += target_x - x;
-remainder_y += target_y - y;
-var x_delta = floor(remainder_x);
-var y_delta = floor(remainder_y);
-remainder_x -= x_delta;
-remainder_y -= y_delta;
-
-repeat(abs(y_delta))
-{
-    with(obj_Player)
-    {
-        if(scr_touching(id, other.id))
-        {
-            y += sign(y_delta);
-        }
-    }
-    y += sign(y_delta);
-}
-
-repeat(abs(x_delta))
-{
-    with(obj_Player)
-    {
-        if(scr_touching(id, other.id))
-        {
-            x += sign(x_delta);
-        }
-    }
-    x += sign(x_delta);
-}
-</string>
-          </argument>
-        </arguments>
       </action>
     </event>
   </events>
