@@ -435,7 +435,7 @@ with(thrown)
           <argument>
             <kind>1</kind>
             <string>///validate hit
-if(hit != noone)// &amp;&amp; false)
+if(hit != noone &amp;&amp; instance_exists(hit))// &amp;&amp; false)
 {
     if(!respawning)
     {
