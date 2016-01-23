@@ -26,15 +26,22 @@
           <argument>
             <kind>1</kind>
             <string>///movement variables
-radius = 40;
-spd = 1; //change in angle per step
+spd = 1;
 angle = 0;
+
+calc_target = true;
+
+target_x = x;
+target_y = y;
+
+remainder_x = 0;
+remainder_y = 0;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="3" enumb="2">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -51,12 +58,39 @@ angle = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>angle += spd;
-var x_next = xstart + lengthdir_x(radius, angle);
-var y_next = ystart + lengthdir_y(radius, angle);
-
-var x_delta = x_next - x;
-var y_delta = y_next - y;
+            <string>///set destination if calc_target is true
+if(calc_target)
+{
+    target_x = x + lengthdir_x(spd, angle);
+    target_y = y + lengthdir_y(spd, angle);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///move
+remainder_x += target_x - x;
+remainder_y += target_y - y;
+var x_delta = floor(remainder_x);
+var y_delta = floor(remainder_y);
+remainder_x -= x_delta;
+remainder_y -= y_delta;
 
 repeat(abs(y_delta))
 {
