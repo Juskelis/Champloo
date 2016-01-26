@@ -51,19 +51,23 @@ lb_begin(menu);
         ft_Bored_64,
         c_white
     ));
-    var currRoom = room_next(room);
-    while(room_exists(currRoom))
-    {
-        lb_add( new(
-            obj_button,
-            room_get_name(currRoom),
-            ft_Normal_24,
-            c_black,
-            scr_goto_room,
-            currRoom
-        ));
-        currRoom = room_next(currRoom);
-    }
+    lb_begin(new(obj_fixed_grid_container, room_width/2, room_height/2, 5, 3));
+        var currRoom = room_next(room);
+        var curr_button = noone;
+        while(room_exists(currRoom))
+        {
+            curr_button = new(
+                obj_button,
+                room_get_name(currRoom),
+                ft_Normal_24,
+                c_black,
+                scr_goto_room,
+                currRoom
+            );
+            lb_add(curr_button);
+            currRoom = room_next(currRoom);
+        }
+    lb_end(true);
     
     button = new(
         obj_button,
@@ -74,11 +78,20 @@ lb_begin(menu);
         menu,
         template_start
     );
+    
+    if(curr_button != noone)
+    {
+        button.up = curr_button;
+        curr_button.down = button;
+    }
+    
     lb_add(button);
 
 lb_end(true);
-
-lb_nav_init(button);
+if(curr_button == noone)
+    lb_nav_init(button);
+else
+    lb_nav_init(curr_button);
 
 lb_clean();
 </string>
