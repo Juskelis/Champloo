@@ -252,6 +252,7 @@
         <object>objects\obj_Moving_Wall</object>
         <object>objects\obj_Circle_Wall</object>
         <object>objects\obj_Line_Wall</object>
+        <object>objects\obj_Box_Wall</object>
       </objects>
     </objects>
     <objects name="Effects">
