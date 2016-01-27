@@ -143,6 +143,8 @@
               </scripts>
               <script>scripts\_obj_align_container_arrange.gml</script>
               <script>scripts\_obj_align_container_init.gml</script>
+              <script>scripts\_obj_fixed_grid_container_arrange.gml</script>
+              <script>scripts\_obj_fixed_grid_container_init.gml</script>
             </scripts>
           </scripts>
           <scripts name="interactive">
@@ -236,6 +238,7 @@
           <objects name="Grid Containers">
             <object>objects\par_grid_container</object>
             <object>objects\obj_align_container</object>
+            <object>objects\obj_fixed_grid_container</object>
           </objects>
         </objects>
       </objects>
