@@ -35,7 +35,10 @@ draw_clear_alpha(c_black,0);
 
 with(obj_Wall)
 {
-    draw_sprite_ext(sprite_index, image_index, x,y, image_xscale, image_yscale, image_angle, c_white, 1);
+    if(object_index != obj_Moving_Wall  &amp;&amp; !object_is_ancestor(object_index, obj_Moving_Wall))
+    {
+        draw_sprite_ext(sprite_index, image_index, x,y, image_xscale, image_yscale, image_angle, c_white, 1);
+    }
 }
 
 surface_reset_target();
