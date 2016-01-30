@@ -156,8 +156,31 @@ y += vsp*global.timescale;
           <argument>
             <kind>1</kind>
             <string>///draw to blood surface
-if(instance_exists(obj_BloodSurface) &amp;&amp; place_meeting(x,y, obj_Wall))
+if(place_meeting(x,y, obj_Wall)) //instance_exists(obj_BloodSurface) &amp;&amp; 
 {
+    var current_surface = noone;
+    for(var i = 0; i &lt; instance_number(obj_BloodSurface); i++)
+    {
+        current_surface = instance_find(obj_BloodSurface, i);
+        surface_set_target(current_surface.surf);
+        
+        draw_set_blend_mode_ext(bm_dest_alpha, bm_normal);
+        draw_sprite_ext(
+            sprite_index,
+            image_index,
+            x - current_surface.x,
+            y - current_surface.y,
+            image_xscale,
+            image_yscale,
+            image_angle,
+            c_white,
+            1
+        );
+        draw_set_blend_mode(bm_normal);
+        
+        surface_reset_target();
+    }
+    /*
     surface_set_target(obj_BloodSurface.surf);
     
     draw_set_blend_mode_ext(bm_dest_alpha, bm_normal);
@@ -165,6 +188,7 @@ if(instance_exists(obj_BloodSurface) &amp;&amp; place_meeting(x,y, obj_Wall))
     draw_set_blend_mode(bm_normal);
     
     surface_reset_target();
+    */
 }
 </string>
           </argument>
