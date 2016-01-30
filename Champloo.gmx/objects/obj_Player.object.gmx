@@ -289,6 +289,8 @@ with(instance_create(x,y,obj_Corpse))
     
 }
 
+audio_stop_sound(footIndex);
+
 </string>
           </argument>
         </arguments>
