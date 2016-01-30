@@ -831,10 +831,7 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///commented out events (in order)
-
-
-///swing sword
+            <string>///swing sword
 var deadzone = 0.1;
 
 if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword &amp;&amp; !block_slow)
@@ -880,7 +877,28 @@ if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword &amp;&amp; !block_slow
     }
 }
 
-///throw sword
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///throw sword
 if(key_shoot_press &amp;&amp; has_sword &amp;&amp; !throwing)
 {
     alarm[3] = 1;//room_speed;
@@ -888,8 +906,27 @@ if(key_shoot_press &amp;&amp; has_sword &amp;&amp; !throwing)
     
     throwing = true;
 }
-
-///check for slow mo for throwing
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check for slow mo for throwing
 if(throwing)
 {
     var slowdown = false;
@@ -918,8 +955,27 @@ if(throwing)
         scr_set_timescale(0.25, 0.25);
     }
 }
-
-///deplete blocking
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///deplete blocking
 if(key_block)
 {
     block_slow = true;
@@ -930,8 +986,27 @@ else
 {
     block_level = min(block_level + blocking_grow_step*global.timescale, max_block);
 }
-
-///check blocking for hitwindow
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check blocking for hitwindow
 if(hit != noone)
 {
     var blocked = scr_block_check(hit.damage);
@@ -940,8 +1015,27 @@ if(hit != noone)
         hit = noone;
     }
 }
-
-///check if KLANG happened
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///check if KLANG happened
 if(hit != noone)
 {
     if(hit.player.hit != noone)
@@ -994,8 +1088,27 @@ if(hit != noone)
         }
     }
 }
-
-///spawn blood
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///spawn blood
 if(respawning)
     scr_spawn_blood(1, spurt_direction, scatter);
 </string>
