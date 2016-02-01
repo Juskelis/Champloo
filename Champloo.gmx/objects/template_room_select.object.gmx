@@ -51,7 +51,7 @@ lb_begin(menu);
         ft_Bored_64,
         c_white
     ));
-    lb_begin(new(obj_fixed_grid_container, room_width/2, room_height/2, 5, 3));
+    lb_begin(new(obj_fixed_grid_container, room_width/2, room_height/2, 3, 3));
         var currRoom = room_next(room);
         var curr_button = noone;
         while(room_exists(currRoom))

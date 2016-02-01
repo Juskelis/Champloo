@@ -95,6 +95,7 @@ target_y = ystart + lengthdir_y(radius, angle);
           <argument>
             <kind>1</kind>
             <string>///draw path
+draw_set_color(c_black);
 draw_circle(xstart + sprite_width/2,ystart + sprite_height/2,radius,true);
 </string>
           </argument>
