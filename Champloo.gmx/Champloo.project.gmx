@@ -267,6 +267,7 @@
   <rooms name="rooms">
     <room>rooms\rm_Start</room>
     <room>rooms\rm_Test</room>
+    <room>rooms\rm_Air</room>
   </rooms>
   <constants number="6">
     <constant name="ha_left">0</constant>
