@@ -252,12 +252,14 @@
         <object>objects\obj_Moving_Wall</object>
         <object>objects\obj_Circle_Wall</object>
         <object>objects\obj_Line_Wall</object>
+        <object>objects\obj_Box_Wall</object>
       </objects>
     </objects>
     <objects name="Effects">
       <object>objects\obj_Dust</object>
       <object>objects\obj_Blood</object>
       <object>objects\obj_BloodSurface</object>
+      <object>objects\obj_BloodSurface_Moving</object>
       <object>objects\obj_Flash</object>
       <object>objects\obj_FootDust</object>
     </objects>

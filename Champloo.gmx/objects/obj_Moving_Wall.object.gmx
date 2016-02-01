@@ -36,6 +36,8 @@ target_y = y;
 
 remainder_x = 0;
 remainder_y = 0;
+
+instance_create(x,y, obj_BloodSurface_Moving);
 </string>
           </argument>
         </arguments>
@@ -101,12 +103,40 @@ repeat(abs(y_delta))
             y += sign(y_delta);
         }
     }
+    with(obj_Blood)
+    {
+        if(scr_touching(id, other.id))
+        {
+            y += sign(y_delta);
+        }
+    }
+    with(obj_ThrownSword)
+    {
+        if(scr_touching(id, other.id))
+        {
+            y += sign(y_delta);
+        }
+    }
     y += sign(y_delta);
 }
 
 repeat(abs(x_delta))
 {
     with(obj_Player)
+    {
+        if(scr_touching(id, other.id))
+        {
+            x += sign(x_delta);
+        }
+    }
+    with(obj_Blood)
+    {
+        if(scr_touching(id, other.id))
+        {
+            x += sign(x_delta);
+        }
+    }
+    with(obj_ThrownSword)
     {
         if(scr_touching(id, other.id))
         {
