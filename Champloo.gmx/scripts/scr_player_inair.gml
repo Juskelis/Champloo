@@ -22,7 +22,7 @@ if(hsp != 0)
     hsp = scr_apply_friction(hsp, air_friction*global.timescale)
 }
 
-if(key_jump_released)
+if(key_jump_released && dash_force == 0)
 {
     if(vsp < 0) vsp *= 0.25;
 }
