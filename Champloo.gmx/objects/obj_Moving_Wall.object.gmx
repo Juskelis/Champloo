@@ -106,7 +106,8 @@ repeat(abs(y_delta))
     {
         with(movelist[i])
         {
-            if(scr_touching(id, other.id))
+            if(scr_touching(id, other.id)
+                &amp;&amp; !scr_place_meeting_but(x,y + sign(y_delta), obj_Wall, other))
             {
                 y += sign(y_delta);
             }
@@ -121,7 +122,8 @@ repeat(abs(x_delta))
     {
         with(movelist[i])
         {
-            if(scr_touching(id, other.id))
+            if(scr_touching(id, other.id)
+                &amp;&amp; !scr_place_meeting_but(x + sign(x_delta),y, obj_Wall, other))
             {
                 x += sign(x_delta);
             }
