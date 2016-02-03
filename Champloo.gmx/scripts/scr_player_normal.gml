@@ -52,10 +52,13 @@ scr_move_collide();
 ///check state
 if(!place_meeting(x, y + 1, obj_Wall))
 {
-    state = States.InAir;
+    if(place_meeting(x - 1,y,obj_Wall) || place_meeting(x + 1,y,obj_Wall))
+    {
+        state = States.WallRiding;
+    }
+    else
+    {
+        state = States.InAir;
+    }
 }
 
-if(place_meeting(x - 1,y,obj_Wall) || place_meeting(x + 1,y,obj_Wall))
-{
-    state = States.WallRiding;
-}

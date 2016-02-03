@@ -38,6 +38,12 @@ remainder_x = 0;
 remainder_y = 0;
 
 instance_create(x,y, obj_BloodSurface_Moving);
+
+//list of object indices that can move
+movelist[0] = obj_Player;
+movelist[1] = obj_ThrownSword;
+movelist[2] = obj_Blood;
+movelist[3] = obj_Corpse;
 </string>
           </argument>
         </arguments>
@@ -96,25 +102,15 @@ remainder_y -= y_delta;
 
 repeat(abs(y_delta))
 {
-    with(obj_Player)
+    for(var i = 0; i &lt; array_length_1d(movelist); i++)
     {
-        if(scr_touching(id, other.id))
+        with(movelist[i])
         {
-            y += sign(y_delta);
-        }
-    }
-    with(obj_Blood)
-    {
-        if(scr_touching(id, other.id))
-        {
-            y += sign(y_delta);
-        }
-    }
-    with(obj_ThrownSword)
-    {
-        if(scr_touching(id, other.id))
-        {
-            y += sign(y_delta);
+            if(scr_touching(id, other.id)
+                &amp;&amp; !scr_place_meeting_but(x,y + sign(y_delta), obj_Wall, other))
+            {
+                y += sign(y_delta);
+            }
         }
     }
     y += sign(y_delta);
@@ -122,25 +118,15 @@ repeat(abs(y_delta))
 
 repeat(abs(x_delta))
 {
-    with(obj_Player)
+    for(var i = 0; i &lt; array_length_1d(movelist); i++)
     {
-        if(scr_touching(id, other.id))
+        with(movelist[i])
         {
-            x += sign(x_delta);
-        }
-    }
-    with(obj_Blood)
-    {
-        if(scr_touching(id, other.id))
-        {
-            x += sign(x_delta);
-        }
-    }
-    with(obj_ThrownSword)
-    {
-        if(scr_touching(id, other.id))
-        {
-            x += sign(x_delta);
+            if(scr_touching(id, other.id)
+                &amp;&amp; !scr_place_meeting_but(x + sign(x_delta),y, obj_Wall, other))
+            {
+                x += sign(x_delta);
+            }
         }
     }
     x += sign(x_delta);

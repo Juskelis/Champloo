@@ -8,6 +8,7 @@ var cell_x = 0;
 var cell_y = 0;
 
 var max_height = 0;
+var max_width = 0;
 
 var curr_cell = noone;
 
@@ -18,13 +19,21 @@ for(i = 0; i < num_y_cells; i++)
         curr_cell = ds_grid_get(items, j, i);
         with(curr_cell)
         {
+            max_width += width + other.horizontal_padding;
+            if(height > max_height)
+                max_height = height;
+        }
+    }
+    cell_x = width/2 - max_width/2;
+    for(j = 0; j < num_x_cells; j++)
+    {
+        curr_cell = ds_grid_get(items, j, i);
+        with(curr_cell)
+        {
             component_shift_to(
                 cell_x,
                 cell_y
             );
-            
-            if(height > max_height)
-                max_height = height;
                 
             cell_x += width + other.horizontal_padding;
         }
