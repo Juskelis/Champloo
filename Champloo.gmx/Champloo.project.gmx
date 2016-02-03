@@ -214,6 +214,7 @@
         <object>objects\template_audio</object>
         <object>objects\template_graphics</object>
         <object>objects\template_room_select</object>
+        <object>objects\template_win</object>
       </objects>
       <objects name="Components">
         <object>objects\par_component</object>

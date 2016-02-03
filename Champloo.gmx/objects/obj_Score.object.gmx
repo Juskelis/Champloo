@@ -125,6 +125,7 @@ for(var i = 0; i &lt; player_count; i++)
 
 if(victory &amp;&amp; alarm[1] &lt;= 0)
 {
+    instance_create(0,0, template_win);
     scr_set_timescale(0.25, 0.25);
     alarm[1] = room_speed*end_slow;
 }
