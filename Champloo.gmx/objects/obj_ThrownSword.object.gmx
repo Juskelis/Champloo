@@ -161,6 +161,18 @@ if(movespeed &lt;= 0)
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///wrap around?
+if(bbox_top &gt; room_height) y = -sprite_yoffset;
+else if(bbox_bottom &lt; 0) y = room_height + sprite_yoffset;
+
+if(bbox_left &gt; room_width) x = -sprite_xoffset;
+if(bbox_right &lt; 0) x = room_width + sprite_xoffset;
+</string>
+          </argument>
+        </arguments>
       </action>
     </event>
     <event eventtype="8" enumb="0">
