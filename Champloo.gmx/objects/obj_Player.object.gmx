@@ -1131,8 +1131,17 @@ if(respawning)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///check if falling to death
-if(y &gt; room_height * 1.5) instance_destroy();
+            <string>///check when outside room
+if(bbox_top &gt; room_height) y = -sprite_yoffset;
+else if(bbox_bottom &lt; 0) y = room_height + sprite_yoffset;
+
+if(bbox_left &gt; room_width) x = -sprite_xoffset;
+else if(bbox_right &lt; 0) x = room_width + sprite_xoffset;
+/*
+if(y &gt; room_height * 1.5) y = -room_height*0.25;
+if(y &lt; -room_height * 0.5) y = room_height*1.25;
+if(x &lt; -room_width
+*/
 </string>
           </argument>
         </arguments>
