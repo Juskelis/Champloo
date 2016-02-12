@@ -1165,6 +1165,10 @@ if(x &lt; -room_width
             <string>///check if crushed
 if(place_meeting(x,y, obj_Wall))
 {
+    with(obj_Score)
+    {
+        scores[other.player_number] = max(0, scores[other.player_number]-1);
+    }
     instance_destroy();
 }
 </string>
