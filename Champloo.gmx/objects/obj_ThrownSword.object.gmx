@@ -38,6 +38,8 @@ opacity_decay_step = 1/(opacity_decay_time*room_speed);
 decay_time = 2;//how long (in seconds) to stay stuck in a wall
 
 spin = 0;
+
+trail_length = 100;
 </string>
           </argument>
         </arguments>
@@ -118,17 +120,43 @@ else if(instance_number(obj_ThrownSword) &gt; global.num_players)
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//decrease trail if stopped
+if(movespeed &lt;= 0)
+{
+    trail_length = scr_approach(trail_length, 0, 1);
+    opacity -= opacity_decay_step;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="7" enumb="0">
       <action>
         <libid>1</libid>
-        <id>203</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_kill_object</functionname>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
@@ -154,12 +182,35 @@ else if(instance_number(obj_ThrownSword) &gt; global.num_players)
             <kind>1</kind>
             <string>///draw line
 
+
 if(opacity &gt; 0)
 {
     draw_set_alpha(opacity);
-    draw_line_width_colour(xstart,ystart,x,y,5, c_white, c_white);
+    if(distance_to_point(xstart,ystart) &lt; trail_length)
+    {
+        draw_line_width_colour(
+            xstart,
+            ystart,
+            x,
+            y,
+            5,
+            c_white,
+            c_white
+        );
+    }
+    else
+    {
+        draw_line_width_colour(
+            x - lengthdir_x(trail_length, attack_direction),
+            y - lengthdir_y(trail_length, attack_direction),
+            x,
+            y,
+            5,
+            c_white,
+            c_white
+        );
+    }
     draw_set_alpha(1);
-    opacity -= opacity_decay_step;
 }
 
 </string>
