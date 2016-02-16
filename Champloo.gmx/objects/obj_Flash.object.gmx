@@ -30,7 +30,7 @@ lifetime = 0.1; //in seconds
 alarm[0] = lifetime*room_speed;
 
 num_flashes = 5; //how spiky is the flash?
-radius = 48;
+radius = 64;
 </string>
           </argument>
         </arguments>
