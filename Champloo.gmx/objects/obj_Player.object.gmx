@@ -1007,7 +1007,7 @@ else
           <argument>
             <kind>1</kind>
             <string>///check blocking for hitwindow
-if(hit != noone)
+if(instance_exists(hit) &amp;&amp; hit != noone)
 {
     var blocked = scr_block_check(hit.damage);
     if(blocked)
@@ -1036,9 +1036,9 @@ if(hit != noone)
           <argument>
             <kind>1</kind>
             <string>///check if KLANG happened
-if(hit != noone)
+if(instance_exists(hit) &amp;&amp; hit != noone)
 {
-    if(hit.player.hit != noone)
+    if(instance_exists(hit.player.hit) &amp;&amp; hit.player.hit != noone)
     {
         if(hit.player.hit.player == id)
         {
@@ -1239,7 +1239,7 @@ if(!has_sword &amp;&amp; other.movespeed &lt;= 0)
         instance_destroy();
     }
 }
-else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawning)
+else if(instance_exists(other.player) &amp;&amp; other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawning)
 {
     if(!scr_block_check(0))
     {
