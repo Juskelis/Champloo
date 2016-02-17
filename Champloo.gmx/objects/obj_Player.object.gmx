@@ -994,6 +994,43 @@ if(instance_exists(hit) &amp;&amp; hit != noone)
           <argument>
             <kind>1</kind>
             <string>///check if KLANG happened
+
+
+
+if(instance_exists(hit) &amp;&amp; my_sword.active)
+{
+    if(abs(hit.attack_direction - my_sword.attack_direction) &gt; 135)
+    {
+        if(instance_exists(hit.player))
+        {
+            var other_player_x = hit.player.x;
+            var other_player_y = hit.player.y;
+            
+            var my_push_dir = point_direction(other_player_x, other_player_y, x, y);
+            var other_push_dir = my_push_dir + 180;
+            
+            var force_amount = maxspeed;
+            force_x = lengthdir_x(force_amount, my_push_dir);
+            force_y = lengthdir_y(force_amount, my_push_dir);
+            
+            hit.player.force_x = -force_x;
+            hit.player_force_y = -force_y;
+            
+            instance_create((x+other_player_x)/2,(y+other_player_y)/2, obj_Flash);
+        }    
+    
+        //deactivate both swords so that we don't redo this
+        my_sword.active = false;
+        hit.active = false;
+        
+        hit = noone;
+        hit_player_number = noone;
+    }
+}
+
+
+
+/*
 if(instance_exists(hit) &amp;&amp; hit != noone)
 {
     if(instance_exists(hit.player.hit) &amp;&amp; hit.player.hit != noone)
@@ -1022,16 +1059,6 @@ if(instance_exists(hit) &amp;&amp; hit != noone)
             
             instance_create((x+other_player_x)/2,(y+other_player_y)/2, obj_Flash);
             
-            /*
-            hsp = lengthdir_x(maxspeed, my_push_dir);
-            vsp = lengthdir_y(maxspeed, (my_push_dir*3 + other_push_dir)/4);
-            with(hit.player)
-            {
-                hsp = lengthdir_x(maxspeed, other_push_dir);
-                vsp = lengthdir_y(maxspeed, (other_push_dir*3 + my_push_dir)/4);
-            }
-            */
-            
             //destroy both swords so that we don't double down on this
             with(hit.player.hit)
             {
@@ -1046,6 +1073,7 @@ if(instance_exists(hit) &amp;&amp; hit != noone)
         }
     }
 }
+*/
 </string>
           </argument>
         </arguments>
