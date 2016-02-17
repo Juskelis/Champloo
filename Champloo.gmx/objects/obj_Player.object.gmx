@@ -1221,13 +1221,6 @@ if(other.active &amp;&amp; other.player != id &amp;&amp; hit == noone)
     hit = other.id;
     hit_player_number = other.player_number;
     alarm[2] = block_window;
-    
-    var angle = point_direction(x,y, hit.player.x,hit.player.y);
-    with(hit)
-    {
-        draw_sprite_ext(sprite_index, image_index, x,y, image_xscale, image_yscale, angle, c_white, 1);
-        scr_sleep(1000);
-    }
 }
 
 </string>
