@@ -67,6 +67,7 @@
       <script>scripts\scr_player_collision.gml</script>
       <script>scripts\scr_spawn_player.gml</script>
       <script>scripts\scr_place_meeting_but.gml</script>
+      <script>scripts\scr_player_color.gml</script>
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>

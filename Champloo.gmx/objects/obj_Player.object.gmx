@@ -1231,7 +1231,7 @@ if(other.active &amp;&amp; other.player != id &amp;&amp; hit == noone)
           <argument>
             <kind>1</kind>
             <string>///check if valid and needed
-if(!has_sword &amp;&amp; other.movespeed &lt;= 0)
+if(!has_sword &amp;&amp; (other.movespeed &lt;= 0 || other.player.player_number == player_number))
 {
     has_sword = true;
     with(other)
@@ -1370,6 +1370,38 @@ enum States
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw colored self
+draw_sprite_ext(
+    sprite_index,
+    image_index,
+    x,
+    y,
+    image_xscale,
+    image_yscale,
+    image_angle,
+    scr_player_color(player_number),
+    1
+);
+</string>
+          </argument>
+        </arguments>
       </action>
       <action>
         <libid>1</libid>
