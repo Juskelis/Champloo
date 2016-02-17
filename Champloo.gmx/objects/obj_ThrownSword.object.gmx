@@ -28,6 +28,8 @@
             <string>///create variables
 attack_direction = 0;
 player = noone;
+player_number = noone;
+can_catch = false;
 
 movespeed = 20; // delta change PER STEP
 
@@ -40,6 +42,33 @@ decay_time = 2;//how long (in seconds) to stay stuck in a wall
 spin = 0;
 
 trail_length = 100;
+
+catch_delay = 0.1;
+alarm[1] = catch_delay * room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///allow catching
+can_catch = true;
 </string>
           </argument>
         </arguments>
@@ -194,7 +223,7 @@ if(bbox_right &lt; 0) x = room_width + sprite_xoffset;
             <kind>1</kind>
             <string>///draw line
 
-var col = scr_player_color(player.player_number);
+var col = scr_player_color(player_number);
 
 if(opacity &gt; 0)
 {

@@ -406,6 +406,7 @@ var thrown = instance_create(x,y,obj_ThrownSword);
 with(thrown)
 {
     player = other.id;
+    player_number = other.player_number;
     attack_direction = attack_dir;
     
     image_angle = attack_direction;
@@ -925,7 +926,7 @@ if(instance_exists(hit) &amp;&amp; hit != noone)
 
 
 
-if(instance_exists(hit) &amp;&amp; my_sword.active)
+if(hit != noone &amp;&amp; instance_exists(hit) &amp;&amp; my_sword.active)
 {
     if(abs(hit.attack_direction - my_sword.attack_direction) &gt; 135)
     {
@@ -1116,7 +1117,9 @@ if(other.active &amp;&amp; other.player != id &amp;&amp; hit == noone)
           <argument>
             <kind>1</kind>
             <string>///check if valid and needed
-if(!has_sword &amp;&amp; (other.movespeed &lt;= 0 || other.player.player_number == player_number))
+if(!has_sword &amp;&amp;
+    (other.movespeed &lt;= 0 ||
+    (other.can_catch &amp;&amp; other.player.player_number == player_number)))
 {
     has_sword = true;
     with(other)
@@ -1124,7 +1127,7 @@ if(!has_sword &amp;&amp; (other.movespeed &lt;= 0 || other.player.player_number 
         instance_destroy();
     }
 }
-else if(instance_exists(other.player) &amp;&amp; other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawning)
+else if(instance_exists(other.player) &amp;&amp; other.player != id &amp;&amp; other.movespeed &gt; 0)
 {
     if(!scr_block_check(0))
     {
