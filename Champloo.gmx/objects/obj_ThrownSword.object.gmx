@@ -194,6 +194,7 @@ if(bbox_right &lt; 0) x = room_width + sprite_xoffset;
             <kind>1</kind>
             <string>///draw line
 
+var col = scr_player_color(player.player_number);
 
 if(opacity &gt; 0)
 {
@@ -206,8 +207,8 @@ if(opacity &gt; 0)
             x,
             y,
             5,
-            c_white,
-            c_white
+            col,
+            col
         );
     }
     else
@@ -218,8 +219,8 @@ if(opacity &gt; 0)
             x,
             y,
             5,
-            c_white,
-            c_white
+            col,
+            col
         );
     }
     draw_set_alpha(1);
