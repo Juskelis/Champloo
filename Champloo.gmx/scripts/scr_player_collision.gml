@@ -11,8 +11,7 @@ var return_list;
 for(var i = 0; i < instance_number(obj_Player); i++)
 {
     other_player = instance_find(obj_Player, i);
-    if(other_player.id != id && !other_player.respawning
-        && place_meeting(temp_x, temp_y, other_player))
+    if(other_player.id != id && place_meeting(temp_x, temp_y, other_player))
     {
         return_list[num_players] = other_player;
         num_players++;

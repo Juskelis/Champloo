@@ -49,7 +49,6 @@ default_room_speed = 60;
           <argument>
             <kind>1</kind>
             <string>///create movement variables
-respawning = false;
 stunned = false;
 
 stun_delay = 0.5;
@@ -499,7 +498,7 @@ attacking = false;
           <argument>
             <kind>1</kind>
             <string>///movement
-if(!respawning &amp;&amp; !my_sword.active)
+if(!my_sword.active)
 {
     switch(state)
     {
@@ -553,7 +552,6 @@ if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed)
 {
     if(current_frame &gt;= footstep_frames)
     {
-        //scr_create_many( obj_FootDust, bbox_left, bbox_bottom, bbox_right, bbox_bottom, 1);
         instance_create(x, bbox_bottom, obj_FootDust);
         
         current_frame -= footstep_frames;
@@ -579,13 +577,6 @@ if(state == States.WallRiding &amp;&amp; abs(vsp) &gt;= grav/2)
         current_frame -= footstep_frames_wall;
     }
     current_frame++;
-}
-
-
-//blood
-if(respawning)
-{
-    scr_spawn_blood(random_range(1,2), 0, 180);
 }
 </string>
           </argument>
@@ -739,29 +730,20 @@ if(dash_force_x == 0 &amp;&amp; dash_force_y == 0)
             <string>///figure out which sprite to use
 image_speed = 10/room_speed;
 
-
-if(respawning)
+switch(state)
 {
-    sprite_index = spr_Player_Hit;
-    image_speed = 10/room_speed;
-}
-else
-{
-    switch(state)
-    {
-        case States.Normal:
-            if(abs(hsp) &lt;= ground_maxspeed/8)
-                sprite_index = spr_Player_Idle;
-            else
-                sprite_index = spr_Player;
-            break;
-        case States.InAir:
-            sprite_index = spr_Player_InAir;
-            break;
-        case States.WallRiding:
-            sprite_index = spr_Player_WallRiding;
-            break;
-    }
+    case States.Normal:
+        if(abs(hsp) &lt;= ground_maxspeed/8)
+            sprite_index = spr_Player_Idle;
+        else
+            sprite_index = spr_Player;
+        break;
+    case States.InAir:
+        sprite_index = spr_Player_InAir;
+        break;
+    case States.WallRiding:
+        sprite_index = spr_Player_WallRiding;
+        break;
 }
 </string>
           </argument>
@@ -786,7 +768,7 @@ else
             <string>///swing sword
 var deadzone = 0.1;
 
-if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword &amp;&amp; !block_slow)
+if(!attacking &amp;&amp; has_sword &amp;&amp; !block_slow)
 {
     if(key_attack_normal)
     {
@@ -1040,29 +1022,6 @@ if(instance_exists(hit) &amp;&amp; hit != noone)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///spawn blood
-if(respawning)
-    scr_spawn_blood(1, spurt_direction, scatter);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///check when outside room
 if(bbox_top &gt; room_height) y = -sprite_yoffset;
 else if(bbox_bottom &lt; 0) y = room_height + sprite_yoffset;
@@ -1193,66 +1152,6 @@ else if(instance_exists(other.player) &amp;&amp; other.player != id &amp;&amp; o
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_Player">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///check if I lost (commented out)
-
-/*
-if(!respawning &amp;&amp; !other.respawning)// &amp;&amp; false)
-{
-    var cardinal_dir = scr_quadrant(other, sprite_width/6);
-    if(vsp &gt; 0 &amp;&amp; (cardinal_dir == 8 || cardinal_dir == 0 || cardinal_dir == 1))
-    {
-        //we win
-        vsp = -jumpspeed;
-    }
-    else if(other.vsp &gt; 0 &amp;&amp; (cardinal_dir == 3 || cardinal_dir == 4 || cardinal_dir == 5))
-    {
-        //they are above us enough to count as a loss
-        respawning = true;
-        alarm[0] = death_time * room_speed;
-        var othernum = other.player_number;
-        with(obj_Score)
-        {
-            scores[othernum]++;
-        }
-        spurt_direction = (point_direction(x,y,other.x,other.y)*3
-                            + point_direction(other.x,other.y,x,y))/4;
-        
-        if(state == States.Normal)
-            spurt_direction = spurt_direction%180;
-        scr_spawn_blood(random_range(20,30), random(360), 180);
-    }
-    else
-    {
-        //they are in the window between win/loss
-        var my_push_dir = point_direction(other.x,other.y,x,y);
-        var force_amount = maxspeed/2;
-        force_x = lengthdir_x(force_amount, my_push_dir);
-        force_y = lengthdir_y(force_amount, my_push_dir);
-    }
-}
-*/
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="7" enumb="2">
       <action>
         <libid>1</libid>
@@ -1325,55 +1224,6 @@ draw_sprite_ext(
     scr_player_color(player_number),
     1
 );
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///show aiming (commented)
-
-/*
-var len = 20;
-draw_set_colour(c_black);
-draw_line_width(x,y,x + horizontal_amount*len, y + vertical_amount*len, 3);
-*/
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///draw player number (commented out)
-//draw_text(x,y,string(player_number));
 </string>
           </argument>
         </arguments>

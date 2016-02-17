@@ -61,7 +61,6 @@
       <script>scripts\scr_spawn_blood.gml</script>
       <script>scripts\scr_set_timescale.gml</script>
       <script>scripts\scr_create_many.gml</script>
-      <script>scripts\scr_sleep.gml</script>
       <script>scripts\scr_touching.gml</script>
       <script>scripts\scr_quadrant.gml</script>
       <script>scripts\scr_player_collision.gml</script>
