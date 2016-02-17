@@ -970,6 +970,7 @@ if(instance_exists(hit) &amp;&amp; hit != noone)
     if(blocked)
     {
         hit = noone;
+        hit_player_number = noone;
     }
 }
 </string>
