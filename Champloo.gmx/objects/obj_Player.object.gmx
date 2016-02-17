@@ -184,6 +184,7 @@ jump_input_time = 0;
 jump_input_delay = 0.2*room_speed; //frame delay
 
 hit = noone;
+hit_player_number = noone;
 block_window = 0.1*room_speed; //frames for incorrect timing window for blocking
 
 </string>
@@ -438,6 +439,25 @@ with(thrown)
           <argument>
             <kind>1</kind>
             <string>///validate hit
+
+if(hit_player_number != noone)
+{
+    with(obj_Score)
+    {
+        scores[other.hit_player_number]++;
+    }
+    
+    if(instance_exists(hit))
+    {
+        spurt_direction = hit.image_angle + 180;
+    }
+    
+    instance_destroy();
+}
+
+hit = noone;
+hit_player_number = noone;
+/*
 if(hit != noone &amp;&amp; instance_exists(hit) &amp;&amp; instance_exists(hit.player))// &amp;&amp; false)
 {
     if(!respawning)
@@ -458,7 +478,7 @@ if(hit != noone &amp;&amp; instance_exists(hit) &amp;&amp; instance_exists(hit.p
         
         instance_destroy();
     }
-    hit = noone;
+*/
 }
 </string>
           </argument>
@@ -1199,6 +1219,7 @@ if(place_meeting(x,y, obj_Wall))
 if(other.active &amp;&amp; other.player != id &amp;&amp; hit == noone)
 {
     hit = other.id;
+    hit_player_number = other.player_number;
     alarm[2] = block_window;
     
     var angle = point_direction(x,y, hit.player.x,hit.player.y);
