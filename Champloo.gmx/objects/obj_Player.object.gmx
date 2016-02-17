@@ -457,29 +457,6 @@ if(hit_player_number != noone)
 
 hit = noone;
 hit_player_number = noone;
-/*
-if(hit != noone &amp;&amp; instance_exists(hit) &amp;&amp; instance_exists(hit.player))// &amp;&amp; false)
-{
-    if(!respawning)
-    {
-        respawning = true;
-        alarm[0] = death_time * room_speed;
-        var othernum = hit.player.player_number;
-        with(obj_Score)
-        {
-            scores[othernum]++;
-        }
-        spurt_direction = (point_direction(x,y, hit.player.x,hit.player.y)*3
-                        + point_direction(hit.player.x,hit.player.y, x,y))/4;
-        
-        if(state == States.Normal)
-            spurt_direction = spurt_direction%180;
-        scr_spawn_blood(random_range(20,30), random(360), 180);
-        
-        instance_destroy();
-    }
-*/
-}
 </string>
           </argument>
         </arguments>
