@@ -388,11 +388,6 @@ block_slow = false;
           <argument>
             <kind>1</kind>
             <string>///throw shit!
-
-scr_set_timescale(1, 0);
-
-//var attack_dir = 90 - image_xscale*90;
-
 has_sword = false;
 
 throwing = false;
