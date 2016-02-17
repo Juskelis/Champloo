@@ -69,7 +69,6 @@ repeat(abs(vsp))
                 {
                     with(other_player)
                     {
-                        respawning = true;
                         alarm[0] = death_time * room_speed;
                         spurt_direction = 0;
                         scr_spawn_blood(random_range(20,30), 0, 180);
@@ -88,7 +87,6 @@ repeat(abs(vsp))
                     {
                         force_y = -jumpspeed;
                     }
-                    respawning = true;
                     alarm[0] = death_time * room_speed;
                     spurt_direction = 0;
                     scr_spawn_blood(random_range(20,30), 0, 180);

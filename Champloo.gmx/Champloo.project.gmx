@@ -57,15 +57,16 @@
       <script>scripts\scr_block_check.gml</script>
       <script>scripts\scr_furthest_spawn.gml</script>
       <script>scripts\scr_furthest_spawn_all.gml</script>
+      <script>scripts\scr_spawn_blood_explosion.gml</script>
       <script>scripts\scr_spawn_blood.gml</script>
       <script>scripts\scr_set_timescale.gml</script>
       <script>scripts\scr_create_many.gml</script>
-      <script>scripts\scr_sleep.gml</script>
       <script>scripts\scr_touching.gml</script>
       <script>scripts\scr_quadrant.gml</script>
       <script>scripts\scr_player_collision.gml</script>
       <script>scripts\scr_spawn_player.gml</script>
       <script>scripts\scr_place_meeting_but.gml</script>
+      <script>scripts\scr_player_color.gml</script>
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>
@@ -214,6 +215,7 @@
         <object>objects\template_audio</object>
         <object>objects\template_graphics</object>
         <object>objects\template_room_select</object>
+        <object>objects\template_win</object>
       </objects>
       <objects name="Components">
         <object>objects\par_component</object>

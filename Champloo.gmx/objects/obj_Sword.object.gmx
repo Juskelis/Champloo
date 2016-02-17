@@ -94,6 +94,7 @@ attack_direction = 0;
             <kind>1</kind>
             <string>///misc variables
 player = noone;
+player_number = noone;
 
 image_speed = image_speed/attack_speed;
 </string>

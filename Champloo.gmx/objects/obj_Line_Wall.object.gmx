@@ -80,8 +80,37 @@ var end_x = xstart + lengthdir_x(line_length, line_angle);
 var end_y = ystart + lengthdir_y(line_length, line_angle);
 var percent_move = absolute_speed/line_length;
 
-distance_traveled += sign(spd) * percent_move;
+distance_traveled = clamp(
+    distance_traveled + sign(spd) * percent_move,
+    0,
+    1
+);
 
+if(distance_traveled &gt;= 1)
+{
+    if(!bounce)
+    {
+        distance_traveled = 0;
+    }
+    else
+    {
+        distance_traveled = 1;
+        spd *= -1;
+    }
+}
+else if(distance_traveled &lt;= 0)
+{
+    if(bounce)
+    {
+        distance_traveled = 0;
+        spd *= -1;
+    }
+}
+
+target_x = xstart + (end_x - xstart) * distance_traveled;
+target_y = ystart + (end_y - ystart) * distance_traveled;
+
+/*
 if(distance_traveled &gt;= 1 || distance_traveled &lt;= 0)
 {
     //distance_traveled = 0;
@@ -102,33 +131,6 @@ else
 {
     target_x = xstart + (end_x - xstart)*distance_traveled;
     target_y = ystart + (end_y - ystart)*distance_traveled;
-}
-
-/*
-var dist_to_line = 0;
-if(spd &gt; 0)
-{
-    target_x = x + lengthdir_x(spd, line_angle);
-    target_y = y + lengthdir_y(spd, line_angle);
-    dist_to_line = scr_distance_to_line_segment_squared(xstart,ystart,end_x,end_y, target_x,target_y);
-    if(point_distance(x,y,end_x, end_y) &lt;= absolute_speed || dist_to_line &gt;= 1)
-    {
-        target_x = end_x;
-        target_y = end_y;
-        spd *= -1;
-    }
-}
-else if(spd &lt; 0)
-{
-    target_x = x + lengthdir_x(spd, line_angle);
-    target_y = y + lengthdir_y(spd, line_angle);
-    dist_to_line = scr_distance_to_line_segment_squared(xstart,ystart,end_x,end_y, target_x,target_y);
-    if(point_distance(x,y,xstart, ystart) &lt;= absolute_speed || dist_to_line &gt;= 1)
-    {
-        target_x = xstart;
-        target_y = ystart;
-        spd *= -1;
-    }
 }
 */
 </string>

@@ -49,7 +49,6 @@ default_room_speed = 60;
           <argument>
             <kind>1</kind>
             <string>///create movement variables
-respawning = false;
 stunned = false;
 
 stun_delay = 0.5;
@@ -122,6 +121,7 @@ my_sword = instance_create(x,y, obj_StaticSword);
 with(my_sword)
 {
     player = other.id;
+    player_number = other.player_number
     image_angle -= swipe_amount/2;
     offset = abs(other.sprite_width/2);
 }
@@ -183,6 +183,7 @@ jump_input_time = 0;
 jump_input_delay = 0.2*room_speed; //frame delay
 
 hit = noone;
+hit_player_number = noone;
 block_window = 0.1*room_speed; //frames for incorrect timing window for blocking
 
 </string>
@@ -386,11 +387,6 @@ block_slow = false;
           <argument>
             <kind>1</kind>
             <string>///throw shit!
-
-scr_set_timescale(1, 0);
-
-//var attack_dir = 90 - image_xscale*90;
-
 has_sword = false;
 
 throwing = false;
@@ -410,6 +406,7 @@ var thrown = instance_create(x,y,obj_ThrownSword);
 with(thrown)
 {
     player = other.id;
+    player_number = other.player_number;
     attack_direction = attack_dir;
     
     image_angle = attack_direction;
@@ -437,28 +434,24 @@ with(thrown)
           <argument>
             <kind>1</kind>
             <string>///validate hit
-if(hit != noone &amp;&amp; instance_exists(hit))// &amp;&amp; false)
+
+if(hit_player_number != noone)
 {
-    if(!respawning)
+    with(obj_Score)
     {
-        respawning = true;
-        alarm[0] = death_time * room_speed;
-        var othernum = hit.player.player_number;
-        with(obj_Score)
-        {
-            scores[othernum]++;
-        }
-        spurt_direction = (point_direction(x,y, hit.player.x,hit.player.y)*3
-                        + point_direction(hit.player.x,hit.player.y, x,y))/4;
-        
-        if(state == States.Normal)
-            spurt_direction = spurt_direction%180;
-        scr_spawn_blood(random_range(20,30), random(360), 180);
-        
-        instance_destroy();
+        scores[other.hit_player_number]++;
     }
-    hit = noone;
+    
+    if(instance_exists(hit))
+    {
+        spurt_direction = hit.image_angle + 180;
+    }
+    
+    instance_destroy();
 }
+
+hit = noone;
+hit_player_number = noone;
 </string>
           </argument>
         </arguments>
@@ -488,47 +481,6 @@ attacking = false;
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///reset
-respawning = false;
-has_sword = true;
-attacking = false;
-stunned = false;
-hsp = 0;
-vsp = 0;
-
-force_x = 0;
-force_y = 0;
-
-var spawn = scr_furthest_spawn(self);
-x = spawn.x;
-y = spawn.y;
-
-//turn off slow_mo
-scr_set_timescale(1,0);
-
-hit = noone;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -547,7 +499,7 @@ hit = noone;
           <argument>
             <kind>1</kind>
             <string>///movement
-if(!respawning &amp;&amp; !my_sword.active)
+if(!my_sword.active)
 {
     switch(state)
     {
@@ -601,7 +553,6 @@ if(state == States.Normal &amp;&amp; abs(hsp) &gt;= ground_maxspeed)
 {
     if(current_frame &gt;= footstep_frames)
     {
-        //scr_create_many( obj_FootDust, bbox_left, bbox_bottom, bbox_right, bbox_bottom, 1);
         instance_create(x, bbox_bottom, obj_FootDust);
         
         current_frame -= footstep_frames;
@@ -627,13 +578,6 @@ if(state == States.WallRiding &amp;&amp; abs(vsp) &gt;= grav/2)
         current_frame -= footstep_frames_wall;
     }
     current_frame++;
-}
-
-
-//blood
-if(respawning)
-{
-    scr_spawn_blood(random_range(1,2), 0, 180);
 }
 </string>
           </argument>
@@ -787,29 +731,20 @@ if(dash_force_x == 0 &amp;&amp; dash_force_y == 0)
             <string>///figure out which sprite to use
 image_speed = 10/room_speed;
 
-
-if(respawning)
+switch(state)
 {
-    sprite_index = spr_Player_Hit;
-    image_speed = 10/room_speed;
-}
-else
-{
-    switch(state)
-    {
-        case States.Normal:
-            if(abs(hsp) &lt;= ground_maxspeed/8)
-                sprite_index = spr_Player_Idle;
-            else
-                sprite_index = spr_Player;
-            break;
-        case States.InAir:
-            sprite_index = spr_Player_InAir;
-            break;
-        case States.WallRiding:
-            sprite_index = spr_Player_WallRiding;
-            break;
-    }
+    case States.Normal:
+        if(abs(hsp) &lt;= ground_maxspeed/8)
+            sprite_index = spr_Player_Idle;
+        else
+            sprite_index = spr_Player;
+        break;
+    case States.InAir:
+        sprite_index = spr_Player_InAir;
+        break;
+    case States.WallRiding:
+        sprite_index = spr_Player_WallRiding;
+        break;
 }
 </string>
           </argument>
@@ -834,7 +769,7 @@ else
             <string>///swing sword
 var deadzone = 0.1;
 
-if(!respawning &amp;&amp; !attacking &amp;&amp; has_sword &amp;&amp; !block_slow)
+if(!attacking &amp;&amp; has_sword &amp;&amp; !block_slow)
 {
     if(key_attack_normal)
     {
@@ -926,55 +861,6 @@ if(key_shoot_press &amp;&amp; has_sword &amp;&amp; !throwing)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///check for slow mo for throwing
-if(throwing)
-{
-    var slowdown = false;
-    scr_set_timescale(1, 0);
-    //check for anyone in the way
-    var endx = x + room_width*image_xscale;
-    var endy = y;
-    with(obj_Player)
-    {
-        if(id != other.id)
-        {
-            var dst = sqrt(scr_distance_to_line_segment_squared(
-                other.x, other.y,
-                endx, endy,
-                x,y
-            ));
-            if(dst &lt; abs(sprite_width*2))
-            {
-                slowdown = true;
-            }
-        }
-    }
-    
-    if(slowdown)
-    {
-        scr_set_timescale(0.25, 0.25);
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///deplete blocking
 if(key_block)
 {
@@ -1007,12 +893,13 @@ else
           <argument>
             <kind>1</kind>
             <string>///check blocking for hitwindow
-if(hit != noone)
+if(instance_exists(hit) &amp;&amp; hit != noone)
 {
     var blocked = scr_block_check(hit.damage);
     if(blocked)
     {
         hit = noone;
+        hit_player_number = noone;
     }
 }
 </string>
@@ -1036,9 +923,46 @@ if(hit != noone)
           <argument>
             <kind>1</kind>
             <string>///check if KLANG happened
-if(hit != noone)
+
+
+
+if(hit != noone &amp;&amp; instance_exists(hit) &amp;&amp; my_sword.active)
 {
-    if(hit.player.hit != noone)
+    if(abs(hit.attack_direction - my_sword.attack_direction) &gt; 135)
+    {
+        if(instance_exists(hit.player))
+        {
+            var other_player_x = hit.player.x;
+            var other_player_y = hit.player.y;
+            
+            var my_push_dir = point_direction(other_player_x, other_player_y, x, y);
+            var other_push_dir = my_push_dir + 180;
+            
+            var force_amount = maxspeed;
+            force_x = lengthdir_x(force_amount, my_push_dir);
+            force_y = lengthdir_y(force_amount, my_push_dir);
+            
+            hit.player.force_x = -force_x;
+            hit.player_force_y = -force_y;
+            
+            instance_create((x+other_player_x)/2,(y+other_player_y)/2, obj_Flash);
+        }    
+    
+        //deactivate both swords so that we don't redo this
+        my_sword.active = false;
+        hit.active = false;
+        
+        hit = noone;
+        hit_player_number = noone;
+    }
+}
+
+
+
+/*
+if(instance_exists(hit) &amp;&amp; hit != noone)
+{
+    if(instance_exists(hit.player.hit) &amp;&amp; hit.player.hit != noone)
     {
         if(hit.player.hit.player == id)
         {
@@ -1064,16 +988,6 @@ if(hit != noone)
             
             instance_create((x+other_player_x)/2,(y+other_player_y)/2, obj_Flash);
             
-            /*
-            hsp = lengthdir_x(maxspeed, my_push_dir);
-            vsp = lengthdir_y(maxspeed, (my_push_dir*3 + other_push_dir)/4);
-            with(hit.player)
-            {
-                hsp = lengthdir_x(maxspeed, other_push_dir);
-                vsp = lengthdir_y(maxspeed, (other_push_dir*3 + my_push_dir)/4);
-            }
-            */
-            
             //destroy both swords so that we don't double down on this
             with(hit.player.hit)
             {
@@ -1088,6 +1002,7 @@ if(hit != noone)
         }
     }
 }
+*/
 </string>
           </argument>
         </arguments>
@@ -1108,31 +1023,17 @@ if(hit != noone)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///spawn blood
-if(respawning)
-    scr_spawn_blood(1, spurt_direction, scatter);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///check if falling to death
-if(y &gt; room_height * 1.5) instance_destroy();
+            <string>///check when outside room
+if(bbox_top &gt; room_height) y = -sprite_yoffset;
+else if(bbox_bottom &lt; 0) y = room_height + sprite_yoffset;
+
+if(bbox_left &gt; room_width) x = -sprite_xoffset;
+else if(bbox_right &lt; 0) x = room_width + sprite_xoffset;
+/*
+if(y &gt; room_height * 1.5) y = -room_height*0.25;
+if(y &lt; -room_height * 0.5) y = room_height*1.25;
+if(x &lt; -room_width
+*/
 </string>
           </argument>
         </arguments>
@@ -1156,6 +1057,10 @@ if(y &gt; room_height * 1.5) instance_destroy();
             <string>///check if crushed
 if(place_meeting(x,y, obj_Wall))
 {
+    with(obj_Score)
+    {
+        scores[other.player_number] = max(0, scores[other.player_number]-1);
+    }
     instance_destroy();
 }
 </string>
@@ -1185,14 +1090,8 @@ if(place_meeting(x,y, obj_Wall))
 if(other.active &amp;&amp; other.player != id &amp;&amp; hit == noone)
 {
     hit = other.id;
+    hit_player_number = other.player_number;
     alarm[2] = block_window;
-    
-    var angle = point_direction(x,y, hit.player.x,hit.player.y);
-    with(hit)
-    {
-        draw_sprite_ext(sprite_index, image_index, x,y, image_xscale, image_yscale, angle, c_white, 1);
-        scr_sleep(1000);
-    }
 }
 
 </string>
@@ -1218,7 +1117,9 @@ if(other.active &amp;&amp; other.player != id &amp;&amp; hit == noone)
           <argument>
             <kind>1</kind>
             <string>///check if valid and needed
-if(!has_sword &amp;&amp; other.movespeed &lt;= 0)
+if(!has_sword &amp;&amp;
+    (other.movespeed &lt;= 0 ||
+    (other.can_catch &amp;&amp; other.player.player_number == player_number)))
 {
     has_sword = true;
     with(other)
@@ -1226,7 +1127,7 @@ if(!has_sword &amp;&amp; other.movespeed &lt;= 0)
         instance_destroy();
     }
 }
-else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawning)
+else if(instance_exists(other.player) &amp;&amp; other.player != id &amp;&amp; other.movespeed &gt; 0)
 {
     if(!scr_block_check(0))
     {
@@ -1249,66 +1150,6 @@ else if(other.player != id &amp;&amp; other.movespeed &gt; 0 &amp;&amp; !respawn
         }
     }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_Player">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///check if I lost (commented out)
-
-/*
-if(!respawning &amp;&amp; !other.respawning)// &amp;&amp; false)
-{
-    var cardinal_dir = scr_quadrant(other, sprite_width/6);
-    if(vsp &gt; 0 &amp;&amp; (cardinal_dir == 8 || cardinal_dir == 0 || cardinal_dir == 1))
-    {
-        //we win
-        vsp = -jumpspeed;
-    }
-    else if(other.vsp &gt; 0 &amp;&amp; (cardinal_dir == 3 || cardinal_dir == 4 || cardinal_dir == 5))
-    {
-        //they are above us enough to count as a loss
-        respawning = true;
-        alarm[0] = death_time * room_speed;
-        var othernum = other.player_number;
-        with(obj_Score)
-        {
-            scores[othernum]++;
-        }
-        spurt_direction = (point_direction(x,y,other.x,other.y)*3
-                            + point_direction(other.x,other.y,x,y))/4;
-        
-        if(state == States.Normal)
-            spurt_direction = spurt_direction%180;
-        scr_spawn_blood(random_range(20,30), random(360), 180);
-    }
-    else
-    {
-        //they are in the window between win/loss
-        var my_push_dir = point_direction(other.x,other.y,x,y);
-        var force_amount = maxspeed/2;
-        force_x = lengthdir_x(force_amount, my_push_dir);
-        force_y = lengthdir_y(force_amount, my_push_dir);
-    }
-}
-*/
 </string>
           </argument>
         </arguments>
@@ -1374,35 +1215,18 @@ enum States
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///show aiming (commented)
-
-/*
-var len = 20;
-draw_set_colour(c_black);
-draw_line_width(x,y,x + horizontal_amount*len, y + vertical_amount*len, 3);
-*/
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///draw player number (commented out)
-//draw_text(x,y,string(player_number));
+            <string>///draw colored self
+draw_sprite_ext(
+    sprite_index,
+    image_index,
+    x,
+    y,
+    image_xscale,
+    image_yscale,
+    image_angle,
+    scr_player_color(player_number),
+    1
+);
 </string>
           </argument>
         </arguments>
