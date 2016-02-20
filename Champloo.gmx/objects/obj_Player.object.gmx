@@ -121,7 +121,6 @@ my_sword = instance_create(x,y, obj_StaticSword);
 with(my_sword)
 {
     player = other.id;
-    player_number = other.player_number
     image_angle -= swipe_amount/2;
     offset = abs(other.sprite_width/2);
 }
