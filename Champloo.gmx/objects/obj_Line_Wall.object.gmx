@@ -90,6 +90,7 @@ if(distance_traveled &gt;= 1)
 {
     if(!bounce)
     {
+        move_others = false;
         distance_traveled = 0;
     }
     else
@@ -109,30 +110,6 @@ else if(distance_traveled &lt;= 0)
 
 target_x = xstart + (end_x - xstart) * distance_traveled;
 target_y = ystart + (end_y - ystart) * distance_traveled;
-
-/*
-if(distance_traveled &gt;= 1 || distance_traveled &lt;= 0)
-{
-    //distance_traveled = 0;
-    if(spd &gt; 0)
-    {
-        target_x = end_x;
-        target_y = end_y;
-        spd *= -1;
-    }
-    else
-    {
-        target_x = xstart;
-        target_y = ystart;
-        spd *= -1;
-    }
-}
-else
-{
-    target_x = xstart + (end_x - xstart)*distance_traveled;
-    target_y = ystart + (end_y - ystart)*distance_traveled;
-}
-*/
 </string>
           </argument>
         </arguments>
