@@ -44,6 +44,10 @@ movelist[0] = obj_Player;
 movelist[1] = obj_ThrownSword;
 movelist[2] = obj_Blood;
 movelist[3] = obj_Corpse;
+
+//used as a flag to prevent carrying things
+move_others = true;
+</string>
 </string>
           </argument>
         </arguments>
@@ -102,14 +106,17 @@ remainder_y -= y_delta;
 
 repeat(abs(y_delta))
 {
-    for(var i = 0; i &lt; array_length_1d(movelist); i++)
+    if(move_others)
     {
-        with(movelist[i])
+        for(var i = 0; i &lt; array_length_1d(movelist); i++)
         {
-            if(scr_touching(id, other.id)
-                &amp;&amp; !scr_place_meeting_but(x,y + sign(y_delta), obj_Wall, other))
+            with(movelist[i])
             {
-                y += sign(y_delta);
+                if(scr_touching(id, other.id)
+                    &amp;&amp; !scr_place_meeting_but(x,y + sign(y_delta), obj_Wall, other))
+                {
+                    y += sign(y_delta);
+                }
             }
         }
     }
@@ -118,19 +125,44 @@ repeat(abs(y_delta))
 
 repeat(abs(x_delta))
 {
-    for(var i = 0; i &lt; array_length_1d(movelist); i++)
+    if(move_others)
     {
-        with(movelist[i])
+        for(var i = 0; i &lt; array_length_1d(movelist); i++)
         {
-            if(scr_touching(id, other.id)
-                &amp;&amp; !scr_place_meeting_but(x + sign(x_delta),y, obj_Wall, other))
+            with(movelist[i])
             {
-                x += sign(x_delta);
+                if(scr_touching(id, other.id)
+                    &amp;&amp; !scr_place_meeting_but(x + sign(x_delta),y, obj_Wall, other))
+                {
+                    x += sign(x_delta);
+                }
             }
         }
     }
     x += sign(x_delta);
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///reset move_others
+move_others = true;
 </string>
           </argument>
         </arguments>
