@@ -46,6 +46,9 @@ angle_speed = (360*revolutions_per_second)/room_speed; //delta per step
 radius = 300;
 
 calc_target = false;
+
+//turn off for the first transition
+move_others = false;
 </string>
           </argument>
         </arguments>
