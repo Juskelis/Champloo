@@ -625,31 +625,7 @@ if(state != States.Normal)
     audio_pause_sound(footIndex);
   }
 }
-//deals with on-ground wallriding state
-/*
-if (state == States.Wallriding &amp;&amp; this.y &gt; 0)
-{
-  if(audio_is_playing(footIndex))
-  {
-    audio_pause_sound(footIndex);
-  }
-}
 
-else if (state == States.Wallriding &amp;&amp; this.y == 0)
-{
-  if(abs(hsp) &gt;= ground_maxspeed/5)
-  {
-    if(audio_is_paused(footIndex))
-    {
-        audio_resume_sound(footIndex);
-    }
-    else if(!audio_is_playing(footIndex))
-    {
-        audio_play_sound(footIndex, 1, true);
-    }
-  }
-}
-*/
 if(abs(hsp) &lt; ground_maxspeed/5)
 {
   if(audio_is_playing(footIndex))
@@ -700,13 +676,6 @@ if(can_dash &amp;&amp; key_dash &amp;&amp; !stunned &amp;&amp; available_dashes 
     
     audio_play_sound(snd_Dash, 0, false);
 }
-
-/*
-if(dash_force_x == 0 &amp;&amp; dash_force_y == 0)
-{
-    can_dash = true;
-}
-*/
 </string>
           </argument>
         </arguments>
@@ -955,53 +924,6 @@ if(instance_exists(hit) &amp;&amp; instance_exists(my_sword) &amp;&amp; my_sword
         hit_player_number = noone;
     }
 }
-
-
-
-/*
-if(instance_exists(hit) &amp;&amp; hit != noone)
-{
-    if(instance_exists(hit.player.hit) &amp;&amp; hit.player.hit != noone)
-    {
-        if(hit.player.hit.player == id)
-        {
-            //slow mo
-            //global.timescale = 0.25;
-            //scr_set_timescale(1,0.25);
-            
-            //set the knockback
-            var other_player_x = hit.player.x;
-            var other_player_y = hit.player.y;
-            
-            var my_push_dir = point_direction(other_player_x,other_player_y, x,y);
-            var other_push_dir = point_direction(x,y, other_player_x,other_player_y);
-            
-            //var force_amount = maxspeed*abs(dot_product_normalised(hsp,vsp, hit.player.hsp, hit.player.vsp));
-            var force_amount = maxspeed;
-            force_x = lengthdir_x(force_amount, my_push_dir);
-            force_y = lengthdir_y(force_amount, my_push_dir);
-            
-            //force_amount = point_distance(0,0, hit.player.hsp*2, hit.player.vsp*2);
-            hit.player.force_x = lengthdir_x(force_amount, other_push_dir);
-            hit.player.force_y = lengthdir_y(force_amount, other_push_dir);
-            
-            instance_create((x+other_player_x)/2,(y+other_player_y)/2, obj_Flash);
-            
-            //destroy both swords so that we don't double down on this
-            with(hit.player.hit)
-            {
-                active = false;
-            }
-            hit.player.hit = noone;
-            with(hit)
-            {
-                active = false;
-            }
-            hit = noone;
-        }
-    }
-}
-*/
 </string>
           </argument>
         </arguments>
