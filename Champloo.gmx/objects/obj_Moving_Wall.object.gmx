@@ -48,6 +48,48 @@ movelist[3] = obj_Corpse;
 //used as a flag to prevent carrying things
 move_others = true;
 </string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///create blood surface
+
+with(instance_create(x,y, obj_BloodSurface_Moving))
+{
+    our_wall = other.id;
+    
+    width = our_wall.sprite_width;
+    height = our_wall.sprite_height;
+    
+    surf = surface_create(width, height);
+    
+    surface_set_target(surf);
+    
+    draw_clear_alpha(c_black, 0);
+    
+    with(our_wall)
+    {
+        draw_sprite_ext(sprite_index,image_index, 0, 0, image_xscale, image_yscale, image_angle, c_white, 1);
+    }
+    
+    surface_reset_target();
+}
+
 </string>
           </argument>
         </arguments>
