@@ -100,6 +100,7 @@ if(pressed_pause)
 paused = false;
 surface_free(pause_surf);
 instance_activate_all();
+audio_resume_all();
 with(par_template)
 {
     instance_destroy();
@@ -126,11 +127,12 @@ with(par_template)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///user pauses (pause menu basically)
+            <string>///user pauses
 paused = true;
 paused_surf = surface_create(surface_get_width(application_surface),surface_get_height(application_surface));
 surface_copy(paused_surf, 0, 0, application_surface);
 instance_deactivate_all(true);
+audio_pause_all();
 
 instance_create(0,0,template_pause);
 </string>
