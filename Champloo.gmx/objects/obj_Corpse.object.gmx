@@ -29,7 +29,7 @@
 hsp = 0;
 vsp = 0;
 
-maxgrav = 5;
+maxgrav = 20*(30/room_speed);
 maxspeed = 5;
 
 hsp_decay = 0.25;
@@ -102,6 +102,7 @@ if(!place_meeting(x,y+1,obj_Wall))
 {
     vsp = scr_approach(vsp, maxgrav, vsp_decay);
 }
+hsp = clamp(hsp, -maxspeed, maxspeed);
 hsp = scr_approach(hsp, 0, hsp_decay);
 
 repeat(abs(hsp))
