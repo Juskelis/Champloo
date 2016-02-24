@@ -105,6 +105,10 @@ with(par_template)
 {
     instance_destroy();
 }
+with(obj_navigation)
+{
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>
