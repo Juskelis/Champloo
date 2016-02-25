@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>///Setting up basic variables
 component = noone;
+
+user_number = 0;
 </string>
           </argument>
         </arguments>
@@ -52,19 +54,19 @@ component = noone;
             <string>///Navigating
 
 //to change what triggers navigation, change this script
-if(gamepad_button_check_pressed(0, gp_padu))
+if(gamepad_button_check_pressed(user_number, gp_padu))
 {
     navigate_to(component.up);
 }
-if(gamepad_button_check_pressed(0, gp_padd))
+if(gamepad_button_check_pressed(user_number, gp_padd))
 {
      navigate_to(component.down);
 }
-if(gamepad_button_check_pressed(0, gp_padl))
+if(gamepad_button_check_pressed(user_number, gp_padl))
 {
     navigate_to(component.left);
 }
-if(gamepad_button_check_pressed(0, gp_padr))
+if(gamepad_button_check_pressed(user_number, gp_padr))
 {
     navigate_to(component.right);
 }
@@ -89,7 +91,7 @@ if(gamepad_button_check_pressed(0, gp_padr))
           <argument>
             <kind>1</kind>
             <string>///Activating Component
-if(gamepad_button_check_pressed(0, gp_face1))
+if(gamepad_button_check_pressed(user_number, gp_face1))
 {
     with(component)
     {

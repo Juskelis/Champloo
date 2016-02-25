@@ -30,6 +30,8 @@ paused = false;
 
 //pause surface
 pause_surf = noone;
+
+pauser_number = noone;
 </string>
           </argument>
         </arguments>
@@ -54,11 +56,13 @@ pause_surf = noone;
             <kind>1</kind>
             <string>///check for player pausing
 var pressed_pause = false;
+var curr_press_number = noone;
 for(var i = 0; i &lt; gamepad_get_device_count(); i++)
 {
     if(gamepad_button_check_pressed(i, gp_start))
     {
         pressed_pause = true;
+        curr_press_number = i;
         break;
     }
 }
@@ -69,8 +73,9 @@ if(pressed_pause)
     {
         event_perform(ev_other, ev_user0);
     }
-    else
+    else if(curr_press_number == pauser_number)
     {
+        pauser_number = curr_press_number;
         event_perform(ev_other, ev_user1);
     }
 }
@@ -139,6 +144,11 @@ instance_deactivate_all(true);
 audio_pause_all();
 
 instance_create(0,0,template_pause);
+with(obj_navigation)
+{
+    //set player_number
+    user_number = other.pauser_number;
+}
 </string>
           </argument>
         </arguments>
