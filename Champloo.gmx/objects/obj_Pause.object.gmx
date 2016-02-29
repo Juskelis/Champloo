@@ -71,11 +71,11 @@ if(pressed_pause)
 {
     if(!paused)
     {
+        pauser_number = curr_press_number;
         event_perform(ev_other, ev_user0);
     }
     else if(curr_press_number == pauser_number)
     {
-        pauser_number = curr_press_number;
         event_perform(ev_other, ev_user1);
     }
 }
