@@ -945,15 +945,25 @@ if(instance_exists(hit) &amp;&amp; instance_exists(my_sword) &amp;&amp; my_sword
           <argument>
             <kind>1</kind>
             <string>///check when outside room
-
-var vertical_outside_window = abs(sprite_height) * 5;
-var horizontal_outside_window = abs(sprite_width) * 5;
-
-if(bbox_top &gt; room_height + vertical_outside_window) y = -sprite_yoffset;
-else if(bbox_bottom &lt; -vertical_outside_window) y = room_height + sprite_yoffset;
-
-if(bbox_left &gt; room_width + horizontal_outside_window) x = -sprite_xoffset;
-else if(bbox_right &lt; -horizontal_outside_window) x = room_width + sprite_xoffset;
+if(global.screen_wrapping)
+{
+    var vertical_outside_window = abs(sprite_height) * 5;
+    var horizontal_outside_window = abs(sprite_width) * 5;
+    
+    if(bbox_top &gt; room_height + vertical_outside_window) y = -sprite_yoffset;
+    else if(bbox_bottom &lt; -vertical_outside_window) y = room_height + sprite_yoffset;
+    
+    if(bbox_left &gt; room_width + horizontal_outside_window) x = -sprite_xoffset;
+    else if(bbox_right &lt; -horizontal_outside_window) x = room_width + sprite_xoffset;
+}
+else
+{
+    if(bbox_top &gt; room_height) instance_destroy();
+    if(bbox_bottom &lt; 0) instance_destroy();
+    
+    if(bbox_left &gt; room_width) instance_destroy();
+    if(bbox_right &lt; 0) instance_destroy();
+}
 /*
 if(y &gt; room_height * 1.5) y = -room_height*0.25;
 if(y &lt; -room_height * 0.5) y = room_height*1.25;
@@ -1044,7 +1054,7 @@ if(other.active &amp;&amp; other.player != id &amp;&amp; hit == noone)
             <string>///check if valid and needed
 if(!has_sword &amp;&amp;
     (other.movespeed &lt;= 0 ||
-    (other.can_catch &amp;&amp; other.player.player_number == player_number)))
+    (other.can_catch &amp;&amp; other.player_number == player_number)))
 {
     has_sword = true;
     with(other)
