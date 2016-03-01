@@ -67,16 +67,26 @@ repeat(abs(vsp))
                 var died = false;
                 if(y < other_player.y)
                 {
+                    var deflected = false;
                     with(other_player)
                     {
+                        if(scr_block_check(0))
+                        {
+                            deflected = true;
+                            break;
+                        }
                         alarm[0] = death_time * room_speed;
                         spurt_direction = 0;
                         scr_spawn_blood(random_range(20,30), 0, 180);
                         instance_destroy();
                     }
-                    with(obj_Score)
+                    
+                    if(!deflected)
                     {
-                        scores[other.player_number]++;
+                        with(obj_Score)
+                        {
+                            scores[other.player_number]++;
+                        }
                     }
                 }
                 else
@@ -87,14 +97,18 @@ repeat(abs(vsp))
                     {
                         force_y = -jumpspeed;
                     }
-                    alarm[0] = death_time * room_speed;
-                    spurt_direction = 0;
-                    scr_spawn_blood(random_range(20,30), 0, 180);
-                    with(obj_Score)
+                    
+                    if(!scr_block_check(0))
                     {
-                        scores[other_player.player_number]++;
+                        alarm[0] = death_time * room_speed;
+                        spurt_direction = 0;
+                        scr_spawn_blood(random_range(20,30), 0, 180);
+                        with(obj_Score)
+                        {
+                            scores[other_player.player_number]++;
+                        }
+                        instance_destroy();
                     }
-                    instance_destroy();
                 }
                 
                 if(!died)
