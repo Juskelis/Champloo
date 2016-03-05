@@ -737,7 +737,7 @@ switch(state)
             <string>///swing sword
 var deadzone = 0.1;
 
-if(!attacking &amp;&amp; has_sword &amp;&amp; !block_slow)
+if(!attacking &amp;&amp; has_sword &amp;&amp; instance_exists(my_sword) &amp;&amp; !block_slow)
 {
     if(key_attack_normal)
     {
