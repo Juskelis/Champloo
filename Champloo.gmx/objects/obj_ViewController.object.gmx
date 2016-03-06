@@ -90,7 +90,7 @@ player_padding = 150;
             <string>///move/scale
 var count = instance_number(obj_Player);
 
-if(count &gt; 0)
+if(count &gt;= global.num_players)
 {
     //update default scale
     original_width = view_wport;
@@ -172,7 +172,10 @@ if(count &gt; 0)
     //smooth if zooming in
     var view_scale = view_wview/original_width;
     var next_view_scale = (max_x - min_x)/original_width;
-    view_scale = scr_approach(view_scale, next_view_scale, 0.005);
+    if(next_view_scale &lt; view_scale)
+        view_scale = scr_approach(view_scale, next_view_scale, 0.005);
+    else
+        view_scale = next_view_scale;
     
     view_wview = original_width * view_scale;
     view_hview = original_height * view_scale;
@@ -193,6 +196,18 @@ if(count &gt; 0)
     
     view_xview = x - view_wview/2;
     view_yview = y - view_hview/2;
+}
+else
+{
+    view_xview = scr_approach(view_xview,0,10);
+    view_yview = scr_approach(view_yview,0,10);
+    
+    var view_scale = view_wview/room_width;
+    var next_view_scale = (scr_approach(view_wview, room_width, 10))/room_width;
+    view_scale = scr_approach(view_scale, next_view_scale, 0.01);
+    
+    view_wview = room_width * view_scale;
+    view_hview = room_height * view_scale;
 }
 </string>
           </argument>
