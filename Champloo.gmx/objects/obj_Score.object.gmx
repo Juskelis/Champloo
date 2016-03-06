@@ -179,7 +179,7 @@ for(var i = 0; i &lt; player_count; i++)
     draw_text(
         left,
         (top + i*height),
-        "Player " + string(i) + ": " + string(scores[i])
+        "Player " + string(i + 1) + ": " + string(scores[i])
     );
     
 }
