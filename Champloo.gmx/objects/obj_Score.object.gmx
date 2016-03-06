@@ -40,11 +40,20 @@
           <argument>
             <kind>1</kind>
             <string>///scores for each player
+
+player_count = global.num_players;
+for(var i = 0; i &lt; player_count; i++)
+{
+    scores[i] = 0;
+}
+
+/*
 player_count = 0;
 for(player_count = 0; player_count &lt; instance_number(obj_Player); player_count += 1)
 {
     scores[player_count] = 0;
 }
+*/
 </string>
           </argument>
         </arguments>
