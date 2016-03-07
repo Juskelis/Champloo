@@ -871,6 +871,20 @@ if(instance_exists(hit) &amp;&amp; hit != noone)
         hit = noone;
         hit_player_number = noone;
     }
+    else if(key_parry)
+    {
+        //parry happens
+        has_sword = true;
+        if(instance_exists(hit.player))
+        {
+            with(hit.player)
+            {
+                has_sword = false;
+            }
+        }
+        hit = noone;
+        hit_player_number = noone;
+    }
 }
 </string>
           </argument>

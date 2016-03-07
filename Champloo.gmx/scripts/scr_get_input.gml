@@ -19,4 +19,7 @@ key_shoot_release = gamepad_button_check_released(player_number, gp_face4);
 
 key_dash = gamepad_button_check_pressed(player_number, gp_face3);
 
+key_parry = !has_sword && (gamepad_button_check_pressed(player_number, gp_shoulderlb)
+                            || gamepad_button_check_pressed(player_number, gp_shoulderl));
+
 scr_filter_input();
