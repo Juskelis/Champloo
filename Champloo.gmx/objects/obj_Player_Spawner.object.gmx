@@ -31,7 +31,7 @@
 //  if they are not spawned already
 pool = noone;
 
-global.num_players = 2;
+//global.num_players = 2;
 
 for(var i = 0; i &lt; global.num_players; i++)
 {

@@ -18,7 +18,7 @@ if(move == 0 || sign(move) == sign(walldir))
 }
 else
 {
-    movespeed = movespeed + (sign(move)*(1/(0.2*room_speed)));
+    movespeed = movespeed + (sign(move)*(1/(walk_off_wall_time*room_speed)));
     hsp = movespeed;
 }
 

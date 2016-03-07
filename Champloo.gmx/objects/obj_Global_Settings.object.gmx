@@ -71,7 +71,9 @@ global.audio_level = 1;
           <argument>
             <kind>1</kind>
             <string>///gameplay settings
-global.screen_wrapping = true;
+global.screen_wrapping = false;
+
+global.num_players = 2;
 </string>
           </argument>
         </arguments>

@@ -134,6 +134,28 @@ can_catch = true;
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///check if outside room
+scr_outside_room();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///check for collisions
 if(movespeed &gt; 0)
 {
@@ -198,34 +220,6 @@ if(movespeed &lt;= 0)
     trail_length = scr_approach(trail_length, 0, 1);
     opacity -= opacity_decay_step;
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///wrap around?
-if(bbox_top &gt; room_height) y = -sprite_yoffset;
-else if(bbox_bottom &lt; 0) y = room_height + sprite_yoffset;
-
-if(bbox_left &gt; room_width) x = -sprite_xoffset;
-if(bbox_right &lt; 0) x = room_width + sprite_xoffset;
 </string>
           </argument>
         </arguments>

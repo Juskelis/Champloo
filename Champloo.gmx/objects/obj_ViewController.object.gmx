@@ -2,7 +2,7 @@
 <object>
   <spriteName>spr_Block</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
+  <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -48,7 +48,74 @@ if(global.motion_sick_mode)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///create variables
+            <string>///create parameters
+
+//panning
+pan_speed = 0.6;
+
+//zoom
+zoom_out_speed = 0.6;
+zoom_in_speed = 0.8;
+
+zoom_max = room_width;
+zoom_min = 0.3*room_width;
+
+zoom_out_boundary = 0.6;
+zoom_in_boundary = 0.4;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///create internal variables
+
+x_center = room_width/2;
+y_center = room_height/2;
+
+//center of mass (average of player positions)
+x_com = 0;
+y_com = 0;
+
+//max distances from center of mass
+x_max = 0;
+y_max = 0;
+
+//set position and aspect ratio
+view_xview = x_center - view_wview/2;
+view_yview = y_center - view_hview/2;
+
+view_ratio = view_wview/view_hview;
+
+//panning
+x_camera = view_xview + view_wview/2;
+y_camera = view_yview + view_hview/2;
+
+//zoom
+x_zoom = x_camera;
+y_zoom = y_camera;
+
+x_zoom_out = zoom_out_boundary * view_wview;
+y_zoom_out = zoom_out_boundary * view_hview;
+
+x_zoom_in = zoom_in_boundary * view_wview;
+y_zoom_in = zoom_in_boundary * view_hview;
+
+/*
 x = room_width/2;
 y = room_height/2;
 
@@ -65,6 +132,7 @@ min_height = max_height*min_size;
 
 //how far the player should be able to see in each direction
 player_padding = 150;
+*/
 </string>
           </argument>
         </arguments>
@@ -87,10 +155,105 @@ player_padding = 150;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///move/scale
+            <string>///move/scale (NEW)
+
+//initialize variables
+x_com = 0;
+y_com = 0;
+
+x_max = 0;
+y_max = 0;
+
+//find center
+with(obj_Player)
+{
+    other.x_com += x;
+    other.y_com += y;
+    
+    other.x_max = max(other.x_max, abs(x - other.x_zoom));
+    other.y_max = max(other.y_max, abs(y - other.y_zoom));
+}
+
+//zooming
+
+//zoom out
+if(!point_in_rectangle(x_max, y_max, 0, 0, x_zoom_out/2, y_zoom_out/2))
+{
+    if(x_max &gt;= x_zoom_out/2)
+    {
+        view_wview = median(zoom_min, zoom_max, power(zoom_out_speed, 3)*(x_max - x_zoom_out/2)/2 + view_wview);
+        view_hview = view_wview/view_ratio;
+    }
+    if(y_max &gt;= y_zoom_out/2)
+    {
+        view_hview = median(zoom_min/view_ratio, zoom_max/view_ratio, power(zoom_out_speed, 3)*(y_max - y_zoom_out/2)/2 + view_hview);
+        view_wview = view_hview * view_ratio;
+    }
+}
+//zoom in
+else if(point_in_rectangle(x_max, y_max, 0, 0, x_zoom_in/2, y_zoom_in/2))
+{
+    if(x_max/(x_zoom_in/2) &gt;= y_max/(y_zoom_in/2))
+    {
+        view_wview = median(zoom_min, zoom_max, power(zoom_in_speed, 3)*(x_max - x_zoom_in/2)/2 + view_wview);
+        view_hview = view_wview/view_ratio;
+    }
+    else
+    {
+        view_hview = median(zoom_min/view_ratio, zoom_max/view_ratio, power(zoom_in_speed, 3)*(y_max - y_zoom_in/2)/2 + view_hview);
+        view_wview = view_hview * view_ratio;
+    }
+}
+
+//update zoom boundaries
+x_zoom_out = zoom_out_boundary * view_wview;
+y_zoom_out = zoom_out_boundary * view_hview;
+x_zoom_in = zoom_in_boundary * view_wview;
+y_zoom_in = zoom_in_boundary * view_hview;
+
+//center of mass
+x_com /= instance_number(obj_Player);
+y_com /= instance_number(obj_Player);
+
+//camera position
+x_camera = scr_cubic_lerp(x_camera, x_com, pan_speed);
+y_camera = scr_cubic_lerp(y_camera, y_com, pan_speed);
+
+view_xview = x_camera - view_wview/2;
+view_yview = y_camera - view_hview/2;
+
+x_zoom = view_xview + view_wview/2;
+y_zoom = view_yview + view_hview/2;
+
+
+view_xview = clamp(view_xview, 0, room_width - view_wview);
+view_yview = clamp(view_yview, 0, room_height - view_hview);
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///move/scale (OLD)
+/*
 var count = instance_number(obj_Player);
 
-if(count &gt; 0)
+if(count &gt;= global.num_players)
 {
     //update default scale
     original_width = view_wport;
@@ -172,7 +335,10 @@ if(count &gt; 0)
     //smooth if zooming in
     var view_scale = view_wview/original_width;
     var next_view_scale = (max_x - min_x)/original_width;
-    view_scale = scr_approach(view_scale, next_view_scale, 0.005);
+    if(next_view_scale &lt; view_scale)
+        view_scale = scr_approach(view_scale, next_view_scale, 0.005);
+    else
+        view_scale = next_view_scale;
     
     view_wview = original_width * view_scale;
     view_hview = original_height * view_scale;
@@ -194,6 +360,19 @@ if(count &gt; 0)
     view_xview = x - view_wview/2;
     view_yview = y - view_hview/2;
 }
+else
+{
+    view_xview = scr_approach(view_xview,0,10);
+    view_yview = scr_approach(view_yview,0,10);
+    
+    var view_scale = view_wview/room_width;
+    var next_view_scale = (scr_approach(view_wview, room_width, 10))/room_width;
+    view_scale = scr_approach(view_scale, next_view_scale, 0.01);
+    
+    view_wview = room_width * view_scale;
+    view_hview = room_height * view_scale;
+}
+*/
 </string>
           </argument>
         </arguments>
@@ -218,7 +397,26 @@ if(count &gt; 0)
             <kind>1</kind>
             <string>///draw bounding rectangle
 draw_self();
+
+draw_point(x_com, y_com);
+
+draw_rectangle(
+    x_zoom - x_zoom_out/2,
+    y_zoom - y_zoom_out/2,
+    x_zoom + x_zoom_out/2,
+    y_zoom + y_zoom_out/2,
+    true
+);
+draw_rectangle(
+    x_zoom - x_zoom_in/2,
+    y_zoom - y_zoom_in/2,
+    x_zoom + x_zoom_in/2,
+    y_zoom + y_zoom_in/2,
+    true
+);
+/*
 draw_rectangle(min_x, min_y, max_x, max_y, true);
+*/
 </string>
           </argument>
         </arguments>

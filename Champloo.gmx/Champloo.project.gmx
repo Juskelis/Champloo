@@ -67,6 +67,7 @@
       <script>scripts\scr_spawn_player.gml</script>
       <script>scripts\scr_place_meeting_but.gml</script>
       <script>scripts\scr_player_color.gml</script>
+      <script>scripts\scr_outside_room.gml</script>
     </scripts>
     <scripts name="Button Calls">
       <script>scripts\scr_example.gml</script>
@@ -80,6 +81,7 @@
       <script>scripts\scr_apply_friction.gml</script>
       <script>scripts\scr_clockwise_angle.gml</script>
       <script>scripts\scr_approach_angle.gml</script>
+      <script>scripts\scr_cubic_lerp.gml</script>
     </scripts>
     <scripts name="UI">
       <scripts name="component model">

@@ -59,7 +59,7 @@ menu = new(obj_vertical_container, room_width, room_height);
 lb_begin(menu);
     lb_add(new(
         obj_label,
-        "Player " + string(winner) + " won",
+        "Player " + string(winner + 1) + " won",
         ft_Bored_64,
         c_white
     ));

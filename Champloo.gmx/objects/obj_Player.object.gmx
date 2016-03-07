@@ -75,6 +75,8 @@ moving_friction = 0;
 stopping_friction = acceleration;
 turning_friction = 2*acceleration;
 
+walk_off_wall_time = 0.1;
+
 blocking_friction = acceleration/4;
 
 previously_on_ground = false;
@@ -737,7 +739,7 @@ switch(state)
             <string>///swing sword
 var deadzone = 0.1;
 
-if(!attacking &amp;&amp; has_sword &amp;&amp; !block_slow)
+if(!attacking &amp;&amp; has_sword &amp;&amp; instance_exists(my_sword) &amp;&amp; !block_slow)
 {
     if(key_attack_normal)
     {
@@ -945,6 +947,9 @@ if(instance_exists(hit) &amp;&amp; instance_exists(my_sword) &amp;&amp; my_sword
           <argument>
             <kind>1</kind>
             <string>///check when outside room
+scr_outside_room(max(abs(sprite_height), abs(sprite_width))*5);
+
+/*
 if(global.screen_wrapping)
 {
     var vertical_outside_window = abs(sprite_height) * 5;
@@ -964,6 +969,7 @@ else
     if(bbox_left &gt; room_width) instance_destroy();
     if(bbox_right &lt; 0) instance_destroy();
 }
+*/
 /*
 if(y &gt; room_height * 1.5) y = -room_height*0.25;
 if(y &lt; -room_height * 0.5) y = room_height*1.25;
