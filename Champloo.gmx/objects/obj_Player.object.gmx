@@ -75,6 +75,8 @@ moving_friction = 0;
 stopping_friction = acceleration;
 turning_friction = 2*acceleration;
 
+walk_off_wall_time = 0.1;
+
 blocking_friction = acceleration/4;
 
 previously_on_ground = false;
