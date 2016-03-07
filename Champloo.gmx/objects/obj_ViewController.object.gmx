@@ -173,6 +173,11 @@ with(obj_Player)
     other.x_max = max(other.x_max, abs(x - other.x_zoom));
     other.y_max = max(other.y_max, abs(y - other.y_zoom));
 }
+if(instance_number(obj_Player) &lt;= 0)
+{
+    x_max = room_width/2;
+    y_max = room_height/2;
+}
 
 //zooming
 
@@ -212,8 +217,16 @@ x_zoom_in = zoom_in_boundary * view_wview;
 y_zoom_in = zoom_in_boundary * view_hview;
 
 //center of mass
-x_com /= instance_number(obj_Player);
-y_com /= instance_number(obj_Player);
+if(instance_number(obj_Player) &gt; 0)
+{
+    x_com /= instance_number(obj_Player);
+    y_com /= instance_number(obj_Player);
+}
+else
+{
+    x_com = room_width/2;
+    y_com = room_height/2;
+}
 
 //camera position
 x_camera = scr_cubic_lerp(x_camera, x_com, pan_speed);
