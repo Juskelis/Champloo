@@ -46,57 +46,75 @@ menu = new(obj_vertical_container, room_width, room_height);
 lb_begin(menu);
     lb_add( new(
         obj_label,
-        "Champloo",
+        "Controls",
         ft_Bored_64,
         c_white
     ));
-    var button = new (
-        obj_button,
-        "Start",
-        ft_Normal_24,
-        c_black,
-        scr_transition_menu,
-        menu,
-        template_room_select
-    );
-    lb_add( button );
     lb_add( new(
-        obj_button,
-        "Audio",
+        obj_label,
+        "XBOX controls",
         ft_Normal_24,
-        c_black,
-        scr_transition_menu,
-        menu,
-        template_audio
+        c_white
     ));
     lb_add( new(
-        obj_button,
-        "Graphics",
+        obj_label,
+        "Jump : A",
         ft_Normal_24,
-        c_black,
-        scr_transition_menu,
-        menu,
-        template_graphics
+        c_white
     ));
     lb_add( new(
-        obj_button,
-        "Controls",
+        obj_label,
+        "Dash : X",
         ft_Normal_24,
-        c_black,
-        scr_transition_menu,
-        menu,
-        template_controls
+        c_white
     ));
     lb_add( new(
-        obj_button,
-        "Quit",
+        obj_label,
+        "Throw Sword : Y",
         ft_Normal_24,
-        c_black,
-        scr_quit
+        c_white
     ));
+    lb_add( new(
+        obj_label,
+        "Attack : RB/RT",
+        ft_Normal_24,
+        c_white
+    ));
+    lb_add( new(
+        obj_label,
+        "Block : LB/LT",
+        ft_Normal_24,
+        c_white
+    ));
+    var ret = noone;
+    if(room != rm_Start)
+    {
+        ret = new(
+            obj_button,
+            "Return",
+            ft_Normal_24,
+            c_black,
+            scr_transition_menu,
+            menu,
+            template_pause
+        );
+    }
+    else
+    {
+        ret = new(
+            obj_button,
+            "Return",
+            ft_Normal_24,
+            c_black,
+            scr_transition_menu,
+            menu,
+            template_start
+        );
+    }
+    lb_add( ret );
 lb_end(true);
 
-lb_nav_init(button);
+lb_nav_init(ret);
 
 lb_clean();
 </string>

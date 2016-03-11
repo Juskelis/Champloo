@@ -215,6 +215,7 @@
         <object>objects\template_start</object>
         <object>objects\template_pause</object>
         <object>objects\template_audio</object>
+        <object>objects\template_controls</object>
         <object>objects\template_graphics</object>
         <object>objects\template_room_select</object>
         <object>objects\template_win</object>

@@ -78,6 +78,15 @@ lb_begin(menu);
     ));
     lb_add( new(
         obj_button,
+        "Controls",
+        ft_Normal_24,
+        c_black,
+        scr_transition_menu,
+        menu,
+        template_controls
+    ));
+    lb_add( new(
+        obj_button,
         "Quit",
         ft_Normal_24,
         c_black,
