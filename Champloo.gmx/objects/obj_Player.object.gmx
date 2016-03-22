@@ -91,6 +91,7 @@ hsp = 0;
 vsp = 0;
 
 jumpspeed = 20*(30/room_speed);
+jumping = false;
 movespeed = 0;
 
 player_number = 0;
@@ -670,9 +671,22 @@ if(can_dash &amp;&amp; key_dash &amp;&amp; !stunned &amp;&amp; available_dashes 
         dash_force_y = 0;
     }
     
+    with(instance_create(x,y,obj_Trail))
+    {
+        trail_nodes = 10;
+        target = other.id;
+        alarm[0] = 0.25*room_speed;
+
+        for(var i = 0; i &lt; trail_nodes; i++)
+        {
+            trail_x[i] = xstart;
+            trail_y[i] = ystart;
+        }
+    }
+    
     can_dash = false;
     alarm[5] = 0.25 * room_speed;
-    scr_create_many(obj_FootDust, bbox_left, bbox_top, bbox_right, bbox_bottom, 10);
+    scr_create_many(obj_FootDust, bbox_left, bbox_top, bbox_right, bbox_bottom, 30);
     
     available_dashes -= 1;
     
