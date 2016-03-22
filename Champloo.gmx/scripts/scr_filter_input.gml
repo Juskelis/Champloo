@@ -45,3 +45,25 @@ if(stunned)// && false)
     key_right = 0;
     key_left = 0;
 }
+
+if(!can_dash)
+{
+    horizontal_amount = 0;
+    vertical_amount = 0;
+    
+    key_right = 0;
+    key_left = 0;
+    
+    key_jump = false;
+    key_jump_released = false;
+    
+    key_block = false;
+    key_attack_normal = false;
+    
+    key_shoot_press = false;
+    key_shoot_release = false;
+    
+    key_dash = false;
+    
+    key_parry = false;
+}
