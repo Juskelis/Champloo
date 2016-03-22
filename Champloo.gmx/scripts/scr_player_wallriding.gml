@@ -50,6 +50,7 @@ if(key_jump)
         }
         audio_play_sound(snd_Jump, 0, false);
     }
+    jumping = true;
     jump_input_time = 0;
 }
 
