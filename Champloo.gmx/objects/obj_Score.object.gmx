@@ -76,6 +76,7 @@ for(player_count = 0; player_count &lt; instance_number(obj_Player); player_coun
             <kind>1</kind>
             <string>///create variables
 end_slow = 2;
+win_score = 7;
 </string>
           </argument>
         </arguments>
@@ -126,7 +127,7 @@ room_goto(rm_Start);
 var victory = false;
 for(var i = 0; i &lt; player_count; i++)
 {
-    if(scores[i] &gt;= 10)
+    if(scores[i] &gt;= win_score)
     {
         victory = true;
     }
