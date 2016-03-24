@@ -35,6 +35,7 @@ if(hsp != 0)
 
 if(key_jump)
 {
+    jumping = true;
     vsp = -jumpspeed;
         
     jump_input_time = 0;

@@ -9,11 +9,13 @@
     <sound>sound\snd_Jump_Small_Old</sound>
     <sound>sound\snd_Footstep_Old</sound>
     <sound>sound\snd_Footstep</sound>
-    <sound>sound\snd_Jump</sound>
-    <sound>sound\snd_Jump_Small</sound>
     <sound>sound\snd_Sword_Swipe</sound>
     <sound>sound\snd_Wall_Slide</sound>
     <sound>sound\snd_Dash</sound>
+    <sound>sound\snd_Jump_Small_2nd_Old</sound>
+    <sound>sound\snd_Jump_2nd_Old</sound>
+    <sound>sound\snd_Jump</sound>
+    <sound>sound\snd_Jump_Small</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="Player">
@@ -23,6 +25,7 @@
       <sprite>sprites\spr_Player_Idle</sprite>
       <sprite>sprites\spr_Player_InAir</sprite>
       <sprite>sprites\spr_Player_Corpse</sprite>
+      <sprite>sprites\spr_Player_Dashing</sprite>
     </sprites>
     <sprite>sprites\spr_Wall</sprite>
     <sprite>sprites\spr_Sword</sprite>
@@ -215,6 +218,7 @@
         <object>objects\template_start</object>
         <object>objects\template_pause</object>
         <object>objects\template_audio</object>
+        <object>objects\template_controls</object>
         <object>objects\template_graphics</object>
         <object>objects\template_room_select</object>
         <object>objects\template_win</object>
@@ -267,6 +271,7 @@
       <object>objects\obj_BloodSurface_Moving</object>
       <object>objects\obj_Flash</object>
       <object>objects\obj_FootDust</object>
+      <object>objects\obj_Trail</object>
     </objects>
   </objects>
   <rooms name="rooms">

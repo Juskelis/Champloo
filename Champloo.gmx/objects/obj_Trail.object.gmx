@@ -5,59 +5,10 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>par_component</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>604</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_inherited</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///scores for each player
-
-player_count = global.num_players;
-for(var i = 0; i &lt; player_count; i++)
-{
-    scores[i] = 0;
-}
-
-/*
-player_count = 0;
-for(player_count = 0; player_count &lt; instance_number(obj_Player); player_count += 1)
-{
-    scores[player_count] = 0;
-}
-*/
-</string>
-          </argument>
-        </arguments>
-      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -75,8 +26,20 @@ for(player_count = 0; player_count &lt; instance_number(obj_Player); player_coun
           <argument>
             <kind>1</kind>
             <string>///create variables
-end_slow = 2;
-win_score = 7;
+target = noone;
+trail_nodes = 5;
+trail_distance = 10;
+trail_width = 5;
+
+color = c_black;
+start_transparency = 1;
+end_transparency = 0;
+
+for(var i = 0; i &lt; trail_nodes; i++)
+{
+    trail_x[i] = xstart;
+    trail_y[i] = ystart;
+}
 </string>
           </argument>
         </arguments>
@@ -99,11 +62,26 @@ win_score = 7;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///end
-room_goto(rm_Start);
+            <string>///create array
 </string>
           </argument>
         </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>203</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_kill_object</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="3" enumb="2">
@@ -123,28 +101,20 @@ room_goto(rm_Start);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///check for victory
-var victory = false;
-for(var i = 0; i &lt; player_count; i++)
+            <string>///move to target
+if(target != noone &amp;&amp; instance_exists(target))
 {
-    if(scores[i] &gt;= win_score)
-    {
-        victory = true;
-    }
+    x = target.x;
+    y = target.y;
 }
-
-if(victory &amp;&amp; alarm[1] &lt;= 0)
+else
 {
-    instance_create(0,0, template_win);
-    scr_set_timescale(0.25, 0.25);
-    alarm[1] = room_speed*end_slow;
+    instance_destroy();
 }
 </string>
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -161,30 +131,54 @@ if(victory &amp;&amp; alarm[1] &lt;= 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///draw scores
-
-draw_set_font(ft_Normal_24);
-
-draw_set_colour(c_white);
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
-
-var height = string_height("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890:abcdefghijklmnopqrstuvwxyz");
-//height = height*yscale;
-var bottom = display_get_gui_height();
-var top = bottom - height*player_count;
-var left = 5;
-
-for(var i = 0; i &lt; player_count; i++)
+            <string>///update trail array
+if(point_distance(x,y,trail_x[0],trail_y[0]) &gt; trail_distance)
 {
-    draw_text(
-        left,
-        (top + i*height),
-        "Player " + string(i + 1) + ": " + string(scores[i])
-    );
-    
+    for(var i = trail_nodes - 1; i &gt; 0; i--)
+    {
+        trail_x[i] = trail_x[i-1];
+        trail_y[i] = trail_y[i-1];
+    }
+    trail_x[0] = x;
+    trail_y[0] = y;
 }
-draw_set_colour(c_black);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw trail
+draw_set_color(color);
+var transparency_step = (start_transparency-end_transparency)/(trail_nodes-1);
+for(var i = 0; i &lt; trail_nodes - 1; i++)
+{
+    draw_set_alpha(start_transparency-(transparency_step*i));
+    draw_line_width(
+        trail_x[i],
+        trail_y[i],
+        trail_x[i+1],trail_y[i+1],
+        trail_width
+    );
+}
+draw_set_color(c_black);
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>

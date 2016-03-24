@@ -156,6 +156,35 @@ scr_outside_room();
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///spin
+if(movespeed &gt; 0)
+{
+    image_angle += 20;
+}
+else
+{
+    image_angle = attack_direction;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///check for collisions
 if(movespeed &gt; 0)
 {
@@ -172,6 +201,8 @@ if(movespeed &gt; 0)
     
     if(inst != noone)
     {
+        image_angle = attack_direction;
+        
         var dx = lengthdir_x(1, attack_direction);
         var dy = lengthdir_y(1, attack_direction);
         while(!place_meeting(x + dx, y + dy, obj_Wall))
@@ -179,10 +210,8 @@ if(movespeed &gt; 0)
             x += dx;
             y += dy;
         }
-        x += lengthdir_x(sprite_width/4, attack_direction);
-        y += lengthdir_y(sprite_width/4, attack_direction);
+        
         movespeed = 0;
-        //alarm[0] = decay_time * room_speed;
     }
     else
     {
@@ -297,6 +326,8 @@ if(opacity &gt; 0)
           <argument>
             <kind>1</kind>
             <string>///draw spun sprite
+draw_self();
+/*
 if(movespeed &gt; 0)
 {
     
@@ -318,6 +349,29 @@ else
 {
     draw_self();
 }
+*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///debug draw collision mask
+//draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, true);
 </string>
           </argument>
         </arguments>

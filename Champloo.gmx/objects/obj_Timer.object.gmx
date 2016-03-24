@@ -40,7 +40,7 @@
           <argument>
             <kind>1</kind>
             <string>///create variables
-timeout = 5*60; //in seconds
+timeout = 2.5*60; //in seconds
 alarm[0] = timeout * room_speed;
 </string>
           </argument>
