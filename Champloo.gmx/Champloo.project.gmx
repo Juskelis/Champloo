@@ -23,6 +23,7 @@
       <sprite>sprites\spr_Player_Idle</sprite>
       <sprite>sprites\spr_Player_InAir</sprite>
       <sprite>sprites\spr_Player_Corpse</sprite>
+      <sprite>sprites\spr_Player_Dashing</sprite>
     </sprites>
     <sprite>sprites\spr_Wall</sprite>
     <sprite>sprites\spr_Sword</sprite>

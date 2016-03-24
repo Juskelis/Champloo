@@ -674,8 +674,13 @@ if(can_dash &amp;&amp; key_dash &amp;&amp; !stunned &amp;&amp; available_dashes 
     with(instance_create(x,y,obj_Trail))
     {
         trail_nodes = 10;
+        trail_width = 10;
         target = other.id;
         alarm[0] = 0.25*room_speed;
+        
+        start_transparency = 0.5;
+        
+        color = scr_player_color(other.id.player_number);
 
         for(var i = 0; i &lt; trail_nodes; i++)
         {
@@ -691,6 +696,10 @@ if(can_dash &amp;&amp; key_dash &amp;&amp; !stunned &amp;&amp; available_dashes 
     available_dashes -= 1;
     
     audio_play_sound(snd_Dash, 0, false);
+}
+else if(!can_dash)
+{
+    scr_create_many(obj_FootDust, x, y, x, y, 5);
 }
 </string>
           </argument>
@@ -1159,20 +1168,6 @@ enum States
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
-        <id>500</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring>draw_self();</codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
-      <action>
-        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -1188,17 +1183,34 @@ enum States
           <argument>
             <kind>1</kind>
             <string>///draw colored self
-draw_sprite_ext(
-    sprite_index,
-    image_index,
-    x,
-    y,
-    image_xscale,
-    image_yscale,
-    image_angle,
-    scr_player_color(player_number),
-    1
-);
+if(can_dash)
+{
+    draw_sprite_ext(
+        sprite_index,
+        image_index,
+        x,
+        y,
+        image_xscale,
+        image_yscale,
+        image_angle,
+        scr_player_color(player_number),
+        1
+    );
+}
+else
+{
+    draw_sprite_ext(
+        spr_Player_Dashing,
+        image_index,
+        x,
+        y,
+        image_xscale,
+        image_yscale,
+        point_direction(0,0,hsp,vsp) - 90,
+        scr_player_color(player_number),
+        1
+    );
+}
 </string>
           </argument>
         </arguments>
@@ -1289,6 +1301,7 @@ for(var i = 0; i &lt; max_dashes; i++)
         false
     );
 }
+draw_set_colour(c_black);
 </string>
           </argument>
         </arguments>
