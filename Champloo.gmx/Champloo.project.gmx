@@ -52,6 +52,7 @@
       <script>scripts\scr_filter_input.gml</script>
       <script>scripts\scr_player_normal.gml</script>
       <script>scripts\scr_player_inair.gml</script>
+      <script>scripts\scr_player_dashing.gml</script>
       <script>scripts\scr_player_wallriding.gml</script>
       <script>scripts\scr_apply_forces.gml</script>
       <script>scripts\scr_move_collide.gml</script>

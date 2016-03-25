@@ -507,13 +507,8 @@ if(!my_sword.active)
     {
         case States.Normal: scr_player_normal(); break;
         case States.InAir: scr_player_inair(); break;
+        case States.Dashing: scr_player_dashing(); break;
         case States.WallRiding: scr_player_wallriding(); break;
-    }
-    
-    //override states for dash
-    if(!can_dash || dash_force_x != 0 || dash_force_y != 0)
-    {
-        state = States.InAir;
     }
     
     //change image scale based on direction
@@ -673,8 +668,9 @@ if(can_dash &amp;&amp; key_dash &amp;&amp; !stunned &amp;&amp; available_dashes 
     
     with(instance_create(x,y,obj_Trail))
     {
-        trail_nodes = 10;
-        trail_width = 10;
+        trail_nodes = 5;
+        trail_width = 15;
+        trail_distance = 20;
         target = other.id;
         alarm[0] = 0.25*room_speed;
         
@@ -696,10 +692,6 @@ if(can_dash &amp;&amp; key_dash &amp;&amp; !stunned &amp;&amp; available_dashes 
     available_dashes -= 1;
     
     audio_play_sound(snd_Dash, 0, false);
-}
-else if(!can_dash)
-{
-    scr_create_many(obj_FootDust, x, y, x, y, 5);
 }
 </string>
           </argument>
@@ -1158,6 +1150,7 @@ enum States
 {
     Normal,
     InAir,
+    Dashing,
     WallRiding
 }
 </string>

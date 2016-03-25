@@ -62,7 +62,11 @@ if(abs(dash_force_x) == 0 && abs(dash_force_y) == 0)
 scr_move_collide();
 
 //get next state
-if(!place_meeting(x + 1, y, obj_Wall) && !place_meeting(x - 1, y, obj_Wall))
+if(!can_dash)
+{
+    state = States.Dashing
+}
+else if(!place_meeting(x + 1, y, obj_Wall) && !place_meeting(x - 1, y, obj_Wall))
 {
     if(place_meeting(x, y + 1, obj_Wall))
     {
