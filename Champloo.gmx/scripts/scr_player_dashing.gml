@@ -14,15 +14,15 @@ hsp = clamp(
 
 scr_move_collide();
 
-if(place_meeting(x, y + 1, obj_Wall))
-{
-    state = States.Normal;
-}
-else if(place_meeting(x - 1,y,obj_Wall) || place_meeting(x + 1,y,obj_Wall))
-{
-    state = States.WallRiding;
-}
-else if(can_dash)
+if(can_dash)
 {
     state = States.InAir;
+    if(place_meeting(x, y + 1, obj_Wall))
+    {
+        state = States.Normal;
+    }
+    else if(place_meeting(x - 1,y,obj_Wall) || place_meeting(x + 1,y,obj_Wall))
+    {
+        state = States.WallRiding;
+    }
 }
