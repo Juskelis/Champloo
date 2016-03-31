@@ -52,6 +52,7 @@ with(obj_Score)
     {
         if(scores[i] &gt; highest)
         {
+            highest = scores[i];
             winner = i;
             ties = 0;
         }
