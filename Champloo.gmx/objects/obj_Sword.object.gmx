@@ -56,16 +56,6 @@ max_size = 1.25;
             <string>///movement variables
 active = false;
 
-//how far to swipe AFTER passing aim
-swipe_amount = 135;
-
-//how fast to move the sword when not attacking
-re_aim_speed = 5;
-
-start_direction = swipe_amount/2;
-
-direction_step = 0;
-
 alarm[0] = 0;
 
 size_gap = max_size - min_size;
@@ -148,7 +138,6 @@ active = false;
 if(instance_exists(player) &amp;&amp;
     (player_number == noone || player.player_number != player_number))
 {
-    show_debug_message("updating to " + string(player.player_number));
     player_number = player.player_number;
 }
 </string>
@@ -175,6 +164,18 @@ if(instance_exists(player) &amp;&amp;
             <kind>1</kind>
             <string>///move
 
+if(active)
+{
+    image_angle = attack_direction;
+    var mapped_angle = sin(degtorad(image_angle)) * 0.5 + 0.5;
+    image_xscale = min_size + size_gap*mapped_angle;
+    
+    x = player.x + lengthdir_x(offset, image_angle);
+    y = player.y + lengthdir_y(offset, image_angle);
+}
+
+
+/*
 if(active)
 {
     var next_image_angle = image_angle;
@@ -209,48 +210,6 @@ else
 
 x = player.x + lengthdir_x(offset, image_angle);
 y = player.y + lengthdir_y(offset, image_angle);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///resize
-//image_xscale = (min_size + size_gap/2) + (size_gap/2)*(-sin(degtorad(image_angle))) + max_size*vertical_mod;
-
-var player_momentum_dir = point_direction(x,y, x + player.hsp,y + player.vsp);
-if(abs(player.hsp) + abs(player.vsp) &lt; 0.1)
-{
-    player_momentum_dir = 90 - 90*player.image_xscale;
-}
-
-// this is basically dot product
-var aim_mod = cos(degtorad(player_momentum_dir - attack_direction))*0.5 + 0.5;
-var vertical_mod = -sin(degtorad(attack_direction))*0.5 + 0.5;
-
-if(active)
-    image_xscale = min_size + ((aim_mod*3 + vertical_mod)/4)*size_gap;
-else
-    image_xscale = scr_approach(image_xscale, 1, 0.01);
-//image_xscale = 1;
-/*
-var aim_mod = -sin(degtorad(image_angle))*0.5 + 0.5;
-
-image_xscale = min_size + ((aim_mod + vertical_mod)/2)*size_gap;
 */
 </string>
           </argument>
@@ -291,34 +250,6 @@ if(active &amp;&amp; other.movespeed &gt; 0)
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="2">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///create enums
-
-enum AttackStyles {
-    Swing,
-    Stab
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -336,52 +267,8 @@ enum AttackStyles {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///draw whoosh
+            <string>///draw self if active
 if(active)
-{
-    //how many degrees should each triangle be?
-    var step_delta = 5;
-    
-    var default_whoosh = abs(direction_step*2);
-    var long_whoosh = scr_angle_diff(image_angle, start_direction);
-    
-    //how far around should we draw in degrees?
-    var segment_angle = max(default_whoosh, long_whoosh);
-    
-    draw_primitive_begin(pr_trianglefan);
-    draw_vertex(x,y);
-    for(var i = 0; i &lt; segment_angle; i+=step_delta)
-    {
-        draw_vertex(
-            x + lengthdir_x(sprite_width, image_angle - i*sign(direction_step)),
-            y + lengthdir_y(sprite_width, image_angle - i*sign(direction_step))
-        );
-    }
-    draw_primitive_end();
-}
-    
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///draw self
-//if(active)
 {
     draw_self();
 }

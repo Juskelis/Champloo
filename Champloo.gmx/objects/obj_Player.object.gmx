@@ -798,23 +798,8 @@ if(!attacking &amp;&amp; has_sword &amp;&amp; instance_exists(my_sword) &amp;&am
         with(my_sword)
         {
             attack_direction = attack_dir;
-            start_direction = image_angle;
-            if(start_direction &lt; 0) start_direction += 360;
-            start_direction = start_direction%360;
-            
-            var delta_direction = -1;
-            if(!scr_clockwise_angle(start_direction, attack_direction))
-            {
-                delta_direction = 1;
-            }
-            direction_step = scr_angle_diff(start_direction, attack_direction);
-            direction_step += swipe_amount;
-            direction_step = direction_step/(attack_speed*room_speed);
-            direction_step *= delta_direction;
             
             alarm[0] = attack_speed*room_speed;
-            
-            image_xscale = (min_size + size_gap/2) + (size_gap/2)*(-sin(degtorad(image_angle)));
             
             active = true;
         }
