@@ -19,13 +19,29 @@
   </sounds>
   <sprites name="sprites">
     <sprites name="Player">
-      <sprite>sprites\spr_Player</sprite>
-      <sprite>sprites\spr_Player_Hit</sprite>
       <sprite>sprites\spr_Player_WallRiding</sprite>
-      <sprite>sprites\spr_Player_Idle</sprite>
-      <sprite>sprites\spr_Player_InAir</sprite>
       <sprite>sprites\spr_Player_Corpse</sprite>
       <sprite>sprites\spr_Player_Dashing</sprite>
+      <sprites name="Player Run">
+        <sprite>sprites\spr_Player_Running</sprite>
+        <sprite>sprites\spr_Player_Running_Hat</sprite>
+        <sprite>sprites\spr_Player_Running_Colors</sprite>
+      </sprites>
+      <sprites name="Player Hit">
+        <sprite>sprites\spr_Player_Hit</sprite>
+        <sprite>sprites\spr_Player_Hit_Colors</sprite>
+        <sprite>sprites\spr_Player_Hat</sprite>
+      </sprites>
+      <sprites name="Player In Air">
+        <sprite>sprites\spr_Player_InAir</sprite>
+        <sprite>sprites\spr_Player_InAir_Hat</sprite>
+        <sprite>sprites\spr_Player_InAir_Colors</sprite>
+      </sprites>
+      <sprites name="Player Idle">
+        <sprite>sprites\spr_Player_Idle</sprite>
+        <sprite>sprites\spr_Player_Idle_Colors</sprite>
+        <sprite>sprites\spr_Player_Idle_Hat</sprite>
+      </sprites>
     </sprites>
     <sprite>sprites\spr_Wall</sprite>
     <sprite>sprites\spr_Sword</sprite>
