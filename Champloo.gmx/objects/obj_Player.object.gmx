@@ -755,6 +755,7 @@ switch(state)
         break;
     case States.WallRiding:
         //sprite_index = spr_Player_WallRiding;
+        current_sprite_state = "WallRiding";
         break;
 }
 </string>

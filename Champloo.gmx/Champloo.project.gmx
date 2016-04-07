@@ -19,7 +19,6 @@
   </sounds>
   <sprites name="sprites">
     <sprites name="Player">
-      <sprite>sprites\spr_Player_WallRiding</sprite>
       <sprite>sprites\spr_Player_Corpse</sprite>
       <sprite>sprites\spr_Player_Dashing</sprite>
       <sprites name="Player Run">
@@ -41,6 +40,11 @@
         <sprite>sprites\spr_Player_Idle</sprite>
         <sprite>sprites\spr_Player_Idle_Colors</sprite>
         <sprite>sprites\spr_Player_Idle_Hat</sprite>
+      </sprites>
+      <sprites name="Player Wall Riding">
+        <sprite>sprites\spr_Player_WallRiding</sprite>
+        <sprite>sprites\spr_Player_WallRiding_Colors</sprite>
+        <sprite>sprites\spr_Player_WallRiding_Hat</sprite>
       </sprites>
     </sprites>
     <sprite>sprites\spr_Wall</sprite>
