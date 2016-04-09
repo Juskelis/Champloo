@@ -126,7 +126,7 @@ my_sword = instance_create(x,y, obj_StaticSword);
 with(my_sword)
 {
     player = other.id;
-    image_angle -= swipe_amount/2;
+    //image_angle -= swipe_amount/2;
     offset = abs(other.sprite_width/2);
 }
 </string>
@@ -757,6 +757,11 @@ switch(state)
         //sprite_index = spr_Player_WallRiding;
         current_sprite_state = "WallRiding";
         break;
+}
+
+if(hit != noone)
+{
+    current_sprite_state = "Hit";
 }
 </string>
           </argument>

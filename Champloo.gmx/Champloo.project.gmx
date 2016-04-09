@@ -29,7 +29,7 @@
       <sprites name="Player Hit">
         <sprite>sprites\spr_Player_Hit</sprite>
         <sprite>sprites\spr_Player_Hit_Colors</sprite>
-        <sprite>sprites\spr_Player_Hat</sprite>
+        <sprite>sprites\spr_Player_Hit_Hat</sprite>
       </sprites>
       <sprites name="Player In Air">
         <sprite>sprites\spr_Player_InAir</sprite>
