@@ -1117,13 +1117,13 @@ if(!has_sword &amp;&amp;
         instance_destroy();
     }
 }
-else if(instance_exists(other.player) &amp;&amp; other.player != id &amp;&amp; other.movespeed &gt; 0)
+else if(other.player != id &amp;&amp; other.movespeed &gt; 0)
 {
     if(!scr_block_check(0))
     {
         respawning = true;
         alarm[0] = death_time * room_speed;
-        var othernum = other.player.player_number;
+        var othernum = other.player_number;
         with(obj_Score)
         {
             scores[othernum]++;
