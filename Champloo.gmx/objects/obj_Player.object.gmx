@@ -1117,7 +1117,7 @@ if(!has_sword &amp;&amp;
         instance_destroy();
     }
 }
-else if(other.player != id &amp;&amp; other.movespeed &gt; 0)
+else if(other.player_number != player_number &amp;&amp; other.movespeed &gt; 0)
 {
     if(!scr_block_check(0))
     {
