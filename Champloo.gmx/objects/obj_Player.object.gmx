@@ -53,7 +53,7 @@ input_deadzone = 0.1;
             <string>///create movement variables
 stunned = false;
 
-stun_delay = 0.5;
+stun_delay = 0.5; //in seconds
 
 state = States.Normal;
 
@@ -960,6 +960,12 @@ if(instance_exists(hit) &amp;&amp; instance_exists(my_sword) &amp;&amp; my_sword
             
             hit.player.force_x = -force_x;
             hit.player_force_y = -force_y;
+            
+            with(hit.player)
+            {
+                hit = noone;
+                hit_player_number = noone;
+            }
             
             instance_create((x+other_player_x)/2,(y+other_player_y)/2, obj_Flash);
         }    

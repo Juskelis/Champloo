@@ -76,7 +76,7 @@ for(player_count = 0; player_count &lt; instance_number(obj_Player); player_coun
             <kind>1</kind>
             <string>///create variables
 end_slow = 2;
-win_score = 7;
+win_score = 7 + 3*(global.num_players - 2);
 </string>
           </argument>
         </arguments>
