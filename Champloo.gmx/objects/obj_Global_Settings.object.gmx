@@ -107,7 +107,7 @@ global.audio_level = 1;
             <kind>1</kind>
             <string>///gameplay settings
 global.screen_wrapping = false;
-
+global.stomp_mode = false;
 global.num_players = 2;
 </string>
           </argument>

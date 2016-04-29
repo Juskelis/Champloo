@@ -68,7 +68,7 @@ lb_begin(menu);
             currRoom = room_next(currRoom);
         }
     lb_end(true);
-    
+    /*
     button = new(
         obj_button,
         "Return",
@@ -78,20 +78,40 @@ lb_begin(menu);
         menu,
         template_start
     );
-    
-    if(curr_button != noone)
-    {
-        button.up = curr_button;
-        curr_button.down = button;
-    }
+    */
+    button = new(
+        obj_toggle,
+        "Stomp Mode",
+        ft_Normal_24,
+        c_black,
+        global.stomp_mode,
+        scr_toggle_stomp
+    );
     
     lb_add(button);
+    
+    lb_add(new(
+        obj_button,
+        "Return",
+        ft_Normal_24,
+        c_black,
+        scr_transition_menu,
+        menu,
+        template_start
+    ));
 
 lb_end(true);
+
 if(curr_button == noone)
     lb_nav_init(button);
 else
     lb_nav_init(curr_button);
+
+if(curr_button != noone)
+{
+    button.up = curr_button;
+    curr_button.down = button;
+}
 
 lb_clean();
 </string>

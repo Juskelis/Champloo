@@ -120,7 +120,7 @@ player_number = 0;
             <string>///create sword variables
 attacking = false;
 throwing = false;
-has_sword = true;
+has_sword = !global.stomp_mode;
 
 my_sword = instance_create(x,y, obj_StaticSword);
 with(my_sword)
