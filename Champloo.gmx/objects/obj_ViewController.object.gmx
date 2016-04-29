@@ -58,7 +58,7 @@ zoom_out_speed = 0.6;
 zoom_in_speed = 0.8;
 
 zoom_max = room_width;
-zoom_min = 0.3*room_width;
+zoom_min = 0.5*room_width;
 
 zoom_out_boundary = 0.6;
 zoom_in_boundary = 0.4;

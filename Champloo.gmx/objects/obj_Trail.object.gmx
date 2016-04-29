@@ -167,9 +167,20 @@ if(point_distance(x,y,trail_x[0],trail_y[0]) &gt; trail_distance)
             <string>///draw trail
 draw_set_color(color);
 var transparency_step = (start_transparency-end_transparency)/(trail_nodes-1);
+//draw the origin
+draw_line_width(
+    x,
+    y,
+    trail_x[0],
+    trail_y[0],
+    trail_width
+);
+
+//draw the rest
 for(var i = 0; i &lt; trail_nodes - 1; i++)
 {
     draw_set_alpha(start_transparency-(transparency_step*i));
+    //draw_circle(trail_x[i],trail_y[i],trail_width/2, false);
     draw_line_width(
         trail_x[i],
         trail_y[i],

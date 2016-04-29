@@ -66,7 +66,7 @@ attack_speed = 0.1;
             <string>///relocate to proper location
 if(active)
 {
-    image_angle = player.aim_direction;
+    image_angle = attack_direction;
     var mapped_angle = sin(degtorad(image_angle)) * 0.5 + 0.5;
     image_xscale = min_size + size_gap*mapped_angle;
     
@@ -78,7 +78,7 @@ if(active)
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="72">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -95,8 +95,12 @@ if(active)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(active)
-    draw_self();
+            <string>//make sure it is always facing UP
+image_yscale = 1;
+if(image_angle &gt; 90 &amp;&amp; image_angle &lt; 270)
+{
+    image_yscale = -1;
+}
 </string>
           </argument>
         </arguments>

@@ -76,7 +76,7 @@ for(player_count = 0; player_count &lt; instance_number(obj_Player); player_coun
             <kind>1</kind>
             <string>///create variables
 end_slow = 2;
-win_score = 7;
+win_score = 7 + 3*(global.num_players - 2);
 </string>
           </argument>
         </arguments>
@@ -135,10 +135,34 @@ for(var i = 0; i &lt; player_count; i++)
 
 if(victory &amp;&amp; alarm[1] &lt;= 0)
 {
-    instance_create(0,0, template_win);
-    scr_set_timescale(0.25, 0.25);
-    alarm[1] = room_speed*end_slow;
+    event_perform(ev_other, ev_user0);
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///end game
+instance_create(0,0, template_win);
+scr_set_timescale(0.25, 0.25);
+alarm[1] = room_speed*end_slow;
 </string>
           </argument>
         </arguments>

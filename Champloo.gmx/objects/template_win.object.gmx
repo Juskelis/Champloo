@@ -44,25 +44,45 @@ lb_init();
 
 //figure out who won
 var winner = -1;
+var highest = 0;
+var ties = 0;
 with(obj_Score)
 {
     for(var i = 0; i &lt; player_count; i++)
     {
-        if(scores[i] &gt;= 10)
+        if(scores[i] &gt; highest)
         {
+            highest = scores[i];
             winner = i;
+            ties = 0;
+        }
+        else if(scores[i] == highest)
+        {
+            ties++;
         }
     }
 }
 
 menu = new(obj_vertical_container, room_width, room_height);
 lb_begin(menu);
-    lb_add(new(
-        obj_label,
-        "Player " + string(winner + 1) + " won",
-        ft_Bored_64,
-        c_white
-    ));
+    if(ties == 0)
+    {
+        lb_add(new(
+            obj_label,
+            "Player " + string(winner + 1) + " won",
+            ft_Bored_64,
+            c_white
+        ));
+    }
+    else
+    {
+        lb_add(new(
+            obj_label,
+            "Tie",
+            ft_Bored_64,
+            c_white
+        ));
+    }
 lb_end();
 lb_clean();
 </string>

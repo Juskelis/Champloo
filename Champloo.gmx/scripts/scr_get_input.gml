@@ -1,3 +1,5 @@
+gamepad_set_axis_deadzone(player_number, input_deadzone)
+
 horizontal_amount = gamepad_axis_value(player_number, gp_axislh);
 vertical_amount = gamepad_axis_value(player_number, gp_axislv);
 aim_direction = point_direction(x,y, x+horizontal_amount*20,y+vertical_amount*20);

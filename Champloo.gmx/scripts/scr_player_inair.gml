@@ -31,12 +31,15 @@ if(key_jump_released && jumping)
 scr_move_collide();
 
 //check state
-if(place_meeting(x, y + 1, obj_Wall))
+if(!can_dash)
+{
+    state = States.Dashing;
+}
+else if(place_meeting(x, y + 1, obj_Wall))
 {
     state = States.Normal;
 }
-
-if(place_meeting(x - 1,y,obj_Wall) || place_meeting(x + 1,y,obj_Wall))
+else if(place_meeting(x - 1,y,obj_Wall) || place_meeting(x + 1,y,obj_Wall))
 {
     state = States.WallRiding;
 }

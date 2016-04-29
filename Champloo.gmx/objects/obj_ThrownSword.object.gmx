@@ -32,6 +32,7 @@ player_number = noone;
 can_catch = false;
 
 movespeed = 20; // delta change PER STEP
+rotation_speed = 0; // delta angle change PER STEP
 
 opacity = 1;
 opacity_decay_time = 1; // time in seconds
@@ -159,7 +160,7 @@ scr_outside_room();
             <string>///spin
 if(movespeed &gt; 0)
 {
-    image_angle += 20;
+    image_angle += rotation_speed;
 }
 else
 {
@@ -198,6 +199,24 @@ if(movespeed &gt; 0)
         false,
         true
     );
+    
+    var player_inst = collision_line(
+        x,y,
+        x + deltax, y + deltay,
+        obj_Player,
+        false,
+        true
+    );
+    var curr_x = x;
+    var curr_y = y;
+    with(player_inst)
+    {
+        other.x = x;
+        other.y = y;
+        event_perform(ev_collision, object_index);
+    }
+    x = curr_x;
+    y = curr_y;
     
     if(inst != noone)
     {

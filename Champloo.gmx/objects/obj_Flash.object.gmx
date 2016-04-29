@@ -74,7 +74,7 @@ radius = 64;
 var a1;
 var a2;
 var a3;
-
+draw_set_color(c_white);
 for(var i = 0; i &lt; num_flashes; i++)
 {
     a1 = random(120);
@@ -88,6 +88,7 @@ for(var i = 0; i &lt; num_flashes; i++)
         false
     );
 }
+draw_set_color(c_black);
 </string>
           </argument>
         </arguments>
