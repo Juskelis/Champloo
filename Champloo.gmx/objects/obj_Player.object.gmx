@@ -1410,7 +1410,7 @@ if(key_block &amp;&amp; !attacking)
           <argument>
             <kind>1</kind>
             <string>///draw reloading indication
-if(attacking)
+if(attacking &amp;&amp; false)
 {
     var timeleft = alarm[1];
     var sprite_num = sprite_get_number(spr_NoAttackIndicator);
