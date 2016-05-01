@@ -67,10 +67,10 @@ repeat(abs(vsp))
                 var died = false;
                 if(y < other_player.y)
                 {
-                    var deflected = false;
+                    var deflected = can_dash;
                     with(other_player)
                     {
-                        if(scr_block_check(0))
+                        if(scr_block_check(0) || deflected)
                         {
                             deflected = true;
                             break;
@@ -88,6 +88,7 @@ repeat(abs(vsp))
                             scores[other.player_number]++;
                         }
                     }
+                    force_y = -jumpspeed;
                 }
                 else
                 {
@@ -98,7 +99,7 @@ repeat(abs(vsp))
                         force_y = -jumpspeed;
                     }
                     
-                    if(!scr_block_check(0))
+                    if(!scr_block_check(0) && !other_player.can_dash)
                     {
                         alarm[0] = death_time * room_speed;
                         spurt_direction = 0;
@@ -109,11 +110,6 @@ repeat(abs(vsp))
                         }
                         instance_destroy();
                     }
-                }
-                
-                if(!died)
-                {
-                    force_y = -jumpspeed;
                 }
             }
         }
