@@ -13,13 +13,17 @@ var walldir = wall_right - wall_left;
 
 if(move == 0 || sign(move) == sign(walldir))
 {
-    movespeed = walldir;
-    hsp = movespeed;
+    movespeed = walk_off_wall_time*room_speed;
+    hsp = 0;
 }
 else
 {
-    movespeed = movespeed + (sign(move)*(1/(walk_off_wall_time*room_speed)));
-    hsp = movespeed;
+    movespeed -= 1;//movespeed + (sign(move)*(1/(walk_off_wall_time*room_speed)));
+    hsp = 0;
+    if(movespeed <= 0)
+    {
+        hsp = sign(move);
+    }
 }
 
 
