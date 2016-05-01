@@ -5,17 +5,24 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound">
-    <sound>sound\snd_Jump_Old</sound>
-    <sound>sound\snd_Jump_Small_Old</sound>
-    <sound>sound\snd_Footstep_Old</sound>
-    <sound>sound\snd_Footstep</sound>
-    <sound>sound\snd_Sword_Swipe</sound>
-    <sound>sound\snd_Wall_Slide</sound>
-    <sound>sound\snd_Dash</sound>
-    <sound>sound\snd_Jump_Small_2nd_Old</sound>
-    <sound>sound\snd_Jump_2nd_Old</sound>
-    <sound>sound\snd_Jump</sound>
-    <sound>sound\snd_Jump_Small</sound>
+    <sounds name="BGM">
+      <sound>sound\snd_rm_Start1</sound>
+      <sound>sound\snd_rm_Start2</sound>
+      <sound>sound\snd_rm_Test1</sound>
+    </sounds>
+    <sounds name="Game Sounds">
+      <sound>sound\snd_Jump_Small</sound>
+      <sound>sound\snd_Jump</sound>
+      <sound>sound\snd_Jump_Old</sound>
+      <sound>sound\snd_Jump_2nd_Old</sound>
+      <sound>sound\snd_Jump_Small_2nd_Old</sound>
+      <sound>sound\snd_Jump_Small_Old</sound>
+      <sound>sound\snd_Footstep</sound>
+      <sound>sound\snd_Footstep_Old</sound>
+      <sound>sound\snd_Dash</sound>
+      <sound>sound\snd_Wall_Slide</sound>
+      <sound>sound\snd_Sword_Swipe</sound>
+    </sounds>
   </sounds>
   <sprites name="sprites">
     <sprites name="Player">
@@ -231,6 +238,7 @@
       <object>objects\obj_ViewController</object>
       <object>objects\obj_Global_Settings</object>
       <object>objects\obj_Pause</object>
+      <object>objects\obj_BGM</object>
     </objects>
     <objects name="UI">
       <objects name="Templates">
