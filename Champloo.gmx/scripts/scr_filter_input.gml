@@ -17,7 +17,7 @@ if(key_jump)
 }
 else
 {
-    jump_input_time = max(0, jump_input_time - 1);
+    jump_input_time = scr_approach(jump_input_time, 0, 1);
 }
 
 key_jump = key_jump || jump_input_time > 0;
@@ -32,6 +32,17 @@ else
 }
 
 key_attack_normal = key_attack_normal || attack_input_time > 0;
+
+if(key_parry)
+{
+    parry_input_time = parry_input_delay;
+}
+else
+{
+    parry_input_time = scr_approach(parry_input_time, 0, 1);
+}
+
+key_parry = key_parry || parry_input_time > 0;
 
 if(key_block)
 {
