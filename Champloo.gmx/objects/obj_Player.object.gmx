@@ -186,6 +186,9 @@ block_slow = false;
 jump_input_time = 0;
 jump_input_delay = 0.2*room_speed; //frame delay
 
+attack_input_time = 0;
+attack_input_delay = 0.2*room_speed; //frame delay
+
 hit = noone;
 hit_player_number = noone;
 block_window = (12/60)*room_speed; //frames for incorrect timing window for blocking/parry
