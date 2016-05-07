@@ -1098,9 +1098,9 @@ if(other.active &amp;&amp; other.player != id &amp;&amp; hit == noone)
     {
         //parry!
         has_sword = true;
-        if(instance_exists(hit.player))
+        if(instance_exists(other.id.player))
         {
-            with(hit.player)
+            with(other.id.player)
             {
                 has_sword = false;
             }
@@ -1143,7 +1143,7 @@ if(!has_sword &amp;&amp;
 }
 else if(other.player_number != player_number &amp;&amp; other.movespeed &gt; 0)
 {
-    if(!scr_block_check(0))
+    if(!scr_block_check(0) &amp;&amp; !key_parry)
     {
         respawning = true;
         alarm[0] = death_time * room_speed;
@@ -1155,6 +1155,15 @@ else if(other.player_number != player_number &amp;&amp; other.movespeed &gt; 0)
         spurt_direction = point_direction(x,y, other.x, other.y);
         scr_spawn_blood(random_range(30,60), 0, 180);
         instance_destroy();
+    }
+    else if(key_parry)
+    {
+        //parry that shit dood
+        has_sword = true;
+        with(other)
+        {
+            instance_destroy();
+        }
     }
     else
     {
