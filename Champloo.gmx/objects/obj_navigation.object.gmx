@@ -52,23 +52,25 @@ user_number = 0;
           <argument>
             <kind>1</kind>
             <string>///Navigating
-
-//to change what triggers navigation, change this script
-if(gamepad_button_check_pressed(user_number, gp_padu))
+if(component != noone)
 {
-    navigate_to(component.up);
-}
-if(gamepad_button_check_pressed(user_number, gp_padd))
-{
-     navigate_to(component.down);
-}
-if(gamepad_button_check_pressed(user_number, gp_padl))
-{
-    navigate_to(component.left);
-}
-if(gamepad_button_check_pressed(user_number, gp_padr))
-{
-    navigate_to(component.right);
+    //to change what triggers navigation, change this script
+    if(gamepad_button_check_pressed(user_number, gp_padu))
+    {
+        navigate_to(component.up);
+    }
+    if(gamepad_button_check_pressed(user_number, gp_padd))
+    {
+         navigate_to(component.down);
+    }
+    if(gamepad_button_check_pressed(user_number, gp_padl))
+    {
+        navigate_to(component.left);
+    }
+    if(gamepad_button_check_pressed(user_number, gp_padr))
+    {
+        navigate_to(component.right);
+    }
 }
 </string>
           </argument>
