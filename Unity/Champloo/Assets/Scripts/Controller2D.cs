@@ -39,6 +39,53 @@ public class Controller2D : RaycastController
         faceDirection = 1;
     }
 
+    public void UpdateTouching()
+    {
+        //above and below
+        collisions.above = false;
+        collisions.below = false;
+        for (int i = 0; i < horizontalRayCount; i++)
+        {
+            Vector2 rayOrigin = raycastOrigins.topLeft;
+            rayOrigin += Vector2.right * (horizontalRaySpacing * i);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up, skinWidth * 2, collisionMask);
+            if(hit)
+            {
+                collisions.above = true;
+            }
+
+            rayOrigin = raycastOrigins.bottomLeft;
+            rayOrigin += Vector2.right * (horizontalRaySpacing * i);
+            hit = Physics2D.Raycast(rayOrigin, Vector2.down, skinWidth * 2, collisionMask);
+            if(hit)
+            {
+                collisions.below = true;
+            }
+        }
+
+        //left and right
+        collisions.left = false;
+        collisions.right = false;
+        for(int i = 0; i < verticalRayCount; i++)
+        {
+            Vector2 rayOrigin = raycastOrigins.bottomLeft;
+            rayOrigin += Vector2.up * (verticalRaySpacing * i);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.left, skinWidth * 2, collisionMask);
+            if(hit)
+            {
+                collisions.left = true;
+            }
+
+            rayOrigin = raycastOrigins.bottomRight;
+            rayOrigin += Vector2.up * (verticalRaySpacing * i);
+            hit = Physics2D.Raycast(rayOrigin, Vector2.right, skinWidth * 2, collisionMask);
+            if(hit)
+            {
+                collisions.right = true;
+            }
+        }
+    }
+
     public void Move(Vector3 velocity, bool standingOnPlatform = false)
     {
         //handle collisions
