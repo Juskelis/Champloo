@@ -94,6 +94,8 @@ public class Controller2D : RaycastController
         collisions.Reset();
         previousVelocity = velocity;
 
+        UpdateTouching();
+
         if (velocity.y < 0)
         {
             DescendSlope(ref velocity);
@@ -270,6 +272,8 @@ public class Controller2D : RaycastController
                 collisions.slopeAngle = slopeAngle;
                 collisions.descendingSlope = true;
                 collisions.below = true;
+
+                print("descending");
             }
         }
     }

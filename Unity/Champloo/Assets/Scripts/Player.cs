@@ -6,67 +6,8 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
-    
-    [Serializable]
-    public class ButtonSetting
-    {
-        public int playerNumber { get; set; }
-        [SerializeField] private string input;
 
-        private bool isDown;
-        private bool isUp;
-        private bool isPressed;
-
-        public bool Down { get { return isDown || onDownTime > 0; } }
-        public bool Up { get { return isUp || onUpTime > 0; } }
-        public bool Pressed { get { return isPressed || onPressedTime > 0; } }
-
-        /// <summary>
-        /// Time (in seconds) to allow down event after it occurs
-        /// </summary>
-        [SerializeField]
-        private float windowDownTime;
-
-        /// <summary>
-        /// Time (in seconds) to allow up event after it occurs
-        /// </summary>
-        [SerializeField]
-        private float windowUpTime;
-
-        /// <summary>
-        /// Time (in seconds) to allow press event after it occurs
-        /// </summary>
-        [SerializeField]
-        private float windowPressedTime;
-
-        private float onDownTime;
-        private float onUpTime;
-        private float onPressedTime;
-
-        public void Update()
-        {
-            isDown = Input.GetButtonDown(input);
-            isUp = Input.GetButtonUp(input);
-            isPressed = Input.GetButton(input);
-
-            if (isDown) onDownTime = windowDownTime;
-            if (isUp) onUpTime = windowUpTime;
-            if (isPressed) onPressedTime = windowPressedTime;
-
-            onDownTime -= Time.deltaTime;
-            onUpTime -= Time.deltaTime;
-            onPressedTime -= Time.deltaTime;
-        }
-
-        public void ResetTimers()
-        {
-            onDownTime = 0;
-            onUpTime = 0;
-            onPressedTime = 0;
-        }
-    }
-
-    [SerializeField] private ButtonSetting jump;
+    private InputController inputs;
     
     [SerializeField] private float maxJumpHeight = 4;
     [SerializeField] private float minJumpHeight = 1;
@@ -85,37 +26,54 @@ public class Player : MonoBehaviour
 
     private Controller2D controller;
 
-    private Vector3 velocity;
+    private Vector3 velocity = Vector3.zero;
+    
+    public float Gravity { get; set; }
 
-    private float gravity;
     private float maxJumpVelocity;
     private float minJumpVelocity;
     private float velocityXSmoothing;
+    
+    private MovementState movementState;
 
     void Start ()
     {
-        jump.playerNumber = 1;
+        movementState = GetComponent<OnGround>();
 
 	    controller = GetComponent<Controller2D>();
 
+        inputs = GetComponent<InputController>();
+        inputs.playerNumber = 1;
+
         //derived from: deltaMovement = velocityInitial*time + (accleration*time^2)/2
-        gravity = -1*(2*maxJumpHeight)/(timeToJumpApex*timeToJumpApex);
+        //gravity = -1*(2*maxJumpHeight)/(timeToJumpApex*timeToJumpApex);
 
         //derived from: velocityFinal = velocityInitial + acceleration*time
-        maxJumpVelocity = -1*gravity*timeToJumpApex;
+        //maxJumpVelocity = -1*gravity*timeToJumpApex;
 
-        minJumpVelocity = Mathf.Sqrt(2*Mathf.Abs(gravity)*minJumpHeight);
+        //minJumpVelocity = Mathf.Sqrt(2*Mathf.Abs(gravity)*minJumpHeight);
 	}
-
-    void UpdateInputs()
-    {
-        jump.Update();
-    }
 
     void Update()
     {
-        UpdateInputs();
+        inputs.UpdateInputs();
+        
+        MovementState next = movementState.UpdateState(ref velocity);
 
+        if (inputs.movementSpecial.Down)
+        {
+            next = GetComponent<OnDash>();
+            velocity = inputs.leftStick*((OnDash) next).DashForce;
+        }
+
+        if (next != null)
+        {
+            movementState.OnExit();
+            next.OnEnter();
+            movementState = next;
+        }
+        
+        /*
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         int wallDirX = (controller.collisions.left) ? -1 : 1;
 
@@ -184,12 +142,13 @@ public class Player : MonoBehaviour
                 velocity.y = maxJumpVelocity;
             }
         }
-        if (jump.Up /*Input.GetButtonUp("Jump")*/ && velocity.y > minJumpVelocity)
+        if (jump.Up && velocity.y > minJumpVelocity)
         {
             velocity.y = minJumpVelocity;
         }
 
         velocity.y += gravity*Time.deltaTime;
         controller.Move(velocity*Time.deltaTime);
+        */
     }
 }
