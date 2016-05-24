@@ -19,6 +19,8 @@ public class OnGround : MovementState
     private float deceleration;
     private float turningDeceleration;
 
+    public bool Jumped { get; set; }
+
     protected override void Start()
     {
         base.Start();
@@ -61,17 +63,17 @@ public class OnGround : MovementState
             velocity.y = 0;
         }
 
-        bool jumped = false;
+        Jumped = false;
         if (input.jump.Down)
         {
-            jumped = true;
+            Jumped = true;
             input.jump.ResetTimers();
             velocity.y = maxJumpVelocity;
         }
 
         controller.Move(velocity*Time.deltaTime);
 
-        if (!controller.collisions.below || jumped)
+        if (!controller.collisions.below || Jumped)
         {
             
             if (controller.collisions.left || controller.collisions.right)

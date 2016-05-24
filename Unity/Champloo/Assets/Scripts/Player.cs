@@ -8,33 +8,17 @@ public class Player : MonoBehaviour
 {
 
     private InputController inputs;
-    
-    [SerializeField] private float maxJumpHeight = 4;
-    [SerializeField] private float minJumpHeight = 1;
-    [SerializeField] private float timeToJumpApex = 0.4f;
-    [SerializeField] private float accelerationTimeInAir = 0.2f;
-    [SerializeField] private float accelerationTimeOnGround = 0.1f;
-    [SerializeField] private Vector2 wallJumpClimb;
-    [SerializeField] private Vector2 wallJumpOff;
-    [SerializeField] private Vector2 wallLeap;
-    [SerializeField] private float wallStickTime = 0.25f;
-    private float timeToWallUnstick;
-
-    private float moveSpeed = 6;
-
-    [SerializeField] private float wallSlideSpeedMax = 3;
 
     private Controller2D controller;
+
+    private Weapon weapon;
 
     private Vector3 velocity = Vector3.zero;
     
     public float Gravity { get; set; }
 
-    private float maxJumpVelocity;
-    private float minJumpVelocity;
-    private float velocityXSmoothing;
-    
     private MovementState movementState;
+    //private Delegate movementState;
 
     void Start ()
     {
@@ -45,14 +29,43 @@ public class Player : MonoBehaviour
         inputs = GetComponent<InputController>();
         inputs.playerNumber = 1;
 
-        //derived from: deltaMovement = velocityInitial*time + (accleration*time^2)/2
-        //gravity = -1*(2*maxJumpHeight)/(timeToJumpApex*timeToJumpApex);
-
-        //derived from: velocityFinal = velocityInitial + acceleration*time
-        //maxJumpVelocity = -1*gravity*timeToJumpApex;
-
-        //minJumpVelocity = Mathf.Sqrt(2*Mathf.Abs(gravity)*minJumpHeight);
+        weapon = GetComponent<Weapon>();
 	}
+
+    //allows inherited classes to interfere with default FSM transitions
+    //  by intercepting the desired next state before it reaches
+    //  the end user
+    //also lets user do polymorphic events for transitions, if need be.
+    //  (note: only gives player scope)
+    protected void ChooseNextState(ref MovementState next)
+    {
+        if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
+        {
+
+            weapon.Attack();
+            next = GetComponent<InAttack>();
+        }
+        else if(inputs.movementSpecial.Down && !(movementState is OnDash))
+        {
+            TrailRenderer tail = GetComponent<TrailRenderer>();
+            tail.enabled = true;
+            tail.Clear();
+            next = GetComponent<OnDash>();
+            velocity = inputs.leftStick * ((OnDash)next).DashForce;
+        }
+        else if(inputs.taunt.Down && (movementState is OnGround))
+        {
+            next = GetComponent<TauntState>();
+        }
+
+        if (next != null)
+        {
+            if (movementState is OnDash)
+            {
+                GetComponent<TrailRenderer>().enabled = false;
+            }
+        }
+    }
 
     void Update()
     {
@@ -60,11 +73,7 @@ public class Player : MonoBehaviour
         
         MovementState next = movementState.UpdateState(ref velocity);
 
-        if (inputs.movementSpecial.Down)
-        {
-            next = GetComponent<OnDash>();
-            velocity = inputs.leftStick*((OnDash) next).DashForce;
-        }
+        ChooseNextState(ref next);
 
         if (next != null)
         {
@@ -72,83 +81,5 @@ public class Player : MonoBehaviour
             next.OnEnter();
             movementState = next;
         }
-        
-        /*
-        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        int wallDirX = (controller.collisions.left) ? -1 : 1;
-
-        float targetVelocityX = input.x * moveSpeed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing,
-            controller.collisions.below ? accelerationTimeOnGround : accelerationTimeInAir);
-
-        bool wallSliding = false;
-        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below)
-        {
-            wallSliding = true;
-
-            if (velocity.y < -wallSlideSpeedMax)
-            {
-                velocity.y = -wallSlideSpeedMax;
-            }
-
-            if (timeToWallUnstick > 0)
-            {
-                velocityXSmoothing = 0;
-                velocity.x = 0;
-
-                if (input.x != 0 && input.x != wallDirX)
-                {
-                    timeToWallUnstick -= Time.deltaTime;
-                }
-                else
-                {
-                    timeToWallUnstick = wallStickTime;
-                }
-            }
-            else
-            {
-                timeToWallUnstick = wallStickTime;
-            }
-        }
-
-        if (controller.collisions.above || controller.collisions.below)
-        {
-            velocity.y = 0;
-        }
-
-        if (jump.Down)
-        {
-            jump.ResetTimers();
-            if (wallSliding)
-            {
-                if (wallDirX == input.x)
-                {
-                    velocity.x = -wallDirX*wallJumpClimb.x;
-                    velocity.y = wallJumpClimb.y;
-                }
-                else if (input.x == 0)
-                {
-                    velocity.x = -wallDirX*wallJumpOff.x;
-                    velocity.y = wallJumpOff.y;
-                }
-                else
-                {
-                    velocity.x = -wallDirX*wallLeap.x;
-                    velocity.y = wallLeap.y;
-                }
-            }
-            else if (controller.collisions.below)
-            {
-                velocity.y = maxJumpVelocity;
-            }
-        }
-        if (jump.Up && velocity.y > minJumpVelocity)
-        {
-            velocity.y = minJumpVelocity;
-        }
-
-        velocity.y += gravity*Time.deltaTime;
-        controller.Move(velocity*Time.deltaTime);
-        */
     }
 }

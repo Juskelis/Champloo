@@ -61,21 +61,12 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Champloo.CSharp.Plugins.csproj">
+      <Project>{A439FA2A-964E-4038-D947-AA8F5037A18F}</Project>
+      <Name>Champloo.CSharp.Plugins</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\GamePadInput\Demo\DemoScript.cs" />
@@ -83,14 +74,17 @@
     <Compile Include="Assets\Scripts\Controller2D.cs" />
     <Compile Include="Assets\Scripts\InputController.cs" />
     <Compile Include="Assets\Scripts\Movement States\InAir.cs" />
+    <Compile Include="Assets\Scripts\Movement States\InAttack.cs" />
     <Compile Include="Assets\Scripts\Movement States\MovementState.cs" />
     <Compile Include="Assets\Scripts\Movement States\OnDash.cs" />
     <Compile Include="Assets\Scripts\Movement States\OnGround.cs" />
     <Compile Include="Assets\Scripts\Movement States\OnWall.cs" />
+    <Compile Include="Assets\Scripts\Movement States\TauntState.cs" />
     <Compile Include="Assets\Scripts\PathPlatformController.cs" />
     <Compile Include="Assets\Scripts\PlatformController.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\RaycastController.cs" />
+    <Compile Include="Assets\Scripts\Weapon.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
