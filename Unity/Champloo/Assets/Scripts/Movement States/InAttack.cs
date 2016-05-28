@@ -8,7 +8,7 @@ public class InAttack : MovementState
     protected override void Start()
     {
         base.Start();
-        playerWeapon = GetComponent<Weapon>();
+        playerWeapon = GetComponentInChildren<Weapon>();
     }
 
     public override MovementState UpdateState(ref Vector3 velocity)

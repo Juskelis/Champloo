@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Weapon : MonoBehaviour {
     public bool InHand { get; set; }
@@ -16,13 +17,24 @@ public class Weapon : MonoBehaviour {
     private float attackTimer;
     private float reloadTimer;
 
+    private InputController input;
+
+    private SpriteRenderer renderer;
+    private BoxCollider2D collider2D;
+
     private void Start()
     {
+        renderer = GetComponent<SpriteRenderer>();
+        collider2D = GetComponent<BoxCollider2D>();
+
         InHand = true;
+        input = GetComponentInParent<InputController>();
     }
-    
+
     private void Update()
     {
+        transform.rotation = Quaternion.AngleAxis(input.leftStickAngle, Vector3.forward);
+
         if(attackTimer > 0)
         {
             attackTimer -= Time.deltaTime;
@@ -35,12 +47,27 @@ public class Weapon : MonoBehaviour {
 
     public void Attack()
     {
-        if(!InHand || attackTimer > 0 || reloadTimer > 0)
+        StartAttack();
+        Invoke("EndAttack", attackTime);
+    }
+
+    private void StartAttack()
+    {
+        if (!InHand || attackTimer > 0 || reloadTimer > 0)
         {
             return;
         }
 
         attackTimer = attackTime;
         reloadTimer = reloadTime;
+
+        renderer.enabled = true;
+        collider2D.enabled = true;
+    }
+
+    private void EndAttack()
+    {
+        renderer.enabled = false;
+        collider2D.enabled = false;
     }
 }

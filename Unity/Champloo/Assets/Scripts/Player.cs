@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
         inputs = GetComponent<InputController>();
         inputs.playerNumber = playerNumber;
 
-        weapon = GetComponent<Weapon>();
+        weapon = GetComponentInChildren<Weapon>();
 	}
 
     //allows inherited classes to interfere with default FSM transitions
@@ -44,7 +44,6 @@ public class Player : MonoBehaviour
     {
         if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
         {
-
             weapon.Attack();
             next = GetComponent<InAttack>();
         }
@@ -83,6 +82,22 @@ public class Player : MonoBehaviour
             movementState.OnExit();
             next.OnEnter();
             movementState = next;
+        }
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        print("doh");
+        if (!col.gameObject.activeSelf)// || !col.transform.IsChildOf(transform))
+        {
+            return;
+        }
+
+        //actually a collision w/ something we care about
+        Weapon otherWeapon = col.GetComponent<Weapon>();
+        if (otherWeapon != null && otherWeapon.IsAttacking)
+        {
+            print("ouch");
         }
     }
 }
