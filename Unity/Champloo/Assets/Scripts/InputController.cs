@@ -76,11 +76,19 @@ public class InputController : MonoBehaviour {
     public ButtonSetting pause;
 
     [HideInInspector] public Vector2 leftStick;
+    public float leftStickAngle { get { return Vector2AsAngle(leftStick);} }
     [HideInInspector] public Vector2 rightStick;
+    public float rightStickAngle { get { return Vector2AsAngle(rightStick); } }
     [HideInInspector] public Vector2 dPad;
 
     [HideInInspector] public int playerNumber;
     private GamePad.Index playerIndex;
+
+    private float Vector2AsAngle(Vector2 vec)
+    {
+        if (Mathf.Abs(vec.x) < float.Epsilon) return vec.y > 0 ? 90 : -90;
+        return Mathf.Atan(vec.y/vec.x)*Mathf.Rad2Deg + (vec.x < 0 ? 180 : 0);
+    }
 
     public void UpdateInputs()
     {

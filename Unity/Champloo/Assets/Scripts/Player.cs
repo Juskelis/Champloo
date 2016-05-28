@@ -6,6 +6,9 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField]
+    [Range(1,4)]
+    private int playerNumber = 1;
 
     private InputController inputs;
 
@@ -27,7 +30,7 @@ public class Player : MonoBehaviour
 	    controller = GetComponent<Controller2D>();
 
         inputs = GetComponent<InputController>();
-        inputs.playerNumber = 1;
+        inputs.playerNumber = playerNumber;
 
         weapon = GetComponent<Weapon>();
 	}
