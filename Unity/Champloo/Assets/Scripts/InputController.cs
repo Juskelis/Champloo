@@ -72,6 +72,9 @@ public class InputController : MonoBehaviour {
     public ButtonSetting weaponSpecial;
     public ButtonSetting movementSpecial;
 
+    public ButtonSetting block;
+    public ButtonSetting parry;
+
     public ButtonSetting taunt;
     public ButtonSetting pause;
 

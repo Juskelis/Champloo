@@ -20,8 +20,12 @@ public class Player : MonoBehaviour
     
     public float Gravity { get; set; }
 
+    public float hitReactionTime;
+
     private MovementState movementState;
     //private Delegate movementState;
+
+    private Weapon hitWith;
 
     void Start ()
     {
@@ -83,6 +87,23 @@ public class Player : MonoBehaviour
             next.OnEnter();
             movementState = next;
         }
+
+
+        //handle blocking/parrying
+        if (hitWith != null)
+        {
+            if (weapon.InHand && inputs.block.Down)
+            {
+                hitWith = null;
+            }
+            else if (!weapon.InHand && inputs.parry.Down)
+            {
+                //steal weapon like a badass
+                weapon.InHand = true;
+                hitWith.InHand = false;
+                hitWith = null;
+            }
+        }
     }
 
     void OnTriggerEnter(Collider col)
@@ -95,9 +116,15 @@ public class Player : MonoBehaviour
 
         //actually a collision w/ something we care about
         Weapon otherWeapon = col.GetComponent<Weapon>();
-        if (otherWeapon != null && otherWeapon.IsAttacking)
+        if (otherWeapon != null && otherWeapon.IsAttacking && hitWith == null)
         {
-            print("ouch");
+            hitWith = otherWeapon;
+            Invoke("GetHit", hitReactionTime);
         }
+    }
+
+    void GetHit()
+    {
+        print("ouch");
     }
 }
