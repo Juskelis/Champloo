@@ -106,25 +106,45 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        print("doh");
-        if (!col.gameObject.activeSelf)// || !col.transform.IsChildOf(transform))
+        //skip if the other object is inactive
+        //  or if the other object is our child
+        if (!col.gameObject.activeSelf || col.transform.IsChildOf(transform))
         {
             return;
         }
 
-        //actually a collision w/ something we care about
         Weapon otherWeapon = col.GetComponent<Weapon>();
-        if (otherWeapon != null && otherWeapon.IsAttacking && hitWith == null)
+        if (otherWeapon != null && hitWith == null)
         {
+            print("been hit " + transform.name);
             hitWith = otherWeapon;
             Invoke("GetHit", hitReactionTime);
         }
     }
+    /*
+    public void OnCollisionWith(MonoBehaviour other)
+    {
+        //skip if the other object is inactive
+        //  or if the other object is our child
+        if (!other.gameObject.activeSelf || other.transform.IsChildOf(transform))
+        {
+            return;
+        }
 
+        Weapon otherWeapon = other.GetComponent<Weapon>();
+        if (otherWeapon != null && otherWeapon.IsAttacking && hitWith == null)
+        {
+            print("been hit " + transform.name);
+            hitWith = otherWeapon;
+            Invoke("GetHit", hitReactionTime);
+        }
+    }
+    */
     void GetHit()
     {
-        print("ouch");
+        hitWith = null;
+        print("ouch " + transform.name);
     }
 }
