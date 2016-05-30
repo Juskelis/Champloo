@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
             tail.enabled = true;
             tail.Clear();
             next = GetComponent<OnDash>();
-            velocity = inputs.leftStick * ((OnDash)next).DashForce;
+            velocity = inputs.leftStick.normalized * ((OnDash)next).DashForce;
         }
         else if(inputs.taunt.Down && (movementState is OnGround))
         {
