@@ -51,6 +51,8 @@ public class InAir : MovementState
             velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
         }
 
+        if (controller.collisions.above && velocity.y > 0) velocity.y = 0;
+
         velocity.y -= player.Gravity*Time.deltaTime;
 
         if (velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
