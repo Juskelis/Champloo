@@ -144,7 +144,8 @@ public class Player : MonoBehaviour
     */
     void GetHit()
     {
+        print("ded");
         hitWith = null;
-        print("ouch " + transform.name);
+        Destroy(gameObject);
     }
 }
