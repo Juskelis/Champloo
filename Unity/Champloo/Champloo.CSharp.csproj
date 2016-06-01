@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\PlatformController.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\RaycastController.cs" />
+    <Compile Include="Assets\Scripts\Spawner.cs" />
     <Compile Include="Assets\Scripts\SplatRenderer.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
   </ItemGroup>

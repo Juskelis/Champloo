@@ -42,6 +42,8 @@ public class SplatRenderer : MonoBehaviour {
 
         cam.targetTexture = tex;
 
+        
+
         child.material.mainTexture = tex;
 
         tex.Create();
