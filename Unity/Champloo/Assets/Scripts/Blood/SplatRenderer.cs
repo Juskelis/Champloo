@@ -56,10 +56,11 @@ public class SplatRenderer : MonoBehaviour
         child.material.mainTexture = tex;
     }
 
-    void OnPreRender()
+    void Update()
     {
         if (firstPass)
         {
+            Graphics.SetRenderTarget(tex);
             Color clearColor = new Color(0, 0, 0, 0);
             GL.Clear(true, true, clearColor);
             firstPass = false;

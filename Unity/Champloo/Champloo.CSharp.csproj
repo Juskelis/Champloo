@@ -61,21 +61,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Champloo.CSharp.Plugins.csproj">
@@ -86,21 +71,23 @@
   <ItemGroup>
     <Compile Include="Assets\GamePadInput\Demo\DemoScript.cs" />
     <Compile Include="Assets\GamePadInput\GamePad.cs" />
-    <Compile Include="Assets\Scripts\Controller2D.cs" />
-    <Compile Include="Assets\Scripts\InputController.cs" />
-    <Compile Include="Assets\Scripts\Movement States\InAir.cs" />
-    <Compile Include="Assets\Scripts\Movement States\InAttack.cs" />
-    <Compile Include="Assets\Scripts\Movement States\MovementState.cs" />
-    <Compile Include="Assets\Scripts\Movement States\OnDash.cs" />
-    <Compile Include="Assets\Scripts\Movement States\OnGround.cs" />
-    <Compile Include="Assets\Scripts\Movement States\OnWall.cs" />
-    <Compile Include="Assets\Scripts\Movement States\TauntState.cs" />
-    <Compile Include="Assets\Scripts\PathPlatformController.cs" />
-    <Compile Include="Assets\Scripts\PlatformController.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\RaycastController.cs" />
+    <Compile Include="Assets\Scripts\Blood\BloodSplat.cs" />
+    <Compile Include="Assets\Scripts\Blood\SplatRenderer.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Controller2D.cs" />
+    <Compile Include="Assets\Scripts\Controllers\InputController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PathPlatformController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlatformController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\RaycastController.cs" />
+    <Compile Include="Assets\Scripts\Player\Movement States\InAir.cs" />
+    <Compile Include="Assets\Scripts\Player\Movement States\InAttack.cs" />
+    <Compile Include="Assets\Scripts\Player\Movement States\MovementState.cs" />
+    <Compile Include="Assets\Scripts\Player\Movement States\OnDash.cs" />
+    <Compile Include="Assets\Scripts\Player\Movement States\OnGround.cs" />
+    <Compile Include="Assets\Scripts\Player\Movement States\OnWall.cs" />
+    <Compile Include="Assets\Scripts\Player\Movement States\TauntState.cs" />
+    <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
-    <Compile Include="Assets\Scripts\SplatRenderer.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
