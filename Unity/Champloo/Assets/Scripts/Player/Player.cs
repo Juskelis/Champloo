@@ -9,7 +9,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     [Range(1,4)]
     private int playerNumber = 1;
-    public int PlayerNumber { get { return playerNumber; } }
+
+    public int PlayerNumber
+    {
+        get { return playerNumber; }
+    }
+
+    [SerializeField] private Transform spawnOnDeath;
 
     private InputController inputs;
 
@@ -124,29 +130,13 @@ public class Player : MonoBehaviour
             Invoke("GetHit", hitReactionTime);
         }
     }
-    /*
-    public void OnCollisionWith(MonoBehaviour other)
-    {
-        //skip if the other object is inactive
-        //  or if the other object is our child
-        if (!other.gameObject.activeSelf || other.transform.IsChildOf(transform))
-        {
-            return;
-        }
 
-        Weapon otherWeapon = other.GetComponent<Weapon>();
-        if (otherWeapon != null && otherWeapon.IsAttacking && hitWith == null)
-        {
-            print("been hit " + transform.name);
-            hitWith = otherWeapon;
-            Invoke("GetHit", hitReactionTime);
-        }
-    }
-    */
     void GetHit()
     {
-        print("ded");
         hitWith = null;
-        Destroy(gameObject);
+        if(spawnOnDeath != null)
+            Instantiate(spawnOnDeath, transform.position, transform.rotation);
+
+        gameObject.SetActive(false);
     }
 }
