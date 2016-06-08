@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class Controller2D : RaycastController
@@ -33,10 +34,20 @@ public class Controller2D : RaycastController
     [HideInInspector]
     public int faceDirection;
 
+    public event EventHandler Crushed;
+
     protected override void Start()
     {
         base.Start();
         faceDirection = 1;
+    }
+
+    protected virtual void OnCrushed(EventArgs e)
+    {
+        if (Crushed != null)
+        {
+            Crushed(this, e);
+        }
     }
 
     private RaycastHit2D Raycast(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
@@ -152,8 +163,7 @@ public class Controller2D : RaycastController
             {
                 if (hit.distance == 0)
                 {
-                    print("Crushed!");
-                    //fire event for player getting crushed
+                    OnCrushed(EventArgs.Empty);
                     continue;
                 }
 
@@ -213,7 +223,7 @@ public class Controller2D : RaycastController
             {
                 if (hit.distance == 0)
                 {
-                    print("Crushed!");
+                    OnCrushed(EventArgs.Empty);
                     continue;
                 }
 

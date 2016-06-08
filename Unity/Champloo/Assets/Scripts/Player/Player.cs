@@ -44,7 +44,22 @@ public class Player : MonoBehaviour
         inputs.playerNumber = playerNumber;
 
         weapon = GetComponentInChildren<Weapon>();
+
+        //attach to events
+        controller.Crushed += Crushed;
 	}
+
+    void Crushed(object sender, EventArgs e)
+    {
+        print("Crushed!");
+        gameObject.SetActive(false);
+    }
+
+    void Destroy()
+    {
+        //detach from events
+        controller.Crushed -= Crushed;
+    }
 
     //allows inherited classes to interfere with default FSM transitions
     //  by intercepting the desired next state before it reaches
