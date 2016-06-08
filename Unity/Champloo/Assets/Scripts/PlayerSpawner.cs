@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,27 +7,35 @@ public class PlayerSpawner : MonoBehaviour {
     [SerializeField]
     private float spawnTime;
 
+    [SerializeField]
     private List<Player> players;
 
     private List<float> playerSpawnTimes;
 
     void Start()
     {
-        // TODO : remove all present players from the list
-        players = new List<Player>();
-
+        Player[] foundPlayers = FindObjectsOfType<Player>();
         playerSpawnTimes = new List<float>();
-        foreach(Player p in FindObjectsOfType<Player>())
+        players = new List<Player>();
+        foreach(Player p in foundPlayers)
         {
-            playerSpawnTimes.Add(0f);
+            players.Add(p);
+            playerSpawnTimes.Add(spawnTime);
         }
+        players.Sort(delegate(Player x, Player y)
+        {
+            if (x == null && y == null) return 0;
+            else if (x == null) return -1;
+            else if (y == null) return 1;
+            else return x.PlayerNumber.CompareTo(y.PlayerNumber);
+        });
     }
 	
 	// Update is called once per frame
 	void Update () {
-	    foreach(Player p in players)
+	    foreach(Player p in FindObjectsOfType<Player>())
         {
-            playerSpawnTimes[p.PlayerNumber] = spawnTime;
+            playerSpawnTimes[p.PlayerNumber-1] = spawnTime;
         }
 
         for(int i = 0; i < playerSpawnTimes.Count; i++)
@@ -42,7 +51,13 @@ public class PlayerSpawner : MonoBehaviour {
 
     void SpawnPlayer(int playerNumber)
     {
-        // TODO : Add master list of player prefabs
-        //          for creating/deleting players
+        if (playerNumber < 0 || playerNumber >= players.Count)
+        {
+            throw new ArgumentException("Tried to spawn invalid player number: " + playerNumber);
+        }
+
+        Player p = players[playerNumber];
+        p.transform.position = transform.position;
+        p.gameObject.SetActive(true);
     }
 }
