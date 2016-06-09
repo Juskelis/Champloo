@@ -6,11 +6,12 @@ public class TauntState : MovementState {
     private float tauntDuration;
     private float tauntTimer;
 
-    public override MovementState UpdateState(ref Vector3 velocity)
+    public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
     {
         velocity = Vector3.zero;
+        externalForces = Vector3.zero;
 
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime + externalForces*Time.deltaTime);
 
         if (tauntTimer <= 0)
         {

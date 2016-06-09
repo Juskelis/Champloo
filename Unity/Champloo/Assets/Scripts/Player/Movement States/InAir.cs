@@ -29,7 +29,7 @@ public class InAir : MovementState
         turningDeceleration = (maxSpeed * 2) / fullTurnTime;
     }
 
-    public override MovementState UpdateState(ref Vector3 velocity)
+    public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
     {
         float inputDirection = Mathf.Sign(input.leftStick.x);
         if (Mathf.Abs(input.leftStick.x) > float.Epsilon)
@@ -56,8 +56,12 @@ public class InAir : MovementState
         velocity.y -= player.Gravity*Time.deltaTime;
 
         if (velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
+        
 
-        controller.Move(velocity*Time.deltaTime);
+        DecayExternalForces(ref externalForces);
+
+        controller.Move(velocity*Time.deltaTime + externalForces*Time.deltaTime);
+
 
         if (controller.collisions.below)
         {

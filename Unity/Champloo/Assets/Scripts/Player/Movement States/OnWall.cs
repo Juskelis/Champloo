@@ -14,7 +14,7 @@ public class OnWall : MovementState
     private float wallStickTime;
     private float timeToWallUnstick;
 
-    public override MovementState UpdateState(ref Vector3 velocity)
+    public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
     {
         int wallDirX = (controller.collisions.left) ? -1 : 1;
         velocity.x = input.leftStick.x;
@@ -39,6 +39,8 @@ public class OnWall : MovementState
         velocity.y -= player.Gravity * Time.deltaTime;
         if (velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
 
+        DecayExternalForces(ref externalForces);
+
         bool jumped = false;
         if (input.jump.Down)
         {
@@ -62,7 +64,7 @@ public class OnWall : MovementState
             }
         }
 
-        controller.Move(velocity*Time.deltaTime);
+        controller.Move(velocity*Time.deltaTime + externalForces * Time.deltaTime);
 
         if (controller.collisions.below)
         {

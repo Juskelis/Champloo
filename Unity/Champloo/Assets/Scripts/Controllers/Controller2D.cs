@@ -2,6 +2,9 @@
 using UnityEngine;
 using System.Collections;
 
+// TODO : Make it possible for exterior code to check collisions
+//      AKA implement GM:S's place_meeting function
+
 public class Controller2D : RaycastController
 {
 
@@ -35,6 +38,10 @@ public class Controller2D : RaycastController
     public int faceDirection;
 
     public event EventHandler Crushed;
+    public event Action<object, Player> Smashed;
+    public event Action<object, Player> Stomped;
+
+    private static float stompBounce = 10f;
 
     protected override void Start()
     {
@@ -50,12 +57,31 @@ public class Controller2D : RaycastController
         }
     }
 
+    protected virtual void OnSmash(Player other)
+    {
+        if (Smashed != null && other.gameObject.activeSelf)
+        {
+            Smashed(this, other);
+        }
+    }
+
+    protected virtual void OnStompedBy(Player other)
+    {
+        Player us = GetComponent<Player>();
+        if(Stomped != null && other.gameObject.activeSelf && us.isActiveAndEnabled)
+        {
+            other.GetComponent<Controller2D>().OnSmash(us);
+            Stomped(this, other);
+        }
+    }
+
     private RaycastHit2D Raycast(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask);
         for (int i = 0; i < hits.Length; i++)
         {
-            if (hits[i].transform.gameObject != gameObject) return hits[i];
+            if (hits[i].transform.gameObject != gameObject
+                && hits[i].transform.gameObject.activeSelf) return hits[i];
         }
         return new RaycastHit2D();
     }
@@ -74,6 +100,11 @@ public class Controller2D : RaycastController
             if(hit)
             {
                 collisions.above = true;
+                Player other = hit.transform.GetComponent<Player>();
+                if(other != null && other.CurrentMovementState is OnDash)
+                {
+                    OnStompedBy(other);
+                }
             }
 
             rayOrigin = raycastOrigins.bottomLeft;
@@ -83,6 +114,12 @@ public class Controller2D : RaycastController
             if (hit)
             {
                 collisions.below = true;
+                Player other = hit.transform.GetComponent<Player>();
+                Player us = GetComponent<Player>();
+                if(other != null && us != null && us.CurrentMovementState is OnDash)
+                {
+                    OnSmash(other);
+                }
             }
         }
 

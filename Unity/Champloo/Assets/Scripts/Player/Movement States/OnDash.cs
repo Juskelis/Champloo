@@ -13,7 +13,7 @@ public class OnDash : MovementState
 
     private Vector2 direction;
 
-    public override MovementState UpdateState(ref Vector3 velocity)
+    public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
     {
         //velocity.x += dashForce * direction.x * dashForce * Time.deltaTime;
         //velocity.y += dashForce * direction.y * dashForce * Time.deltaTime;
@@ -25,7 +25,11 @@ public class OnDash : MovementState
             velocity.x = 0;
         }
 
-        controller.Move(velocity * Time.deltaTime);
+
+        DecayExternalForces(ref externalForces);
+
+        controller.Move(velocity * Time.deltaTime + externalForces * Time.deltaTime);
+
 
         if (timeLeft < 0)
         {

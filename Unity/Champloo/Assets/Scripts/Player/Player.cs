@@ -24,12 +24,17 @@ public class Player : MonoBehaviour
     private Weapon weapon;
 
     private Vector3 velocity = Vector3.zero;
+    private Vector3 externalForce = Vector3.zero;
     
     public float Gravity { get; set; }
 
     public float hitReactionTime;
 
     private MovementState movementState;
+    public MovementState CurrentMovementState
+    {
+        get { return movementState; }
+    }
     //private Delegate movementState;
 
     private Weapon hitWith;
@@ -47,11 +52,39 @@ public class Player : MonoBehaviour
 
         //attach to events
         controller.Crushed += Crushed;
+        controller.Smashed += Smashed;
+        controller.Stomped += StompedBy;
 	}
 
     void Crushed(object sender, EventArgs e)
     {
-        print("Crushed!");
+        Kill();
+    }
+
+    void Smashed(object sender, Player other)
+    {
+        ApplyForce(Vector3.up * 30f);
+    }
+
+    void StompedBy(object sender, Player other)
+    {
+        Kill();
+    }
+
+    public void ApplyForce(Vector3 force)
+    {
+        externalForce += force;
+    }
+
+    void Kill()
+    {
+        velocity = Vector3.zero;
+        externalForce = Vector3.zero;
+        hitWith = null;
+
+        if (spawnOnDeath != null)
+            Instantiate(spawnOnDeath, transform.position, transform.rotation);
+
         gameObject.SetActive(false);
     }
 
@@ -79,7 +112,8 @@ public class Player : MonoBehaviour
             tail.enabled = true;
             tail.Clear();
             next = GetComponent<OnDash>();
-            velocity = inputs.leftStick.normalized * ((OnDash)next).DashForce;
+            Vector2 leftStickDir = inputs.leftStick.normalized;
+            velocity = ((leftStickDir == Vector2.zero)?Vector2.up:leftStickDir) * ((OnDash)next).DashForce;
         }
         else if(inputs.taunt.Down && (movementState is OnGround))
         {
@@ -99,7 +133,7 @@ public class Player : MonoBehaviour
     {
         inputs.UpdateInputs();
         
-        MovementState next = movementState.UpdateState(ref velocity);
+        MovementState next = movementState.UpdateState(ref velocity, ref externalForce);
 
         ChooseNextState(ref next);
 
@@ -109,7 +143,6 @@ public class Player : MonoBehaviour
             next.OnEnter();
             movementState = next;
         }
-
 
         //handle blocking/parrying
         if (hitWith != null)
@@ -140,7 +173,6 @@ public class Player : MonoBehaviour
         Weapon otherWeapon = col.GetComponent<Weapon>();
         if (otherWeapon != null && hitWith == null)
         {
-            print("been hit " + transform.name);
             hitWith = otherWeapon;
             Invoke("GetHit", hitReactionTime);
         }
@@ -148,10 +180,6 @@ public class Player : MonoBehaviour
 
     void GetHit()
     {
-        hitWith = null;
-        if(spawnOnDeath != null)
-            Instantiate(spawnOnDeath, transform.position, transform.rotation);
-
-        gameObject.SetActive(false);
+        Kill();
     }
 }
