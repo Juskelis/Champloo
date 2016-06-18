@@ -14,6 +14,9 @@ public class Weapon : MonoBehaviour {
     [SerializeField]
     private float reloadTime;
 
+    [SerializeField]
+    private Projectile thrownVersion;
+
     private float attackTimer;
     private float reloadTimer;
 
@@ -69,5 +72,22 @@ public class Weapon : MonoBehaviour {
     {
         renderer.enabled = false;
         collider2D.enabled = false;
+    }
+
+    public void Throw()
+    {
+        if (InHand)
+        {
+            InHand = false;
+            Instantiate(thrownVersion, transform.position, transform.rotation);
+        }
+    }
+
+    public void PickUp()
+    {
+        if (!InHand)
+        {
+            InHand = true;
+        }
     }
 }

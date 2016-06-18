@@ -76,14 +76,17 @@ public class Player : MonoBehaviour
         externalForce += force;
     }
 
-    void Kill()
+    void Kill(Vector3 direction = default(Vector3))
     {
         velocity = Vector3.zero;
         externalForce = Vector3.zero;
         hitWith = null;
 
         if (spawnOnDeath != null)
-            Instantiate(spawnOnDeath, transform.position, transform.rotation);
+        {
+            Transform corpse = (Transform)Instantiate(spawnOnDeath, transform.position, transform.rotation);
+            corpse.GetComponent<Rigidbody2D>().velocity = direction;
+        }
 
         gameObject.SetActive(false);
     }
@@ -159,6 +162,11 @@ public class Player : MonoBehaviour
                 hitWith = null;
             }
         }
+
+        if (inputs.weaponSpecial.Down)
+        {
+            weapon.Throw();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -180,6 +188,6 @@ public class Player : MonoBehaviour
 
     void GetHit()
     {
-        Kill();
+        Kill(transform.InverseTransformVector(hitWith.transform.TransformVector(hitWith.transform.right*10f)));
     }
 }
