@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
 
     void Crushed(object sender, EventArgs e)
     {
+        FindObjectOfType<Score>().SubtractScore(playerNumber);
         Kill();
     }
 
@@ -68,6 +69,7 @@ public class Player : MonoBehaviour
 
     void StompedBy(object sender, Player other)
     {
+        FindObjectOfType<Score>().AddScore(other.playerNumber);
         Kill();
     }
 
@@ -165,7 +167,7 @@ public class Player : MonoBehaviour
 
         if (inputs.weaponSpecial.Down)
         {
-            weapon.Throw();
+            weapon.Special();
         }
     }
 
