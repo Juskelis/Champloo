@@ -32,7 +32,8 @@ public class Sword : Weapon {
         if (InHand)
         {
             InHand = false;
-            Instantiate(thrownVersion, transform.position, transform.rotation);
+            Projectile temp = (Projectile)Instantiate(thrownVersion, transform.position, transform.rotation);
+            temp.PlayerNumber = GetComponentInParent<Player>().PlayerNumber;
         }
     }
 

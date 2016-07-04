@@ -188,6 +188,32 @@ public class Player : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if(!col.gameObject.activeSelf)
+        {
+            return;
+        }
+
+        Projectile p = col.gameObject.GetComponent<Projectile>();
+        if(p != null)
+        {
+            if(p.PlayerNumber == playerNumber)
+            {
+                if (!p.Moving && !weapon.InHand)
+                {
+                    weapon.PickUp();
+                    Destroy(p.gameObject);
+                }
+            }
+            else if(p.Moving)
+            {
+                FindObjectOfType<Score>().AddScore(p.PlayerNumber);
+                Kill(transform.InverseTransformVector(p.transform.TransformVector(p.transform.right * 10f)));
+            }
+        }
+    }
+
     void GetHit()
     {
         Kill(transform.InverseTransformVector(hitWith.transform.TransformVector(hitWith.transform.right*10f)));

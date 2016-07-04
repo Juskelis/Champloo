@@ -7,7 +7,7 @@ public class Weapon : MonoBehaviour {
 
     public bool CanAttack { get { return InHand && !IsAttacking && reloadTimer <= 0; } }
 
-    public bool IsAttacking { get { return attackTimer <= 0; } }
+    public bool IsAttacking { get { return attackTimer >= 0; } }
 
     [SerializeField]
     protected float attackTime;

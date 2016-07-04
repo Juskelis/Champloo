@@ -3,12 +3,14 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
+    public int PlayerNumber { get; set; }
 
     [SerializeField] private LayerMask collisionMask;
 
     [SerializeField] private float speed = 1f;
 
     private bool moving = true;
+    public bool Moving { get { return moving; } }
 
     void Update()
     {
