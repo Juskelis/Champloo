@@ -57,7 +57,36 @@ public class PlayerSpawner : MonoBehaviour {
         }
 
         Player p = players[playerNumber];
-        p.transform.position = transform.position;
+        p.transform.position = FindValidSpawn(p);
         p.gameObject.SetActive(true);
+    }
+
+    Vector3 FindValidSpawn(Player p, int maxAttempts = 30)
+    {
+        BoxCollider2D col = p.GetComponent<BoxCollider2D>();
+
+        Vector2 min = new Vector2(-9, -4);
+        Vector2 max = new Vector2(9, 4);
+
+        Vector2 test = Vector2.zero;
+        bool valid = false;
+        int attempts = 0;
+
+        while(attempts < maxAttempts && !valid)
+        {
+            test.x = UnityEngine.Random.Range(min.x, max.x);
+            test.y = UnityEngine.Random.Range(min.y, max.y);
+
+            if(!CollisionChecking.Place.Meeting(col, test))
+            {
+                valid = true;
+            }
+        }
+
+        if(attempts > maxAttempts)
+        {
+            return transform.position;
+        }
+        return test;
     }
 }
