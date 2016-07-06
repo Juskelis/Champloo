@@ -4,6 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerSpawner : MonoBehaviour {
+    [Serializable]
+    struct SpawnZone
+    {
+        public Vector3 topLeft;
+        public Vector3 bottomRight;
+    }
+
+    [SerializeField]
+    private SpawnZone[] spawnZones;
+
     [SerializeField]
     private float spawnTime;
 
@@ -29,6 +39,16 @@ public class PlayerSpawner : MonoBehaviour {
             else if (y == null) return 1;
             else return x.PlayerNumber.CompareTo(y.PlayerNumber);
         });
+    }
+
+    void OnDrawGizmos()
+    {
+        foreach(SpawnZone zone in spawnZones)
+        {
+            Gizmos.DrawWireCube((zone.topLeft + zone.bottomRight) / 2, (zone.topLeft - zone.bottomRight));
+            Gizmos.DrawWireSphere(zone.topLeft, 0.1f);
+            Gizmos.DrawWireSphere(zone.bottomRight, 0.1f);
+        }
     }
 	
 	// Update is called once per frame
@@ -68,16 +88,19 @@ public class PlayerSpawner : MonoBehaviour {
         Vector2 min = new Vector2(-9, -4);
         Vector2 max = new Vector2(9, 4);
 
+        SpawnZone zone;
+
         Vector2 test = Vector2.zero;
         bool valid = false;
         int attempts = 0;
 
         while(attempts < maxAttempts && !valid)
         {
-            test.x = UnityEngine.Random.Range(min.x, max.x);
-            test.y = UnityEngine.Random.Range(min.y, max.y);
+            zone = spawnZones[UnityEngine.Random.Range(0, spawnZones.Length)];
+            test.x = UnityEngine.Random.Range(zone.topLeft.x, zone.bottomRight.x);
+            test.y = UnityEngine.Random.Range(zone.bottomRight.y, zone.topLeft.y);
 
-            if(!CollisionChecking.Place.Meeting(col, test))
+            if(!CollisionChecking.Place.Meeting(col, test, 0f))
             {
                 valid = true;
             }
