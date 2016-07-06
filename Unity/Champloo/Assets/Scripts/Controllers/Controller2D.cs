@@ -116,7 +116,7 @@ public class Controller2D : RaycastController
                 collisions.below = true;
                 Player other = hit.transform.GetComponent<Player>();
                 Player us = GetComponent<Player>();
-                if(other != null && us != null && us.CurrentMovementState is OnDash)
+                if(other != null && us != null)
                 {
                     OnSmash(other);
                 }

@@ -18,7 +18,7 @@ public class InAttack : MovementState
 
         controller.Move(velocity * Time.deltaTime + externalForces * Time.deltaTime);
 
-        if (playerWeapon.IsAttacking)
+        if (!playerWeapon.IsAttacking)
         {
             if (controller.collisions.below)
             {

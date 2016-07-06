@@ -47,7 +47,7 @@ public class OnWall : MovementState
             jumped = true;
             input.jump.ResetTimers();
 
-            if (wallDirX == input.leftStick.x)
+            if (Mathf.Abs(wallDirX - input.leftStick.x) < 0.5f)
             {
                 velocity.x = -wallDirX * wallJumpClimbForces.x;
                 velocity.y = wallJumpClimbForces.y;

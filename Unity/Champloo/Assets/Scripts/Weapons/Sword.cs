@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Sword : Weapon {
     private InputController input;
-    private SpriteRenderer ren;
+    private MeshRenderer ren;
     private BoxCollider2D col;
 
     [SerializeField]
@@ -13,8 +13,8 @@ public class Sword : Weapon {
     {
         base.Start();
 
-        input = GetComponentInParent<InputController>();
-        ren = GetComponent<SpriteRenderer>();
+        input = transform.parent.GetComponentInParent<InputController>();
+        ren = GetComponent<MeshRenderer>();
         col = GetComponent<BoxCollider2D>();
     }
 
@@ -22,7 +22,7 @@ public class Sword : Weapon {
     {
         base.Update();
 
-        transform.rotation = Quaternion.AngleAxis(input.leftStickAngle, Vector3.forward);
+        transform.parent.rotation = Quaternion.AngleAxis(input.leftStickAngle, Vector3.forward);
     }
 
     public override void Special()
