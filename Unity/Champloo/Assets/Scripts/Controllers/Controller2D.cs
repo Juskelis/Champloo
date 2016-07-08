@@ -2,9 +2,6 @@
 using UnityEngine;
 using System.Collections;
 
-// TODO : Make it possible for exterior code to check collisions
-//      AKA implement GM:S's place_meeting function
-
 public class Controller2D : RaycastController
 {
 
@@ -29,7 +26,7 @@ public class Controller2D : RaycastController
 
     [SerializeField] private float maxClimbAngle = 80f;
     [SerializeField] private float maxDescendAngle = 75f;
-    [SerializeField] private LayerMask collisionMask;
+    [SerializeField] public LayerMask collisionMask;
     public CollisionInfo collisions;
 
     private Vector3 previousVelocity;
@@ -40,6 +37,7 @@ public class Controller2D : RaycastController
     public event EventHandler Crushed;
     public event Action<object, Player> Smashed;
     public event Action<object, Player> Stomped;
+    public event Action<object, Player, bool> Bounced;
 
     private static float stompBounce = 10f;
 
@@ -75,6 +73,14 @@ public class Controller2D : RaycastController
         }
     }
 
+    protected virtual void OnBounce(Player other, bool horizontal)
+    {
+        if(Bounced != null)
+        {
+            Bounced(this, other, horizontal);
+        }
+    }
+
     private RaycastHit2D Raycast(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask);
@@ -101,9 +107,11 @@ public class Controller2D : RaycastController
             {
                 collisions.above = true;
                 Player other = hit.transform.GetComponent<Player>();
-                if(other != null && other.CurrentMovementState is OnDash)
+                if(other != null)
                 {
-                    OnStompedBy(other);
+                    if (other.CurrentMovementState is OnDash)
+                        OnStompedBy(other);
+                    else OnBounce(other, false);
                 }
             }
 
@@ -135,6 +143,11 @@ public class Controller2D : RaycastController
             if (hit)
             {
                 collisions.left = true;
+                Player other = hit.transform.GetComponent<Player>();
+                if(other != null)
+                {
+                    OnBounce(other, true);
+                }
             }
 
             rayOrigin = raycastOrigins.bottomRight;
@@ -144,6 +157,11 @@ public class Controller2D : RaycastController
             if(hit)
             {
                 collisions.right = true;
+                Player other = hit.transform.GetComponent<Player>();
+                if (other != null)
+                {
+                    OnBounce(other, true);
+                }
             }
         }
     }

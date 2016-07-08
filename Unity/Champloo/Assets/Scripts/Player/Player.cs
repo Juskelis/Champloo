@@ -18,10 +18,15 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform spawnOnDeath;
 
     private InputController inputs;
-
+    private BoxCollider2D box;
     private Controller2D controller;
 
     private Weapon weapon;
+
+    [SerializeField]
+    private float bounceForce = 10f;
+    [SerializeField]
+    private float deathForce = 20f;
 
     private Vector3 velocity = Vector3.zero;
     private Vector3 externalForce = Vector3.zero;
@@ -35,14 +40,13 @@ public class Player : MonoBehaviour
     {
         get { return movementState; }
     }
-    //private Delegate movementState;
 
     private Weapon hitWith;
 
     void Start ()
     {
         movementState = GetComponent<OnGround>();
-
+        box = GetComponent<BoxCollider2D>();
 	    controller = GetComponent<Controller2D>();
 
         inputs = GetComponent<InputController>();
@@ -54,7 +58,8 @@ public class Player : MonoBehaviour
         controller.Crushed += Crushed;
         controller.Smashed += Smashed;
         controller.Stomped += StompedBy;
-	}
+        controller.Bounced += Bounced;
+    }
 
     void Crushed(object sender, EventArgs e)
     {
@@ -64,7 +69,7 @@ public class Player : MonoBehaviour
 
     void Smashed(object sender, Player other)
     {
-        ApplyForce(Vector3.up * 30f);
+        ApplyForce(Vector3.up * bounceForce);
     }
 
     void StompedBy(object sender, Player other)
@@ -73,9 +78,26 @@ public class Player : MonoBehaviour
         Kill();
     }
 
+    void Bounced(object sender, Player other, bool horizontal)
+    {
+        float dir;
+        if(horizontal)
+        {
+            dir = Mathf.Sign(transform.position.x - other.transform.position.x);
+            ApplyForce(Vector3.right * dir * bounceForce);
+        }
+        else
+        {
+            dir = Mathf.Sign(transform.position.y - other.transform.position.y);
+            ApplyForce(Vector3.up * dir * bounceForce);
+        }
+    }
+
     public void ApplyForce(Vector3 force)
     {
-        externalForce += force;
+        velocity = force;
+        controller.collisions.above = false;
+        controller.collisions.below = false;
     }
 
     void Kill(Vector3 direction = default(Vector3))
@@ -87,7 +109,9 @@ public class Player : MonoBehaviour
         if (spawnOnDeath != null)
         {
             Transform corpse = (Transform)Instantiate(spawnOnDeath, transform.position, transform.rotation);
-            corpse.GetComponent<Rigidbody2D>().velocity = direction;
+            Rigidbody2D corpseBody = corpse.GetComponent<Rigidbody2D>();
+            corpseBody.gravityScale = Gravity/Physics2D.gravity.magnitude;
+            corpseBody.velocity = direction;
         }
 
         gameObject.SetActive(false);
@@ -97,6 +121,9 @@ public class Player : MonoBehaviour
     {
         //detach from events
         controller.Crushed -= Crushed;
+        controller.Smashed -= Smashed;
+        controller.Stomped -= StompedBy;
+        controller.Bounced -= Bounced;
     }
 
     //allows inherited classes to interfere with default FSM transitions
@@ -141,6 +168,8 @@ public class Player : MonoBehaviour
         MovementState next = movementState.UpdateState(ref velocity, ref externalForce);
 
         ChooseNextState(ref next);
+
+        //HandleCollisions();
 
         if (next != null)
         {
