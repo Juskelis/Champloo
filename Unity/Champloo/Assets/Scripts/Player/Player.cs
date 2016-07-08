@@ -238,13 +238,13 @@ public class Player : MonoBehaviour
             else if(p.Moving)
             {
                 FindObjectOfType<Score>().AddScore(p.PlayerNumber);
-                Kill(transform.InverseTransformVector(p.transform.TransformVector(p.transform.right * 10f)));
+                Kill(p.transform.right * deathForce);
             }
         }
     }
 
     void GetHit()
     {
-        Kill(transform.InverseTransformVector(hitWith.transform.TransformVector(hitWith.transform.right*10f)));
+        Kill(hitWith.transform.right * deathForce);
     }
 }
