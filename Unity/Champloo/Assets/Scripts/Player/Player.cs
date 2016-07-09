@@ -10,6 +10,11 @@ public class Player : MonoBehaviour
     [Range(1,4)]
     private int playerNumber = 1;
 
+    [SerializeField]
+    private Color playerColor = Color.white;
+    [SerializeField]
+    private SpriteRenderer[] coloredSprites;
+
     public int PlayerNumber
     {
         get { return playerNumber; }
@@ -20,6 +25,7 @@ public class Player : MonoBehaviour
     private InputController inputs;
     private BoxCollider2D box;
     private Controller2D controller;
+    private Animator anim;
 
     private Weapon weapon;
 
@@ -48,6 +54,13 @@ public class Player : MonoBehaviour
         movementState = GetComponent<OnGround>();
         box = GetComponent<BoxCollider2D>();
 	    controller = GetComponent<Controller2D>();
+        anim = GetComponent<Animator>();
+
+        //change colors of child sprites
+        foreach(SpriteRenderer s in coloredSprites)
+        {
+            s.color = playerColor;
+        }
 
         inputs = GetComponent<InputController>();
         inputs.playerNumber = playerNumber;
@@ -197,6 +210,25 @@ public class Player : MonoBehaviour
         if (inputs.weaponSpecial.Down)
         {
             weapon.Special();
+        }
+
+        //update animation states
+        if (anim != null)
+        {
+            float velMag = Mathf.Abs(velocity.x);
+            anim.SetFloat("HorizontalSpeed", velMag);
+            anim.SetBool("OnGround", movementState is OnGround);
+            anim.SetBool("OnDash", movementState is OnDash);
+            anim.SetBool("OnWall", movementState is OnWall);
+            //anim.SetBool("InAttack", movementState is InAttack);
+            anim.SetBool("InAir", movementState is InAir);
+            anim.SetBool("Hit", hitWith != null);
+            if (velMag > 0.01f)
+            { 
+                Vector3 localScale = transform.localScale;
+                localScale.x = Mathf.Sign(velocity.x);
+                transform.localScale = localScale;
+            }
         }
     }
 
