@@ -1,0 +1,166 @@
+fileFormatVersion: 2
+guid: ffb5b6fffba6e0f468cfa444251c6498
+timeCreated: 1468024044
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: in_air_colored_bits_0
+    21300002: in_air_colored_bits_1
+    21300004: in_air_colored_bits_2
+    21300006: in_air_colored_bits_3
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 32
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: in_air_colored_bits_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 25}
+        - {x: -4, y: 24}
+        - {x: -2, y: 21}
+        - {x: 0, y: 19}
+        - {x: 2, y: 19}
+        - {x: 2, y: 18}
+        - {x: -3, y: 20}
+        - {x: -6, y: 20}
+        - {x: -13, y: 17}
+        - {x: -16, y: 15}
+        - {x: -16, y: 8}
+        - {x: 16, y: 8}
+        - {x: 16, y: 19}
+        - {x: 11, y: 25}
+    - name: in_air_colored_bits_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 7, y: 25}
+        - {x: 0, y: 25}
+        - {x: -2, y: 23}
+        - {x: -2, y: 21}
+        - {x: 0, y: 19}
+        - {x: 2, y: 19}
+        - {x: 2, y: 18}
+        - {x: -5, y: 21}
+        - {x: -10, y: 23}
+        - {x: -16, y: 14}
+        - {x: -16, y: 9}
+        - {x: -15, y: 8}
+        - {x: 14, y: 8}
+        - {x: 16, y: 12}
+        - {x: 16, y: 17}
+    - name: in_air_colored_bits_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 25}
+        - {x: -2, y: 21}
+        - {x: 0, y: 19}
+        - {x: 2, y: 19}
+        - {x: 1, y: 18}
+        - {x: -7, y: 22}
+        - {x: -13, y: 24}
+        - {x: -16, y: 20}
+        - {x: -16, y: 10}
+        - {x: -5, y: 7}
+        - {x: 14, y: 7}
+        - {x: 15, y: 8}
+        - {x: 15, y: 22}
+        - {x: 5, y: 25}
+    - name: in_air_colored_bits_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 9, y: 25}
+        - {x: 0, y: 25}
+        - {x: -3, y: 24}
+        - {x: -2, y: 21}
+        - {x: 0, y: 19}
+        - {x: 2, y: 19}
+        - {x: -2, y: 19}
+        - {x: -4, y: 21}
+        - {x: -14, y: 23}
+        - {x: -16, y: 19}
+        - {x: -16, y: 12}
+        - {x: -13, y: 11}
+        - {x: -2, y: 9}
+        - {x: 8, y: 8}
+        - {x: 14, y: 8}
+        - {x: 16, y: 10}
+        - {x: 16, y: 17}
+        - {x: 14, y: 22}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

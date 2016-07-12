@@ -77,7 +77,7 @@ moving_friction = 0;
 stopping_friction = acceleration;
 turning_friction = 2*acceleration;
 
-walk_off_wall_time = 0.1;
+walk_off_wall_time = 7/60; //in seconds
 
 blocking_friction = acceleration/4;
 
@@ -186,10 +186,16 @@ block_slow = false;
 jump_input_time = 0;
 jump_input_delay = 0.2*room_speed; //frame delay
 
+attack_input_time = 0;
+attack_input_delay = 0.2*room_speed; //frame delay
+
 hit = noone;
 hit_player_number = noone;
-block_window = (12/60)*room_speed; //frames for incorrect timing window for blocking/parry
+block_window = (12/60)*room_speed; //frames for incorrect timing window for blocking
+//parry_window = (18/60)*room_speed;
 
+parry_input_time = 0;
+parry_input_delay = (18/60)*room_speed; //frames
 </string>
           </argument>
         </arguments>
@@ -1082,11 +1088,23 @@ if(place_meeting(x,y, obj_Wall))
 
 if(other.active &amp;&amp; other.player != id &amp;&amp; hit == noone)
 {
-    if(!scr_block_check(other.id.damage))
+    if(!scr_block_check(other.id.damage) &amp;&amp; !key_parry)
     {
         hit = other.id;
         hit_player_number = other.player_number;
         alarm[2] = block_window;
+    }
+    else if(key_parry)
+    {
+        //parry!
+        has_sword = true;
+        if(instance_exists(other.id.player))
+        {
+            with(other.id.player)
+            {
+                has_sword = false;
+            }
+        }
     }
 }
 
@@ -1125,7 +1143,7 @@ if(!has_sword &amp;&amp;
 }
 else if(other.player_number != player_number &amp;&amp; other.movespeed &gt; 0)
 {
-    if(!scr_block_check(0))
+    if(!scr_block_check(0) &amp;&amp; !key_parry)
     {
         respawning = true;
         alarm[0] = death_time * room_speed;
@@ -1137,6 +1155,15 @@ else if(other.player_number != player_number &amp;&amp; other.movespeed &gt; 0)
         spurt_direction = point_direction(x,y, other.x, other.y);
         scr_spawn_blood(random_range(30,60), 0, 180);
         instance_destroy();
+    }
+    else if(key_parry)
+    {
+        //parry that shit dood
+        has_sword = true;
+        with(other)
+        {
+            instance_destroy();
+        }
     }
     else
     {
@@ -1198,6 +1225,44 @@ enum States
       </action>
     </event>
     <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw reticule
+var radius = 3;
+var distance = 30;
+var center_x = x + horizontal_amount * distance;
+var center_y = y + vertical_amount * distance;
+var player_color = scr_player_color(player_number);
+
+draw_set_alpha(0.5);
+draw_ellipse_colour(
+    center_x - radius,
+    center_y - radius,
+    center_x + radius,
+    center_y + radius,
+    player_color,
+    player_color,
+    false
+);
+draw_set_alpha(1);
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -1372,7 +1437,7 @@ if(key_block &amp;&amp; !attacking)
           <argument>
             <kind>1</kind>
             <string>///draw reloading indication
-if(attacking)
+if(attacking &amp;&amp; false)
 {
     var timeleft = alarm[1];
     var sprite_num = sprite_get_number(spr_NoAttackIndicator);
