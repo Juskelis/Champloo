@@ -21,8 +21,13 @@ public class Sword : Weapon {
     protected override void Update()
     {
         base.Update();
-        if(CanAttack)
-            transform.parent.rotation = Quaternion.AngleAxis(input.leftStickAngle, Vector3.forward);
+        if (CanAttack)
+        {
+            transform.parent.rotation = Quaternion.AngleAxis(
+                input.leftStickAngle + 180 * transform.parent.localScale.x < 0?1:0,
+                Vector3.forward
+            );
+        }
     }
 
     public override void Special()
