@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -99,6 +93,12 @@
     <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
+    <Compile Include="Assets\Scripts\UI\DynamicFont.cs" />
+    <Compile Include="Assets\Scripts\UI\GIF Encoder\AnimatedGifEncoder.cs" />
+    <Compile Include="Assets\Scripts\UI\GIF Encoder\CustomEvents.cs" />
+    <Compile Include="Assets\Scripts\UI\GIF Encoder\GifRecorder.cs" />
+    <Compile Include="Assets\Scripts\UI\GIF Encoder\LZWEncoder.cs" />
+    <Compile Include="Assets\Scripts\UI\GIF Encoder\NeuQuant.cs" />
     <Compile Include="Assets\Scripts\UI\Scene.cs" />
     <Compile Include="Assets\Scripts\UI\Score.cs" />
     <Compile Include="Assets\Scripts\UI\Timer.cs" />
@@ -107,6 +107,9 @@
     <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Fonts\License.txt" />
+    <None Include="Assets\Fonts\Read me japanese.txt" />
+    <None Include="Assets\Fonts\Read me.txt" />
     <None Include="Assets\Resources\Video_Game_Names.txt" />
     <None Include="Assets\Shaders\Splatter.shader" />
     <None Include="Assets\Shaders\Surface.shader" />

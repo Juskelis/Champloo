@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -81,6 +75,9 @@
     <Compile Include="Assets\Standard Assets\Utility\TimedObjectDestructor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Fonts\License.txt" />
+    <None Include="Assets\Fonts\Read me japanese.txt" />
+    <None Include="Assets\Fonts\Read me.txt" />
     <None Include="Assets\Resources\Video_Game_Names.txt" />
     <None Include="Assets\Shaders\Splatter.shader" />
     <None Include="Assets\Shaders\Surface.shader" />
