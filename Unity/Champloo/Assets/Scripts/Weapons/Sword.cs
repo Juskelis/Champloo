@@ -8,6 +8,8 @@ public class Sword : Weapon {
 
     [SerializeField]
     private Projectile thrownVersion;
+    [SerializeField]
+    private bool alwaysVisible = false;
 
     protected override void Start()
     {
@@ -16,6 +18,9 @@ public class Sword : Weapon {
         input = transform.parent.GetComponentInParent<InputController>();
         ren = GetComponent<MeshRenderer>();
         col = GetComponent<BoxCollider2D>();
+
+        ren.enabled = alwaysVisible;
+        col.enabled = false;
     }
 
     protected override void Update()
@@ -23,9 +28,12 @@ public class Sword : Weapon {
         base.Update();
         if (CanAttack)
         {
+            //transform.parent.localScale = transform.parent.parent.localScale;
+
+            //print(input.leftStickAngle);
             transform.parent.rotation = Quaternion.AngleAxis(
-                input.leftStickAngle + 180 * transform.parent.localScale.x < 0?1:0,
-                Vector3.forward
+                transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
+                transform.parent.forward
             );
         }
     }
@@ -53,8 +61,8 @@ public class Sword : Weapon {
     protected override void EndAttack()
     {
         base.EndAttack();
-
-        ren.enabled = false;
+        
+        ren.enabled = alwaysVisible;
         col.enabled = false;
     }
 }

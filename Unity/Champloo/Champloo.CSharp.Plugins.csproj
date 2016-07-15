@@ -61,9 +61,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Standard Assets\Utility\ActivateTrigger.cs" />
@@ -75,9 +72,8 @@
     <Compile Include="Assets\Standard Assets\Utility\TimedObjectDestructor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Fonts\License.txt" />
-    <None Include="Assets\Fonts\Read me japanese.txt" />
-    <None Include="Assets\Fonts\Read me.txt" />
+    <None Include="Assets\Fonts\INFO.txt" />
+    <None Include="Assets\Fonts\OFL.txt" />
     <None Include="Assets\Resources\Video_Game_Names.txt" />
     <None Include="Assets\Shaders\Splatter.shader" />
     <None Include="Assets\Shaders\Surface.shader" />
