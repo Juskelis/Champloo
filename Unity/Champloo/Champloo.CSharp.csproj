@@ -61,6 +61,9 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Champloo.CSharp.Plugins.csproj">
@@ -69,6 +72,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\DummyPlayer.cs" />
     <Compile Include="Assets\GamePadInput\Demo\DemoScript.cs" />
     <Compile Include="Assets\GamePadInput\GamePad.cs" />
     <Compile Include="Assets\Scripts\Blood\BloodSplat.cs" />

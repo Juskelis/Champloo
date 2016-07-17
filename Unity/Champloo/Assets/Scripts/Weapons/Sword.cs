@@ -32,7 +32,7 @@ public class Sword : Weapon {
 
             //print(input.leftStickAngle);
             transform.parent.rotation = Quaternion.AngleAxis(
-                transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
+                input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
                 transform.parent.forward
             );
         }
@@ -45,7 +45,14 @@ public class Sword : Weapon {
         if (InHand)
         {
             InHand = false;
-            Projectile temp = (Projectile)Instantiate(thrownVersion, transform.position, transform.rotation);
+            Projectile temp = (Projectile)Instantiate(
+                thrownVersion,
+                transform.position,
+                Quaternion.AngleAxis(
+                    input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
+                    transform.parent.forward
+                )
+            );
             temp.PlayerNumber = GetComponentInParent<Player>().PlayerNumber;
         }
     }

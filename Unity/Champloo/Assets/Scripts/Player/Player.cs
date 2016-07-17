@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     private Color playerColor = Color.white;
     [SerializeField]
     private SpriteRenderer[] coloredSprites;
+    [SerializeField]
+    private Transform visuals;
 
     public int PlayerNumber
     {
@@ -102,15 +104,19 @@ public class Player : MonoBehaviour
         else
         {
             dir = Mathf.Sign(transform.position.y - other.transform.position.y);
-            ApplyForce(Vector3.up * dir * bounceForce);
+            ApplyForce(Vector3.up * dir * bounceForce, false);
         }
     }
 
-    public void ApplyForce(Vector3 force)
+    public void ApplyForce(Vector3 force, bool disableCollisions = true)
     {
         velocity = force;
-        controller.collisions.above = false;
-        controller.collisions.below = false;
+
+        if (disableCollisions)
+        {
+            controller.collisions.above = false;
+            controller.collisions.below = false;
+        }
     }
 
     void Kill(Vector3 direction = default(Vector3))
@@ -225,9 +231,9 @@ public class Player : MonoBehaviour
             anim.SetBool("Hit", hitWith != null);
             if (velMag > 0.01f)
             { 
-                Vector3 localScale = transform.localScale;
+                Vector3 localScale = visuals.localScale;
                 localScale.x = Mathf.Sign(velocity.x);
-                transform.localScale = localScale;
+                visuals.localScale = localScale;
             }
         }
     }
