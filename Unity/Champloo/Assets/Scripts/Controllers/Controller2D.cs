@@ -1,10 +1,64 @@
 ﻿using System;
 using UnityEngine;
+using CollisionChecking;
 using System.Collections;
 
 public class Controller2D : RaycastController
 {
 
+    /*
+    private BoxCollider2D box;
+
+    [SerializeField]
+    public LayerMask collisionMask;
+
+    public bool above
+    {
+        get { return Place.Meeting(box, transform.position + Vector3.up, 0f, collisionMask); }
+    }
+
+    public bool below
+    {
+        get { return Place.Meeting(box, transform.position + Vector3.down, 0f, collisionMask); }
+    }
+
+    public bool left
+    {
+        get { return Place.Meeting(box, transform.position + Vector3.left, 0f, collisionMask); }
+    }
+
+    public bool right
+    {
+        get { return Place.Meeting(box, transform.position + Vector3.right, 0f, collisionMask); }
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        box = GetComponent<BoxCollider2D>();
+    }
+
+    private RaycastHit2D Raycast(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask);
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.gameObject != gameObject
+                && hits[i].transform.gameObject.activeSelf)
+                return hits[i];
+        }
+        return new RaycastHit2D();
+    }
+
+    public void Move(Vector3 velocity, bool standingOnPlatform = false)
+    {
+        //handle collisions
+        UpdateRaycastOrigins();
+    }
+    */
+
+
+    
     public struct CollisionInfo
     {
         public bool above, below;
@@ -168,20 +222,6 @@ public class Controller2D : RaycastController
 
     public void Move(Vector3 velocity, bool standingOnPlatform = false)
     {
-        UpdateRaycastOrigins();
-        collisions.Reset();
-
-
-
-        //horizontal
-
-
-        //vertical
-
-
-
-
-        /*
         //handle collisions
         UpdateRaycastOrigins();
 
@@ -212,7 +252,6 @@ public class Controller2D : RaycastController
         {
             collisions.below = true;
         }
-        */
     }
 
     void VerticalCollisions(ref Vector3 velocity)
@@ -373,4 +412,5 @@ public class Controller2D : RaycastController
             }
         }
     }
+    
 }

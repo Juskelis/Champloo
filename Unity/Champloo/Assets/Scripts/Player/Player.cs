@@ -104,19 +104,20 @@ public class Player : MonoBehaviour
         else
         {
             dir = Mathf.Sign(transform.position.y - other.transform.position.y);
-            ApplyForce(Vector3.up * dir * bounceForce, false);
+            ApplyForce(Vector3.up * dir * bounceForce);
         }
     }
 
-    public void ApplyForce(Vector3 force, bool disableCollisions = true)
+    public void ApplyForce(Vector3 force)
     {
         velocity = force;
-
+        /*
         if (disableCollisions)
         {
             controller.collisions.above = false;
             controller.collisions.below = false;
         }
+        */
     }
 
     void Kill(Vector3 direction = default(Vector3))

@@ -58,7 +58,7 @@ public class OnGround : MovementState
             velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
         }
 
-        if (controller.collisions.above || controller.collisions.below)
+        if ((controller.collisions.above && velocity.y > 0) || (controller.collisions.below && velocity.y < 0))
         {
             velocity.y = 0;
         }
