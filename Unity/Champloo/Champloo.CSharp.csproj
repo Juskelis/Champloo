@@ -73,6 +73,7 @@
     <Compile Include="Assets\GamePadInput\GamePad.cs" />
     <Compile Include="Assets\Scripts\Blood\BloodSplat.cs" />
     <Compile Include="Assets\Scripts\Blood\SplatRenderer.cs" />
+    <Compile Include="Assets\Scripts\Camera\SmashCamera.cs" />
     <Compile Include="Assets\Scripts\Controllers\CollisionChecker.cs" />
     <Compile Include="Assets\Scripts\Controllers\Controller2D.cs" />
     <Compile Include="Assets\Scripts\Controllers\InputController.cs" />
