@@ -6,7 +6,7 @@ public class Score : MonoBehaviour {
     private List<int> scores;
     public List<int> Scores { get { return scores; } }
 
-    private void Start()
+    private void Awake()
     {
         scores = new List<int>(FindObjectsOfType<Player>().Length);
         for(int i = 0; i < scores.Capacity; i++)

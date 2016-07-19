@@ -96,8 +96,10 @@
     <Compile Include="Assets\Scripts\UI\GIF Encoder\GifRecorder.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\LZWEncoder.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\NeuQuant.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerScoreCard.cs" />
     <Compile Include="Assets\Scripts\UI\Scene.cs" />
     <Compile Include="Assets\Scripts\UI\Score.cs" />
+    <Compile Include="Assets\Scripts\UI\ScoreCardInstantiator.cs" />
     <Compile Include="Assets\Scripts\UI\Timer.cs" />
     <Compile Include="Assets\Scripts\UI\TitleGenerator.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.cs" />

@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Globalization;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Timer : MonoBehaviour {
     [SerializeField]
     private float levelSeconds = 90f;
+
+    [SerializeField] private Text displayText;
 
     private float timer;
     public float TimeLeft { get { return timer; } }
@@ -26,6 +30,11 @@ public class Timer : MonoBehaviour {
         {
             Timeout();
             timerDone = true;
+        }
+
+        if (displayText != null)
+        {
+            displayText.text = timer > 0f ? ((int)timer).ToString(CultureInfo.InvariantCulture) : "--";
         }
     }
 
