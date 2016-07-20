@@ -97,6 +97,8 @@
     <Compile Include="Assets\Scripts\UI\GIF Encoder\GifRecorder.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\LZWEncoder.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\NeuQuant.cs" />
+    <Compile Include="Assets\Scripts\UI\Menu.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerScoreCard.cs" />
     <Compile Include="Assets\Scripts\UI\Scene.cs" />
     <Compile Include="Assets\Scripts\UI\Score.cs" />
