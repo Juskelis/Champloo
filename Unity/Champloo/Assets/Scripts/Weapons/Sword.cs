@@ -3,8 +3,11 @@ using System.Collections;
 
 public class Sword : Weapon {
     private InputController input;
-    private MeshRenderer ren;
+    //private MeshRenderer ren;
     private BoxCollider2D col;
+
+    [SerializeField]
+    private SpriteRenderer visuals;
 
     [SerializeField]
     private Projectile thrownVersion;
@@ -16,11 +19,12 @@ public class Sword : Weapon {
         base.Start();
 
         input = transform.parent.GetComponentInParent<InputController>();
-        ren = GetComponent<MeshRenderer>();
+        //ren = GetComponent<MeshRenderer>();
         col = GetComponent<BoxCollider2D>();
 
-        ren.enabled = alwaysVisible;
+        //ren.enabled = alwaysVisible;
         col.enabled = false;
+        visuals.enabled = alwaysVisible;
     }
 
     protected override void Update()
@@ -61,15 +65,17 @@ public class Sword : Weapon {
     {
         base.StartAttack();
 
-        ren.enabled = true;
+        //ren.enabled = true;
+        visuals.enabled = true;
         col.enabled = true;
     }
 
     protected override void EndAttack()
     {
         base.EndAttack();
-        
-        ren.enabled = alwaysVisible;
+
+        //ren.enabled = alwaysVisible;
+        visuals.enabled = alwaysVisible;
         col.enabled = false;
     }
 }

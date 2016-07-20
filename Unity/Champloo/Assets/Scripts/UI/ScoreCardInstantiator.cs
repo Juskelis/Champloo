@@ -17,7 +17,7 @@ public class ScoreCardInstantiator : MonoBehaviour
 	    {
 	        PlayerScoreCard currentPlayerScoreCard = Instantiate(scoreCardPrefab);
 	        currentPlayerScoreCard.playerNumber = i;
-            currentPlayerScoreCard.transform.SetParent(transform);
+            currentPlayerScoreCard.transform.SetParent(transform, false);
 	    }
         Destroy(this);
 	}

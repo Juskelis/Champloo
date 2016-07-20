@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
     private Vector3 externalForce = Vector3.zero;
+
+    private int currentDashes = 0;
     
     public float Gravity { get; set; }
 
@@ -68,6 +70,8 @@ public class Player : MonoBehaviour
         inputs.playerNumber = playerNumber;
 
         weapon = GetComponentInChildren<Weapon>();
+
+        currentDashes = GetComponent<OnDash>().DashLimit;
 
         //attach to events
         controller.Crushed += Crushed;
@@ -158,8 +162,9 @@ public class Player : MonoBehaviour
             weapon.Attack();
             next = GetComponent<InAttack>();
         }
-        else if(inputs.movementSpecial.Down && !(movementState is OnDash))
+        else if(inputs.movementSpecial.Down && !(movementState is OnDash) && currentDashes > 0)
         {
+            currentDashes--;
             TrailRenderer tail = GetComponent<TrailRenderer>();
             tail.enabled = true;
             tail.Clear();
@@ -177,6 +182,10 @@ public class Player : MonoBehaviour
             if (movementState is OnDash)
             {
                 GetComponent<TrailRenderer>().enabled = false;
+            }
+            if(movementState is OnGround)
+            {
+                currentDashes = GetComponent<OnDash>().DashLimit;
             }
         }
     }

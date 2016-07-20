@@ -9,7 +9,12 @@ public class OnDash : MovementState
     [SerializeField] private float dashTime;
     private float timeLeft;
 
-    [SerializeField] private float gravityModifier = 1f;
+    [SerializeField]
+    private float gravityModifier = 1f;
+
+    [SerializeField]
+    private int dashLimit = 3;
+    public int DashLimit {  get { return dashLimit; } }
 
     private Vector2 direction;
 
