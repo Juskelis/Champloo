@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.IO;
 using System.Linq;
+using UnityEngine.Events;
 
 //this whole system is basically ripped from videogamena.me
 
@@ -20,6 +21,12 @@ public class TitleGenerator : MonoBehaviour {
     [SerializeField]
     private float interval = 10f;
 
+    [SerializeField]
+    private string[] secretPhraseList;
+
+    [SerializeField]
+    private UnityEvent secretEvent;
+
     private List<List<string>> word_list;
 
     private Text toChange;
@@ -31,10 +38,19 @@ public class TitleGenerator : MonoBehaviour {
         CreateTitle();
     }
 
+    private bool CheckSecret(string title)
+    {
+        return secretPhraseList.Contains(title);
+    }
+
     private void CreateTitle()
     {
         toChange.text = Generate();
         if (generateAfterInterval) Invoke("CreateTitle", interval);
+        if (CheckSecret(toChange.text))
+        {
+            secretEvent.Invoke();
+        }
     }
 
     private void BuildList()
