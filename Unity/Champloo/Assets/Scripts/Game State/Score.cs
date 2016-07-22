@@ -55,9 +55,10 @@ public class Score : MonoBehaviour
     //returns winner playerNumber
     public int FindWinner()
     {
+        int max = scores.Max();
         for (int i = 0; i < scores.Count; i++)
         {
-            if (scores[i] >= winScore) return i;
+            if (scores[i] >= max) return i;
         }
 
         return -1;

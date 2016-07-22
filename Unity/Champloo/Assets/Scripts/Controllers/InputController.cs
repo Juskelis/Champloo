@@ -3,7 +3,14 @@ using UnityEngine;
 using System.Collections;
 using GamepadInput;
 
-public class InputController : MonoBehaviour {
+public class InputController : MonoBehaviour
+{
+    private static bool HandleInput = true;
+
+    public static void SetInputs(bool on)
+    {
+        HandleInput = on;
+    }
 
     [Serializable]
     public class ButtonSetting
@@ -95,6 +102,7 @@ public class InputController : MonoBehaviour {
 
     public void UpdateInputs()
     {
+        if (!HandleInput) return;
         switch (playerNumber)
         {
             case 1:

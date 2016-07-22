@@ -9,6 +9,9 @@ public class Match : MonoBehaviour
     private UnityEvent onStart;
 
     [SerializeField]
+    private UnityEvent onEnd;
+
+    [SerializeField]
     private UnityEvent onWin;
 
     [SerializeField]
@@ -24,8 +27,15 @@ public class Match : MonoBehaviour
         onStart.Invoke();
     }
 
+    public void SetPlayerInput(bool active)
+    {
+        InputController.SetInputs(active);
+    }
+
     public void End()
     {
+        onEnd.Invoke();
+
         if (GetComponent<Score>().IsTied())
         {
             onTie.Invoke();

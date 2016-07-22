@@ -106,6 +106,7 @@
     <Compile Include="Assets\Scripts\UI\Scene.cs" />
     <Compile Include="Assets\Scripts\UI\ScoreCardInstantiator.cs" />
     <Compile Include="Assets\Scripts\UI\TitleGenerator.cs" />
+    <Compile Include="Assets\Scripts\UI\UpdatePlayerNumber.cs" />
     <Compile Include="Assets\Scripts\Utility\Interpolate.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.cs" />
     <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
