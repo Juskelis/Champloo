@@ -6,6 +6,7 @@ using GifEncoder;
 public class GifRecorder : MonoBehaviour
 {
 	public Camera renderCamera;
+    public Camera copyCamera;
 	public float lengthInSeconds = 2;
 	public bool customResolution = false;
 	public Vector2 GifResolution = Vector2.zero;
@@ -26,6 +27,8 @@ public class GifRecorder : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+        renderCamera.CopyFrom(copyCamera);
+
 		// 320/width = x/height
 		int width = (int)GifResolution.x;
 		int height = (int)GifResolution.y;
@@ -60,11 +63,19 @@ public class GifRecorder : MonoBehaviour
 		timespent = 0;
 		rendering = true;
 	}
+
+    void CopyCamera()
+    {
+        renderCamera.transform.position = copyCamera.transform.position;
+        renderCamera.orthographicSize = copyCamera.orthographicSize;
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		if(rendering)
 		{
+            CopyCamera();
+
 			renderCamera.Render();
 			
 			RenderTexture.active = renderTexture;

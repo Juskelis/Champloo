@@ -24,6 +24,9 @@ public class SmashCamera : MonoBehaviour
     private Vector3 zoomIn;
 
     [SerializeField]
+    private float panSpeed = 0.6f;
+
+    [SerializeField]
     private float zoomOutSpeed = 0.6f;
     [SerializeField]
     private float zoomInSpeed = 0.8f;
@@ -38,6 +41,9 @@ public class SmashCamera : MonoBehaviour
     private float zoomMin = 0.1f;
     [SerializeField]
     private float zoomMax = 10f;
+
+    [SerializeField]
+    private AnimationCurve zoomCurve;
 
     private Vector3 center;
     private Vector3 maxDist;
@@ -67,7 +73,7 @@ public class SmashCamera : MonoBehaviour
         center = center / (toFollow.Length > 0 ? toFollow.Length : 1);
     }
 
-    void Update()
+    void LateUpdate()
     {
         Vector2 newCenter = Vector2.zero;
 
@@ -91,7 +97,7 @@ public class SmashCamera : MonoBehaviour
                 size.x = Median(
                     zoomMin,
                     zoomMax,
-                    Mathf.Pow(zoomOutSpeed, 3)*(maxDist.x - zoomOut.x/2)/2 + size.x
+                    (Mathf.Pow(zoomOutSpeed, 3) * (maxDist.x - zoomOut.x/2))/2 + size.x
                 );
                 size.y = size.x/cam.aspect;
             }
@@ -100,7 +106,7 @@ public class SmashCamera : MonoBehaviour
                 size.y = Median(
                     zoomMin/cam.aspect,
                     zoomMax/cam.aspect,
-                    Mathf.Pow(zoomOutSpeed, 3)*(maxDist.y - zoomOut.y/2)/2 + size.y
+                    (Mathf.Pow(zoomOutSpeed, 3) * (maxDist.y - zoomOut.y/2))/2 + size.y
                 );
                 size.x = size.y*cam.aspect;
             }
@@ -112,7 +118,7 @@ public class SmashCamera : MonoBehaviour
                 size.x = Median(
                     zoomMin,
                     zoomMax,
-                    Mathf.Pow(zoomInSpeed, 3) * (maxDist.x - zoomIn.x/2)/2 + size.x
+                    (Mathf.Pow(zoomInSpeed, 3) * (maxDist.x - zoomIn.x/2))/2 + size.x
                 );
                 size.y = size.x/cam.aspect;
             }
@@ -121,7 +127,7 @@ public class SmashCamera : MonoBehaviour
                 size.y = Median(
                     zoomMin/cam.aspect,
                     zoomMax/cam.aspect,
-                    Mathf.Pow(zoomInSpeed, 3) * (maxDist.y - zoomIn.y/2)/2 + size.y
+                    (Mathf.Pow(zoomInSpeed, 3) * (maxDist.y - zoomIn.y/2))/2 + size.y
                 );
                 size.x = size.y*cam.aspect;
             }
@@ -130,7 +136,9 @@ public class SmashCamera : MonoBehaviour
         zoomOut = zoomOutBoundary*size;
         zoomIn = zoomInBoundary*size;
 
-        center = newCenter;
+        //center = newCenter;
+        center.x = cubic_lerp(center.x, newCenter.x, panSpeed);
+        center.y = cubic_lerp(center.y, newCenter.y, panSpeed);
         center.z = transform.position.z;
 
 
@@ -168,5 +176,10 @@ public class SmashCamera : MonoBehaviour
         {
             return sorted.ElementAt(half);
         }
+    }
+
+    public float cubic_lerp(float start, float end, float speed)
+    {
+        return speed*speed*speed*(end - start)/2 + start;
     }
 }

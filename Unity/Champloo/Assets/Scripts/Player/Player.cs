@@ -293,6 +293,7 @@ public class Player : MonoBehaviour
 
     void GetHit()
     {
+        FindObjectOfType<Score>().AddScore(hitWith.GetComponentInParent<Player>().PlayerNumber);
         Kill(hitWith.transform.right * deathForce);
     }
 }

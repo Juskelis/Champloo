@@ -12,6 +12,8 @@ public class MenuManager : MonoBehaviour
 
     public void ShowMenu(Menu menu)
     {
+        if (menu == null) return;
+
         if (CurrentMenu != null)
         {
             CurrentMenu.IsOpen = false;

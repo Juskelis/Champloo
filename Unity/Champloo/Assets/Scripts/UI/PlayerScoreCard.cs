@@ -30,6 +30,7 @@ public class PlayerScoreCard : MonoBehaviour
 	void Start ()
 	{
 	    scoreService = FindObjectOfType<Score>();
+	    maxScore = scoreService.WinScore;
 
 	    for (int i = 0; i < maxScore; i++)
 	    {
@@ -37,7 +38,7 @@ public class PlayerScoreCard : MonoBehaviour
 	        Image im = g.AddComponent<Image>();
 	        im.sprite = emptyScoreIndicator;
 	        im.preserveAspect = true;
-	        g.transform.SetParent(indicatorParent);
+	        g.transform.SetParent(indicatorParent, false);
             scores.Add(im);
 	    }
 	}
