@@ -61,6 +61,9 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Champloo.CSharp.Plugins.csproj">
@@ -95,6 +98,7 @@
     <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
+    <Compile Include="Assets\Scripts\UI\Carousel.cs" />
     <Compile Include="Assets\Scripts\UI\DynamicFont.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\AnimatedGifEncoder.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\CustomEvents.cs" />

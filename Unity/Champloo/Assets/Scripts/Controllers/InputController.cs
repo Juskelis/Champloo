@@ -12,6 +12,28 @@ public class InputController : MonoBehaviour
         HandleInput = on;
     }
 
+    /// <summary>
+    /// Converts a playerNumber to a GamePad Index
+    /// </summary>
+    /// <param name="playerNumber"> a ONE indexed (starting at 1) player number</param>
+    /// <returns>A conversion to the corresponding gamepad index</returns>
+    public static GamePad.Index ConvertToIndex(int playerNumber)
+    {
+        switch(playerNumber)
+        {
+            case 1:
+                return GamePad.Index.One;
+            case 2:
+                return GamePad.Index.Two;
+            case 3:
+                return GamePad.Index.Three;
+            case 4:
+                return GamePad.Index.Four;
+            default:
+                return GamePad.Index.Any;
+        }
+    }
+
     [Serializable]
     public class ButtonSetting
     {
@@ -103,24 +125,8 @@ public class InputController : MonoBehaviour
     public void UpdateInputs()
     {
         if (!HandleInput) return;
-        switch (playerNumber)
-        {
-            case 1:
-                playerIndex = GamePad.Index.One;
-                break;
-            case 2:
-                playerIndex = GamePad.Index.Two;
-                break;
-            case 3:
-                playerIndex = GamePad.Index.Three;
-                break;
-            case 4:
-                playerIndex = GamePad.Index.Four;
-                break;
-            default:
-                playerIndex = GamePad.Index.Any;
-                break;
-        }
+
+        playerIndex = ConvertToIndex(playerNumber);
 
         jump.Update(playerIndex);
         attack.Update(playerIndex);

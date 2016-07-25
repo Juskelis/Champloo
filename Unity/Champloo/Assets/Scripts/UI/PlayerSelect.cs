@@ -6,7 +6,8 @@ using UnityEngine.Events;
 
 public class PlayerSelect : MonoBehaviour {
 
-    public int PlayerIndex { get; set; }
+    [Range(1,4)]
+    public int PlayerIndex;
 
     [Serializable]
     private class Stage
@@ -40,25 +41,7 @@ public class PlayerSelect : MonoBehaviour {
     {
         if (!ourGroup.interactable) return;
 
-        GamePad.Index playerIndex;
-        switch (PlayerIndex)
-        {
-            case 0:
-                playerIndex = GamePad.Index.One;
-                break;
-            case 1:
-                playerIndex = GamePad.Index.Two;
-                break;
-            case 2:
-                playerIndex = GamePad.Index.Three;
-                break;
-            case 3:
-                playerIndex = GamePad.Index.Four;
-                break;
-            default:
-                playerIndex = GamePad.Index.Any;
-                break;
-        }
+        GamePad.Index playerIndex = InputController.ConvertToIndex(PlayerIndex);
 
         int previousStage = currentStage;
         if (GamePad.GetButtonDown(next, playerIndex))
