@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Controllers\PlatformController.cs" />
     <Compile Include="Assets\Scripts\Controllers\RaycastController.cs" />
     <Compile Include="Assets\Scripts\Game State\Match.cs" />
+    <Compile Include="Assets\Scripts\Game State\PlayerSettings.cs" />
     <Compile Include="Assets\Scripts\Game State\Score.cs" />
     <Compile Include="Assets\Scripts\Game State\Timer.cs" />
     <Compile Include="Assets\Scripts\Player\Movement States\InAir.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Assets\Scripts\UI\Menu.cs" />
     <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerScoreCard.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerSelect.cs" />
     <Compile Include="Assets\Scripts\UI\Scene.cs" />
     <Compile Include="Assets\Scripts\UI\ScoreCardInstantiator.cs" />
     <Compile Include="Assets\Scripts\UI\TitleGenerator.cs" />
