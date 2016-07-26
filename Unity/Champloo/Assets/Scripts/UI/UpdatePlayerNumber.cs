@@ -11,7 +11,6 @@ public class UpdatePlayerNumber : MonoBehaviour
         Text ourText = GetComponent<Text>();
         
         string replacement = FindObjectOfType<PlayerSettings>().GetPlayerName(FindObjectOfType<Score>().FindWinner());
-        print(replacement);
 
         Regex rgx = new Regex("\\d+");
 

@@ -114,14 +114,11 @@ public class Player : MonoBehaviour
 
     public void ApplyForce(Vector3 force)
     {
-        velocity = force;
-        /*
-        if (disableCollisions)
-        {
-            controller.collisions.above = false;
-            controller.collisions.below = false;
-        }
-        */
+        //velocity = force;
+        float threshold = 0.25f;
+        if (Mathf.Abs(force.x) > threshold) velocity.x = force.x;
+        if (Mathf.Abs(force.y) > threshold) velocity.y = force.y;
+        if (Mathf.Abs(force.z) > threshold) velocity.z = force.z;
     }
 
     void Kill(Vector3 direction = default(Vector3))
@@ -210,7 +207,7 @@ public class Player : MonoBehaviour
         //handle blocking/parrying
         if (hitWith != null)
         {
-            if (weapon.InHand && inputs.block.Down)
+            if (!hitWith.isActiveAndEnabled || (weapon.InHand && inputs.block.Down))
             {
                 hitWith = null;
             }
