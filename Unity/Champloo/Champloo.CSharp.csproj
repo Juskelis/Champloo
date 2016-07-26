@@ -61,9 +61,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Champloo.CSharp.Plugins.csproj">
@@ -98,7 +95,6 @@
     <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
-    <Compile Include="Assets\Scripts\UI\Carousel.cs" />
     <Compile Include="Assets\Scripts\UI\DynamicFont.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\AnimatedGifEncoder.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\CustomEvents.cs" />
@@ -107,8 +103,10 @@
     <Compile Include="Assets\Scripts\UI\GIF Encoder\NeuQuant.cs" />
     <Compile Include="Assets\Scripts\UI\Menu.cs" />
     <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Player Selection\Carousel.cs" />
+    <Compile Include="Assets\Scripts\UI\Player Selection\PlayerSelect.cs" />
+    <Compile Include="Assets\Scripts\UI\Player Selection\PlayerSelectConfirmation.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerScoreCard.cs" />
-    <Compile Include="Assets\Scripts\UI\PlayerSelect.cs" />
     <Compile Include="Assets\Scripts\UI\Scene.cs" />
     <Compile Include="Assets\Scripts\UI\ScoreCardInstantiator.cs" />
     <Compile Include="Assets\Scripts\UI\TitleGenerator.cs" />

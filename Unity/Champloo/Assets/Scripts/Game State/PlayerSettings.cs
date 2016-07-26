@@ -14,6 +14,7 @@ public class PlayerSettings : MonoBehaviour {
     {
         try
         {
+            print("setting player " + playerNumber + "'s name to '" + name + "'");
             PlayerPrefs.SetString("Name_" + playerNumber, name);
 
             return true;
