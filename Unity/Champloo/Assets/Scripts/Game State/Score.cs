@@ -52,13 +52,16 @@ public class Score : MonoBehaviour
         return shareMax > 1;
     }
 
-    //returns winner playerNumber
+    /// <summary>
+    /// Find the index of the player in the lead
+    /// </summary>
+    /// <returns>The controller number (1 indexed) of the winning player</returns>
     public int FindWinner()
     {
         int max = scores.Max();
         for (int i = 0; i < scores.Count; i++)
         {
-            if (scores[i] >= max) return i;
+            if (scores[i] >= max) return i + 1;
         }
 
         return -1;

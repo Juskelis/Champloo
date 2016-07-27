@@ -31,6 +31,7 @@ public class PlayerScoreCard : MonoBehaviour
 	{
 	    scoreService = FindObjectOfType<Score>();
 	    maxScore = scoreService.WinScore;
+        playerNameText = GetComponentInChildren<Text>();
 
 	    for (int i = 0; i < maxScore; i++)
 	    {
@@ -40,6 +41,7 @@ public class PlayerScoreCard : MonoBehaviour
 	        im.preserveAspect = true;
 	        g.transform.SetParent(indicatorParent, false);
             scores.Add(im);
+            playerNameText.text = FindObjectOfType<PlayerSettings>().GetPlayerName(playerNumber + 1);
 	    }
 	}
 	

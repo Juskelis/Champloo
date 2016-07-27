@@ -14,6 +14,7 @@ public class PlayerSelectConfirmation : MonoBehaviour
     private void Update()
     {
         possibleConfirmed = 0;
+        confirmedPlayers = 0;
         foreach (var child in GetComponentsInChildren<PlayerSelect>())
         {
             if (child.Working) possibleConfirmed++;

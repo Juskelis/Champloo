@@ -9,15 +9,32 @@ public class UpdatePlayerNumber : MonoBehaviour
     public void UpdateText()
     {
         Text ourText = GetComponent<Text>();
-        
+        /*
         string replacement = FindObjectOfType<PlayerSettings>().GetPlayerName(FindObjectOfType<Score>().FindWinner());
 
         Regex rgx = new Regex("\\d+");
 
         string text = rgx.Replace(ourText.text, replacement);
+        */
+
+        Regex find = new Regex("[\\d+]");
+
+        string match = find.Match(ourText.text).Value;
+        int conversion = int.Parse(match.Substring(1, match.Length - 2));
+
+        string text = "";
+
+        if(conversion <= 0)
+        {
+            text = FindObjectOfType<PlayerSettings>().GetPlayerName(FindObjectOfType<Score>().FindWinner());
+        }
+        else
+        {
+            text = FindObjectOfType<PlayerSettings>().GetPlayerName(conversion);
+        }
 
         ourText.text = text;
-
+        
         Destroy(this);
     }
 }
