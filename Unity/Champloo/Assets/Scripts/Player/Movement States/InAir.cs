@@ -5,6 +5,7 @@ public class InAir : MovementState
 {
     [SerializeField]
     private float maxFallSpeed = 20f;
+    public float MaxFallSpeed { get { return maxFallSpeed; } }
 
     [SerializeField]
     private float maxSpeed = 6;

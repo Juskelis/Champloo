@@ -34,7 +34,6 @@ public class PlayerSettings : MonoBehaviour {
     {
         try
         {
-            print("gettings player " + playerNumber + "'s name");
             return PlayerPrefs.GetString("Name_" + playerNumber);
         }
         catch

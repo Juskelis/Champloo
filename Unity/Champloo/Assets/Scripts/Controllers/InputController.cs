@@ -133,6 +133,9 @@ public class InputController : MonoBehaviour
         weaponSpecial.Update(playerIndex);
         movementSpecial.Update(playerIndex);
 
+        block.Update(playerIndex);
+        parry.Update(playerIndex);
+
         taunt.Update(playerIndex);
         pause.Update(playerIndex);
 

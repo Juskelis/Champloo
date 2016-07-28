@@ -159,6 +159,10 @@ public class Player : MonoBehaviour
             weapon.Attack();
             next = GetComponent<InAttack>();
         }
+        else if (inputs.block.Down && weapon.InHand && !(movementState is InBlock || movementState is InAttack))
+        {
+            next = GetComponent<InBlock>();
+        }
         else if(inputs.movementSpecial.Down && !(movementState is OnDash) && currentDashes > 0)
         {
             currentDashes--;
@@ -183,6 +187,10 @@ public class Player : MonoBehaviour
             if(movementState is OnGround)
             {
                 currentDashes = GetComponent<OnDash>().DashLimit;
+            }
+            if (movementState is OnWall)
+            {
+                currentDashes = Mathf.Max(currentDashes, 1);
             }
         }
     }

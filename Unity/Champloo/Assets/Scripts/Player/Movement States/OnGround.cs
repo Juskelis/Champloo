@@ -12,6 +12,8 @@ public class OnGround : MovementState
     [SerializeField] private float maxSpeedToStopTime = 0.2f;
     [SerializeField] private float fullTurnTime = 0.2f;
 
+    public float MaxSpeed { get { return maxSpeed; } }
+
     private float maxJumpVelocity;
     private float minJumpVelocity;
 
