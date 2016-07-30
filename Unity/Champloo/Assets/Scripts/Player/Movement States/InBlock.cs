@@ -10,6 +10,15 @@ public class InBlock : MovementState
 
     private float maxFallSpeed;
 
+    private Shield ourShield;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        ourShield = GetComponentInChildren<Shield>();
+    }
+
     public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
     {
         velocity.x = Mathf.MoveTowards(velocity.x, 0f, deceleration * Time.deltaTime);
@@ -24,7 +33,7 @@ public class InBlock : MovementState
 
         controller.Move(velocity * Time.deltaTime + externalForces * Time.deltaTime);
 
-        if(!input.block.Pressed)
+        if(!input.block.Pressed || !ourShield.Up)
         {
             if (controller.collisions.below)
             {
@@ -43,5 +52,11 @@ public class InBlock : MovementState
     {
         deceleration = GetComponent<OnGround>().MaxSpeed/maxSpeedToStopTime;
         maxFallSpeed = GetComponent<InAir>().MaxFallSpeed;
+        ourShield.ActivateShield();
+    }
+
+    public override void OnExit()
+    {
+        ourShield.DeactivateShield();
     }
 }

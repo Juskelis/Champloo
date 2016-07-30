@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     private Animator anim;
 
     private Weapon weapon;
+    private Shield shield;
 
     [SerializeField]
     private float bounceForce = 10f;
@@ -215,7 +216,7 @@ public class Player : MonoBehaviour
         //handle blocking/parrying
         if (hitWith != null)
         {
-            if (!hitWith.isActiveAndEnabled || (weapon.InHand && inputs.block.Down))
+            if (!hitWith.isActiveAndEnabled || (weapon.InHand && shield.TakeHit()))
             {
                 hitWith = null;
             }

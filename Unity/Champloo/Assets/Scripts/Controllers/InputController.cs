@@ -39,11 +39,15 @@ public class InputController : MonoBehaviour
     {
         private GamePad.Index playerIndex;
         [SerializeField] private GamePad.Button buttonIndex;
+        [SerializeField] private bool useTrigger = false;
+        [SerializeField] private GamePad.Trigger triggerIndex;
         //private string input;
 
         private bool isDown;
         private bool isUp;
         private bool isPressed;
+
+        private bool triggerPreviouslyPressed = false;
 
         public bool Down { get { return isDown || onDownTime > 0; } }
         public bool Up { get { return isUp || onUpTime > 0; } }
@@ -78,6 +82,21 @@ public class InputController : MonoBehaviour
             isDown = GamePad.GetButtonDown(buttonIndex, playerIndex);//Input.GetButtonDown(input);
             isUp = GamePad.GetButtonUp(buttonIndex, playerIndex);//Input.GetButtonUp(input);
             isPressed = GamePad.GetButton(buttonIndex, playerIndex);//Input.GetButton(input);
+            
+            if (useTrigger)
+            {
+                bool triggerPressed = GamePad.GetTrigger(triggerIndex, playerIndex, true) != 0;
+                if (triggerPressed && !triggerPreviouslyPressed)
+                {
+                    isDown = true;
+                }
+                if (!triggerPressed && triggerPreviouslyPressed)
+                {
+                    isUp = true;
+                }
+                triggerPreviouslyPressed = triggerPressed;
+                isPressed = isPressed || triggerPressed;
+            }
 
             if (isDown) onDownTime = windowDownTime;
             if (isUp) onUpTime = windowUpTime;
