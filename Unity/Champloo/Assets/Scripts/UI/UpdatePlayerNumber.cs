@@ -17,9 +17,10 @@ public class UpdatePlayerNumber : MonoBehaviour
         string text = rgx.Replace(ourText.text, replacement);
         */
 
-        Regex find = new Regex("[\\d+]");
+        Regex find = new Regex("\\[\\d+\\]");
 
         string match = find.Match(ourText.text).Value;
+        print("Match is: '" + match + "'");
         int conversion = int.Parse(match.Substring(1, match.Length - 2));
 
         string text = "";
@@ -33,7 +34,7 @@ public class UpdatePlayerNumber : MonoBehaviour
             text = FindObjectOfType<PlayerSettings>().GetPlayerName(conversion);
         }
 
-        ourText.text = text;
+        ourText.text = find.Replace(ourText.text, text);
         
         Destroy(this);
     }

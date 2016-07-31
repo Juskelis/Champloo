@@ -24,6 +24,8 @@ public class Shield : MonoBehaviour {
     private float percentPerHit;
 
     private bool canActivate = true;
+    public bool CanActivate {  get { return canActivate; } }
+
     private bool up = false;
     public bool Up { get { return up; } }
 
@@ -35,9 +37,9 @@ public class Shield : MonoBehaviour {
     public void ActivateShield()
     {
         if (!canActivate) return;
-        print("activating");
-        percentPerHit = 1/MaxHits;
-        up = percentPerHit > 0;
+
+        percentPerHit = 1/((float)MaxHits);
+        up = percentLeft > 0;
         decay = 1/timeToLoseShield;
         grow = 1/timeToGainShield;
 
@@ -54,27 +56,27 @@ public class Shield : MonoBehaviour {
         if (up)
         {
             percentLeft -= decay*Time.deltaTime;
+            if (percentLeft <= 0) up = false;
         }
-
-        up = up && percentLeft > 0;
-
-        if (!up)
+        else
         {
             percentLeft += grow*Time.deltaTime;
         }
-
-        canActivate = !canActivate && percentLeft >= 1f;
+        
+        if(!canActivate && percentLeft >= 1f)
+        {
+            canActivate = true;
+        }
 
         percentLeft = Mathf.Clamp01(percentLeft);
 
         visuals.transform.localScale = Vector3.one*spriteMaxScale*percentLeft;
+        visuals.enabled = up;
     }
 
     public bool TakeHit()
     {
         if (!Up) return false;
-
-        print("shield hit");
 
         percentLeft -= percentPerHit;
         return percentLeft >= 0;

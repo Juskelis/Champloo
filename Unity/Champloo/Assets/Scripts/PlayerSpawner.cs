@@ -79,6 +79,7 @@ public class PlayerSpawner : MonoBehaviour {
         Player p = players[playerNumber];
         p.transform.position = FindValidSpawn(p);
         p.gameObject.SetActive(true);
+        p.Start();
     }
 
     Vector3 FindValidSpawn(Player p, int maxAttempts = 30)

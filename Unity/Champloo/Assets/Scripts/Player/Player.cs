@@ -54,23 +54,29 @@ public class Player : MonoBehaviour
 
     private Weapon hitWith;
 
-    void Start ()
+    void Awake()
     {
         movementState = GetComponent<OnGround>();
         box = GetComponent<BoxCollider2D>();
-	    controller = GetComponent<Controller2D>();
+        controller = GetComponent<Controller2D>();
         anim = GetComponent<Animator>();
+
+        inputs = GetComponent<InputController>();
+
+        weapon = GetComponentInChildren<Weapon>();
+        shield = GetComponentInChildren<Shield>();
+    }
+
+    public void Start ()
+    {
+        weapon.PickUp();
 
         //change colors of child sprites
         foreach(SpriteRenderer s in coloredSprites)
         {
             s.color = playerColor;
         }
-
-        inputs = GetComponent<InputController>();
         inputs.playerNumber = playerNumber;
-
-        weapon = GetComponentInChildren<Weapon>();
 
         currentDashes = GetComponent<OnDash>().DashLimit;
 
@@ -160,7 +166,7 @@ public class Player : MonoBehaviour
             weapon.Attack();
             next = GetComponent<InAttack>();
         }
-        else if (inputs.block.Down && weapon.InHand && !(movementState is InBlock || movementState is InAttack))
+        else if (inputs.block.Down && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
         {
             next = GetComponent<InBlock>();
         }
@@ -299,7 +305,19 @@ public class Player : MonoBehaviour
 
     void GetHit()
     {
-        FindObjectOfType<Score>().AddScore(hitWith.GetComponentInParent<Player>().PlayerNumber);
+        if (hitWith == null) return;
+
+        Score s = FindObjectOfType<Score>();
+        Player other = hitWith.GetComponentInParent<Player>();
+        if (other == null) print("oh no the other player is null");
+
+        int otherNum = other.PlayerNumber;
+        print(otherNum);
+
+        s.AddScore(otherNum);
+
+
+        //FindObjectOfType<Score>().AddScore(hitWith.GetComponentInParent<Player>().PlayerNumber);
         Kill(hitWith.transform.right * deathForce);
     }
 }
