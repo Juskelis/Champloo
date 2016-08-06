@@ -24,6 +24,7 @@ public class PlayerSelectConfirmation : MonoBehaviour
         if (possibleConfirmed > 1 && confirmedPlayers == possibleConfirmed)
         {
             onReady.Invoke();
+            FindObjectOfType<PlayerSettings>().SetNumPlayers(confirmedPlayers);
         }
     }
 }

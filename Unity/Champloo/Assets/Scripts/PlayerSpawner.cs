@@ -24,6 +24,15 @@ public class PlayerSpawner : MonoBehaviour {
 
     void Start()
     {
+        players = new List<Player>();
+        PlayerSettings settings = FindObjectOfType<PlayerSettings>();
+        int numPlayers = settings.GetNumPlayers();
+        for (int i = 0; i < numPlayers; i++)
+        {
+            
+        }
+
+        /*
         Player[] foundPlayers = FindObjectsOfType<Player>();
         playerSpawnTimes = new List<float>();
         players = new List<Player>();
@@ -39,6 +48,7 @@ public class PlayerSpawner : MonoBehaviour {
             else if (y == null) return 1;
             else return x.PlayerNumber.CompareTo(y.PlayerNumber);
         });
+        */
     }
 
     void OnDrawGizmos()

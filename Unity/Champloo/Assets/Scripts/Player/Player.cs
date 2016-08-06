@@ -28,6 +28,11 @@ public class Player : MonoBehaviour
     private BoxCollider2D box;
     private Controller2D controller;
     private Animator anim;
+    
+    [SerializeField]
+    private Transform weaponPrefab;
+    [SerializeField]
+    private Transform shieldPrefab;
 
     private Weapon weapon;
     private Shield shield;
@@ -63,8 +68,14 @@ public class Player : MonoBehaviour
 
         inputs = GetComponent<InputController>();
 
-        weapon = GetComponentInChildren<Weapon>();
-        shield = GetComponentInChildren<Shield>();
+        Transform weaponClone = Instantiate(weaponPrefab);
+        weaponClone.SetParent(transform, false);
+
+        Transform shieldClone = Instantiate(shieldPrefab);
+        shieldClone.SetParent(transform, false);
+
+        weapon = weaponClone.GetComponentInChildren<Weapon>();
+        shield = shieldClone.GetComponentInChildren<Shield>();
     }
 
     public void Start ()
