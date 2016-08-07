@@ -36,6 +36,18 @@ public class PlayerSelect : MonoBehaviour {
     [SerializeField]
     private Stage[] stages;
 
+    [SerializeField]
+    private Text playerName;
+
+    [SerializeField]
+    private Text playerPrefab;
+
+    [SerializeField]
+    private Text playerWeapon;
+
+    [SerializeField]
+    private Text playerShield;
+
     private int currentStage = 0;
 
     private CanvasGroup ourGroup;
@@ -73,9 +85,18 @@ public class PlayerSelect : MonoBehaviour {
         }
     }
 
-    public void SavePlayerSelection(Text toCopy)
+    public void SavePlayerSelection()
     {
         PlayerSettings settings = FindObjectOfType<PlayerSettings>();
-        settings.SetPlayerName(PlayerIndex, toCopy.text);
+        settings.SetPlayerName(PlayerIndex, playerName.text);
+
+        settings.SetWeapon(PlayerIndex, "Prefabs/Weapon/Sword");
+        settings.SetShield(PlayerIndex, "Prefabs/Shield/Shield");
+        /*
+        settings.SetWeapon(PlayerIndex, playerWeapon.text);
+        settings.SetShield(PlayerIndex, playerShield.text);
+        */
+
+        settings.SetPlayerPrefab(PlayerIndex, "Prefabs/Player/Player");
     }
 }

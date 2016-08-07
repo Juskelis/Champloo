@@ -8,17 +8,21 @@ public class ScoreCardInstantiator : MonoBehaviour
 
     private Score score;
 
-	// Use this for initialization
-	void Start ()
-	{
-	    score = FindObjectOfType<Score>();
+    private bool lateStartDone = false;
 
-	    for (int i = 0; i < score.Scores.Count; i++)
-	    {
-	        PlayerScoreCard currentPlayerScoreCard = Instantiate(scoreCardPrefab);
-	        currentPlayerScoreCard.playerNumber = i;
-            currentPlayerScoreCard.transform.SetParent(transform, false);
-	    }
-        Destroy(this);
-	}
+    void Update()
+    {
+        if(!lateStartDone)
+        {
+            score = FindObjectOfType<Score>();
+
+            for (int i = 0; i < score.Scores.Count; i++)
+            {
+                PlayerScoreCard currentPlayerScoreCard = Instantiate(scoreCardPrefab);
+                currentPlayerScoreCard.playerNumber = i;
+                currentPlayerScoreCard.transform.SetParent(transform, false);
+            }
+            Destroy(this);
+        }
+    }
 }

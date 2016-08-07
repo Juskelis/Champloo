@@ -41,6 +41,31 @@ public class PlayerSettings : MonoBehaviour {
         }
     }
 
+    public bool SetPlayerPrefab(int playerNumber, string prefabName)
+    {
+        try
+        {
+            PlayerPrefs.SetString("Player_Prefab_" + playerNumber, prefabName);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public string GetPlayerPrefab(int playerNumber)
+    {
+        try
+        {
+            return PlayerPrefs.GetString("Player_Prefab_" + playerNumber);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     /// <summary>
     /// Set the total number of players
     /// </summary>
@@ -96,6 +121,31 @@ public class PlayerSettings : MonoBehaviour {
         try
         {
             return PlayerPrefs.GetString("Weapon_" + playerNumber);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    public bool SetShield(int playerNumber, string shieldName)
+    {
+        try
+        {
+            PlayerPrefs.SetString("Shield_" + playerNumber, shieldName);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public string GetShield(int playerNumber)
+    {
+        try
+        {
+            return PlayerPrefs.GetString("Shield_" + playerNumber);
         }
         catch
         {

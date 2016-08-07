@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public int PlayerNumber
     {
         get { return playerNumber; }
+        set { playerNumber = value; }
     }
 
     [SerializeField] private Transform spawnOnDeath;

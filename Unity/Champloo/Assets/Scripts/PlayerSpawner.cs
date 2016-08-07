@@ -25,11 +25,31 @@ public class PlayerSpawner : MonoBehaviour {
     void Start()
     {
         players = new List<Player>();
+        playerSpawnTimes = new List<float>();
+
         PlayerSettings settings = FindObjectOfType<PlayerSettings>();
         int numPlayers = settings.GetNumPlayers();
+        print("Num Players: " + numPlayers);
         for (int i = 0; i < numPlayers; i++)
         {
-            
+            string prefabName = "Prefabs/Player/Player";//settings.GetPlayerPrefab(i + 1);
+            string weaponName = "Prefabs/Weapon/Sword";//settings.GetWeapon(i + 1);
+            string shieldName = "Prefabs/Shield/Shield";//settings.GetShield(i + 1);
+
+            Transform player = ((GameObject)Instantiate(Resources.Load(prefabName))).transform;
+            Transform weapon = ((GameObject)Instantiate(Resources.Load(weaponName))).transform;
+            Transform shield = ((GameObject)Instantiate(Resources.Load(shieldName))).transform;
+
+            Player p = player.GetComponent<Player>();
+            p.PlayerNumber = i + 1;
+
+            weapon.SetParent(player);
+            shield.SetParent(player);
+
+            player.position = FindValidSpawn(p);
+
+            players.Add(player.GetComponent<Player>());
+            playerSpawnTimes.Add(spawnTime);
         }
 
         /*

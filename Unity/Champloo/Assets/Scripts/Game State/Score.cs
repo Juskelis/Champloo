@@ -17,12 +17,18 @@ public class Score : MonoBehaviour
     private List<int> scores;
     public List<int> Scores { get { return scores; } }
 
-    private void Awake()
+    bool lateStartDone = false;
+
+    private void Update()
     {
-        scores = new List<int>(FindObjectsOfType<Player>().Length);
-        for(int i = 0; i < scores.Capacity; i++)
+        if(!lateStartDone)
         {
-            scores.Add(0);
+            scores = new List<int>(FindObjectsOfType<Player>().Length);
+            for (int i = 0; i < scores.Capacity; i++)
+            {
+                scores.Add(0);
+            }
+            lateStartDone = true;
         }
     }
 

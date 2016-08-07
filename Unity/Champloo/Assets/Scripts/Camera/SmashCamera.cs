@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
+using System.Collections.Generic;
 using UnityEditor;
 
 public class SmashCamera : MonoBehaviour
@@ -8,7 +9,6 @@ public class SmashCamera : MonoBehaviour
     private Camera cam;
     private Renderer ren;
 
-    [SerializeField]
     private Transform[] toFollow;
 
     [SerializeField]
@@ -48,11 +48,14 @@ public class SmashCamera : MonoBehaviour
     private Vector3 center;
     private Vector3 maxDist;
 
-    void Start()
+    void Awake()
     {
         cam = GetComponent<Camera>();
         ren = GetComponent<Renderer>();
+    }
 
+    void Start()
+    {
         screenSpaceTopRight = new Vector3(cam.pixelWidth, cam.pixelHeight, 0);
 
         bottomLeft.position = cam.ScreenToWorldPoint(Vector3.zero);
@@ -64,17 +67,18 @@ public class SmashCamera : MonoBehaviour
         zoomOut = zoomOutBoundary * size;
 
         center = Vector3.zero;
-
-        for (int i = 0; i < toFollow.Length; i++)
-        {
-            center.x += toFollow[i].position.x;
-            center.y += toFollow[i].position.y;
-        }
-        center = center / (toFollow.Length > 0 ? toFollow.Length : 1);
     }
 
     void LateUpdate()
     {
+        CameraTarget[] targets = FindObjectsOfType<CameraTarget>();
+        List<Transform> targetTransforms = new List<Transform>();
+        foreach(CameraTarget target in targets)
+        {
+            targetTransforms.Add(target.transform);
+        }
+        toFollow = targetTransforms.ToArray();
+
         Vector2 newCenter = Vector2.zero;
 
         maxDist = Vector2.zero;
