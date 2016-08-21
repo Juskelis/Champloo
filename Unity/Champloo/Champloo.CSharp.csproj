@@ -108,7 +108,8 @@
     <Compile Include="Assets\Scripts\UI\GIF Encoder\NeuQuant.cs" />
     <Compile Include="Assets\Scripts\UI\Menu.cs" />
     <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
-    <Compile Include="Assets\Scripts\UI\Player Selection\Carousel.cs" />
+    <Compile Include="Assets\Scripts\UI\Player Selection\Carousels\Carousel.cs" />
+    <Compile Include="Assets\Scripts\UI\Player Selection\Carousels\NameCarousel.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\PlayerSelect.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\PlayerSelectConfirmation.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerScoreCard.cs" />

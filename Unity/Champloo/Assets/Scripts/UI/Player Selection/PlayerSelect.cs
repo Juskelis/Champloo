@@ -18,7 +18,9 @@ public class PlayerSelect : MonoBehaviour {
     private class Stage
     {
         public string name;
-        
+
+        public GameObject activeObject;
+
         public UnityEvent onEnter;
         
         public UnityEvent onExit;
@@ -29,9 +31,6 @@ public class PlayerSelect : MonoBehaviour {
 
     [SerializeField]
     private GamePad.Button previousButton;
-
-    [SerializeField]
-    private GamePad.Button readyUpButton;
 
     [SerializeField]
     private Stage[] stages;
@@ -54,7 +53,12 @@ public class PlayerSelect : MonoBehaviour {
 
     private void Start()
     {
+        foreach(Stage s in stages)
+        {
+            s.activeObject.SetActive(false);
+        }
         ourGroup = GetComponentInParent<CanvasGroup>();
+        stages[currentStage].activeObject.SetActive(true);
         stages[currentStage].onEnter.Invoke();
     }
 
@@ -64,25 +68,37 @@ public class PlayerSelect : MonoBehaviour {
 
         GamePad.Index playerIndex = InputController.ConvertToIndex(PlayerIndex);
 
+        int next = 0;
+        if (GamePad.GetButtonDown(nextButton, playerIndex))
+            next = 1;
+        else if (GamePad.GetButtonDown(nextButton, playerIndex))
+            next = -1;
+
+        if(next != 0)
+        {
+            stages[currentStage].activeObject.SetActive(false);
+            stages[currentStage].onExit.Invoke();
+            currentStage = Mathf.Clamp(currentStage + next, 0, stages.Length - 1);
+            stages[currentStage].activeObject.SetActive(true);
+            stages[currentStage].onEnter.Invoke();
+        }
+        /*
         if (GamePad.GetButtonDown(nextButton, playerIndex))
         {
+            stages[currentStage].activeObject.SetActive(false);
             currentStage = Mathf.Min(currentStage + 1, stages.Length - 2);
+            stages[currentStage].activeObject.SetActive(true);
             stages[currentStage].onEnter.Invoke();
         }
 
         if (GamePad.GetButtonDown(previousButton, playerIndex))
         {
-            int previousStage = currentStage;
+            stages[currentStage].activeObject.SetActive(false);
+            stages[currentStage].onExit.Invoke();
             currentStage = Mathf.Max(currentStage - 1, 0);
-            stages[previousStage].onExit.Invoke();
+            stages[currentStage].activeObject.SetActive(true);
         }
-
-        if (GamePad.GetButtonDown(readyUpButton, playerIndex))
-        {
-            int previousStage = currentStage;
-            currentStage = stages.Length - 1;
-            stages[currentStage].onEnter.Invoke();
-        }
+        */
     }
 
     public void SavePlayerSelection()

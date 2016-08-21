@@ -3,20 +3,21 @@ using UnityEngine.UI;
 using System.Collections;
 using GamepadInput;
 
-public class Carousel : MonoBehaviour {
+public class NameCarousel : MonoBehaviour
+{
     [Range(1,4)]
     public int playerNumber;
 
     [SerializeField]
-    private GamePad.Axis navigate;
+    protected GamePad.Axis navigate;
     [SerializeField]
-    private float maxAxisTime = 0.1f;
+    protected float maxAxisTime = 0.1f;
 
     [SerializeField]
-    private GamePad.Button next;
+    protected GamePad.Button next;
 
     [SerializeField]
-    private GamePad.Button previous;
+    protected GamePad.Button previous;
 
     [SerializeField]
     private string[] valuesOnCarousel;
