@@ -53,7 +53,17 @@ public class PlayerSelect : MonoBehaviour {
 
     private void Start()
     {
-        foreach(Stage s in stages)
+        //set the playernumber for all of the children
+        foreach (Carousel c in GetComponentsInChildren<Carousel>())
+        {
+            c.playerNumber = PlayerIndex;
+        }
+        foreach (NameCarousel c in GetComponentsInChildren<NameCarousel>())
+        {
+            c.playerNumber = PlayerIndex;
+        }
+
+        foreach (Stage s in stages)
         {
             s.activeObject.SetActive(false);
         }
@@ -71,7 +81,7 @@ public class PlayerSelect : MonoBehaviour {
         int next = 0;
         if (GamePad.GetButtonDown(nextButton, playerIndex))
             next = 1;
-        else if (GamePad.GetButtonDown(nextButton, playerIndex))
+        else if (GamePad.GetButtonDown(previousButton, playerIndex))
             next = -1;
 
         if(next != 0)
@@ -104,15 +114,22 @@ public class PlayerSelect : MonoBehaviour {
     public void SavePlayerSelection()
     {
         PlayerSettings settings = FindObjectOfType<PlayerSettings>();
+
         settings.SetPlayerName(PlayerIndex, playerName.text);
+        
+        if(playerWeapon != null)
+            settings.SetWeapon(PlayerIndex, "Prefabs/Weapon/" + playerWeapon.text);
+        else
+            settings.SetWeapon(PlayerIndex, "Prefabs/Weapon/Sword");
 
-        settings.SetWeapon(PlayerIndex, "Prefabs/Weapon/Sword");
-        settings.SetShield(PlayerIndex, "Prefabs/Shield/Shield");
-        /*
-        settings.SetWeapon(PlayerIndex, playerWeapon.text);
-        settings.SetShield(PlayerIndex, playerShield.text);
-        */
+        if (playerShield != null)
+            settings.SetShield(PlayerIndex, "Prefabs/Shield/" + playerShield.text);
+        else
+            settings.SetShield(PlayerIndex, "Prefabs/Shield/Shield");
 
-        settings.SetPlayerPrefab(PlayerIndex, "Prefabs/Player/Player");
+        if(playerPrefab != null)
+            settings.SetPlayerPrefab(PlayerIndex, "Prefabs/Player/" + playerPrefab.text);
+        else
+            settings.SetPlayerPrefab(PlayerIndex, "Prefabs/Player/Player");
     }
 }

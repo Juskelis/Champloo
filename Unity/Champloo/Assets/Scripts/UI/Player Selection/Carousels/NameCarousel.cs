@@ -5,7 +5,7 @@ using GamepadInput;
 
 public class NameCarousel : MonoBehaviour
 {
-    [Range(1,4)]
+    [HideInInspector]
     public int playerNumber;
 
     [SerializeField]

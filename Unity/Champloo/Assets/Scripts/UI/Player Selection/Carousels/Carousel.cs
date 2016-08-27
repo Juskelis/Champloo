@@ -5,12 +5,12 @@ using GamepadInput;
 
 public class Carousel : MonoBehaviour {
 
-    [Range(1, 4)]
+    [HideInInspector]
     public int playerNumber;
 
     public Object CurrentSelection
     {
-        get { return valuesOnCarousel[currentIndex]; }
+        get { return currentIndex < valuesOnCarousel.Length ? valuesOnCarousel[currentIndex] : null; }
     }
 
     [SerializeField]
@@ -27,9 +27,17 @@ public class Carousel : MonoBehaviour {
     [SerializeField]
     protected Object[] valuesOnCarousel;
 
+    [SerializeField]
+    protected Text nameDisplay;
+
     private int currentIndex = 0;
 
     private float timer = 0;
+
+    public void Start()
+    {
+        UpdateInformation();
+    }
 
     public void Update()
     {
@@ -55,5 +63,15 @@ public class Carousel : MonoBehaviour {
         }
 
         timer -= Time.deltaTime;
+
+        UpdateInformation();
+    }
+
+    void UpdateInformation()
+    {
+        if (nameDisplay != null && CurrentSelection != null)
+        {
+            nameDisplay.text = CurrentSelection.name;
+        }
     }
 }
