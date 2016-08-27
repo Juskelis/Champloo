@@ -32,10 +32,10 @@ public class PlayerSpawner : MonoBehaviour {
         print("Num Players: " + numPlayers);
         for (int i = 0; i < numPlayers; i++)
         {
-            string prefabName = "Prefabs/Player/Player";//settings.GetPlayerPrefab(i + 1);
-            string weaponName = "Prefabs/Weapon/Sword";//settings.GetWeapon(i + 1);
-            string shieldName = "Prefabs/Shield/Shield";//settings.GetShield(i + 1);
-
+            string prefabName = settings.GetPlayerPrefab(i + 1);
+            string weaponName = settings.GetWeapon(i + 1);
+            string shieldName = settings.GetShield(i + 1);
+            
             Transform player = ((GameObject)Instantiate(Resources.Load(prefabName))).transform;
             Transform weapon = ((GameObject)Instantiate(Resources.Load(weaponName))).transform;
             Transform shield = ((GameObject)Instantiate(Resources.Load(shieldName))).transform;
@@ -51,24 +51,6 @@ public class PlayerSpawner : MonoBehaviour {
             players.Add(player.GetComponent<Player>());
             playerSpawnTimes.Add(spawnTime);
         }
-
-        /*
-        Player[] foundPlayers = FindObjectsOfType<Player>();
-        playerSpawnTimes = new List<float>();
-        players = new List<Player>();
-        foreach(Player p in foundPlayers)
-        {
-            players.Add(p);
-            playerSpawnTimes.Add(spawnTime);
-        }
-        players.Sort(delegate(Player x, Player y)
-        {
-            if (x == null && y == null) return 0;
-            else if (x == null) return -1;
-            else if (y == null) return 1;
-            else return x.PlayerNumber.CompareTo(y.PlayerNumber);
-        });
-        */
     }
 
     void OnDrawGizmos()

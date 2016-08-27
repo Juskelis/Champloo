@@ -51,6 +51,7 @@ public class SmashCamera : MonoBehaviour
     void Awake()
     {
         cam = GetComponent<Camera>();
+        if (cam == null) cam = GetComponentInChildren<Camera>();
         ren = GetComponent<Renderer>();
     }
 
