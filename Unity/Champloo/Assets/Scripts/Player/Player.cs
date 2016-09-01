@@ -140,8 +140,15 @@ public class Player : MonoBehaviour
         if (Mathf.Abs(force.z) > threshold) velocity.z = force.z;
     }
 
+    void ShakeCamera()
+    {
+        EZCameraShake.CameraShaker.Instance.ShakeOnce(10f, 10f, 0f, 0.5f);
+    }
+
     void Kill(Vector3 direction = default(Vector3))
     {
+        ShakeCamera();
+
         velocity = Vector3.zero;
         externalForce = Vector3.zero;
         hitWith = null;
@@ -285,6 +292,7 @@ public class Player : MonoBehaviour
         if (otherWeapon != null && hitWith == null)
         {
             hitWith = otherWeapon;
+            ShakeCamera();
             Invoke("GetHit", hitReactionTime);
         }
     }

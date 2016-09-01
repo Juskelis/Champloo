@@ -41,6 +41,7 @@ public class InputController : MonoBehaviour
         [SerializeField] private GamePad.Button buttonIndex;
         [SerializeField] private bool useTrigger = false;
         [SerializeField] private GamePad.Trigger triggerIndex;
+        [SerializeField] private float triggerThreshold = 0.75f;
         //private string input;
 
         private bool isDown;
@@ -85,7 +86,7 @@ public class InputController : MonoBehaviour
             
             if (useTrigger)
             {
-                bool triggerPressed = GamePad.GetTrigger(triggerIndex, playerIndex, true) != 0;
+                bool triggerPressed = GamePad.GetTrigger(triggerIndex, playerIndex, true) >= triggerThreshold;
                 if (triggerPressed && !triggerPreviouslyPressed)
                 {
                     isDown = true;

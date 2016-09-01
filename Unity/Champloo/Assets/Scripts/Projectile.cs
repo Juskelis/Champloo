@@ -42,27 +42,11 @@ public class Projectile : MonoBehaviour
         if (!moving) return;
         if ((collisionMask.value & (1 << c.gameObject.layer)) > 0)
         {
-            /*
-            Vector2 average = Vector2.zero;
-            foreach (var contact in c.contacts)
-            {
-                average += contact.point;
-            }
-            transform.position = average/c.contacts.Length;
-            */
-            /*
-            Collider2D col = c.collider;
-            Vector2 pos = transform.position;
-            while (col.OverlapPoint(pos))
-            {
-                pos.x -= transform.right.x;
-                pos.y -= transform.right.y;
-            }
-            transform.position = pos;
-            */
             follow = c.transform;
             relativePos = follow.position - transform.position;
             moving = false;
+
+            EZCameraShake.CameraShaker.Instance.ShakeOnce(5, 5, 0, 0.5f);
 
             GetComponent<TrailRenderer>().enabled = false;
         }
