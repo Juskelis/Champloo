@@ -69,7 +69,7 @@ public class Controller2D : RaycastController
             Collision(this, other, info);
         }
     }
-
+    /*
     protected virtual void OnSmash(Player other)
     {
         if (Smashed != null && other.gameObject.activeSelf)
@@ -95,26 +95,29 @@ public class Controller2D : RaycastController
             Bounced(this, other, horizontal);
         }
     }
-
+    */
     private RaycastHit2D Raycast(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask.value);
         for (int i = 0; i < hits.Length; i++)
         {
             if (hits[i].transform.gameObject != gameObject
-                && hits[i].transform.gameObject.activeSelf) return hits[i];
+                && hits[i].transform.gameObject.activeInHierarchy)
+            {
+                return hits[i];
+            }
         }
         return new RaycastHit2D();
     }
 
     private RaycastHit2D[] RaycastAll(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask.value);
         List<RaycastHit2D> hitsList = new List<RaycastHit2D>();
         for (int i = 0; i < hits.Length; i++)
         {
             if (hits[i].transform.gameObject != gameObject
-                && hits[i].transform.gameObject.activeSelf
+                && hits[i].transform.gameObject.activeInHierarchy
                 && !hitsList.Contains(hits[i]))
             {
                 hitsList.Add(hits[i]);
@@ -255,7 +258,6 @@ public class Controller2D : RaycastController
         collisions.Reset();
 
         UpdateTouching();
-
         if (velocity.y < 0)
         {
             DescendSlope(ref velocity);
@@ -263,15 +265,13 @@ public class Controller2D : RaycastController
         if (velocity.x != 0)
         {
             faceDirection = (int)Mathf.Sign(velocity.x);
+            HorizontalCollisions(ref velocity);
         }
-
-        HorizontalCollisions(ref velocity);
 
         if (velocity.y != 0)
         {
             VerticalCollisions(ref velocity);
         }
-
         transform.Translate(velocity);
 
         if (standingOnPlatform)
@@ -295,12 +295,29 @@ public class Controller2D : RaycastController
             Debug.DrawRay(rayOrigin, Vector2.up * directionY * magnitudeY, Color.red);
 
             //check being crushed
+            Vector3 newVelocity = Vector3.zero;
             foreach (RaycastHit2D h in hits)
             {
                 if (h.distance == 0)
                 {
                     OnCrushed(h.transform.gameObject);
                 }
+
+                newVelocity.y += (hit.distance - skinWidth) * directionY;
+
+                if (collisions.ClimbingSlope)
+                {
+                    newVelocity.x += velocity.y / Mathf.Tan(collisions.SlopeAngle * Mathf.Deg2Rad) * Mathf.Sign(velocity.x);
+                }
+
+                collisions.Below = directionY == -1;
+                collisions.Above = directionY == 1;
+            }
+
+            if (hits.Length > 0)
+            {
+                newVelocity = newVelocity/hits.Length;
+                velocity.y = newVelocity.y;
             }
 
             if (hit)
@@ -313,17 +330,17 @@ public class Controller2D : RaycastController
                     continue;
                 }
                 */
-
+                /*
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 magnitudeY = hit.distance;
-
                 if (collisions.ClimbingSlope)
                 {
                     velocity.x = velocity.y/Mathf.Tan(collisions.SlopeAngle*Mathf.Deg2Rad)*Mathf.Sign(velocity.x);
                 }
-
+                
                 collisions.Below = directionY == -1;
                 collisions.Above = directionY == 1;
+                */
             }
         }
 
@@ -333,8 +350,21 @@ public class Controller2D : RaycastController
             float rayLength = Mathf.Abs(velocity.x) + skinWidth;
             Vector2 rayOrigin = ((directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight) +
                                 Vector2.up*velocity.y;
-            RaycastHit2D hit = Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+            RaycastHit2D[] hits = RaycastAll(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
 
+            float averageX = 0f;
+            float averageAngle = 0f;
+            foreach (RaycastHit2D hit in hits)
+            {
+                averageAngle = Vector2.Angle(hit.normal, Vector2.up);
+                averageX += (hit.distance - skinWidth)*directionX;
+            }
+            if (hits.Length > 0)
+            {
+                collisions.SlopeAngle = averageAngle/hits.Length;
+                velocity.x = averageAngle / hits.Length;
+            }
+            /*
             if (hit)
             {
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
@@ -344,6 +374,7 @@ public class Controller2D : RaycastController
                     collisions.SlopeAngle = slopeAngle;
                 }
             }
+            */
         }
     }
     void HorizontalCollisions(ref Vector3 velocity)
@@ -366,12 +397,28 @@ public class Controller2D : RaycastController
             Debug.DrawRay(rayOrigin, Vector2.right * directionX * magnitudeX, Color.red);
 
             //check being crushed
+            Vector3 newVelocity = Vector3.zero;
             foreach (RaycastHit2D h in hits)
             {
                 if (h.distance == 0)
                 {
                     OnCrushed(h.transform.gameObject);
                 }
+
+                newVelocity.x += (hit.distance - skinWidth) * directionX;
+
+                if (collisions.ClimbingSlope)
+                {
+                    newVelocity.y = Mathf.Tan(collisions.SlopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x);
+                }
+
+                collisions.Left = directionX == -1;
+                collisions.Right = directionX == 1;
+            }
+            if (hits.Length > 0)
+            {
+                newVelocity = newVelocity / hits.Length;
+                velocity.x = newVelocity.x;
             }
 
             if (hit)
@@ -384,6 +431,7 @@ public class Controller2D : RaycastController
                     continue;
                 }
                 */
+                /*
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
                 if (i == 0 && slopeAngle <= maxClimbAngle)
@@ -416,6 +464,7 @@ public class Controller2D : RaycastController
                     collisions.Left = directionX == -1;
                     collisions.Right = directionX == 1;
                 }
+                */
             }
         }
     }

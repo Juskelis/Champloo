@@ -70,19 +70,20 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
 
         inputs = GetComponent<InputController>();
-
+        /*
         Transform weaponClone = Instantiate(weaponPrefab);
         weaponClone.SetParent(transform, false);
 
         Transform shieldClone = Instantiate(shieldPrefab);
         shieldClone.SetParent(transform, false);
-
-        weapon = weaponClone.GetComponentInChildren<Weapon>();
-        shield = shieldClone.GetComponentInChildren<Shield>();
+        */
     }
 
     public void Start ()
     {
+        weapon = GetComponentInChildren<Weapon>();
+        shield = GetComponentInChildren<Shield>();
+
         dead = false;
 
         weapon.PickUp();
@@ -106,10 +107,12 @@ public class Player : MonoBehaviour
 
     void Crushed(object sender, GameObject obj)
     {
+        
         if (obj.GetComponent<Player>() != null) return;
         print("crushed");
         FindObjectOfType<Score>().SubtractScore(playerNumber);
         Kill();
+        
     }
 
     void Smashed(object sender, Player other)

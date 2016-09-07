@@ -22,7 +22,7 @@ public class PlayerSpawner : MonoBehaviour {
 
     private List<float> playerSpawnTimes;
 
-    void Start()
+    void Awake()
     {
         players = new List<Player>();
         playerSpawnTimes = new List<float>();
