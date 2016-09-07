@@ -94,7 +94,7 @@ public class SmashCamera : MonoBehaviour
         }
         newCenter = newCenter / (toFollow.Length > 0 ? toFollow.Length : 1);
 
-        if (maxDist.x > zoomOut.x / 2 && maxDist.y > zoomOut.y / 2)
+        if (maxDist.x >= zoomOut.x || maxDist.y >= zoomOut.y)
         {
             //zoom out
             if (maxDist.x >= zoomOut.x/2)
@@ -106,7 +106,7 @@ public class SmashCamera : MonoBehaviour
                 );
                 size.y = size.x/cam.aspect;
             }
-            if (maxDist.y >= zoomOut.y/2)
+            else if (maxDist.y >= zoomOut.y/2)
             {
                 size.y = Median(
                     zoomMin/cam.aspect,
@@ -116,7 +116,7 @@ public class SmashCamera : MonoBehaviour
                 size.x = size.y*cam.aspect;
             }
         }
-        else if (maxDist.x < zoomIn.x && maxDist.y < zoomIn.y)
+        else if (maxDist.x <= zoomIn.x && maxDist.y <= zoomIn.y)
         {
             if (maxDist.x/(zoomIn.x/2) >= maxDist.y/(zoomIn.y/2))
             {

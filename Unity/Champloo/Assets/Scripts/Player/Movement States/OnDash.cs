@@ -25,7 +25,7 @@ public class OnDash : MovementState
 
         velocity.y -= player.Gravity*Time.deltaTime*gravityModifier;
 
-        if(controller.collisions.left || controller.collisions.right)
+        if(controller.collisions.Left || controller.collisions.Right)
         {
             velocity.x = 0;
         }
@@ -38,11 +38,11 @@ public class OnDash : MovementState
 
         if (timeLeft < 0)
         {
-            if (controller.collisions.below)
+            if (controller.collisions.Below)
             {
                 return GetComponent<OnGround>();
             }
-            else if (controller.collisions.left || controller.collisions.right)
+            else if (controller.collisions.Left || controller.collisions.Right)
             {
                 return GetComponent<OnWall>();
             }

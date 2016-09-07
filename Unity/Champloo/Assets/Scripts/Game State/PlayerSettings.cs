@@ -37,7 +37,7 @@ public class PlayerSettings : MonoBehaviour {
         }
         catch
         {
-            return null;
+            return "Yoshitsune";
         }
     }
 
@@ -62,7 +62,7 @@ public class PlayerSettings : MonoBehaviour {
         }
         catch
         {
-            return null;
+            return "Prefabs/Player/Player";
         }
     }
 
@@ -124,7 +124,7 @@ public class PlayerSettings : MonoBehaviour {
         }
         catch
         {
-            return null;
+            return "Prefabs/Weapon/Sword";
         }
     }
 
@@ -149,7 +149,7 @@ public class PlayerSettings : MonoBehaviour {
         }
         catch
         {
-            return null;
+            return "Prefabs/Shield/Shield";
         }
     }
 }

@@ -16,7 +16,7 @@ public class OnWall : MovementState
 
     public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
     {
-        int wallDirX = (controller.collisions.left) ? -1 : 1;
+        int wallDirX = (controller.collisions.Left) ? -1 : 1;
         velocity.x = input.leftStick.x;
         if (timeToWallUnstick > 0)
         {
@@ -66,11 +66,11 @@ public class OnWall : MovementState
 
         controller.Move(velocity*Time.deltaTime + externalForces * Time.deltaTime);
 
-        if (controller.collisions.below)
+        if (controller.collisions.Below)
         {
             return GetComponent<OnGround>();
         }
-        else if (jumped || !(controller.collisions.left || controller.collisions.right))
+        else if (jumped || !(controller.collisions.Left || controller.collisions.Right))
         {
             return GetComponent<InAir>();
         }

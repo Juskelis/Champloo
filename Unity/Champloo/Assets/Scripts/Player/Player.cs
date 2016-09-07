@@ -6,6 +6,8 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
+    private bool dead = false;
+
     [SerializeField]
     [Range(1,4)]
     private int playerNumber = 1;
@@ -81,6 +83,8 @@ public class Player : MonoBehaviour
 
     public void Start ()
     {
+        dead = false;
+
         weapon.PickUp();
 
         //change colors of child sprites
@@ -94,13 +98,16 @@ public class Player : MonoBehaviour
 
         //attach to events
         controller.Crushed += Crushed;
-        controller.Smashed += Smashed;
-        controller.Stomped += StompedBy;
-        controller.Bounced += Bounced;
+        controller.Collision += Collided;
+        //controller.Smashed += Smashed;
+        //controller.Stomped += StompedBy;
+        //controller.Bounced += Bounced;
     }
 
-    void Crushed(object sender, EventArgs e)
+    void Crushed(object sender, GameObject obj)
     {
+        if (obj.GetComponent<Player>() != null) return;
+        print("crushed");
         FindObjectOfType<Score>().SubtractScore(playerNumber);
         Kill();
     }
@@ -131,6 +138,41 @@ public class Player : MonoBehaviour
         }
     }
 
+    void Collided(object sender, GameObject other, Controller2D.CollisionInfo info)
+    {
+        Player otherPlayer = other.GetComponent<Player>();
+        if (otherPlayer == null) return;
+        
+        //at this point, we are only dealing with player collisions
+        if (info.Below)
+        {
+            //bounce off their head no matter what
+            ApplyForce(Vector3.up * bounceForce);
+            if (movementState is OnDash && !otherPlayer.dead)
+            {
+                //kill them!
+                Score();
+                otherPlayer.Kill(Vector3.down);
+            }
+        }
+        else if (info.Above)
+        {
+            if (otherPlayer.movementState is OnDash && !dead)
+            {
+                //they killed us!
+                Kill(Vector3.down);
+                otherPlayer.ApplyForce(Vector3.up * bounceForce);
+                otherPlayer.Score();
+            }
+        }
+        else if (info.Left || info.Right)
+        {
+            //bounce away
+            float dir = Mathf.Sign(transform.position.x - other.transform.position.x);
+            ApplyForce(Vector3.right * dir * bounceForce);
+        }
+    }
+
     public void ApplyForce(Vector3 force)
     {
         //velocity = force;
@@ -145,8 +187,15 @@ public class Player : MonoBehaviour
         EZCameraShake.CameraShaker.Instance.ShakeOnce(10f, 10f, 0f, 0.5f);
     }
 
+    private void Score()
+    {
+        FindObjectOfType<Score>().AddScore(playerNumber);
+    }
+
     void Kill(Vector3 direction = default(Vector3))
     {
+        print("killed");
+
         ShakeCamera();
 
         velocity = Vector3.zero;
@@ -162,15 +211,17 @@ public class Player : MonoBehaviour
         }
 
         gameObject.SetActive(false);
+        dead = true;
     }
 
     void Destroy()
     {
         //detach from events
         controller.Crushed -= Crushed;
-        controller.Smashed -= Smashed;
-        controller.Stomped -= StompedBy;
-        controller.Bounced -= Bounced;
+        controller.Collision -= Collided;
+        //controller.Smashed -= Smashed;
+        //controller.Stomped -= StompedBy;
+        //controller.Bounced -= Bounced;
     }
 
     //allows inherited classes to interfere with default FSM transitions

@@ -60,7 +60,7 @@ public class OnGround : MovementState
             velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
         }
 
-        if ((controller.collisions.above && velocity.y > 0) || (controller.collisions.below && velocity.y < 0))
+        if ((controller.collisions.Above && velocity.y > 0) || (controller.collisions.Below && velocity.y < 0))
         {
             velocity.y = 0;
         }
@@ -77,10 +77,10 @@ public class OnGround : MovementState
 
         controller.Move(velocity*Time.deltaTime + externalForces*Time.deltaTime);
 
-        if (!controller.collisions.below || Jumped)
+        if (!controller.collisions.Below || Jumped)
         {
             
-            if (controller.collisions.left || controller.collisions.right)
+            if (controller.collisions.Left || controller.collisions.Right)
             {
                 return GetComponent<OnWall>(); //wallriding
             }

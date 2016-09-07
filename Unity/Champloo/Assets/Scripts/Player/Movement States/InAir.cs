@@ -52,7 +52,7 @@ public class InAir : MovementState
             velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
         }
 
-        if (controller.collisions.above && velocity.y > 0) velocity.y = 0;
+        if (controller.collisions.Above && velocity.y > 0) velocity.y = 0;
 
         velocity.y -= player.Gravity*Time.deltaTime;
 
@@ -64,11 +64,11 @@ public class InAir : MovementState
         controller.Move(velocity*Time.deltaTime + externalForces*Time.deltaTime);
 
 
-        if (controller.collisions.below)
+        if (controller.collisions.Below)
         {
             return GetComponent<OnGround>();
         }
-        else if (controller.collisions.left || controller.collisions.right)
+        else if (controller.collisions.Left || controller.collisions.Right)
         {
             return GetComponent<OnWall>();
         }

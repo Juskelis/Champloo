@@ -61,9 +61,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Champloo.CSharp.Plugins.csproj">
@@ -126,6 +123,7 @@
     <Compile Include="Assets\Scripts\UI\TitleGenerator.cs" />
     <Compile Include="Assets\Scripts\UI\UpdatePlayerNumber.cs" />
     <Compile Include="Assets\Scripts\Utility\Interpolate.cs" />
+    <Compile Include="Assets\Scripts\Utility\Utility.cs" />
     <Compile Include="Assets\Scripts\Weapons\Shield.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.cs" />
     <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />

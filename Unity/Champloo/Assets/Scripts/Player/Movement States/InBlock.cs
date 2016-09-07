@@ -23,7 +23,7 @@ public class InBlock : MovementState
     {
         velocity.x = Mathf.MoveTowards(velocity.x, 0f, deceleration * Time.deltaTime);
 
-        if (controller.collisions.above && velocity.y > 0) velocity.y = 0;
+        if (controller.collisions.Above && velocity.y > 0) velocity.y = 0;
 
         velocity.y -= player.Gravity * Time.deltaTime;
 
@@ -35,11 +35,11 @@ public class InBlock : MovementState
 
         if(!input.block.Pressed || !ourShield.Up)
         {
-            if (controller.collisions.below)
+            if (controller.collisions.Below)
             {
                 return GetComponent<OnGround>();
             }
-            else if (controller.collisions.left || controller.collisions.right)
+            else if (controller.collisions.Left || controller.collisions.Right)
             {
                 return GetComponent<OnWall>();
             }

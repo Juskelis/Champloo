@@ -59,7 +59,7 @@ public class PlatformController : RaycastController
         float directionY = Mathf.Sign(velocity.y);
 
         //vertical moving platform
-        if (velocity.y != 0)
+        if (velocity.y != 0 && directionY > 0)
         {
             float magnitudeY = Mathf.Abs(velocity.y) + skinWidth;
 

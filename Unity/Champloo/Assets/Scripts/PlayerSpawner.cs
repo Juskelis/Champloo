@@ -29,6 +29,15 @@ public class PlayerSpawner : MonoBehaviour {
 
         PlayerSettings settings = FindObjectOfType<PlayerSettings>();
         int numPlayers = settings.GetNumPlayers();
+        for (int i = numPlayers; i < 2; i++)
+        {
+            settings.SetPlayerName(i + 1, "Yoshitsune");
+            settings.SetPlayerPrefab(i + 1, "Prefabs/Player/Player");
+            settings.SetShield(i + 1, "Prefabs/Shield/Shield");
+            settings.SetWeapon(i + 1, "Prefabs/Weapon/Sword");
+            numPlayers++;
+        }
+
         print("Num Players: " + numPlayers);
         for (int i = 0; i < numPlayers; i++)
         {
