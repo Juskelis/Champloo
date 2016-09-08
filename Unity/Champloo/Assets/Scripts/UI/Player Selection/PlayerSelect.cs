@@ -5,7 +5,9 @@ using GamepadInput;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class PlayerSelect : MonoBehaviour {
+public class PlayerSelect : MonoBehaviour
+{
+    private Rewired.Player player;
 
     public bool Working { get { return currentStage > 0; } }
 
@@ -25,13 +27,13 @@ public class PlayerSelect : MonoBehaviour {
         
         public UnityEvent onExit;
     }
-
+    /*
     [SerializeField]
     private GamePad.Button nextButton;
 
     [SerializeField]
     private GamePad.Button previousButton;
-
+    */
     [SerializeField]
     private Stage[] stages;
 
@@ -53,14 +55,17 @@ public class PlayerSelect : MonoBehaviour {
 
     private void Start()
     {
+        player = Rewired.ReInput.players.GetPlayer(PlayerIndex - 1);
         //set the playernumber for all of the children
         foreach (Carousel c in GetComponentsInChildren<Carousel>())
         {
             c.playerNumber = PlayerIndex;
+            c.p = player;
         }
         foreach (NameCarousel c in GetComponentsInChildren<NameCarousel>())
         {
             c.playerNumber = PlayerIndex;
+            c.p = player;
         }
 
         foreach (Stage s in stages)
@@ -76,12 +81,15 @@ public class PlayerSelect : MonoBehaviour {
     {
         if (!ourGroup.interactable) return;
 
-        GamePad.Index playerIndex = InputController.ConvertToIndex(PlayerIndex);
+        //GamePad.Index playerIndex = InputController.ConvertToIndex(PlayerIndex);
+        Rewired.Player p = Rewired.ReInput.players.GetPlayer(PlayerIndex - 1);
 
         int next = 0;
-        if (GamePad.GetButtonDown(nextButton, playerIndex))
+        //if (GamePad.GetButtonDown(nextButton, playerIndex))
+        if (p.GetButtonDown("Accept"))
             next = 1;
-        else if (GamePad.GetButtonDown(previousButton, playerIndex))
+        //else if (GamePad.GetButtonDown(previousButton, playerIndex))
+        else if (p.GetButtonDown("Back"))
             next = -1;
 
         if(next != 0)

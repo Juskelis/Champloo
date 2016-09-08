@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using Rewired;
 
 [RequireComponent(typeof(Controller2D))]
 
@@ -93,7 +94,7 @@ public class Player : MonoBehaviour
         {
             s.color = playerColor;
         }
-        inputs.playerNumber = playerNumber;
+        //inputs.playerNumber = playerNumber;
 
         currentDashes = GetComponent<OnDash>().DashLimit;
 
@@ -109,7 +110,6 @@ public class Player : MonoBehaviour
     {
         
         if (obj.GetComponent<Player>() != null) return;
-        print("crushed");
         FindObjectOfType<Score>().SubtractScore(playerNumber);
         Kill();
         
@@ -234,26 +234,33 @@ public class Player : MonoBehaviour
     //  (note: only gives player scope)
     protected void ChooseNextState(ref MovementState next)
     {
-        if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
+        //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
+        if(inputs.inputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack))
         {
             weapon.Attack();
             next = GetComponent<InAttack>();
         }
-        else if (inputs.block.Down && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
+        //else if (inputs.block.Down && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
+        else if (inputs.inputPlayer.GetButtonDown("Block") && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
         {
             next = GetComponent<InBlock>();
         }
-        else if(inputs.movementSpecial.Down && !(movementState is OnDash) && currentDashes > 0)
+        //else if(inputs.movementSpecial.Down && !(movementState is OnDash) && currentDashes > 0)
+        else if(inputs.inputPlayer.GetButtonDown("Movement Special") && !(movementState is OnDash) && currentDashes > 0)
         {
             currentDashes--;
             TrailRenderer tail = GetComponent<TrailRenderer>();
             tail.enabled = true;
             tail.Clear();
             next = GetComponent<OnDash>();
-            Vector2 leftStickDir = inputs.leftStick.normalized;
+            //Vector2 leftStickDir = inputs.leftStick.normalized;
+            Vector2 leftStickDir =
+                (Vector2.right*inputs.inputPlayer.GetAxis("Aim Horizontal") +
+                 Vector2.up*inputs.inputPlayer.GetAxis("Aim Vertical")).normalized;
             velocity = ((leftStickDir == Vector2.zero)?Vector2.up:leftStickDir) * ((OnDash)next).DashForce;
         }
-        else if(inputs.taunt.Down && (movementState is OnGround))
+        //else if(inputs.taunt.Down && (movementState is OnGround))
+        else if(inputs.inputPlayer.GetButtonDown("Taunt") && (movementState is OnGround))
         {
             next = GetComponent<TauntState>();
         }
@@ -277,7 +284,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        inputs.UpdateInputs();
+        //inputs.UpdateInputs();
         
         MovementState next = movementState.UpdateState(ref velocity, ref externalForce);
 
@@ -299,7 +306,8 @@ public class Player : MonoBehaviour
             {
                 hitWith = null;
             }
-            else if (!weapon.InHand && inputs.parry.Down)
+            //else if (!weapon.InHand && inputs.parry.Down)
+            else if (!weapon.InHand && inputs.inputPlayer.GetButtonDown("Parry"))
             {
                 //steal weapon like a badass
                 weapon.InHand = true;
@@ -308,7 +316,8 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (inputs.weaponSpecial.Down)
+        //if (inputs.weaponSpecial.Down)
+        if (inputs.inputPlayer.GetButtonDown("Weapon Special"))
         {
             weapon.Special();
         }

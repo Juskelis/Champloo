@@ -40,18 +40,20 @@ public class OnGround : MovementState
 
     public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
     {
-        float inputDirection = Mathf.Sign(input.leftStick.x);
-        if (Mathf.Abs(input.leftStick.x) > float.Epsilon)
+        //float inputDirection = Mathf.Sign(input.leftStick.x);
+        float moveX = input.inputPlayer.GetAxis("Move Horizontal");
+        float inputDirection = Mathf.Sign(moveX);
+        if (Mathf.Abs(moveX) > float.Epsilon)
         {
             if (inputDirection != Mathf.Sign(velocity.x))
             {
                 //turning
-                velocity.x = Mathf.MoveTowards(velocity.x, maxSpeed * input.leftStick.x, turningDeceleration * Time.deltaTime);
+                velocity.x = Mathf.MoveTowards(velocity.x, maxSpeed * moveX, turningDeceleration * Time.deltaTime);
             }
             else
             {
                 //speeding up
-                velocity.x = Mathf.MoveTowards(velocity.x, maxSpeed * input.leftStick.x, acceleration * Time.deltaTime);
+                velocity.x = Mathf.MoveTowards(velocity.x, maxSpeed * moveX, acceleration * Time.deltaTime);
             }
         }
         else
@@ -66,10 +68,11 @@ public class OnGround : MovementState
         }
 
         Jumped = false;
-        if (input.jump.Down)
+        //if (input.jump.Down)
+        if(input.inputPlayer.GetButtonDown("Jump"))
         {
             Jumped = true;
-            input.jump.ResetTimers();
+            //input.jump.ResetTimers();
             velocity.y = maxJumpVelocity;
         }
 

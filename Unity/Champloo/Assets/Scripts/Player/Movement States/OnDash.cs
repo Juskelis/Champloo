@@ -55,7 +55,9 @@ public class OnDash : MovementState
     public override void OnEnter()
     {
         timeLeft = dashTime;
-        direction = input.leftStick;
+        //direction = input.leftStick;
+        Rewired.Player p = input.inputPlayer;
+        direction = Vector2.right*p.GetAxis("Aim Horizontal") + Vector2.up*p.GetAxis("Aim Vertical");
     }
 
     public override void OnExit()

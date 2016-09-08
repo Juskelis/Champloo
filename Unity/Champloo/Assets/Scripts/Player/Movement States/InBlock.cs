@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Rewired;
 
 public class InBlock : MovementState
 {
@@ -33,7 +34,8 @@ public class InBlock : MovementState
 
         controller.Move(velocity * Time.deltaTime + externalForces * Time.deltaTime);
 
-        if(!input.block.Pressed || !ourShield.Up)
+        //if(!input.block.Pressed || !ourShield.Up)
+        if(!input.inputPlayer.GetButton("Block") || !ourShield.Up)
         {
             if (controller.collisions.Below)
             {

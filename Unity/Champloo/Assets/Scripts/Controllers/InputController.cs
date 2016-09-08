@@ -2,9 +2,21 @@
 using UnityEngine;
 using System.Collections;
 using GamepadInput;
+using Rewired;
 
 public class InputController : MonoBehaviour
 {
+    public Rewired.Player inputPlayer;
+    private Player player;
+
+    public void Start()
+    {
+        player = GetComponent<Player>();
+        print("Player Number: " + player.PlayerNumber);
+        inputPlayer = ReInput.players.GetPlayer(player.PlayerNumber - 1);
+    }
+
+    /*
     private static bool HandleInput = true;
 
     public static void SetInputs(bool on)
@@ -76,9 +88,10 @@ public class InputController : MonoBehaviour
         private float onUpTime;
         private float onPressedTime;
 
-        public void Update(GamePad.Index player = GamePad.Index.Any)
+        //public void Update(GamePad.Index player = GamePad.Index.Any)
+        public void Update(int playerNumber)
         {
-            playerIndex = player;
+            playerIndex = InputController.ConvertToIndex(playerNumber);
 
             isDown = GamePad.GetButtonDown(buttonIndex, playerIndex);//Input.GetButtonDown(input);
             isUp = GamePad.GetButtonUp(buttonIndex, playerIndex);//Input.GetButtonUp(input);
@@ -148,19 +161,20 @@ public class InputController : MonoBehaviour
 
         playerIndex = ConvertToIndex(playerNumber);
 
-        jump.Update(playerIndex);
-        attack.Update(playerIndex);
-        weaponSpecial.Update(playerIndex);
-        movementSpecial.Update(playerIndex);
+        jump.Update(playerNumber);
+        attack.Update(playerNumber);
+        weaponSpecial.Update(playerNumber);
+        movementSpecial.Update(playerNumber);
 
-        block.Update(playerIndex);
-        parry.Update(playerIndex);
+        block.Update(playerNumber);
+        parry.Update(playerNumber);
 
-        taunt.Update(playerIndex);
-        pause.Update(playerIndex);
+        taunt.Update(playerNumber);
+        pause.Update(playerNumber);
 
         leftStick = GamePad.GetAxis(GamePad.Axis.LeftStick, playerIndex);
         rightStick = GamePad.GetAxis(GamePad.Axis.RightStick, playerIndex);
         dPad = GamePad.GetAxis(GamePad.Axis.Dpad, playerIndex);
     }
+    */
 }

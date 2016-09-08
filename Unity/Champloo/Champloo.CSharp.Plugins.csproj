@@ -61,6 +61,12 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Rewired_Core">
+      <HintPath>Assets\Rewired\Internal\Libraries\Runtime\Rewired_Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Rewired_Windows_Lib">
+      <HintPath>Assets\Rewired\Internal\Libraries\Runtime\Rewired_Windows_Lib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Standard Assets\Utility\ActivateTrigger.cs" />
@@ -75,6 +81,10 @@
     <None Include="Assets\Fonts\INFO.txt" />
     <None Include="Assets\Fonts\OFL.txt" />
     <None Include="Assets\Resources\Video_Game_Names.txt" />
+    <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
+    <None Include="Assets\Rewired\Documentation\ReleaseNotes.txt" />
+    <None Include="Assets\Rewired\Documentation\licences.txt" />
+    <None Include="Assets\Rewired\Internal\Libraries\Runtime\Rewired_Core.XML" />
     <None Include="Assets\Shaders\Splatter.shader" />
     <None Include="Assets\Shaders\Surface.shader" />
   </ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 using UnityEngine.Events;
 
 public class Match : MonoBehaviour
@@ -29,7 +30,18 @@ public class Match : MonoBehaviour
 
     public void SetPlayerInput(bool active)
     {
-        InputController.SetInputs(active);
+        //InputController.SetInputs(active);
+        foreach (var ic in FindObjectsOfType<InputController>())
+        {
+            ic.inputPlayer.controllers.maps.SetMapsEnabled(active, "In Game");
+            ic.inputPlayer.controllers.maps.SetMapsEnabled(!active, "Menu");
+            /*
+                foreach (var map in ic.inputPlayer.controllers.maps.GetAllMaps())
+                {
+                    map.
+                }
+            */
+        }
     }
 
     public void End()

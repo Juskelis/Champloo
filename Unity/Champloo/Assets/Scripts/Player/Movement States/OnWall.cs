@@ -17,12 +17,14 @@ public class OnWall : MovementState
     public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
     {
         int wallDirX = (controller.collisions.Left) ? -1 : 1;
-        velocity.x = input.leftStick.x;
+        //velocity.x = input.leftStick.x;
+        float moveX = input.inputPlayer.GetAxis("Move Horizontal");
+        velocity.x = moveX;
         if (timeToWallUnstick > 0)
         {
             velocity.x = 0;
 
-            if (input.leftStick.x != 0 && input.leftStick.x != wallDirX)
+            if (moveX != 0 && moveX != wallDirX)
             {
                 timeToWallUnstick -= Time.deltaTime;
             }
@@ -42,17 +44,18 @@ public class OnWall : MovementState
         DecayExternalForces(ref externalForces);
 
         bool jumped = false;
-        if (input.jump.Down)
+        //if (input.jump.Down)
+        if (input.inputPlayer.GetButtonDown("Jump"))
         {
             jumped = true;
-            input.jump.ResetTimers();
+            //input.jump.ResetTimers();
 
-            if (Mathf.Abs(wallDirX - input.leftStick.x) < 0.5f)
+            if (Mathf.Abs(wallDirX - moveX) < 0.5f)
             {
                 velocity.x = -wallDirX * wallJumpClimbForces.x;
                 velocity.y = wallJumpClimbForces.y;
             }
-            else if (input.leftStick.x == 0)
+            else if (moveX == 0)
             {
                 velocity.x = -wallDirX * wallJumpOffForces.x;
                 velocity.y = wallJumpOffForces.y;

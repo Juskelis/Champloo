@@ -33,10 +33,10 @@ public class Sword : Weapon {
         if (CanAttack)
         {
             //transform.parent.localScale = transform.parent.parent.localScale;
-
+            Vector2 aim = Vector2.right*input.inputPlayer.GetAxis("Aim Horizontal") + Vector2.up*input.inputPlayer.GetAxis("Aim Vertical");
             //print(input.leftStickAngle);
             transform.parent.rotation = Quaternion.AngleAxis(
-                input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
+                Utility.Vector2AsAngle(aim),//input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
                 transform.parent.forward
             );
         }
@@ -49,11 +49,12 @@ public class Sword : Weapon {
         if (InHand)
         {
             InHand = false;
+            Vector2 aim = Vector2.right * input.inputPlayer.GetAxis("Aim Horizontal") + Vector2.up * input.inputPlayer.GetAxis("Aim Vertical");
             Projectile temp = (Projectile)Instantiate(
                 thrownVersion,
                 transform.position,
                 Quaternion.AngleAxis(
-                    input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
+                    Utility.Vector2AsAngle(aim),//input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
                     transform.parent.forward
                 )
             );
