@@ -9,7 +9,12 @@ public class OnDash : MovementState
     [SerializeField] private float dashTime;
     private float timeLeft;
 
-    [SerializeField] private float gravityModifier = 1f;
+    [SerializeField]
+    private float gravityModifier = 1f;
+
+    [SerializeField]
+    private int dashLimit = 3;
+    public int DashLimit {  get { return dashLimit; } }
 
     private Vector2 direction;
 
@@ -20,7 +25,7 @@ public class OnDash : MovementState
 
         velocity.y -= player.Gravity*Time.deltaTime*gravityModifier;
 
-        if(controller.collisions.left || controller.collisions.right)
+        if(controller.collisions.Left || controller.collisions.Right)
         {
             velocity.x = 0;
         }
@@ -33,11 +38,11 @@ public class OnDash : MovementState
 
         if (timeLeft < 0)
         {
-            if (controller.collisions.below)
+            if (controller.collisions.Below)
             {
                 return GetComponent<OnGround>();
             }
-            else if (controller.collisions.left || controller.collisions.right)
+            else if (controller.collisions.Left || controller.collisions.Right)
             {
                 return GetComponent<OnWall>();
             }
@@ -50,7 +55,9 @@ public class OnDash : MovementState
     public override void OnEnter()
     {
         timeLeft = dashTime;
-        direction = input.leftStick;
+        //direction = input.leftStick;
+        Rewired.Player p = input.inputPlayer;
+        direction = Vector2.right*p.GetAxis("Aim Horizontal") + Vector2.up*p.GetAxis("Aim Vertical");
     }
 
     public override void OnExit()

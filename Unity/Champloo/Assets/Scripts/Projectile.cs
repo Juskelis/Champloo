@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class Projectile : MonoBehaviour
 {
@@ -12,11 +13,27 @@ public class Projectile : MonoBehaviour
     private bool moving = true;
     public bool Moving { get { return moving; } }
 
+    private Transform follow;
+    private Vector3 relativePos;
+
+    private Rigidbody2D body;
+
+    void Awake()
+    {
+        body = GetComponent<Rigidbody2D>();
+    }
+
     void Update()
     {
+        body.velocity = Vector2.zero;
         if (moving)
         {
-            transform.Translate(Vector2.right*speed*Time.deltaTime);
+            //transform.Translate(Vector2.right*speed*Time.deltaTime);
+            body.velocity = transform.TransformVector(Vector2.right*speed);
+        }
+        else if(follow != null)
+        {
+            transform.position = follow.position - relativePos;
         }
     }
 
@@ -25,8 +42,13 @@ public class Projectile : MonoBehaviour
         if (!moving) return;
         if ((collisionMask.value & (1 << c.gameObject.layer)) > 0)
         {
-            //transform.parent = c.transform;
+            follow = c.transform;
+            relativePos = follow.position - transform.position;
             moving = false;
+
+            EZCameraShake.CameraShaker.Instance.ShakeOnce(5, 5, 0, 0.5f);
+
+            GetComponent<TrailRenderer>().enabled = false;
         }
     }
 }

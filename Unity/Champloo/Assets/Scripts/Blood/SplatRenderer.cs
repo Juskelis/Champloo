@@ -31,7 +31,7 @@ public class SplatRenderer : MonoBehaviour
         Vector3 parentScale = transform.parent.localScale;
 
         //make render texture that fits the object
-        if(parentScale.x < parentScale.y)
+        if(parentScale.x <= parentScale.y)
             tex = new RenderTexture(Mathf.CeilToInt(parentScale.x) * scaleFactor, Mathf.CeilToInt(parentScale.y) * scaleFactor, 0);
         else
             tex = new RenderTexture(Mathf.CeilToInt(parentScale.x) * scaleFactor, Mathf.CeilToInt(parentScale.y) * scaleFactor/2, 0);

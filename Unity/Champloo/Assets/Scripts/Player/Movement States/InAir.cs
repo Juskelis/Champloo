@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Rewired;
 
 public class InAir : MovementState
 {
     [SerializeField]
     private float maxFallSpeed = 20f;
+    public float MaxFallSpeed { get { return maxFallSpeed; } }
 
     [SerializeField]
     private float maxSpeed = 6;
@@ -31,18 +33,20 @@ public class InAir : MovementState
 
     public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
     {
-        float inputDirection = Mathf.Sign(input.leftStick.x);
-        if (Mathf.Abs(input.leftStick.x) > float.Epsilon)
+        //float inputDirection = Mathf.Sign(input.leftStick.x);
+        float moveX = input.inputPlayer.GetAxis("Move Horizontal");
+        float inputDirection = Mathf.Sign(moveX);
+        if (Mathf.Abs(moveX) > float.Epsilon)
         {
             if (inputDirection != Mathf.Sign(velocity.x))
             {
                 //turning
-                velocity.x = Mathf.MoveTowards(velocity.x, maxSpeed * input.leftStick.x, turningDeceleration * Time.deltaTime);
+                velocity.x = Mathf.MoveTowards(velocity.x, maxSpeed * moveX, turningDeceleration * Time.deltaTime);
             }
             else
             {
                 //speeding up
-                velocity.x = Mathf.MoveTowards(velocity.x, maxSpeed * input.leftStick.x, acceleration * Time.deltaTime);
+                velocity.x = Mathf.MoveTowards(velocity.x, maxSpeed * moveX, acceleration * Time.deltaTime);
             }
         }
         else
@@ -51,7 +55,7 @@ public class InAir : MovementState
             velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
         }
 
-        if (controller.collisions.above && velocity.y > 0) velocity.y = 0;
+        if (controller.collisions.Above && velocity.y > 0) velocity.y = 0;
 
         velocity.y -= player.Gravity*Time.deltaTime;
 
@@ -63,11 +67,11 @@ public class InAir : MovementState
         controller.Move(velocity*Time.deltaTime + externalForces*Time.deltaTime);
 
 
-        if (controller.collisions.below)
+        if (controller.collisions.Below)
         {
             return GetComponent<OnGround>();
         }
-        else if (controller.collisions.left || controller.collisions.right)
+        else if (controller.collisions.Left || controller.collisions.Right)
         {
             return GetComponent<OnWall>();
         }

@@ -1,11 +1,14 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using Rewired;
 
 [RequireComponent(typeof(Controller2D))]
 
 public class Player : MonoBehaviour
 {
+    private bool dead = false;
+
     [SerializeField]
     [Range(1,4)]
     private int playerNumber = 1;
@@ -14,10 +17,13 @@ public class Player : MonoBehaviour
     private Color playerColor = Color.white;
     [SerializeField]
     private SpriteRenderer[] coloredSprites;
+    [SerializeField]
+    private Transform visuals;
 
     public int PlayerNumber
     {
         get { return playerNumber; }
+        set { playerNumber = value; }
     }
 
     [SerializeField] private Transform spawnOnDeath;
@@ -26,8 +32,14 @@ public class Player : MonoBehaviour
     private BoxCollider2D box;
     private Controller2D controller;
     private Animator anim;
+    
+    [SerializeField]
+    private Transform weaponPrefab;
+    [SerializeField]
+    private Transform shieldPrefab;
 
     private Weapon weapon;
+    private Shield shield;
 
     [SerializeField]
     private float bounceForce = 10f;
@@ -36,6 +48,8 @@ public class Player : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
     private Vector3 externalForce = Vector3.zero;
+
+    private int currentDashes = 0;
     
     public float Gravity { get; set; }
 
@@ -49,35 +63,56 @@ public class Player : MonoBehaviour
 
     private Weapon hitWith;
 
-    void Start ()
+    void Awake()
     {
         movementState = GetComponent<OnGround>();
         box = GetComponent<BoxCollider2D>();
-	    controller = GetComponent<Controller2D>();
+        controller = GetComponent<Controller2D>();
         anim = GetComponent<Animator>();
+
+        inputs = GetComponent<InputController>();
+        /*
+        Transform weaponClone = Instantiate(weaponPrefab);
+        weaponClone.SetParent(transform, false);
+
+        Transform shieldClone = Instantiate(shieldPrefab);
+        shieldClone.SetParent(transform, false);
+        */
+    }
+
+    public void Start ()
+    {
+        weapon = GetComponentInChildren<Weapon>();
+        shield = GetComponentInChildren<Shield>();
+
+        dead = false;
+
+        weapon.PickUp();
 
         //change colors of child sprites
         foreach(SpriteRenderer s in coloredSprites)
         {
             s.color = playerColor;
         }
+        //inputs.playerNumber = playerNumber;
 
-        inputs = GetComponent<InputController>();
-        inputs.playerNumber = playerNumber;
-
-        weapon = GetComponentInChildren<Weapon>();
+        currentDashes = GetComponent<OnDash>().DashLimit;
 
         //attach to events
         controller.Crushed += Crushed;
-        controller.Smashed += Smashed;
-        controller.Stomped += StompedBy;
-        controller.Bounced += Bounced;
+        controller.Collision += Collided;
+        //controller.Smashed += Smashed;
+        //controller.Stomped += StompedBy;
+        //controller.Bounced += Bounced;
     }
 
-    void Crushed(object sender, EventArgs e)
+    void Crushed(object sender, GameObject obj)
     {
+        
+        if (obj.GetComponent<Player>() != null) return;
         FindObjectOfType<Score>().SubtractScore(playerNumber);
         Kill();
+        
     }
 
     void Smashed(object sender, Player other)
@@ -106,15 +141,66 @@ public class Player : MonoBehaviour
         }
     }
 
+    void Collided(object sender, GameObject other, Controller2D.CollisionInfo info)
+    {
+        Player otherPlayer = other.GetComponent<Player>();
+        if (otherPlayer == null) return;
+        
+        //at this point, we are only dealing with player collisions
+        if (info.Below)
+        {
+            //bounce off their head no matter what
+            ApplyForce(Vector3.up * bounceForce);
+            if (movementState is OnDash && !otherPlayer.dead)
+            {
+                //kill them!
+                Score();
+                otherPlayer.Kill(Vector3.down);
+            }
+        }
+        else if (info.Above)
+        {
+            if (otherPlayer.movementState is OnDash && !dead)
+            {
+                //they killed us!
+                Kill(Vector3.down);
+                otherPlayer.ApplyForce(Vector3.up * bounceForce);
+                otherPlayer.Score();
+            }
+        }
+        else if (info.Left || info.Right)
+        {
+            //bounce away
+            float dir = Mathf.Sign(transform.position.x - other.transform.position.x);
+            ApplyForce(Vector3.right * dir * bounceForce);
+        }
+    }
+
     public void ApplyForce(Vector3 force)
     {
-        velocity = force;
-        controller.collisions.above = false;
-        controller.collisions.below = false;
+        //velocity = force;
+        float threshold = 0.25f;
+        if (Mathf.Abs(force.x) > threshold) velocity.x = force.x;
+        if (Mathf.Abs(force.y) > threshold) velocity.y = force.y;
+        if (Mathf.Abs(force.z) > threshold) velocity.z = force.z;
+    }
+
+    void ShakeCamera()
+    {
+        EZCameraShake.CameraShaker.Instance.ShakeOnce(10f, 10f, 0f, 0.5f);
+    }
+
+    private void Score()
+    {
+        FindObjectOfType<Score>().AddScore(playerNumber);
     }
 
     void Kill(Vector3 direction = default(Vector3))
     {
+        print("killed");
+
+        ShakeCamera();
+
         velocity = Vector3.zero;
         externalForce = Vector3.zero;
         hitWith = null;
@@ -128,15 +214,17 @@ public class Player : MonoBehaviour
         }
 
         gameObject.SetActive(false);
+        dead = true;
     }
 
     void Destroy()
     {
         //detach from events
         controller.Crushed -= Crushed;
-        controller.Smashed -= Smashed;
-        controller.Stomped -= StompedBy;
-        controller.Bounced -= Bounced;
+        controller.Collision -= Collided;
+        //controller.Smashed -= Smashed;
+        //controller.Stomped -= StompedBy;
+        //controller.Bounced -= Bounced;
     }
 
     //allows inherited classes to interfere with default FSM transitions
@@ -146,21 +234,33 @@ public class Player : MonoBehaviour
     //  (note: only gives player scope)
     protected void ChooseNextState(ref MovementState next)
     {
-        if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
+        //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
+        if(inputs.inputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack))
         {
             weapon.Attack();
             next = GetComponent<InAttack>();
         }
-        else if(inputs.movementSpecial.Down && !(movementState is OnDash))
+        //else if (inputs.block.Down && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
+        else if (inputs.inputPlayer.GetButtonDown("Block") && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
         {
+            next = GetComponent<InBlock>();
+        }
+        //else if(inputs.movementSpecial.Down && !(movementState is OnDash) && currentDashes > 0)
+        else if(inputs.inputPlayer.GetButtonDown("Movement Special") && !(movementState is OnDash) && currentDashes > 0)
+        {
+            currentDashes--;
             TrailRenderer tail = GetComponent<TrailRenderer>();
             tail.enabled = true;
             tail.Clear();
             next = GetComponent<OnDash>();
-            Vector2 leftStickDir = inputs.leftStick.normalized;
+            //Vector2 leftStickDir = inputs.leftStick.normalized;
+            Vector2 leftStickDir =
+                (Vector2.right*inputs.inputPlayer.GetAxis("Aim Horizontal") +
+                 Vector2.up*inputs.inputPlayer.GetAxis("Aim Vertical")).normalized;
             velocity = ((leftStickDir == Vector2.zero)?Vector2.up:leftStickDir) * ((OnDash)next).DashForce;
         }
-        else if(inputs.taunt.Down && (movementState is OnGround))
+        //else if(inputs.taunt.Down && (movementState is OnGround))
+        else if(inputs.inputPlayer.GetButtonDown("Taunt") && (movementState is OnGround))
         {
             next = GetComponent<TauntState>();
         }
@@ -171,12 +271,20 @@ public class Player : MonoBehaviour
             {
                 GetComponent<TrailRenderer>().enabled = false;
             }
+            if(movementState is OnGround)
+            {
+                currentDashes = GetComponent<OnDash>().DashLimit;
+            }
+            if (movementState is OnWall)
+            {
+                currentDashes = Mathf.Max(currentDashes, 1);
+            }
         }
     }
 
     void Update()
     {
-        inputs.UpdateInputs();
+        //inputs.UpdateInputs();
         
         MovementState next = movementState.UpdateState(ref velocity, ref externalForce);
 
@@ -194,11 +302,12 @@ public class Player : MonoBehaviour
         //handle blocking/parrying
         if (hitWith != null)
         {
-            if (weapon.InHand && inputs.block.Down)
+            if (!hitWith.isActiveAndEnabled || (weapon.InHand && shield.TakeHit()))
             {
                 hitWith = null;
             }
-            else if (!weapon.InHand && inputs.parry.Down)
+            //else if (!weapon.InHand && inputs.parry.Down)
+            else if (!weapon.InHand && inputs.inputPlayer.GetButtonDown("Parry"))
             {
                 //steal weapon like a badass
                 weapon.InHand = true;
@@ -207,7 +316,8 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (inputs.weaponSpecial.Down)
+        //if (inputs.weaponSpecial.Down)
+        if (inputs.inputPlayer.GetButtonDown("Weapon Special"))
         {
             weapon.Special();
         }
@@ -225,9 +335,9 @@ public class Player : MonoBehaviour
             anim.SetBool("Hit", hitWith != null);
             if (velMag > 0.01f)
             { 
-                Vector3 localScale = transform.localScale;
+                Vector3 localScale = visuals.localScale;
                 localScale.x = Mathf.Sign(velocity.x);
-                transform.localScale = localScale;
+                visuals.localScale = localScale;
             }
         }
     }
@@ -245,6 +355,7 @@ public class Player : MonoBehaviour
         if (otherWeapon != null && hitWith == null)
         {
             hitWith = otherWeapon;
+            ShakeCamera();
             Invoke("GetHit", hitReactionTime);
         }
     }
@@ -277,6 +388,19 @@ public class Player : MonoBehaviour
 
     void GetHit()
     {
+        if (hitWith == null) return;
+
+        Score s = FindObjectOfType<Score>();
+        Player other = hitWith.GetComponentInParent<Player>();
+        if (other == null) print("oh no the other player is null");
+
+        int otherNum = other.PlayerNumber;
+        print(otherNum);
+
+        s.AddScore(otherNum);
+
+
+        //FindObjectOfType<Score>().AddScore(hitWith.GetComponentInParent<Player>().PlayerNumber);
         Kill(hitWith.transform.right * deathForce);
     }
 }

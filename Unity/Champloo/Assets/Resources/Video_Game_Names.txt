@@ -348,7 +348,7 @@ Rural
 Rushing^Rush
 Russian
 Samba de
-Samurai
+Samurai^Samurai
 Satan's
 Savage
 Save Yourself from the
@@ -721,7 +721,7 @@ Rollerball^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Rugby^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Sailboat
 Sailor
-Samurai
+Samurai^Samurai
 Sandwich
 Scooter
 Scorched Earth
@@ -755,6 +755,7 @@ Stunt
 Submarine
 Sumo
 Sudoku
+Sunflower
 Sunshine
 Surf
 Surgery
@@ -1105,6 +1106,7 @@ Rush
 Safari
 Saga
 Saloon
+Samurai
 Scam
 Scandal
 School

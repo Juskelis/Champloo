@@ -22,23 +22,44 @@ public class PlayerSpawner : MonoBehaviour {
 
     private List<float> playerSpawnTimes;
 
-    void Start()
+    void Awake()
     {
-        Player[] foundPlayers = FindObjectsOfType<Player>();
-        playerSpawnTimes = new List<float>();
         players = new List<Player>();
-        foreach(Player p in foundPlayers)
+        playerSpawnTimes = new List<float>();
+
+        PlayerSettings settings = FindObjectOfType<PlayerSettings>();
+        int numPlayers = settings.GetNumPlayers();
+        for (int i = numPlayers; i < 2; i++)
         {
-            players.Add(p);
+            settings.SetPlayerName(i + 1, "Yoshitsune");
+            settings.SetPlayerPrefab(i + 1, "Prefabs/Player/Player");
+            settings.SetShield(i + 1, "Prefabs/Shield/Shield");
+            settings.SetWeapon(i + 1, "Prefabs/Weapon/Sword");
+            numPlayers++;
+        }
+
+        print("Num Players: " + numPlayers);
+        for (int i = 0; i < numPlayers; i++)
+        {
+            string prefabName = settings.GetPlayerPrefab(i + 1);
+            string weaponName = settings.GetWeapon(i + 1);
+            string shieldName = settings.GetShield(i + 1);
+            
+            Transform player = ((GameObject)Instantiate(Resources.Load(prefabName))).transform;
+            Transform weapon = ((GameObject)Instantiate(Resources.Load(weaponName))).transform;
+            Transform shield = ((GameObject)Instantiate(Resources.Load(shieldName))).transform;
+
+            Player p = player.GetComponent<Player>();
+            p.PlayerNumber = i + 1;
+
+            weapon.SetParent(player);
+            shield.SetParent(player);
+
+            player.position = FindValidSpawn(p);
+
+            players.Add(player.GetComponent<Player>());
             playerSpawnTimes.Add(spawnTime);
         }
-        players.Sort(delegate(Player x, Player y)
-        {
-            if (x == null && y == null) return 0;
-            else if (x == null) return -1;
-            else if (y == null) return 1;
-            else return x.PlayerNumber.CompareTo(y.PlayerNumber);
-        });
     }
 
     void OnDrawGizmos()
@@ -79,6 +100,7 @@ public class PlayerSpawner : MonoBehaviour {
         Player p = players[playerNumber];
         p.transform.position = FindValidSpawn(p);
         p.gameObject.SetActive(true);
+        p.Start();
     }
 
     Vector3 FindValidSpawn(Player p, int maxAttempts = 30)

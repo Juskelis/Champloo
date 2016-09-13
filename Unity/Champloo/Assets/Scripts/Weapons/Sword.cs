@@ -3,19 +3,28 @@ using System.Collections;
 
 public class Sword : Weapon {
     private InputController input;
-    private MeshRenderer ren;
+    //private MeshRenderer ren;
     private BoxCollider2D col;
 
     [SerializeField]
+    private SpriteRenderer visuals;
+
+    [SerializeField]
     private Projectile thrownVersion;
+    [SerializeField]
+    private bool alwaysVisible = false;
 
     protected override void Start()
     {
         base.Start();
 
         input = transform.parent.GetComponentInParent<InputController>();
-        ren = GetComponent<MeshRenderer>();
+        //ren = GetComponent<MeshRenderer>();
         col = GetComponent<BoxCollider2D>();
+
+        //ren.enabled = alwaysVisible;
+        col.enabled = false;
+        visuals.enabled = alwaysVisible;
     }
 
     protected override void Update()
@@ -23,9 +32,12 @@ public class Sword : Weapon {
         base.Update();
         if (CanAttack)
         {
+            //transform.parent.localScale = transform.parent.parent.localScale;
+            Vector2 aim = Vector2.right*input.inputPlayer.GetAxis("Aim Horizontal") + Vector2.up*input.inputPlayer.GetAxis("Aim Vertical");
+            //print(input.leftStickAngle);
             transform.parent.rotation = Quaternion.AngleAxis(
-                input.leftStickAngle + 180 * transform.parent.localScale.x < 0?1:0,
-                Vector3.forward
+                Utility.Vector2AsAngle(aim),//input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
+                transform.parent.forward
             );
         }
     }
@@ -37,7 +49,15 @@ public class Sword : Weapon {
         if (InHand)
         {
             InHand = false;
-            Projectile temp = (Projectile)Instantiate(thrownVersion, transform.position, transform.rotation);
+            Vector2 aim = Vector2.right * input.inputPlayer.GetAxis("Aim Horizontal") + Vector2.up * input.inputPlayer.GetAxis("Aim Vertical");
+            Projectile temp = (Projectile)Instantiate(
+                thrownVersion,
+                transform.position,
+                Quaternion.AngleAxis(
+                    Utility.Vector2AsAngle(aim),//input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
+                    transform.parent.forward
+                )
+            );
             temp.PlayerNumber = GetComponentInParent<Player>().PlayerNumber;
         }
     }
@@ -46,7 +66,8 @@ public class Sword : Weapon {
     {
         base.StartAttack();
 
-        ren.enabled = true;
+        //ren.enabled = true;
+        visuals.enabled = true;
         col.enabled = true;
     }
 
@@ -54,7 +75,8 @@ public class Sword : Weapon {
     {
         base.EndAttack();
 
-        ren.enabled = false;
+        //ren.enabled = alwaysVisible;
+        visuals.enabled = alwaysVisible;
         col.enabled = false;
     }
 }

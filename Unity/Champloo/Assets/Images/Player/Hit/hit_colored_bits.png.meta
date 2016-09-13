@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 04ca93bba4dd50d41a5116928871a747
-timeCreated: 1468091513
+timeCreated: 1468913925
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -61,19 +61,19 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 0, y: 23}
-        - {x: -12, y: 20}
-        - {x: -15, y: 14}
-        - {x: -15, y: 6}
-        - {x: -13, y: 4}
-        - {x: 14, y: 4}
-        - {x: 15, y: 6}
-        - {x: 15, y: 18}
-        - {x: 8, y: 23}
+      - - {x: 0, y: 7}
+        - {x: -12, y: 4}
+        - {x: -15, y: -2}
+        - {x: -15, y: -10}
+        - {x: -13, y: -12}
+        - {x: 14, y: -12}
+        - {x: 15, y: -10}
+        - {x: 15, y: 2}
+        - {x: 8, y: 7}
     - name: hit_colored_bits_1
       rect:
         serializedVersion: 2
@@ -81,18 +81,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -7, y: 23}
-        - {x: -15, y: 15}
-        - {x: -15, y: 7}
-        - {x: -10, y: 3}
-        - {x: 12, y: 3}
-        - {x: 14, y: 7}
-        - {x: 14, y: 19}
-        - {x: 7, y: 23}
+      - - {x: -7, y: 7}
+        - {x: -15, y: -1}
+        - {x: -15, y: -9}
+        - {x: -10, y: -13}
+        - {x: 12, y: -13}
+        - {x: 14, y: -9}
+        - {x: 14, y: 3}
+        - {x: 7, y: 7}
     - name: hit_colored_bits_2
       rect:
         serializedVersion: 2
@@ -100,19 +100,19 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -6, y: 23}
-        - {x: -15, y: 16}
-        - {x: -15, y: 6}
-        - {x: -14, y: 3}
-        - {x: -14, y: 2}
-        - {x: 12, y: 2}
-        - {x: 15, y: 3}
-        - {x: 15, y: 21}
-        - {x: 9, y: 23}
+      - - {x: -6, y: 7}
+        - {x: -15, y: 0}
+        - {x: -15, y: -10}
+        - {x: -14, y: -13}
+        - {x: -14, y: -14}
+        - {x: 12, y: -14}
+        - {x: 15, y: -13}
+        - {x: 15, y: 5}
+        - {x: 9, y: 7}
     - name: hit_colored_bits_3
       rect:
         serializedVersion: 2
@@ -120,18 +120,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 9, y: 23}
-        - {x: -2, y: 23}
-        - {x: -15, y: 18}
-        - {x: -15, y: 3}
-        - {x: 12, y: 3}
-        - {x: 14, y: 6}
-        - {x: 15, y: 11}
-        - {x: 15, y: 16}
+      - - {x: 9, y: 7}
+        - {x: -2, y: 7}
+        - {x: -15, y: 2}
+        - {x: -15, y: -13}
+        - {x: 12, y: -13}
+        - {x: 14, y: -10}
+        - {x: 15, y: -5}
+        - {x: 15, y: 0}
     outline: []
   spritePackingTag: 
   userData: 

@@ -21,7 +21,7 @@ namespace CollisionChecking
                     pos.x + colBounds.extents.x,
                     pos.y + colBounds.extents.y
                 ),
-                mask
+                mask.value
             );
 
             return lastCol != null;
@@ -43,7 +43,7 @@ namespace CollisionChecking
                     pos.x + colBounds.extents.x,
                     pos.y + colBounds.extents.y
                 ),
-                mask
+                mask.value
             );
 
             return cols;

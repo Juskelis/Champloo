@@ -15,11 +15,11 @@ public class TauntState : MovementState {
 
         if (tauntTimer <= 0)
         {
-            if (controller.collisions.below)
+            if (controller.collisions.Below)
             {
                 return GetComponent<OnGround>();
             }
-            else if (controller.collisions.left || controller.collisions.right)
+            else if (controller.collisions.Left || controller.collisions.Right)
             {
                 return GetComponent<OnWall>();
             }

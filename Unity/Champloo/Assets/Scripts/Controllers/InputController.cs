@@ -2,19 +2,65 @@
 using UnityEngine;
 using System.Collections;
 using GamepadInput;
+using Rewired;
 
-public class InputController : MonoBehaviour {
+public class InputController : MonoBehaviour
+{
+    public Rewired.Player inputPlayer;
+    private Player player;
+
+    public void Start()
+    {
+        player = GetComponent<Player>();
+        print("Player Number: " + player.PlayerNumber);
+        inputPlayer = ReInput.players.GetPlayer(player.PlayerNumber - 1);
+    }
+
+    /*
+    private static bool HandleInput = true;
+
+    public static void SetInputs(bool on)
+    {
+        HandleInput = on;
+    }
+
+    /// <summary>
+    /// Converts a playerNumber to a GamePad Index
+    /// </summary>
+    /// <param name="playerNumber"> a ONE indexed (starting at 1) player number</param>
+    /// <returns>A conversion to the corresponding gamepad index</returns>
+    public static GamePad.Index ConvertToIndex(int playerNumber)
+    {
+        switch(playerNumber)
+        {
+            case 1:
+                return GamePad.Index.One;
+            case 2:
+                return GamePad.Index.Two;
+            case 3:
+                return GamePad.Index.Three;
+            case 4:
+                return GamePad.Index.Four;
+            default:
+                return GamePad.Index.Any;
+        }
+    }
 
     [Serializable]
     public class ButtonSetting
     {
         private GamePad.Index playerIndex;
         [SerializeField] private GamePad.Button buttonIndex;
+        [SerializeField] private bool useTrigger = false;
+        [SerializeField] private GamePad.Trigger triggerIndex;
+        [SerializeField] private float triggerThreshold = 0.75f;
         //private string input;
 
         private bool isDown;
         private bool isUp;
         private bool isPressed;
+
+        private bool triggerPreviouslyPressed = false;
 
         public bool Down { get { return isDown || onDownTime > 0; } }
         public bool Up { get { return isUp || onUpTime > 0; } }
@@ -42,13 +88,29 @@ public class InputController : MonoBehaviour {
         private float onUpTime;
         private float onPressedTime;
 
-        public void Update(GamePad.Index player = GamePad.Index.Any)
+        //public void Update(GamePad.Index player = GamePad.Index.Any)
+        public void Update(int playerNumber)
         {
-            playerIndex = player;
+            playerIndex = InputController.ConvertToIndex(playerNumber);
 
             isDown = GamePad.GetButtonDown(buttonIndex, playerIndex);//Input.GetButtonDown(input);
             isUp = GamePad.GetButtonUp(buttonIndex, playerIndex);//Input.GetButtonUp(input);
             isPressed = GamePad.GetButton(buttonIndex, playerIndex);//Input.GetButton(input);
+            
+            if (useTrigger)
+            {
+                bool triggerPressed = GamePad.GetTrigger(triggerIndex, playerIndex, true) >= triggerThreshold;
+                if (triggerPressed && !triggerPreviouslyPressed)
+                {
+                    isDown = true;
+                }
+                if (!triggerPressed && triggerPreviouslyPressed)
+                {
+                    isUp = true;
+                }
+                triggerPreviouslyPressed = triggerPressed;
+                isPressed = isPressed || triggerPressed;
+            }
 
             if (isDown) onDownTime = windowDownTime;
             if (isUp) onUpTime = windowUpTime;
@@ -95,35 +157,24 @@ public class InputController : MonoBehaviour {
 
     public void UpdateInputs()
     {
-        switch (playerNumber)
-        {
-            case 1:
-                playerIndex = GamePad.Index.One;
-                break;
-            case 2:
-                playerIndex = GamePad.Index.Two;
-                break;
-            case 3:
-                playerIndex = GamePad.Index.Three;
-                break;
-            case 4:
-                playerIndex = GamePad.Index.Four;
-                break;
-            default:
-                playerIndex = GamePad.Index.Any;
-                break;
-        }
+        if (!HandleInput) return;
 
-        jump.Update(playerIndex);
-        attack.Update(playerIndex);
-        weaponSpecial.Update(playerIndex);
-        movementSpecial.Update(playerIndex);
+        playerIndex = ConvertToIndex(playerNumber);
 
-        taunt.Update(playerIndex);
-        pause.Update(playerIndex);
+        jump.Update(playerNumber);
+        attack.Update(playerNumber);
+        weaponSpecial.Update(playerNumber);
+        movementSpecial.Update(playerNumber);
+
+        block.Update(playerNumber);
+        parry.Update(playerNumber);
+
+        taunt.Update(playerNumber);
+        pause.Update(playerNumber);
 
         leftStick = GamePad.GetAxis(GamePad.Axis.LeftStick, playerIndex);
         rightStick = GamePad.GetAxis(GamePad.Axis.RightStick, playerIndex);
         dPad = GamePad.GetAxis(GamePad.Axis.Dpad, playerIndex);
     }
+    */
 }
