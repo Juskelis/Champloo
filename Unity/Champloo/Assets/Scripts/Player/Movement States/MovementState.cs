@@ -5,7 +5,7 @@ using System.Collections;
 public class MovementState : MonoBehaviour
 {
     protected Player player;
-    protected InputController input;
+    protected Rewired.Player input;
     protected Controller2D controller;
 
     protected float externalForceDecay = 1f;
@@ -13,7 +13,7 @@ public class MovementState : MonoBehaviour
     protected virtual void Start()
     {
         player = GetComponent<Player>();
-        input = GetComponent<InputController>();
+        input = player.InputPlayer;//GetComponent<InputController>();
         controller = GetComponent<Controller2D>();
     }
 

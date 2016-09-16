@@ -18,7 +18,7 @@ public class OnWall : MovementState
     {
         int wallDirX = (controller.collisions.Left) ? -1 : 1;
         //velocity.x = input.leftStick.x;
-        float moveX = input.inputPlayer.GetAxis("Move Horizontal");
+        float moveX = player.InputPlayer.GetAxis("Move Horizontal");
         velocity.x = moveX;
         if (timeToWallUnstick > 0)
         {
@@ -45,7 +45,7 @@ public class OnWall : MovementState
 
         bool jumped = false;
         //if (input.jump.Down)
-        if (input.inputPlayer.GetButtonDown("Jump"))
+        if (player.InputPlayer.GetButtonDown("Jump"))
         {
             jumped = true;
             //input.jump.ResetTimers();

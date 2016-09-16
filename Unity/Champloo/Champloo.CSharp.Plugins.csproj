@@ -80,6 +80,8 @@
   <ItemGroup>
     <None Include="Assets\Fonts\INFO.txt" />
     <None Include="Assets\Fonts\OFL.txt" />
+    <None Include="Assets\Lobby\Documentation.txt" />
+    <None Include="Assets\Lobby\Instruction.txt" />
     <None Include="Assets\Resources\Video_Game_Names.txt" />
     <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
     <None Include="Assets\Rewired\Documentation\ReleaseNotes.txt" />

@@ -6,6 +6,7 @@ using Rewired;
 
 public class InputController : MonoBehaviour
 {
+    /*
     public Rewired.Player inputPlayer;
     private Player player;
 
@@ -15,7 +16,7 @@ public class InputController : MonoBehaviour
         print("Player Number: " + player.PlayerNumber);
         inputPlayer = ReInput.players.GetPlayer(player.PlayerNumber - 1);
     }
-
+    */
     /*
     private static bool HandleInput = true;
 

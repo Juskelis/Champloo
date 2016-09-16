@@ -1,11 +1,9 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
-using Rewired;
+﻿using UnityEngine;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(Controller2D))]
-
-public class Player : MonoBehaviour
+[RequireComponent(typeof(NetworkIdentity))]
+public class Player : NetworkBehaviour
 {
     private bool dead = false;
 
@@ -24,6 +22,21 @@ public class Player : MonoBehaviour
     {
         get { return playerNumber; }
         set { playerNumber = value; }
+    }
+
+    private Rewired.Player inputPlayer;
+
+    public Rewired.Player InputPlayer
+    {
+        get
+        {
+            if (inputPlayer == null)
+            {
+                inputPlayer = Utility.GetNetworkPlayer(GetComponent<NetworkIdentity>().playerControllerId);
+            }
+            return inputPlayer;
+        }
+        private set { inputPlayer = value; }
     }
 
     [SerializeField] private Transform spawnOnDeath;
@@ -71,13 +84,9 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
 
         inputs = GetComponent<InputController>();
-        /*
-        Transform weaponClone = Instantiate(weaponPrefab);
-        weaponClone.SetParent(transform, false);
+        InputPlayer = Utility.GetNetworkPlayer(GetComponent<NetworkIdentity>().playerControllerId);
 
-        Transform shieldClone = Instantiate(shieldPrefab);
-        shieldClone.SetParent(transform, false);
-        */
+        transform.position = Random.insideUnitCircle;
     }
 
     public void Start ()
@@ -101,9 +110,6 @@ public class Player : MonoBehaviour
         //attach to events
         controller.Crushed += Crushed;
         controller.Collision += Collided;
-        //controller.Smashed += Smashed;
-        //controller.Stomped += StompedBy;
-        //controller.Bounced += Bounced;
     }
 
     void Crushed(object sender, GameObject obj)
@@ -113,32 +119,6 @@ public class Player : MonoBehaviour
         FindObjectOfType<Score>().SubtractScore(playerNumber);
         Kill();
         
-    }
-
-    void Smashed(object sender, Player other)
-    {
-        ApplyForce(Vector3.up * bounceForce);
-    }
-
-    void StompedBy(object sender, Player other)
-    {
-        FindObjectOfType<Score>().AddScore(other.playerNumber);
-        Kill();
-    }
-
-    void Bounced(object sender, Player other, bool horizontal)
-    {
-        float dir;
-        if(horizontal)
-        {
-            dir = Mathf.Sign(transform.position.x - other.transform.position.x);
-            ApplyForce(Vector3.right * dir * bounceForce);
-        }
-        else
-        {
-            dir = Mathf.Sign(transform.position.y - other.transform.position.y);
-            ApplyForce(Vector3.up * dir * bounceForce);
-        }
     }
 
     void Collided(object sender, GameObject other, Controller2D.CollisionInfo info)
@@ -222,9 +202,6 @@ public class Player : MonoBehaviour
         //detach from events
         controller.Crushed -= Crushed;
         controller.Collision -= Collided;
-        //controller.Smashed -= Smashed;
-        //controller.Stomped -= StompedBy;
-        //controller.Bounced -= Bounced;
     }
 
     //allows inherited classes to interfere with default FSM transitions
@@ -235,18 +212,18 @@ public class Player : MonoBehaviour
     protected void ChooseNextState(ref MovementState next)
     {
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
-        if(inputs.inputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack))
+        if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack))
         {
             weapon.Attack();
             next = GetComponent<InAttack>();
         }
         //else if (inputs.block.Down && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
-        else if (inputs.inputPlayer.GetButtonDown("Block") && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
+        else if (InputPlayer.GetButtonDown("Block") && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
         {
             next = GetComponent<InBlock>();
         }
         //else if(inputs.movementSpecial.Down && !(movementState is OnDash) && currentDashes > 0)
-        else if(inputs.inputPlayer.GetButtonDown("Movement Special") && !(movementState is OnDash) && currentDashes > 0)
+        else if(InputPlayer.GetButtonDown("Movement Special") && !(movementState is OnDash) && currentDashes > 0)
         {
             currentDashes--;
             TrailRenderer tail = GetComponent<TrailRenderer>();
@@ -255,12 +232,12 @@ public class Player : MonoBehaviour
             next = GetComponent<OnDash>();
             //Vector2 leftStickDir = inputs.leftStick.normalized;
             Vector2 leftStickDir =
-                (Vector2.right*inputs.inputPlayer.GetAxis("Aim Horizontal") +
-                 Vector2.up*inputs.inputPlayer.GetAxis("Aim Vertical")).normalized;
+                (Vector2.right*InputPlayer.GetAxis("Aim Horizontal") +
+                 Vector2.up*InputPlayer.GetAxis("Aim Vertical")).normalized;
             velocity = ((leftStickDir == Vector2.zero)?Vector2.up:leftStickDir) * ((OnDash)next).DashForce;
         }
         //else if(inputs.taunt.Down && (movementState is OnGround))
-        else if(inputs.inputPlayer.GetButtonDown("Taunt") && (movementState is OnGround))
+        else if(InputPlayer.GetButtonDown("Taunt") && (movementState is OnGround))
         {
             next = GetComponent<TauntState>();
         }
@@ -307,7 +284,7 @@ public class Player : MonoBehaviour
                 hitWith = null;
             }
             //else if (!weapon.InHand && inputs.parry.Down)
-            else if (!weapon.InHand && inputs.inputPlayer.GetButtonDown("Parry"))
+            else if (!weapon.InHand && InputPlayer.GetButtonDown("Parry"))
             {
                 //steal weapon like a badass
                 weapon.InHand = true;
@@ -317,7 +294,7 @@ public class Player : MonoBehaviour
         }
 
         //if (inputs.weaponSpecial.Down)
-        if (inputs.inputPlayer.GetButtonDown("Weapon Special"))
+        if (InputPlayer.GetButtonDown("Weapon Special"))
         {
             weapon.Special();
         }
