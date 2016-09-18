@@ -13,8 +13,8 @@ namespace Prototype.NetworkLobby
         public Text slotInfo;
         public Button joinButton;
 
-        public void Populate(MatchDesc match, LobbyManager lobbyManager, Color c)
-        {
+		public void Populate(MatchInfoSnapshot match, LobbyManager lobbyManager, Color c)
+		{
             serverInfoText.text = match.name;
 
             slotInfo.text = match.currentSize.ToString() + "/" + match.maxSize.ToString(); ;
@@ -29,8 +29,8 @@ namespace Prototype.NetworkLobby
 
         void JoinMatch(NetworkID networkID, LobbyManager lobbyManager)
         {
-            lobbyManager.matchMaker.JoinMatch(networkID, "", lobbyManager.OnMatchJoined);
-            lobbyManager.backDelegate = lobbyManager.StopClientClbk;
+			lobbyManager.matchMaker.JoinMatch(networkID, "", "", "", 0, 0, lobbyManager.OnMatchJoined);
+			lobbyManager.backDelegate = lobbyManager.StopClientClbk;
             lobbyManager._isMatchmaking = true;
             lobbyManager.DisplayIsConnecting();
         }

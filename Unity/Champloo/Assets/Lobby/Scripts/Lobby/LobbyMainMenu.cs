@@ -61,8 +61,8 @@ namespace Prototype.NetworkLobby
                 matchNameInput.text,
                 (uint)lobbyManager.maxPlayers,
                 true,
-                "",
-                lobbyManager.OnMatchCreate);
+				"", "", "", 0, 0,
+				lobbyManager.OnMatchCreate);
 
             lobbyManager.backDelegate = lobbyManager.StopHost;
             lobbyManager._isMatchmaking = true;
