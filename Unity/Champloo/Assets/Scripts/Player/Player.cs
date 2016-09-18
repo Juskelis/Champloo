@@ -84,9 +84,13 @@ public class Player : NetworkBehaviour
         anim = GetComponent<Animator>();
 
         inputs = GetComponent<InputController>();
-        InputPlayer = Utility.GetNetworkPlayer(GetComponent<NetworkIdentity>().playerControllerId);
 
-        transform.position = Random.insideUnitCircle;
+        int ourNetworkID = GetComponent<NetworkIdentity>().playerControllerId;
+        playerNumber = Utility.GetLocalPlayerNumber(ourNetworkID);
+        InputPlayer = Utility.GetNetworkPlayer(ourNetworkID);
+
+        //transform.position = Random.insideUnitCircle;
+        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
     }
 
     public void Start ()
@@ -110,6 +114,14 @@ public class Player : NetworkBehaviour
         //attach to events
         controller.Crushed += Crushed;
         controller.Collision += Collided;
+    }
+
+    private void Spawn()
+    {
+        gameObject.SetActive(true);
+        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
+        dead = false;
+        weapon.PickUp();
     }
 
     void Crushed(object sender, GameObject obj)
@@ -195,6 +207,9 @@ public class Player : NetworkBehaviour
 
         gameObject.SetActive(false);
         dead = true;
+        float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
+        print("Spawn time: " + time);
+        Invoke("Spawn", time);
     }
 
     void Destroy()
