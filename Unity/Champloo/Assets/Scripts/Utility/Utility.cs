@@ -19,6 +19,7 @@ public class Utility {
 
     public static Rewired.Player GetNetworkPlayer(int networkControllerID)
     {
+        /*
         for (int i = 0; i < ClientScene.localPlayers.Count; i++)
         {
             if (ClientScene.localPlayers[i].playerControllerId == networkControllerID)
@@ -27,5 +28,20 @@ public class Utility {
             }
         }
         return null;
+        */
+        int localID = GetLocalPlayerNumber(networkControllerID);
+        return localID >= 0 ? ReInput.players.GetPlayer(localID) : null;
+    }
+
+    public static int GetLocalPlayerNumber(int networkControllerID)
+    {
+        for (int i = 0; i < ClientScene.localPlayers.Count; i++)
+        {
+            if (ClientScene.localPlayers[i].playerControllerId == networkControllerID)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 }
