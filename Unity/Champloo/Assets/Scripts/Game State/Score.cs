@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 
-public class Score : MonoBehaviour
+public class Score : NetworkBehaviour
 {
 
     [SerializeField]
@@ -21,6 +22,8 @@ public class Score : MonoBehaviour
 
     private void Update()
     {
+        if (!isServer) return;
+
         if(!lateStartDone)
         {
             scores = new List<int>(FindObjectsOfType<Player>().Length);
