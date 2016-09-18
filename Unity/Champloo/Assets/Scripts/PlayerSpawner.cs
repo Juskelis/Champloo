@@ -16,6 +16,7 @@ public class PlayerSpawner : MonoBehaviour {
 
     [SerializeField]
     private float spawnTime;
+    public float SpawnTime { get { return spawnTime; } private set { spawnTime = value; } }
 
     [SerializeField]
     private List<Player> players;
@@ -24,8 +25,15 @@ public class PlayerSpawner : MonoBehaviour {
 
     void Awake()
     {
+        /*
         players = new List<Player>();
         playerSpawnTimes = new List<float>();
+
+        foreach (var player in FindObjectsOfType<Player>())
+        {
+            players.Add(player);
+            playerSpawnTimes.Add(spawnTime);
+        }
 
         PlayerSettings settings = FindObjectOfType<PlayerSettings>();
         int numPlayers = settings.GetNumPlayers();
@@ -60,6 +68,7 @@ public class PlayerSpawner : MonoBehaviour {
             players.Add(player.GetComponent<Player>());
             playerSpawnTimes.Add(spawnTime);
         }
+        */
     }
 
     void OnDrawGizmos()
@@ -73,7 +82,9 @@ public class PlayerSpawner : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+        /*
 	    foreach(Player p in FindObjectsOfType<Player>())
         {
             playerSpawnTimes[p.PlayerNumber-1] = spawnTime;
@@ -88,6 +99,7 @@ public class PlayerSpawner : MonoBehaviour {
                 playerSpawnTimes[i] = spawnTime;
             }
         }
+        */
 	}
 
     void SpawnPlayer(int playerNumber)
@@ -103,7 +115,7 @@ public class PlayerSpawner : MonoBehaviour {
         p.Start();
     }
 
-    Vector3 FindValidSpawn(Player p, int maxAttempts = 30)
+    public Vector3 FindValidSpawn(Player p, int maxAttempts = 30)
     {
         BoxCollider2D col = p.GetComponent<BoxCollider2D>();
 
