@@ -2,6 +2,30 @@
 using UnityEngine;
 using System.Collections;
 
+
+public class PlayerSettings : MonoBehaviour
+{
+    public Color Color;
+    public string Name;
+    public string PrefabPath; //useful for Resources
+    public Transform Prefab;  //used for AssetBundles
+
+    public static PlayerSettings GetSettingsFor(int playerNumber)
+    {
+        foreach (var player in FindObjectsOfType<Player>())
+        {
+            if (player.PlayerNumber == playerNumber)
+            {
+                return player.GetComponent<PlayerSettings>();
+            }
+        }
+        return null;
+    }
+}
+
+
+//old version; uses playerprefs to store player info
+/*
 public class PlayerSettings : MonoBehaviour {
 
     /// <summary>
@@ -153,3 +177,4 @@ public class PlayerSettings : MonoBehaviour {
         }
     }
 }
+*/
