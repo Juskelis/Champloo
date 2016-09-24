@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Net;
+using UnityEngine.Networking;
 
 public class PlayerScoreCard : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class PlayerScoreCard : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	    scoreService = FindObjectOfType<Score>();
+	    scoreService = Score.instance;//FindObjectOfType<Score>();
 	    maxScore = scoreService.WinScore;
         playerNameText = GetComponentInChildren<Text>();
 
@@ -59,7 +60,7 @@ public class PlayerScoreCard : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	    score = scoreService.Scores[playerNumber];
+	    score = Score.Scores[playerNumber];
 
 	    for (int i = 0; i < maxScore; i++)
 	    {
