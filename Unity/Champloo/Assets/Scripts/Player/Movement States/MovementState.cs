@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class MovementState : MonoBehaviour
+public class MovementState : NetworkBehaviour
 {
     protected Player player;
     protected Rewired.Player input;
