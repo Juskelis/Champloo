@@ -41,8 +41,19 @@ public class PlayerScoreCard : MonoBehaviour
 	        im.preserveAspect = true;
 	        g.transform.SetParent(indicatorParent, false);
             scores.Add(im);
-            playerNameText.text = FindObjectOfType<PlayerSettings>().GetPlayerName(playerNumber + 1);
-	    }
+        }
+
+
+        PlayerSettings settings = PlayerSettings.GetSettingsFor(playerNumber);
+	    playerNameText.text = settings != null ? settings.Name : "Name";
+
+	    /*
+	    PlayerSettings settings = FindObjectOfType<PlayerSettings>();
+        if(settings == null) print("settings is null!");
+	    string playerName = settings.GetPlayerName(playerNumber + 1);
+	    playerNameText.text = playerName;
+        */
+	    //playerNameText.text = FindObjectOfType<PlayerSettings>().GetPlayerName(playerNumber + 1);
 	}
 	
 	// Update is called once per frame

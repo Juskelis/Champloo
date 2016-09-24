@@ -121,6 +121,7 @@ public class PlayerSelect : MonoBehaviour
 
     public void SavePlayerSelection()
     {
+        /*
         PlayerSettings settings = FindObjectOfType<PlayerSettings>();
 
         settings.SetPlayerName(PlayerIndex, playerName.text);
@@ -139,5 +140,6 @@ public class PlayerSelect : MonoBehaviour
             settings.SetPlayerPrefab(PlayerIndex, "Prefabs/Player/" + playerPrefab.text);
         else
             settings.SetPlayerPrefab(PlayerIndex, "Prefabs/Player/Player");
+            */
     }
 }
