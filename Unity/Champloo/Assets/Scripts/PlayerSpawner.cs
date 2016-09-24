@@ -119,9 +119,6 @@ public class PlayerSpawner : MonoBehaviour {
     {
         BoxCollider2D col = p.GetComponent<BoxCollider2D>();
 
-        Vector2 min = new Vector2(-9, -4);
-        Vector2 max = new Vector2(9, 4);
-
         SpawnZone zone;
 
         Vector2 test = Vector2.zero;
