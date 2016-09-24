@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 
-public class Match : MonoBehaviour
+public class Match : NetworkBehaviour
 {
+    public static List<Player> players = new List<Player>();
+    public static Match instance = null;
 
     [SerializeField]
     private UnityEvent onStart;
@@ -20,15 +22,16 @@ public class Match : MonoBehaviour
 
     [SerializeField]
     private UnityEvent onLeave;
+
+
     [SerializeField]
     private float secondsToLeave;
-
+    
+    [ServerCallback]
     public void Start()
     {
-        /*
-        onStart.Invoke();
-        SetPlayerInput(true);
-        */
+        //onStart.Invoke();
+        //SetPlayerInput(true);
         Invoke("MatchStart", 0.001f);
     }
 
