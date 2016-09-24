@@ -5,27 +5,60 @@ using UnityEngine.Networking;
 [RequireComponent(typeof(NetworkIdentity))]
 public class Player : NetworkBehaviour
 {
+    #region Variables
+
+    #region State Variables
+    [SyncVar]
     private bool dead = false;
 
     [SerializeField]
-    [Range(1,4)]
+    [Range(1, 4)]
     private int playerNumber = 1;
-
-    [SerializeField]
-    private Color playerColor = Color.white;
-    [SerializeField]
-    private SpriteRenderer[] coloredSprites;
-    [SerializeField]
-    private Transform visuals;
-
     public int PlayerNumber
     {
         get { return playerNumber; }
         set { playerNumber = value; }
     }
 
-    private Rewired.Player inputPlayer;
+    private int ourNetworkID;
 
+    private int currentDashes = 0;
+    
+    private MovementState movementState;
+    public MovementState CurrentMovementState
+    {
+        get { return movementState; }
+    }
+
+    #endregion
+
+    #region Customization Variables
+
+    [SerializeField]
+    private Color playerColor = Color.white;
+
+    [SerializeField]
+    private SpriteRenderer[] coloredSprites;
+
+    [SerializeField]
+    private Transform visuals;
+
+    [SerializeField]
+    private Transform spawnOnDeath;
+
+    [SerializeField]
+    private float bounceForce = 10f;
+
+    [SerializeField]
+    private float deathForce = 20f;
+
+    public float hitReactionTime;
+
+    #endregion
+
+    #region Utility Variables
+
+    private Rewired.Player inputPlayer;
     public Rewired.Player InputPlayer
     {
         get
@@ -38,46 +71,43 @@ public class Player : NetworkBehaviour
         }
         private set { inputPlayer = value; }
     }
+    
+    [SyncVar]
+    private Vector3 velocity = Vector3.zero;
+    [SyncVar]
+    private Vector3 externalForce = Vector3.zero;
 
-    [SerializeField] private Transform spawnOnDeath;
+    public float Gravity { get; set; }
+
+    private Weapon hitWith;
+
+    #endregion
+
+    #region Component Variables
 
     private InputController inputs;
     private BoxCollider2D box;
     private Controller2D controller;
     private Animator anim;
-    
-    [SerializeField]
-    private Transform weaponPrefab;
-    [SerializeField]
-    private Transform shieldPrefab;
 
     private Weapon weapon;
     private Shield shield;
 
-    [SerializeField]
-    private float bounceForce = 10f;
-    [SerializeField]
-    private float deathForce = 20f;
+    #endregion
 
-    private Vector3 velocity = Vector3.zero;
-    private Vector3 externalForce = Vector3.zero;
+    #endregion
 
-    private int currentDashes = 0;
-    
-    public float Gravity { get; set; }
-
-    public float hitReactionTime;
-
-    private MovementState movementState;
-    public MovementState CurrentMovementState
-    {
-        get { return movementState; }
-    }
-
-    private Weapon hitWith;
+    #region Initialization
 
     void Awake()
     {
+    }
+
+    //[ClientCallback]
+    public void Start ()
+    {
+        weapon = GetComponentInChildren<Weapon>();
+        shield = GetComponentInChildren<Shield>();
         movementState = GetComponent<OnGround>();
         box = GetComponent<BoxCollider2D>();
         controller = GetComponent<Controller2D>();
@@ -85,18 +115,13 @@ public class Player : NetworkBehaviour
 
         inputs = GetComponent<InputController>();
 
-        int ourNetworkID = GetComponent<NetworkIdentity>().playerControllerId;
-        playerNumber = Utility.GetLocalPlayerNumber(ourNetworkID);
-        InputPlayer = Utility.GetNetworkPlayer(ourNetworkID);
-
+        ourNetworkID = (int)GetComponent<NetworkIdentity>().netId.Value;
+        int ourPlayerControllerID = GetComponent<NetworkIdentity>().playerControllerId;
+        //playerNumber = Utility.GetLocalPlayerNumber(ourPlayerControllerID);
+        playerNumber = ourNetworkID;
+        InputPlayer = Utility.GetNetworkPlayer(ourPlayerControllerID);
         //transform.position = Random.insideUnitCircle;
         transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
-    }
-
-    public void Start ()
-    {
-        weapon = GetComponentInChildren<Weapon>();
-        shield = GetComponentInChildren<Shield>();
 
         dead = false;
 
@@ -114,7 +139,28 @@ public class Player : NetworkBehaviour
         //attach to events
         controller.Crushed += Crushed;
         controller.Collision += Collided;
+
+        //add to score register
+        Score.AddPlayer(ourNetworkID);
     }
+
+    #endregion
+
+    #region De-Initialization
+
+    void Destroy()
+    {
+        //detach from events
+        controller.Crushed -= Crushed;
+        controller.Collision -= Collided;
+
+        //detach from score register
+        Score.RemovePlayer(ourNetworkID);
+    }
+
+    #endregion
+
+    #region Spawning
 
     private void Spawn()
     {
@@ -124,6 +170,66 @@ public class Player : NetworkBehaviour
         weapon.PickUp();
     }
 
+    #endregion
+
+    #region Death
+
+    [Command]
+    void CmdKill(Vector3 direction)
+    {
+        RpcKilled(direction);
+    }
+    
+    //[Client]
+    void Kill(Vector3 direction = default(Vector3))
+    {
+        if (isLocalPlayer && hasAuthority)
+        {
+            CmdKill(direction);
+        }
+        /*
+        else if (isServer)
+        {
+            RpcKilled(direction);
+        }
+        else
+        {
+            //local copy of other player got killed
+            //  so we need to notify authoritative version
+            //  of other player that they died
+        }
+        */
+    }
+
+    [ClientRpc]
+    void RpcKilled(Vector3 direction)
+    {
+        ShakeCamera();
+
+        velocity = Vector3.zero;
+
+        velocity = Vector3.zero;
+        externalForce = Vector3.zero;
+        hitWith = null;
+
+        if (spawnOnDeath != null)
+        {
+            Transform corpse = (Transform)Instantiate(spawnOnDeath, transform.position, transform.rotation);
+            Rigidbody2D corpseBody = corpse.GetComponent<Rigidbody2D>();
+            corpseBody.gravityScale = Gravity / Physics2D.gravity.magnitude;
+            corpseBody.velocity = direction;
+        }
+
+        gameObject.SetActive(false);
+        dead = true;
+        float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
+        Invoke("Spawn", time);
+    }
+
+    #endregion
+
+    #region Collision Callbacks
+    [Client]
     void Crushed(object sender, GameObject obj)
     {
         
@@ -146,7 +252,7 @@ public class Player : NetworkBehaviour
             if (movementState is OnDash && !otherPlayer.dead)
             {
                 //kill them!
-                Score();
+                CmdScore();
                 otherPlayer.Kill(Vector3.down);
             }
         }
@@ -157,7 +263,7 @@ public class Player : NetworkBehaviour
                 //they killed us!
                 Kill(Vector3.down);
                 otherPlayer.ApplyForce(Vector3.up * bounceForce);
-                otherPlayer.Score();
+                otherPlayer.CmdScore();
             }
         }
         else if (info.Left || info.Right)
@@ -168,6 +274,75 @@ public class Player : NetworkBehaviour
         }
     }
 
+    [ClientCallback]
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        //skip if the other object is inactive
+        //  or if the other object is our child
+        if (!col.gameObject.activeSelf || col.transform.IsChildOf(transform))
+        {
+            return;
+        }
+
+        Weapon otherWeapon = col.GetComponent<Weapon>();
+        if (otherWeapon != null && hitWith == null)
+        {
+            hitWith = otherWeapon;
+            ShakeCamera();
+            Invoke("GetHit", hitReactionTime);
+        }
+    }
+
+    [ClientCallback]
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (!col.gameObject.activeSelf)
+        {
+            return;
+        }
+
+        Projectile p = col.gameObject.GetComponent<Projectile>();
+        if (p != null)
+        {
+            if (p.PlayerNumber == playerNumber)
+            {
+                if (!p.Moving && !weapon.InHand)
+                {
+                    weapon.PickUp();
+                    Destroy(p.gameObject);
+                }
+            }
+            else if (p.Moving)
+            {
+                //Score.instance.AddScore(p.PlayerNumber);
+                Score.instance.CmdScore(p.PlayerNumber);
+                Kill(p.transform.right * deathForce);
+            }
+        }
+    }
+
+    void GetHit()
+    {
+        if (hitWith == null) return;
+
+        Score s = Score.instance;//FindObjectOfType<Score>();
+        Player other = hitWith.GetComponentInParent<Player>();
+        if (other == null) Debug.LogError("Get Hit other object is null");
+
+        int otherNum = other.PlayerNumber;
+        print(otherNum);
+
+        //s.AddScore(otherNum);
+        other.CmdScore();
+
+
+        //FindObjectOfType<Score>().AddScore(hitWith.GetComponentInParent<Player>().PlayerNumber);
+        Kill(hitWith.transform.right * deathForce);
+    }
+
+    #endregion
+
+    #region Helpers
     public void ApplyForce(Vector3 force)
     {
         //velocity = force;
@@ -177,59 +352,61 @@ public class Player : NetworkBehaviour
         if (Mathf.Abs(force.z) > threshold) velocity.z = force.z;
     }
 
-    void ShakeCamera()
+    private void ShakeCamera()
     {
         EZCameraShake.CameraShaker.Instance.ShakeOnce(10f, 10f, 0f, 0.5f);
     }
-
-    private void Score()
+    
+    [Command]
+    private void CmdScore()
     {
-        FindObjectOfType<Score>().AddScore(playerNumber);
+        if (!isServer) return;
+        //FindObjectOfType<Score>().AddScore(playerNumber);
+        Score.instance.AddScore(playerNumber);
+    }
+    #endregion
+
+    #region Data Syncronization
+    [Command]
+    private void CmdUpdateMovementState(string state)
+    {
+        //print("state is '" + state + "'");
+        RpcUpdateMovementState(state);
     }
 
-    void Kill(Vector3 direction = default(Vector3))
+    [ClientRpc]
+    private void RpcUpdateMovementState(string state)
     {
-        print("killed");
-
-        ShakeCamera();
-
-        velocity = Vector3.zero;
-        externalForce = Vector3.zero;
-        hitWith = null;
-
-        if (spawnOnDeath != null)
-        {
-            Transform corpse = (Transform)Instantiate(spawnOnDeath, transform.position, transform.rotation);
-            Rigidbody2D corpseBody = corpse.GetComponent<Rigidbody2D>();
-            corpseBody.gravityScale = Gravity/Physics2D.gravity.magnitude;
-            corpseBody.velocity = direction;
-        }
-
-        gameObject.SetActive(false);
-        dead = true;
-        float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
-        print("Spawn time: " + time);
-        Invoke("Spawn", time);
+        movementState = (MovementState)GetComponent(state);
     }
 
-    void Destroy()
+    [Command]
+    private void CmdAttack()
     {
-        //detach from events
-        controller.Crushed -= Crushed;
-        controller.Collision -= Collided;
+        RpcAttack();
     }
 
+    [ClientRpc]
+    private void RpcAttack()
+    {
+        weapon.Attack();
+    }
+    #endregion
+
+    #region Main Loop
     //allows inherited classes to interfere with default FSM transitions
     //  by intercepting the desired next state before it reaches
     //  the end user
     //also lets user do polymorphic events for transitions, if need be.
     //  (note: only gives player scope)
+    [Client]
     protected void ChooseNextState(ref MovementState next)
     {
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
         if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack))
         {
-            weapon.Attack();
+            //weapon.Attack();
+            CmdAttack();
             next = GetComponent<InAttack>();
         }
         //else if (inputs.block.Down && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
@@ -274,8 +451,14 @@ public class Player : NetworkBehaviour
         }
     }
 
+    [ClientCallback]
     void Update()
     {
+        if (!isLocalPlayer)
+        {
+            //controller.Move(velocity * Time.deltaTime);
+            return;
+        }
         //inputs.UpdateInputs();
         
         MovementState next = movementState.UpdateState(ref velocity, ref externalForce);
@@ -289,6 +472,7 @@ public class Player : NetworkBehaviour
             movementState.OnExit();
             next.OnEnter();
             movementState = next;
+            CmdUpdateMovementState(movementState.GetType().ToString());
         }
 
         //handle blocking/parrying
@@ -333,66 +517,5 @@ public class Player : NetworkBehaviour
             }
         }
     }
-
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        //skip if the other object is inactive
-        //  or if the other object is our child
-        if (!col.gameObject.activeSelf || col.transform.IsChildOf(transform))
-        {
-            return;
-        }
-
-        Weapon otherWeapon = col.GetComponent<Weapon>();
-        if (otherWeapon != null && hitWith == null)
-        {
-            hitWith = otherWeapon;
-            ShakeCamera();
-            Invoke("GetHit", hitReactionTime);
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if(!col.gameObject.activeSelf)
-        {
-            return;
-        }
-
-        Projectile p = col.gameObject.GetComponent<Projectile>();
-        if(p != null)
-        {
-            if(p.PlayerNumber == playerNumber)
-            {
-                if (!p.Moving && !weapon.InHand)
-                {
-                    weapon.PickUp();
-                    Destroy(p.gameObject);
-                }
-            }
-            else if(p.Moving)
-            {
-                FindObjectOfType<Score>().AddScore(p.PlayerNumber);
-                Kill(p.transform.right * deathForce);
-            }
-        }
-    }
-
-    void GetHit()
-    {
-        if (hitWith == null) return;
-
-        Score s = FindObjectOfType<Score>();
-        Player other = hitWith.GetComponentInParent<Player>();
-        if (other == null) print("oh no the other player is null");
-
-        int otherNum = other.PlayerNumber;
-        print(otherNum);
-
-        s.AddScore(otherNum);
-
-
-        //FindObjectOfType<Score>().AddScore(hitWith.GetComponentInParent<Player>().PlayerNumber);
-        Kill(hitWith.transform.right * deathForce);
-    }
+    #endregion
 }
