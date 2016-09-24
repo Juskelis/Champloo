@@ -457,6 +457,7 @@ public class Player : NetworkBehaviour
         if (!isLocalPlayer)
         {
             //controller.Move(velocity * Time.deltaTime);
+            UpdateDirection();
             return;
         }
         //inputs.UpdateInputs();
@@ -501,6 +502,7 @@ public class Player : NetworkBehaviour
         //update animation states
         if (anim != null)
         {
+            UpdateDirection();
             float velMag = Mathf.Abs(velocity.x);
             anim.SetFloat("HorizontalSpeed", velMag);
             anim.SetBool("OnGround", movementState is OnGround);
@@ -509,12 +511,17 @@ public class Player : NetworkBehaviour
             //anim.SetBool("InAttack", movementState is InAttack);
             anim.SetBool("InAir", movementState is InAir);
             anim.SetBool("Hit", hitWith != null);
-            if (velMag > 0.01f)
-            { 
-                Vector3 localScale = visuals.localScale;
-                localScale.x = Mathf.Sign(velocity.x);
-                visuals.localScale = localScale;
-            }
+        }
+    }
+
+    private void UpdateDirection()
+    {
+        float velMag = Mathf.Abs(velocity.x);
+        if (velMag > 0.01f)
+        {
+            Vector3 localScale = visuals.localScale;
+            localScale.x = Mathf.Sign(velocity.x);
+            visuals.localScale = localScale;
         }
     }
     #endregion
