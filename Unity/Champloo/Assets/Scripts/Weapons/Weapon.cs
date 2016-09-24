@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,13 +18,19 @@ public class Weapon : MonoBehaviour {
     private float attackTimer;
     private float reloadTimer;
 
+    private bool isLocalPlayer = false;
+
+    //[ClientCallback]
     protected virtual void Start()
     {
         InHand = true;
+        isLocalPlayer = GetComponentInParent<NetworkIdentity>().isLocalPlayer;
     }
 
+    //[ClientCallback]
     protected virtual void Update()
     {
+        if (!isLocalPlayer) return;
         attackTimer -= Time.deltaTime;
         reloadTimer -= Time.deltaTime;
     }
