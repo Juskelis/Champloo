@@ -78,11 +78,13 @@ public class InAir : MovementState
         return null;
     }
 
-    public override void OnEnter()
+    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
     {
+        movementSpecial.OnEnterAir(ref velocity, ref externalForces);
     }
 
-    public override void OnExit()
+    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
     {
+        movementSpecial.OnExitAir(ref velocity, ref externalForces);
     }
 }

@@ -38,8 +38,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Transform shieldPrefab;
 
+
     private Weapon weapon;
     private Shield shield;
+    private OnMovementSpecial movementSpecial;
+
 
     [SerializeField]
     private float bounceForce = 10f;
@@ -48,8 +51,6 @@ public class Player : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
     private Vector3 externalForce = Vector3.zero;
-
-    private int currentDashes = 0;
     
     public float Gravity { get; set; }
 
@@ -66,11 +67,13 @@ public class Player : MonoBehaviour
     void Awake()
     {
         movementState = GetComponent<OnGround>();
+        movementSpecial = GetComponent<OnMovementSpecial>();
         box = GetComponent<BoxCollider2D>();
         controller = GetComponent<Controller2D>();
         anim = GetComponent<Animator>();
 
         inputs = GetComponent<InputController>();
+
         /*
         Transform weaponClone = Instantiate(weaponPrefab);
         weaponClone.SetParent(transform, false);
@@ -95,8 +98,6 @@ public class Player : MonoBehaviour
             s.color = playerColor;
         }
         //inputs.playerNumber = playerNumber;
-
-        currentDashes = GetComponent<OnDash>().DashLimit;
 
         //attach to events
         controller.Crushed += Crushed;
@@ -145,8 +146,10 @@ public class Player : MonoBehaviour
     {
         Player otherPlayer = other.GetComponent<Player>();
         if (otherPlayer == null) return;
-        
-        //at this point, we are only dealing with player collisions
+
+        //This section deals with player collisions
+        //This section needs to be changed to not reference dash
+        //If another player is below 
         if (info.Below)
         {
             //bounce off their head no matter what
@@ -158,6 +161,7 @@ public class Player : MonoBehaviour
                 otherPlayer.Kill(Vector3.down);
             }
         }
+        //if another player is above
         else if (info.Above)
         {
             if (otherPlayer.movementState is OnDash && !dead)
@@ -168,6 +172,7 @@ public class Player : MonoBehaviour
                 otherPlayer.Score();
             }
         }
+        //if another player is to the side
         else if (info.Left || info.Right)
         {
             //bounce away
@@ -230,12 +235,12 @@ public class Player : MonoBehaviour
     //allows inherited classes to interfere with default FSM transitions
     //  by intercepting the desired next state before it reaches
     //  the end user
-    //also lets user do polymorphic events for transitions, if need be.
+    //  also lets user do polymorphic events for transitions, if need be.
     //  (note: only gives player scope)
     protected void ChooseNextState(ref MovementState next)
     {
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
-        if(inputs.inputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack))
+        if (inputs.inputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack))
         {
             weapon.Attack();
             next = GetComponent<InAttack>();
@@ -245,40 +250,16 @@ public class Player : MonoBehaviour
         {
             next = GetComponent<InBlock>();
         }
+
         //else if(inputs.movementSpecial.Down && !(movementState is OnDash) && currentDashes > 0)
-        else if(inputs.inputPlayer.GetButtonDown("Movement Special") && !(movementState is OnDash) && currentDashes > 0)
+        else if (inputs.inputPlayer.GetButtonDown("Movement Special") && !(movementState is OnMovementSpecial) && (!movementSpecial.isDisabled))
         {
-            currentDashes--;
-            TrailRenderer tail = GetComponent<TrailRenderer>();
-            tail.enabled = true;
-            tail.Clear();
-            next = GetComponent<OnDash>();
-            //Vector2 leftStickDir = inputs.leftStick.normalized;
-            Vector2 leftStickDir =
-                (Vector2.right*inputs.inputPlayer.GetAxis("Aim Horizontal") +
-                 Vector2.up*inputs.inputPlayer.GetAxis("Aim Vertical")).normalized;
-            velocity = ((leftStickDir == Vector2.zero)?Vector2.up:leftStickDir) * ((OnDash)next).DashForce;
-        }
-        //else if(inputs.taunt.Down && (movementState is OnGround))
-        else if(inputs.inputPlayer.GetButtonDown("Taunt") && (movementState is OnGround))
-        {
-            next = GetComponent<TauntState>();
+            next = GetComponentInChildren<OnMovementSpecial>();
         }
 
-        if (next != null)
+        else if (inputs.inputPlayer.GetButtonDown("Taunt") && (movementState is OnGround))
         {
-            if (movementState is OnDash)
-            {
-                GetComponent<TrailRenderer>().enabled = false;
-            }
-            if(movementState is OnGround)
-            {
-                currentDashes = GetComponent<OnDash>().DashLimit;
-            }
-            if (movementState is OnWall)
-            {
-                currentDashes = Mathf.Max(currentDashes, 1);
-            }
+            next = GetComponent<TauntState>();
         }
     }
 
@@ -294,8 +275,8 @@ public class Player : MonoBehaviour
 
         if (next != null)
         {
-            movementState.OnExit();
-            next.OnEnter();
+            movementState.OnExit(ref velocity, ref externalForce);
+            next.OnEnter(ref velocity, ref externalForce);
             movementState = next;
         }
 
@@ -328,7 +309,7 @@ public class Player : MonoBehaviour
             float velMag = Mathf.Abs(velocity.x);
             anim.SetFloat("HorizontalSpeed", velMag);
             anim.SetBool("OnGround", movementState is OnGround);
-            anim.SetBool("OnDash", movementState is OnDash);
+            //anim.SetBool("OnDash", movementState is OnDash);
             anim.SetBool("OnWall", movementState is OnWall);
             //anim.SetBool("InAttack", movementState is InAttack);
             anim.SetBool("InAir", movementState is InAir);
