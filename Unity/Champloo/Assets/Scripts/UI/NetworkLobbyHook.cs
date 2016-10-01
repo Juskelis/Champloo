@@ -9,7 +9,7 @@ public class NetworkLobbyHook : LobbyHook {
         LobbyPlayer lobby = lobbyPlayer.GetComponent<LobbyPlayer>();
         PlayerSettings playerSettings = gamePlayer.GetComponent<PlayerSettings>();
 
-        playerSettings.Name = lobby.name;
+        playerSettings.Name = lobby.playerName;
         playerSettings.Color = lobby.playerColor;
     }
 }
