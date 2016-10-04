@@ -81,12 +81,14 @@ public class OnWall : MovementState
         return null;
     }
 
-    public override void OnEnter()
+    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
     {
         timeToWallUnstick = wallStickTime;
+        movementSpecial.OnEnterWall(ref velocity, ref externalForces);
     }
 
-    public override void OnExit()
+    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
     {
+        movementSpecial.OnExitWall(ref velocity, ref externalForces);
     }
 }

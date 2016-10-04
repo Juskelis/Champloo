@@ -92,12 +92,14 @@ public class OnGround : MovementState
         return null;
     }
 
-    public override void OnEnter()
+    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
     {
+        movementSpecial.OnEnterGround(ref velocity, ref externalForces);
     }
 
-    public override void OnExit()
+    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
     {
+        movementSpecial.OnExitGround(ref velocity, ref externalForces);
     }
 
 }

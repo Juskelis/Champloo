@@ -29,12 +29,14 @@ public class TauntState : MovementState {
         return null;
     }
 
-    public override void OnEnter()
+    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
     {
         tauntTimer = tauntDuration;
+        movementSpecial.OnEnterTaunt(ref velocity, ref externalForces);
     }
 
-    public override void OnExit()
+    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
     {
+        movementSpecial.OnExitTaunt(ref velocity, ref externalForces);
     }
 }

@@ -7,7 +7,7 @@ public class MovementState : MonoBehaviour
     protected Player player;
     protected InputController input;
     protected Controller2D controller;
-
+    protected OnMovementSpecial movementSpecial;
     protected float externalForceDecay = 1f;
 
     protected virtual void Start()
@@ -15,15 +15,16 @@ public class MovementState : MonoBehaviour
         player = GetComponent<Player>();
         input = GetComponent<InputController>();
         controller = GetComponent<Controller2D>();
+        movementSpecial = GetComponent<OnMovementSpecial>();
     }
 
     private void Update() { } //prevent children from using this
 
     public virtual MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces) { return null; }
 
-    public virtual void OnEnter() { }
+    public virtual void OnEnter(ref Vector3 velocity, ref Vector3 externalForces) { }
 
-    public virtual void OnExit() { }
+    public virtual void OnExit(ref Vector3 velocity, ref Vector3 externalForces) { }
 
     public virtual void DecayExternalForces(ref Vector3 externalForces)
     {
