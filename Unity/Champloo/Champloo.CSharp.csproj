@@ -75,10 +75,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\EZ Camera Shake\Demo\Sample Scripts\ShakeByDistance.cs" />
-    <Compile Include="Assets\EZ Camera Shake\Demo\Sample Scripts\ShakeOnKeyPress.cs" />
-    <Compile Include="Assets\EZ Camera Shake\Demo\Sample Scripts\ShakeOnTrigger.cs" />
-    <Compile Include="Assets\EZ Camera Shake\Demo\ShakeDemo.cs" />
     <Compile Include="Assets\EZ Camera Shake\Scripts\CameraShakeInstance.cs" />
     <Compile Include="Assets\EZ Camera Shake\Scripts\CameraShakePresets.cs" />
     <Compile Include="Assets\EZ Camera Shake\Scripts\CameraShaker.cs" />
@@ -163,6 +159,7 @@
     <Compile Include="Assets\Scripts\Player\Movement States\MovementState.cs" />
     <Compile Include="Assets\Scripts\Player\Movement States\OnDash.cs" />
     <Compile Include="Assets\Scripts\Player\Movement States\OnGround.cs" />
+    <Compile Include="Assets\Scripts\Player\Movement States\OnMovementSpecial.cs" />
     <Compile Include="Assets\Scripts\Player\Movement States\OnWall.cs" />
     <Compile Include="Assets\Scripts\Player\Movement States\TauntState.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
@@ -177,6 +174,7 @@
     <Compile Include="Assets\Scripts\UI\GIF Encoder\NeuQuant.cs" />
     <Compile Include="Assets\Scripts\UI\Menu.cs" />
     <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
+    <Compile Include="Assets\Scripts\UI\NetworkLobbyHook.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\Carousels\Carousel.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\Carousels\NameCarousel.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\PlayerSelect.cs" />

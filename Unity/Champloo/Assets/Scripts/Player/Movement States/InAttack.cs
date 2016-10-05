@@ -33,11 +33,13 @@ public class InAttack : MovementState
         return null;
     }
 
-    public override void OnEnter()
+    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
     {
+        movementSpecial.OnEnterAttack(ref velocity, ref externalForces);
     }
 
-    public override void OnExit()
+    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
     {
+        movementSpecial.OnExitAttack(ref velocity, ref externalForces);
     }
 }

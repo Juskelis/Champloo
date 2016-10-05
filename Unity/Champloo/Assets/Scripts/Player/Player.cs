@@ -66,12 +66,12 @@ public class Player : NetworkBehaviour
             if (inputPlayer == null)
             {
                 inputPlayer = Utility.GetNetworkPlayer(GetComponent<NetworkIdentity>().playerControllerId);
-            }
+    }
             return inputPlayer;
         }
         private set { inputPlayer = value; }
     }
-    
+
     [SyncVar]
     private Vector3 velocity = Vector3.zero;
     [SyncVar]
@@ -93,6 +93,8 @@ public class Player : NetworkBehaviour
     private Weapon weapon;
     private Shield shield;
 
+    private OnMovementSpecial movementSpecial;
+
     #endregion
 
     #endregion
@@ -109,6 +111,7 @@ public class Player : NetworkBehaviour
         weapon = GetComponentInChildren<Weapon>();
         shield = GetComponentInChildren<Shield>();
         movementState = GetComponent<OnGround>();
+        movementSpecial = GetComponent<OnMovementSpecial>();
         box = GetComponent<BoxCollider2D>();
         controller = GetComponent<Controller2D>();
         anim = GetComponent<Animator>();
@@ -134,8 +137,6 @@ public class Player : NetworkBehaviour
         }
         //inputs.playerNumber = playerNumber;
 
-        currentDashes = GetComponent<OnDash>().DashLimit;
-
         //attach to events
         controller.Crushed += Crushed;
         controller.Collision += Collided;
@@ -157,9 +158,9 @@ public class Player : NetworkBehaviour
         //detach from score register
         Score.RemovePlayer(ourNetworkID);
     }
-
+        
     #endregion
-
+        
     #region Spawning
 
     private void Spawn()
@@ -179,12 +180,12 @@ public class Player : NetworkBehaviour
     {
         RpcKilled(direction);
     }
-    
+
     //[Client]
     void Kill(Vector3 direction = default(Vector3))
     {
         if (isLocalPlayer && hasAuthority)
-        {
+    {
             CmdKill(direction);
         }
         /*
@@ -224,7 +225,7 @@ public class Player : NetworkBehaviour
         dead = true;
         float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
         Invoke("Spawn", time);
-    }
+        }
 
     #endregion
 
@@ -244,7 +245,9 @@ public class Player : NetworkBehaviour
         Player otherPlayer = other.GetComponent<Player>();
         if (otherPlayer == null) return;
         
-        //at this point, we are only dealing with player collisions
+        //This section deals with player collisions
+        //This section needs to be changed to not reference dash
+        //If another player is below 
         if (info.Below)
         {
             //bounce off their head no matter what
@@ -256,6 +259,7 @@ public class Player : NetworkBehaviour
                 otherPlayer.Kill(Vector3.down);
             }
         }
+        //if another player is above
         else if (info.Above)
         {
             if (otherPlayer.movementState is OnDash && !dead)
@@ -266,6 +270,7 @@ public class Player : NetworkBehaviour
                 otherPlayer.CmdScore();
             }
         }
+        //if another player is to the side
         else if (info.Left || info.Right)
         {
             //bounce away
@@ -356,7 +361,7 @@ public class Player : NetworkBehaviour
     {
         EZCameraShake.CameraShaker.Instance.ShakeOnce(10f, 10f, 0f, 0.5f);
     }
-    
+
     [Command]
     private void CmdScore()
     {
@@ -376,9 +381,9 @@ public class Player : NetworkBehaviour
 
     [ClientRpc]
     private void RpcUpdateMovementState(string state)
-    {
+        {
         movementState = (MovementState)GetComponent(state);
-    }
+        }
 
     [Command]
     private void CmdAttack()
@@ -397,7 +402,7 @@ public class Player : NetworkBehaviour
     //allows inherited classes to interfere with default FSM transitions
     //  by intercepting the desired next state before it reaches
     //  the end user
-    //also lets user do polymorphic events for transitions, if need be.
+    //  also lets user do polymorphic events for transitions, if need be.
     //  (note: only gives player scope)
     [Client]
     protected void ChooseNextState(ref MovementState next)
@@ -414,40 +419,16 @@ public class Player : NetworkBehaviour
         {
             next = GetComponent<InBlock>();
         }
+
         //else if(inputs.movementSpecial.Down && !(movementState is OnDash) && currentDashes > 0)
         else if(InputPlayer.GetButtonDown("Movement Special") && !(movementState is OnDash) && currentDashes > 0)
         {
-            currentDashes--;
-            TrailRenderer tail = GetComponent<TrailRenderer>();
-            tail.enabled = true;
-            tail.Clear();
-            next = GetComponent<OnDash>();
-            //Vector2 leftStickDir = inputs.leftStick.normalized;
-            Vector2 leftStickDir =
-                (Vector2.right*InputPlayer.GetAxis("Aim Horizontal") +
-                 Vector2.up*InputPlayer.GetAxis("Aim Vertical")).normalized;
-            velocity = ((leftStickDir == Vector2.zero)?Vector2.up:leftStickDir) * ((OnDash)next).DashForce;
-        }
-        //else if(inputs.taunt.Down && (movementState is OnGround))
-        else if(InputPlayer.GetButtonDown("Taunt") && (movementState is OnGround))
-        {
-            next = GetComponent<TauntState>();
+            next = GetComponentInChildren<OnMovementSpecial>();
         }
 
-        if (next != null)
-        {
-            if (movementState is OnDash)
+        else if (InputPlayer.GetButtonDown("Taunt") && (movementState is OnGround))
             {
-                GetComponent<TrailRenderer>().enabled = false;
-            }
-            if(movementState is OnGround)
-            {
-                currentDashes = GetComponent<OnDash>().DashLimit;
-            }
-            if (movementState is OnWall)
-            {
-                currentDashes = Mathf.Max(currentDashes, 1);
-            }
+            next = GetComponent<TauntState>();
         }
     }
 
@@ -470,8 +451,8 @@ public class Player : NetworkBehaviour
 
         if (next != null)
         {
-            movementState.OnExit();
-            next.OnEnter();
+            movementState.OnExit(ref velocity, ref externalForce);
+            next.OnEnter(ref velocity, ref externalForce);
             movementState = next;
             CmdUpdateMovementState(movementState.GetType().ToString());
         }
@@ -506,7 +487,7 @@ public class Player : NetworkBehaviour
             float velMag = Mathf.Abs(velocity.x);
             anim.SetFloat("HorizontalSpeed", velMag);
             anim.SetBool("OnGround", movementState is OnGround);
-            anim.SetBool("OnDash", movementState is OnDash);
+            //anim.SetBool("OnDash", movementState is OnDash);
             anim.SetBool("OnWall", movementState is OnWall);
             //anim.SetBool("InAttack", movementState is InAttack);
             anim.SetBool("InAir", movementState is InAir);
@@ -517,12 +498,12 @@ public class Player : NetworkBehaviour
     private void UpdateDirection()
     {
         float velMag = Mathf.Abs(velocity.x);
-        if (velMag > 0.01f)
-        {
-            Vector3 localScale = visuals.localScale;
-            localScale.x = Mathf.Sign(velocity.x);
-            visuals.localScale = localScale;
-        }
+            if (velMag > 0.01f)
+            { 
+                Vector3 localScale = visuals.localScale;
+                localScale.x = Mathf.Sign(velocity.x);
+                visuals.localScale = localScale;
+            }
     }
     #endregion
 }

@@ -50,15 +50,17 @@ public class InBlock : MovementState
         return null;
     }
 
-    public override void OnEnter()
+    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
     {
+        movementSpecial.OnEnterBlock(ref velocity, ref externalForces);
         deceleration = GetComponent<OnGround>().MaxSpeed/maxSpeedToStopTime;
         maxFallSpeed = GetComponent<InAir>().MaxFallSpeed;
         ourShield.ActivateShield();
     }
 
-    public override void OnExit()
+    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
     {
+        movementSpecial.OnExitBlock(ref velocity, ref externalForces);
         ourShield.DeactivateShield();
     }
 }
