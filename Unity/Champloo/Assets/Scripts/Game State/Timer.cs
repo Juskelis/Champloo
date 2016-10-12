@@ -1,14 +1,16 @@
 ﻿using System.Globalization;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour {
+public class Timer : NetworkBehaviour {
     [SerializeField]
     private float levelSeconds = 90f;
 
     [SerializeField] private Text displayText;
 
+    [SyncVar]
     private float timer;
     public float TimeLeft { get { return timer; } }
 
