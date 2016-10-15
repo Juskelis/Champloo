@@ -6,9 +6,7 @@ public class OnDash : OnMovementSpecial
     [SerializeField]
     private float dashForce;
     public float DashForce { get { return dashForce; } }
-
-    [SerializeField]
-    private float dashTime;
+    
     private float timeLeft;
 
     [SerializeField]
@@ -34,9 +32,6 @@ public class OnDash : OnMovementSpecial
 
     public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
     {
-        //velocity.x += dashForce * direction.x * dashForce * Time.deltaTime;
-        //velocity.y += dashForce * direction.y * dashForce * Time.deltaTime;
-
         if (!isDisabled)
         {
             velocity.y -= player.Gravity * Time.deltaTime * gravityModifier;
@@ -56,7 +51,6 @@ public class OnDash : OnMovementSpecial
 
         if (timeLeft < 0)
         {
-
             //this probably needs to be changed so that it doesn't trigger on enemy players being below or to the side
             if (controller.collisions.Below)
             {
@@ -74,9 +68,7 @@ public class OnDash : OnMovementSpecial
 
     public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
     {
-        Debug.Log("Velocity on Enter:" + velocity);
-
-        timeLeft = dashTime;
+        timeLeft = specialTime;
 
         //set up the dash visual trail
         tail.enabled = true;
@@ -96,13 +88,8 @@ public class OnDash : OnMovementSpecial
             Vector2 leftStickDir =
                 (Vector2.right * input.inputPlayer.GetAxis("Aim Horizontal") +
                  Vector2.up * input.inputPlayer.GetAxis("Aim Vertical")).normalized;
-
-            Debug.Log("leftStickDir: " + leftStickDir);
-
+            
             velocity = ((leftStickDir == Vector2.zero) ? Vector2.up : leftStickDir) * DashForce;
-
-            Debug.Log("Velocity at End: " + velocity);
-
         }
 
         //If player does not have dashes
@@ -115,11 +102,8 @@ public class OnDash : OnMovementSpecial
     public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
     {
         tail.enabled = false;
-
     }
-
-
-
+    
     //Functions to be called on state changes
 
     //ground state changes
@@ -128,11 +112,6 @@ public class OnDash : OnMovementSpecial
         currentDashes = DashLimit;
         isDisabled = false;
     }
-    //public virtual void OnExitGround() { }
-
-    //air state changes
-    //public virtual void OnEnterAir() { }
-    //public virtual void OnExitAir() { }
 
     //wallride state changes
     public override void OnEnterWall(ref Vector3 velocity, ref Vector3 externalForces)
@@ -143,5 +122,4 @@ public class OnDash : OnMovementSpecial
         }
         isDisabled = false;
     }
-    //public virtual void OnExitWall() { }
 }

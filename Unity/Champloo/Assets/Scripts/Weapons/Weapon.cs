@@ -17,6 +17,17 @@ public class Weapon : MonoBehaviour {
     private float attackTimer;
     private float reloadTimer;
 
+
+    [SerializeField]
+    protected Projectile thrownVersion;
+
+    public Projectile ThrownVersion { get { return thrownVersion; } }
+
+
+    [SerializeField]
+    protected bool alwaysVisible = false;
+
+
     protected virtual void Start()
     {
         InHand = true;
