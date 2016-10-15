@@ -9,10 +9,7 @@ public class Sword : Weapon {
     [SerializeField]
     private SpriteRenderer visuals;
 
-    [SerializeField]
-    private Projectile thrownVersion;
-    [SerializeField]
-    private bool alwaysVisible = false;
+    
 
     protected override void Start()
     {

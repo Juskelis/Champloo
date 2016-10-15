@@ -3,16 +3,14 @@ using System.Collections;
 
 public class OnMovementSpecial : MovementState
 {
-    //OnMovementSpecial playerMovementSpecial;
-
     [SerializeField]
     protected float specialTime;
     [SerializeField]
     protected float cooldownTime;
 
 
-    private float specialTimer;
-    private float cooldownTimer;
+    protected float specialTimer;
+    protected float cooldownTimer;
 
     //bools for determining current state
     public bool canUse { get { return !isInUse && !isDisabled; } }
@@ -27,20 +25,6 @@ public class OnMovementSpecial : MovementState
 
     public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
     {
-        specialTimer -= Time.deltaTime;
-        cooldownTimer -= Time.deltaTime;
-        if (!isInUse )
-        {
-            if (controller.collisions.Below)
-            {
-                return GetComponent<OnGround>();
-            }
-            else if (controller.collisions.Left || controller.collisions.Right)
-            {
-                return GetComponent<OnWall>();
-            }
-            return GetComponent<InAir>();
-        }
         return null;
     }
 
@@ -56,8 +40,7 @@ public class OnMovementSpecial : MovementState
 
     //ground state changes
     public virtual void OnEnterGround(ref Vector3 velocity, ref Vector3 externalForces) {}
-    public virtual void OnExitGround(ref Vector3 velocity, ref Vector3 externalForces)
-    {}
+    public virtual void OnExitGround(ref Vector3 velocity, ref Vector3 externalForces){}
 
     //air state changes
     public virtual void OnEnterAir(ref Vector3 velocity, ref Vector3 externalForces) { }
