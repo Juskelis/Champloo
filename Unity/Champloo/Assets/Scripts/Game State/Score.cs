@@ -121,6 +121,8 @@ public class Score : NetworkBehaviour
         instance = this;
         if(scores == null)
             scores = new Dictionary<int, int>();
+
+        scores.Clear();
     }
 
     //[Server]
