@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Controller2D))]
 [RequireComponent(typeof(NetworkIdentity))]
@@ -103,6 +105,7 @@ public class Player : NetworkBehaviour
 
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
     }
 
     //[ClientCallback]
@@ -140,8 +143,22 @@ public class Player : NetworkBehaviour
         //attach to events
         controller.Crushed += Crushed;
         controller.Collision += Collided;
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
         //add to score register
+        Score.AddPlayer(ourNetworkID);
+    }
+
+    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene arg0, LoadSceneMode loadSceneMode)
+    {
+        Reset();
+    }
+
+    void Reset()
+    {
+        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
+        dead = false;
+        weapon.PickUp();
         Score.AddPlayer(ourNetworkID);
     }
 
@@ -154,6 +171,7 @@ public class Player : NetworkBehaviour
         //detach from events
         controller.Crushed -= Crushed;
         controller.Collision -= Collided;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
 
         //detach from score register
         Score.RemovePlayer(ourNetworkID);
