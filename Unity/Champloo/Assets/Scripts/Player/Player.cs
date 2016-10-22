@@ -156,9 +156,7 @@ public class Player : NetworkBehaviour
 
     void Reset()
     {
-        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
-        dead = false;
-        weapon.PickUp();
+        Spawn();
         Score.AddPlayer(ourNetworkID);
     }
 
@@ -166,7 +164,7 @@ public class Player : NetworkBehaviour
 
     #region De-Initialization
 
-    void Destroy()
+    void OnDestroy()
     {
         //detach from events
         controller.Crushed -= Crushed;
@@ -186,6 +184,8 @@ public class Player : NetworkBehaviour
         gameObject.SetActive(true);
         transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
         dead = false;
+        velocity = Vector3.zero;
+        externalForce = Vector3.zero;
         weapon.PickUp();
     }
 
@@ -243,7 +243,7 @@ public class Player : NetworkBehaviour
         dead = true;
         float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
         Invoke("Spawn", time);
-        }
+    }
 
     #endregion
 
