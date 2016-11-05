@@ -8,7 +8,10 @@ using UnityEngine.Events;
 
 //this whole system is basically ripped from videogamena.me
 
-public class TitleGenerator : MonoBehaviour {
+public class TitleGenerator : MonoBehaviour
+{
+    private static string TITLE = "";
+
     [SerializeField]
     private TextAsset gameNames;
 
@@ -31,11 +34,21 @@ public class TitleGenerator : MonoBehaviour {
 
     private Text toChange;
 
+    private void Awake()
+    {
+        toChange = GetComponent<Text>();
+    }
+
     private void Start()
     {
+        if (TITLE.Length > 0)
+        {
+            toChange.text = TITLE;
+            return;
+        }
         BuildList();
-        toChange = GetComponent<Text>();
         CreateTitle();
+        TITLE = toChange.text;
     }
 
     private bool CheckSecret(string title)
