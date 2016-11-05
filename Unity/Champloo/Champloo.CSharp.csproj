@@ -173,6 +173,8 @@
     <Compile Include="Assets\Scripts\UI\GIF Encoder\GifRecorder.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\LZWEncoder.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\NeuQuant.cs" />
+    <Compile Include="Assets\Scripts\UI\Lobby\LobbyCodeHookTEST.cs" />
+    <Compile Include="Assets\Scripts\UI\Lobby\LobbyManagementHooks.cs" />
     <Compile Include="Assets\Scripts\UI\Menu.cs" />
     <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
     <Compile Include="Assets\Scripts\UI\NetworkLobbyHook.cs" />
