@@ -119,14 +119,22 @@ namespace Prototype.NetworkLobby
 
         public void ChangeTo(RectTransform newPanel)
         {
-            if (currentPanel != null)
+            if (currentPanel != null && currentPanel.GetComponent<Menu>() == null)
             {
                 currentPanel.gameObject.SetActive(false);
             }
 
             if (newPanel != null)
             {
-                newPanel.gameObject.SetActive(true);
+                Menu newPanelMenu = newPanel.GetComponent<Menu>();
+                if (newPanelMenu != null)
+                {
+                    FindObjectOfType<MenuManager>().ShowMenu(newPanelMenu);
+                }
+                else
+                {
+                    newPanel.gameObject.SetActive(true);
+                }
             }
 
             currentPanel = newPanel;
