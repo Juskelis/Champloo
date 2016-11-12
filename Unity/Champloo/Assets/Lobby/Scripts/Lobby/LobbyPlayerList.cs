@@ -19,8 +19,15 @@ namespace Prototype.NetworkLobby
 
         public void OnEnable()
         {
-            _instance = this;
-            _layout = playerListContentTransform.GetComponent<VerticalLayoutGroup>();
+            if (_instance == null)
+            {
+                _instance = this;
+                _layout = playerListContentTransform.GetComponent<VerticalLayoutGroup>();
+            }
+            else if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
         }
 
         public void DisplayDirectServerWarning(bool enabled)
