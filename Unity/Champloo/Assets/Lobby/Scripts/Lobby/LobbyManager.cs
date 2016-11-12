@@ -255,6 +255,10 @@ namespace Prototype.NetworkLobby
             ChangeTo(lobbyPanel);
             backDelegate = StopHostClbk;
             SetServerInfo("Hosting", networkAddress);
+
+            //reset player counts so that the lobby shows correctly
+            ClientScene.localPlayers.Clear();
+            _playerNumber = 0;
         }
 
 		public override void OnMatchCreate(bool success, string extendedInfo, MatchInfo matchInfo)
