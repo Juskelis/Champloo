@@ -53,7 +53,10 @@ namespace Prototype.NetworkLobby
             _players.Add(player);
 
             player.transform.SetParent(playerListContentTransform, false);
-            addButtonRow.transform.SetAsLastSibling();
+            if (addButtonRow != null)
+            {
+                addButtonRow.transform.SetAsLastSibling();
+            }
 
             PlayerListModified();
         }
