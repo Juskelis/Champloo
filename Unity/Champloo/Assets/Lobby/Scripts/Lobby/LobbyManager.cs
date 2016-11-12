@@ -55,16 +55,23 @@ namespace Prototype.NetworkLobby
 
         void Start()
         {
-            s_Singleton = this;
-            _lobbyHooks = GetComponent<Prototype.NetworkLobby.LobbyHook>();
-            currentPanel = mainMenuPanel;
+            if (s_Singleton == null)
+            {
+                s_Singleton = this;
+                _lobbyHooks = GetComponent<Prototype.NetworkLobby.LobbyHook>();
+                currentPanel = mainMenuPanel;
 
-            backButton.gameObject.SetActive(false);
-            GetComponent<Canvas>().enabled = true;
+                backButton.gameObject.SetActive(false);
+                GetComponent<Canvas>().enabled = true;
 
-            DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(gameObject);
 
-            SetServerInfo("Offline", "None");
+                SetServerInfo("Offline", "None");
+            }
+            else if (s_Singleton != this)
+            {
+                Destroy(gameObject);
+            }
         }
 
         public override void OnLobbyClientSceneChanged(NetworkConnection conn)
