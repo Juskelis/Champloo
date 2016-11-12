@@ -13,8 +13,8 @@ public class Player : NetworkBehaviour
     [SyncVar]
     private bool dead = false;
 
-    [SerializeField]
-    [Range(1, 4)]
+    //[SerializeField]
+    //[Range(1, 4)]
     private int playerNumber = 1;
     public int PlayerNumber
     {
