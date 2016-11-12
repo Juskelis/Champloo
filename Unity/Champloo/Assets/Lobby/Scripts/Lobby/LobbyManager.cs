@@ -140,6 +140,7 @@ namespace Prototype.NetworkLobby
                 }
                 else
                 {
+                    FindObjectOfType<MenuManager>().ShowMenu(null);
                     newPanel.gameObject.SetActive(true);
                 }
             }
