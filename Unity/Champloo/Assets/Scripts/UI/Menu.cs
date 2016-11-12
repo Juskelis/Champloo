@@ -17,6 +17,7 @@ public class Menu : MonoBehaviour
             anim.SetBool("IsOpen", value);
             if (value && initiallySelected != null)
             {
+                eventSystem = FindObjectOfType<EventSystem>();
                 eventSystem.SetSelectedGameObject(initiallySelected);
             }
         }
@@ -29,7 +30,7 @@ public class Menu : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         cgroup = GetComponent<CanvasGroup>();
-        eventSystem = FindObjectOfType<EventSystem>();
+        //eventSystem = FindObjectOfType<EventSystem>();
 
         var rect = GetComponent<RectTransform>();
         rect.offsetMax = rect.offsetMin = new Vector2(0, 0);
