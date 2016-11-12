@@ -149,6 +149,7 @@
     <Compile Include="Assets\Scripts\Controllers\PathPlatformController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlatformController.cs" />
     <Compile Include="Assets\Scripts\Controllers\RaycastController.cs" />
+    <Compile Include="Assets\Scripts\DontDestroyOnLoad.cs" />
     <Compile Include="Assets\Scripts\Game State\Match.cs" />
     <Compile Include="Assets\Scripts\Game State\PlayerSettings.cs" />
     <Compile Include="Assets\Scripts\Game State\Score.cs" />
@@ -167,12 +168,15 @@
     <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
+    <Compile Include="Assets\Scripts\UI\Controller Navigation\MultiplayerUIController.cs" />
+    <Compile Include="Assets\Scripts\UI\Controller Navigation\MultiplayerUIManager.cs" />
     <Compile Include="Assets\Scripts\UI\DynamicFont.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\AnimatedGifEncoder.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\CustomEvents.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\GifRecorder.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\LZWEncoder.cs" />
     <Compile Include="Assets\Scripts\UI\GIF Encoder\NeuQuant.cs" />
+    <Compile Include="Assets\Scripts\UI\Lobby\ButtonKeyTrigger.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby\LobbyCodeHookTEST.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby\LobbyManagementHooks.cs" />
     <Compile Include="Assets\Scripts\UI\Menu.cs" />
