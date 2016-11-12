@@ -68,7 +68,7 @@ public class Player : NetworkBehaviour
             if (inputPlayer == null)
             {
                 inputPlayer = Utility.GetNetworkPlayer(GetComponent<NetworkIdentity>().playerControllerId);
-    }
+            }
             return inputPlayer;
         }
         private set { inputPlayer = value; }
