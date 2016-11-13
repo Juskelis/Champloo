@@ -15,6 +15,11 @@ public class Menu : MonoBehaviour
         set
         {
             anim.SetBool("IsOpen", value);
+            if (UIManager != null)
+            {
+                UIManager.enabled = value;
+            }
+
             if (value && initiallySelected != null)
             {
                 eventSystem = FindObjectOfType<EventSystem>();
@@ -26,6 +31,8 @@ public class Menu : MonoBehaviour
     [SerializeField]
     private GameObject initiallySelected;
 
+    private MultiplayerUIManager UIManager;
+
     public void Awake()
     {
         anim = GetComponent<Animator>();
@@ -34,6 +41,9 @@ public class Menu : MonoBehaviour
 
         var rect = GetComponent<RectTransform>();
         rect.offsetMax = rect.offsetMin = new Vector2(0, 0);
+        UIManager = GetComponent<MultiplayerUIManager>();
+
+        if(UIManager != null) UIManager.enabled = false;
     }
 
     public void Update()
