@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class MultiplayerUIManager : MonoBehaviour
 {
     [SerializeField]
-    private Selectable firstSelected;
+    private MultiplayerSelectable firstSelected;
 
     [SerializeField]
     private MultiplayerUIController controllerPrefab;

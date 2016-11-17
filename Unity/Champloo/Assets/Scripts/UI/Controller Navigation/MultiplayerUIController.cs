@@ -78,7 +78,7 @@ public class MultiplayerUIController : MonoBehaviour
             next = currentlySelected.FindSelectableOnDown();
         }
 
-        if (next != null) ChangeSelected(next);
+        if (next != null) ChangeSelected(next.GetComponent<MultiplayerSelectable>());
 
         if (Vector2.Dot(raw, prev_move) <= 0)
         {
@@ -113,12 +113,12 @@ public class MultiplayerUIController : MonoBehaviour
         return ret;
     }
 
-    public void ChangeSelected(Selectable next)
+    public void ChangeSelected(MultiplayerSelectable next)
     {
         if (next == null || next == currentlySelected) return;
 
         //if(currentlySelected != null) currentlySelected.OnDeselect(new BaseEventData(eventSystem));
-        currentlySelected = next;
+        currentlySelected = next.GetComponent<Selectable>();
         //currentlySelected.OnSelect(new BaseEventData(eventSystem));
 
         /*
@@ -130,8 +130,11 @@ public class MultiplayerUIController : MonoBehaviour
         indicator.SetParent(currentlySelected.transform, false);
         indicator.SetAsFirstSibling();
         */
-
+        /*
         transform.SetParent(currentlySelected.transform, false);
         transform.SetAsFirstSibling();
+        */
+
+        next.AddPlayerIndicator(transform);
     }
 }

@@ -61,12 +61,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
     <Reference Include="Rewired_Core">
       <HintPath>Assets\Rewired\Internal\Libraries\Runtime\Rewired_Core.dll</HintPath>
     </Reference>
@@ -174,6 +168,7 @@
     <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
+    <Compile Include="Assets\Scripts\UI\Controller Navigation\MultiplayerSelectable.cs" />
     <Compile Include="Assets\Scripts\UI\Controller Navigation\MultiplayerUIController.cs" />
     <Compile Include="Assets\Scripts\UI\Controller Navigation\MultiplayerUIManager.cs" />
     <Compile Include="Assets\Scripts\UI\DynamicFont.cs" />
