@@ -18,8 +18,14 @@ public class MultiplayerSelectable : MonoBehaviour
 
     public void AddPlayerIndicator(Transform r)
     {
-        r.SetParent(playerContainer.transform, false);
+        int sortR = r.GetComponent<MultiplayerUIController>().ControllerNumber;
 
-        //ordering
+        int sortIndex;
+        MultiplayerUIController[] children = transform.GetComponentsInChildren<MultiplayerUIController>();
+        for(sortIndex = 0; sortIndex < children.Length && sortR < children[sortIndex].ControllerNumber; sortIndex++)
+        { }
+
+        r.SetParent(playerContainer.transform, false);
+        r.SetSiblingIndex(sortIndex);
     }
 }
