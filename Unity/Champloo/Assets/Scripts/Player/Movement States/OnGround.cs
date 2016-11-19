@@ -41,7 +41,7 @@ public class OnGround : MovementState
     public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
     {
         //float inputDirection = Mathf.Sign(input.leftStick.x);
-        float moveX = input.inputPlayer.GetAxis("Move Horizontal");
+        float moveX = player.InputPlayer.GetAxis("Move Horizontal");
         float inputDirection = Mathf.Sign(moveX);
         if (Mathf.Abs(moveX) > float.Epsilon)
         {
@@ -69,7 +69,7 @@ public class OnGround : MovementState
 
         Jumped = false;
         //if (input.jump.Down)
-        if(input.inputPlayer.GetButtonDown("Jump"))
+        if(player.InputPlayer.GetButtonDown("Jump"))
         {
             Jumped = true;
             //input.jump.ResetTimers();

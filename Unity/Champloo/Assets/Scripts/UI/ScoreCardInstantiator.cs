@@ -14,12 +14,19 @@ public class ScoreCardInstantiator : MonoBehaviour
     {
         if(!lateStartDone)
         {
-            score = FindObjectOfType<Score>();
-
-            for (int i = 0; i < score.Scores.Count; i++)
+            //score = FindObjectOfType<Score>();
+            /*
+            for (int i = 0; i < Score.Scores.Count; i++)
             {
                 PlayerScoreCard currentPlayerScoreCard = Instantiate(scoreCardPrefab);
                 currentPlayerScoreCard.playerNumber = i;
+                currentPlayerScoreCard.transform.SetParent(transform, false);
+            }
+            */
+            foreach (var pair in Score.Scores)
+            {
+                PlayerScoreCard currentPlayerScoreCard = Instantiate(scoreCardPrefab);
+                currentPlayerScoreCard.playerNumber = pair.Key;
                 currentPlayerScoreCard.transform.SetParent(transform, false);
             }
             Destroy(this);

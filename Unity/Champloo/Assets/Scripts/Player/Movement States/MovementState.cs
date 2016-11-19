@@ -1,11 +1,12 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class MovementState : MonoBehaviour
+public class MovementState : NetworkBehaviour
 {
     protected Player player;
-    protected InputController input;
+    protected Rewired.Player input;
     protected Controller2D controller;
     protected OnMovementSpecial movementSpecial;
     protected float externalForceDecay = 1f;
@@ -13,7 +14,7 @@ public class MovementState : MonoBehaviour
     protected virtual void Start()
     {
         player = GetComponent<Player>();
-        input = GetComponent<InputController>();
+        input = player.InputPlayer;//GetComponent<InputController>();
         controller = GetComponent<Controller2D>();
         movementSpecial = GetComponent<OnMovementSpecial>();
     }

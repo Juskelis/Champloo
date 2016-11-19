@@ -27,11 +27,13 @@ public class UpdatePlayerNumber : MonoBehaviour
 
         if(conversion <= 0)
         {
-            text = FindObjectOfType<PlayerSettings>().GetPlayerName(FindObjectOfType<Score>().FindWinner());
+            //text = FindObjectOfType<PlayerSettings>().GetPlayerName(FindObjectOfType<Score>().FindWinner());
+            text = PlayerSettings.GetSettingsFor(Score.instance.FindWinner()).Name;
         }
         else
         {
-            text = FindObjectOfType<PlayerSettings>().GetPlayerName(conversion);
+            //text = FindObjectOfType<PlayerSettings>().GetPlayerName(conversion);
+            text = PlayerSettings.GetSettingsFor(conversion).Name;
         }
 
         ourText.text = find.Replace(ourText.text, text);

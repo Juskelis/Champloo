@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
-using UnityEditor;
 
 public class SmashCamera : MonoBehaviour
 {
     private Camera cam;
-    private Renderer ren;
+    //private Renderer ren;
 
     private Transform[] toFollow;
 
@@ -52,7 +51,7 @@ public class SmashCamera : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         if (cam == null) cam = GetComponentInChildren<Camera>();
-        ren = GetComponent<Renderer>();
+        //ren = GetComponent<Renderer>();
     }
 
     void Start()

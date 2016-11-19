@@ -30,7 +30,7 @@ public class PlayerSelectConfirmation : MonoBehaviour
         if (possibleConfirmed > 1 && confirmedPlayers == possibleConfirmed)
         {
             onReady.Invoke();
-            FindObjectOfType<PlayerSettings>().SetNumPlayers(confirmedPlayers);
+            //FindObjectOfType<PlayerSettings>().SetNumPlayers(confirmedPlayers);
         }
 
         if (totalPlayers > 0 && possibleConfirmed < 1 && GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))

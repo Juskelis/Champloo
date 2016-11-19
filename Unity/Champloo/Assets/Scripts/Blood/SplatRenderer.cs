@@ -43,6 +43,8 @@ public class SplatRenderer : MonoBehaviour
 
         tex.depth = (int)Depth;
 
+        tex.filterMode = textureFilterMode;
+
         //tex.Create();
 
         //get camera

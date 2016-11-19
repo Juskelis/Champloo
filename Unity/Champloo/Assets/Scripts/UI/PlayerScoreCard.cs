@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Net;
+using UnityEngine.Networking;
 
 public class PlayerScoreCard : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class PlayerScoreCard : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	    scoreService = FindObjectOfType<Score>();
+	    scoreService = Score.instance;//FindObjectOfType<Score>();
 	    maxScore = scoreService.WinScore;
         playerNameText = GetComponentInChildren<Text>();
 
@@ -41,14 +42,29 @@ public class PlayerScoreCard : MonoBehaviour
 	        im.preserveAspect = true;
 	        g.transform.SetParent(indicatorParent, false);
             scores.Add(im);
-            playerNameText.text = FindObjectOfType<PlayerSettings>().GetPlayerName(playerNumber + 1);
-	    }
+        }
+
+
+        PlayerSettings settings = PlayerSettings.GetSettingsFor(playerNumber);
+	    playerNameText.text = settings != null ? settings.Name : "Name";
+
+	    /*
+	    PlayerSettings settings = FindObjectOfType<PlayerSettings>();
+        if(settings == null) print("settings is null!");
+	    string playerName = settings.GetPlayerName(playerNumber + 1);
+	    playerNameText.text = playerName;
+        */
+	    //playerNameText.text = FindObjectOfType<PlayerSettings>().GetPlayerName(playerNumber + 1);
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-	    score = scoreService.Scores[playerNumber];
+        if(!Score.Scores.ContainsKey(playerNumber))
+        {
+            return;
+        }
+	    score = Score.Scores[playerNumber];
 
 	    for (int i = 0; i < maxScore; i++)
 	    {
