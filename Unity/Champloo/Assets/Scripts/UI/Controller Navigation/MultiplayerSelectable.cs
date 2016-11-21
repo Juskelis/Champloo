@@ -65,7 +65,7 @@ public class MultiplayerSelectable : Selectable
 
         int sortIndex;
         MultiplayerUIController[] children = transform.GetComponentsInChildren<MultiplayerUIController>();
-        for(sortIndex = 0; sortIndex < children.Length && sortR < children[sortIndex].ControllerNumber; sortIndex++)
+        for(sortIndex = 0; sortIndex < children.Length && sortR > children[sortIndex].ControllerNumber; sortIndex++)
         { }
 
         r.SetParent(playerContainer.transform, false);
