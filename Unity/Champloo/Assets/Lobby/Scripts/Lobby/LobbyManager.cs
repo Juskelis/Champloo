@@ -144,6 +144,10 @@ namespace Prototype.NetworkLobby
                     newPanel.gameObject.SetActive(true);
                 }
             }
+            else
+            {
+                FindObjectOfType<MenuManager>().ShowMenu(null);
+            }
 
             currentPanel = newPanel;
 
