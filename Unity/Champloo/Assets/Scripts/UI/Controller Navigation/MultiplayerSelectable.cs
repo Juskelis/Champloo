@@ -21,9 +21,15 @@ public class MultiplayerSelectable : Selectable
 
     protected override void Start()
     {
-        playerContainer = Instantiate(playerContainerPrefab);
-        playerContainer.transform.SetParent(transform, false);
         base.Start();
+
+        playerContainer = GetComponentInChildren<LayoutGroup>();
+        if (playerContainer == null)
+        {
+            //print("Error: MultiplayerSelectable needs a child LayoutGroup");
+            Debug.LogError("MultiplayerSelectable needs a child LayoutGroup");
+        }
+
 
         if (addToNeighbors)
         {
@@ -45,6 +51,12 @@ public class MultiplayerSelectable : Selectable
                 Utility.CopyComponent(this, FindSelectableOnRight().gameObject);
             }
         }
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        DestroyImmediate(playerContainer);
     }
 
     public void AddPlayerIndicator(Transform r)
