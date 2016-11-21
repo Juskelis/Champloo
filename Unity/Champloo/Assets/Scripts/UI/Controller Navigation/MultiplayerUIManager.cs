@@ -30,14 +30,12 @@ public class MultiplayerUIManager : MonoBehaviour
 
     void OnEnable()
     {
-        print("OnEnable");
         ReInput.ControllerPreDisconnectEvent += ReInputOnControllerPreDisconnectEvent;
         FindObjectOfType<RewiredStandaloneInputModule>().enabled = false;
     }
 
     void OnDisable()
     {
-        print("OnDisable");
         ReInput.ControllerPreDisconnectEvent -= ReInputOnControllerPreDisconnectEvent;
         RewiredStandaloneInputModule module = FindObjectOfType<RewiredStandaloneInputModule>();
         if (module == null) return;
@@ -85,7 +83,6 @@ public class MultiplayerUIManager : MonoBehaviour
 
     private void AddController(Rewired.Player p)
     {
-        print("add player");
         MultiplayerUIController controller = Instantiate(controllerPrefab);
         controller.ControllerNumber = p.id;
         controller.ChangeSelected(firstSelected);
