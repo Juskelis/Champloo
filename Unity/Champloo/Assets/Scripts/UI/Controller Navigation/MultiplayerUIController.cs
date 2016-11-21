@@ -13,7 +13,7 @@ public class MultiplayerUIController : MonoBehaviour
     private EventSystem eventSystem;
     private RewiredStandaloneInputModule rewiredEventSystem;
 
-    private Selectable currentlySelected;
+    private MultiplayerSelectable currentlySelected;
 
     [SerializeField]
     private int controllerNumber = 0;
@@ -44,11 +44,14 @@ public class MultiplayerUIController : MonoBehaviour
         
         if (controller.GetButtonDown(rewiredEventSystem.submitButton))
         {
+            /*
             Button b = currentlySelected.GetComponent<Button>();
             if (b != null)
             {
                 b.onClick.Invoke();
             }
+            */
+            currentlySelected.OnClick.Invoke(controllerNumber);
         }
         
         Selectable next = null;
@@ -118,7 +121,7 @@ public class MultiplayerUIController : MonoBehaviour
         if (next == null || next == currentlySelected) return;
 
         //if(currentlySelected != null) currentlySelected.OnDeselect(new BaseEventData(eventSystem));
-        currentlySelected = next.GetComponent<Selectable>();
+        currentlySelected = next;
         //currentlySelected.OnSelect(new BaseEventData(eventSystem));
 
         /*
