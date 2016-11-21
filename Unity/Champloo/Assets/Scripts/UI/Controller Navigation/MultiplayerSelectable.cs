@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
+[System.Serializable]
+public class IntEvent : UnityEvent<int> {}
 
 //[RequireComponent(typeof(Selectable))]
 public class MultiplayerSelectable : Selectable
@@ -11,9 +14,11 @@ public class MultiplayerSelectable : Selectable
 
     public bool addToNeighbors = false;
 
+    //public Action OnClick;
+    public IntEvent OnClick;
+
     private LayoutGroup playerContainer;
 
-    void Start()
     protected override void Start()
     {
         playerContainer = Instantiate(playerContainerPrefab);
@@ -53,5 +58,10 @@ public class MultiplayerSelectable : Selectable
 
         r.SetParent(playerContainer.transform, false);
         r.SetSiblingIndex(sortIndex);
+    }
+
+    public void OnClickCallback(int i)
+    {
+        print("Clicked with " + i);
     }
 }
