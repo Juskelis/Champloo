@@ -2,8 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Selectable))]
-public class MultiplayerSelectable : MonoBehaviour
+
+//[RequireComponent(typeof(Selectable))]
+public class MultiplayerSelectable : Selectable
 {
     [Tooltip("Where player indicators are held (ie Horizontal/Vertical Layout Groups)")]
     public LayoutGroup playerContainerPrefab;
@@ -13,28 +14,30 @@ public class MultiplayerSelectable : MonoBehaviour
     private LayoutGroup playerContainer;
 
     void Start()
+    protected override void Start()
     {
         playerContainer = Instantiate(playerContainerPrefab);
         playerContainer.transform.SetParent(transform, false);
+        base.Start();
 
         if (addToNeighbors)
         {
-            Selectable us = GetComponent<Selectable>();
-            if (us.FindSelectableOnDown().GetComponent<MultiplayerSelectable>() == null)
+            //Selectable us = GetComponent<Selectable>();
+            if (FindSelectableOnDown().GetComponent<MultiplayerSelectable>() == null)
             {
-                Utility.CopyComponent(this, us.FindSelectableOnDown().gameObject);
+                Utility.CopyComponent(this, FindSelectableOnDown().gameObject);
             }
-            if (us.FindSelectableOnUp().GetComponent<MultiplayerSelectable>() == null)
+            if (FindSelectableOnUp().GetComponent<MultiplayerSelectable>() == null)
             {
-                Utility.CopyComponent(this, us.FindSelectableOnUp().gameObject);
+                Utility.CopyComponent(this, FindSelectableOnUp().gameObject);
             }
-            if (us.FindSelectableOnLeft().GetComponent<MultiplayerSelectable>() == null)
+            if (FindSelectableOnLeft().GetComponent<MultiplayerSelectable>() == null)
             {
-                Utility.CopyComponent(this, us.FindSelectableOnLeft().gameObject);
+                Utility.CopyComponent(this, FindSelectableOnLeft().gameObject);
             }
-            if (us.FindSelectableOnRight().GetComponent<MultiplayerSelectable>() == null)
+            if (FindSelectableOnRight().GetComponent<MultiplayerSelectable>() == null)
             {
-                Utility.CopyComponent(this, us.FindSelectableOnRight().gameObject);
+                Utility.CopyComponent(this, FindSelectableOnRight().gameObject);
             }
         }
     }
