@@ -61,12 +61,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
     <Reference Include="Rewired_Core">
       <HintPath>Assets\Rewired\Internal\Libraries\Runtime\Rewired_Core.dll</HintPath>
     </Reference>
@@ -193,6 +187,8 @@
     <Compile Include="Assets\Scripts\UI\Player Selection\Carousels\NameCarousel.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\PlayerSelect.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\PlayerSelectConfirmation.cs" />
+    <Compile Include="Assets\Scripts\UI\Player Selection\V2\PlayerOption.cs" />
+    <Compile Include="Assets\Scripts\UI\Player Selection\V2\PlayerSelectManager.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerScoreCard.cs" />
     <Compile Include="Assets\Scripts\UI\Scene.cs" />
     <Compile Include="Assets\Scripts\UI\ScoreCardInstantiator.cs" />
