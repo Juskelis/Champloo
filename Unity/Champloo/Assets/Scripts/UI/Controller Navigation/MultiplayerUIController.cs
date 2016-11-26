@@ -51,7 +51,7 @@ public class MultiplayerUIController : MonoBehaviour
                 b.onClick.Invoke();
             }
             */
-            currentlySelected.OnClick.Invoke(controllerNumber);
+            currentlySelected.OnClick.Invoke(currentlySelected, this);
         }
         
         Selectable next = null;

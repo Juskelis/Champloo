@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 
 [System.Serializable]
-public class IntEvent : UnityEvent<int> {}
+public class MultiplayerSelectableEvent : UnityEvent<MultiplayerSelectable, MultiplayerUIController> {}
 
 //[RequireComponent(typeof(Selectable))]
 public class MultiplayerSelectable : Selectable
@@ -15,7 +15,7 @@ public class MultiplayerSelectable : Selectable
     public bool addToNeighbors = false;
 
     //public Action OnClick;
-    public IntEvent OnClick;
+    public MultiplayerSelectableEvent OnClick;
 
     private LayoutGroup playerContainer;
 
@@ -72,8 +72,8 @@ public class MultiplayerSelectable : Selectable
         r.SetSiblingIndex(sortIndex);
     }
 
-    public void OnClickCallback(int i)
+    public void OnClickCallback(MultiplayerSelectable selectable, MultiplayerUIController controller)
     {
-        print("Clicked with " + i);
+        print("Clicked with " + controller.ControllerNumber);
     }
 }
