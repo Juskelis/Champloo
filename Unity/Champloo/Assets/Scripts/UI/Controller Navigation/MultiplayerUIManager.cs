@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Rewired;
 using Rewired.Integration.UnityUI;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class MultiplayerUIManager : MonoBehaviour
@@ -19,7 +20,12 @@ public class MultiplayerUIManager : MonoBehaviour
     [SerializeField]
     private string leaveAction = "UILeave";
 
+    [SerializeField]
+    private UnityEvent OnPlayersLeave;
+
     private List<MultiplayerUIController> activeControllers;
+
+    private bool playersJoined = false;
 
 	// Use this for initialization
 	void Start ()
@@ -32,6 +38,7 @@ public class MultiplayerUIManager : MonoBehaviour
     {
         ReInput.ControllerPreDisconnectEvent += ReInputOnControllerPreDisconnectEvent;
         FindObjectOfType<RewiredStandaloneInputModule>().enabled = false;
+        playersJoined = false;
     }
 
     void OnDisable()
@@ -87,6 +94,7 @@ public class MultiplayerUIManager : MonoBehaviour
         controller.ControllerNumber = p.id;
         controller.ChangeSelected(firstSelected);
         activeControllers.Add(controller);
+        playersJoined = true;
     }
 
     private void RemoveController(Rewired.Player p)
@@ -98,6 +106,11 @@ public class MultiplayerUIManager : MonoBehaviour
                 Destroy(activeControllers[i].gameObject);
                 activeControllers.RemoveAt(i);
             }
+        }
+        if (playersJoined && activeControllers.Count <= 0)
+        {
+            //all players have left!
+            OnPlayersLeave.Invoke();
         }
     }
 }
