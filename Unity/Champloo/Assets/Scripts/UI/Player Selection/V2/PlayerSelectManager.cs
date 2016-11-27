@@ -18,8 +18,9 @@ public class PlayerSelectManager : MonoBehaviour {
                 player = networkPlayer as LobbyPlayer;
                 if(player != null && player.isLocalPlayer && player.playerControllerId == controller.ControllerNumber)
                 {
-                    print("updating lobby player info");
-                    player.playerName = selectedOption.playerPrefabName;
+                    //player.playerName = selectedOption.playerPrefabName;
+                    //player.OnMyName(selectedOption.playerPrefabName);
+                    player.playerPrefabName = selectedOption.playerPrefabName;
                 }
             }
         }
