@@ -134,6 +134,7 @@ public class Player : NetworkBehaviour
         weapon.PickUp();
 
         //change colors of child sprites
+        playerColor = GetComponent<PlayerSettings>().Color;
         foreach(SpriteRenderer s in coloredSprites)
         {
             s.color = playerColor;
