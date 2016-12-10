@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Prototype.NetworkLobby;
+using UnityEngine.Events;
 
-public class PlayerSelectManager : MonoBehaviour {
+public class PlayerSelectManager : MonoBehaviour
+{
+
+    public UnityEvent OnAllConfirmed;
     
     public void PlayerSelected(MultiplayerSelectable selectable, MultiplayerUIController controller)
     {
@@ -18,8 +22,6 @@ public class PlayerSelectManager : MonoBehaviour {
                 player = networkPlayer as LobbyPlayer;
                 if(player != null && player.isLocalPlayer && player.playerControllerId == controller.ControllerNumber)
                 {
-                    //player.playerName = selectedOption.playerPrefabName;
-                    //player.OnMyName(selectedOption.playerPrefabName);
                     player.playerPrefabName = selectedOption.playerPrefabName;
                 }
             }
