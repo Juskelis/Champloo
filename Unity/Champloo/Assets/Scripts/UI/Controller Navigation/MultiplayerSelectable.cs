@@ -18,6 +18,27 @@ public class MultiplayerSelectable : Selectable
     public MultiplayerSelectableEvent OnClick;
 
     private LayoutGroup playerContainer;
+    
+    public int ControllersSelecting()
+    {
+        int ret = 0;
+        foreach (var controller in playerContainer.GetComponentsInChildren<MultiplayerUIController>())
+        {
+            if (controller.hasSelected) ret++;
+        }
+        return ret;
+    }
+
+    public bool HasControllerSelected(MultiplayerUIController controller)
+    {
+        if (!controller.hasSelected) return false;
+
+        foreach (var child in playerContainer.GetComponentsInChildren<MultiplayerUIController>())
+        {
+            if (child == controller) return true;
+        }
+        return false;
+    }
 
     protected override void Start()
     {
