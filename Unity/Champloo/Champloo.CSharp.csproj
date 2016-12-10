@@ -194,6 +194,7 @@
     <Compile Include="Assets\Scripts\UI\ScoreCardInstantiator.cs" />
     <Compile Include="Assets\Scripts\UI\TitleGenerator.cs" />
     <Compile Include="Assets\Scripts\UI\UpdatePlayerNumber.cs" />
+    <Compile Include="Assets\Scripts\UI\Voting\VotingManager.cs" />
     <Compile Include="Assets\Scripts\Utility\Interpolate.cs" />
     <Compile Include="Assets\Scripts\Utility\Utility.cs" />
     <Compile Include="Assets\Scripts\Weapons\Shield.cs" />
