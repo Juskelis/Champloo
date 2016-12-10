@@ -24,6 +24,8 @@ public class MultiplayerUIController : MonoBehaviour
         set { controllerNumber = value; }
     }
 
+    public bool hasSelected = false;
+
     private Vector2 prev_move = Vector2.zero;
     private int move_count = 0;
 
@@ -51,6 +53,7 @@ public class MultiplayerUIController : MonoBehaviour
                 b.onClick.Invoke();
             }
             */
+            hasSelected = true;
             currentlySelected.OnClick.Invoke(currentlySelected, this);
         }
         
@@ -122,6 +125,7 @@ public class MultiplayerUIController : MonoBehaviour
 
         //if(currentlySelected != null) currentlySelected.OnDeselect(new BaseEventData(eventSystem));
         currentlySelected = next;
+        hasSelected = false;
         //currentlySelected.OnSelect(new BaseEventData(eventSystem));
 
         /*
