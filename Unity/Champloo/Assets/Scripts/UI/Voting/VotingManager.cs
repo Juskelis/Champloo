@@ -1,6 +1,10 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Events;
+
+[Serializable]
+public class VotingEvent : UnityEvent<VotingManager.Option> { }
 
 public class VotingManager : MonoBehaviour
 {
@@ -21,6 +25,8 @@ public class VotingManager : MonoBehaviour
 
     public Option[] options;
     private Option electedOption;
+
+    public VotingEvent OnElected;
 
     private Option TallyVotes()
     {
@@ -58,5 +64,14 @@ public class VotingManager : MonoBehaviour
     public void OnVote(MultiplayerSelectable selected, MultiplayerUIController controller)
     {
         electedOption = TallyVotes();
+    }
+
+    public void AllSelectedCallback()
+    {
+        if (!gameObject.activeInHierarchy) return;
+
+        //do things
+        electedOption = TallyVotes();
+        OnElected.Invoke(electedOption);
     }
 }

@@ -23,6 +23,10 @@ public class MultiplayerUIManager : MonoBehaviour
     [SerializeField]
     private UnityEvent OnPlayersLeave;
 
+    [SerializeField]
+    private UnityEvent OnAllSelected;
+    private bool allSelected = false;
+
     private List<MultiplayerUIController> activeControllers;
 
     private bool playersJoined = false;
@@ -77,6 +81,23 @@ public class MultiplayerUIManager : MonoBehaviour
                 RemoveController(player);
 	        }
 	    }
+
+        //check all the controllers
+        if (activeControllers.Count == 0) return;
+        int selected = 0;
+        foreach(var controller in activeControllers)
+        {
+            if (controller.hasSelected) selected++;
+        }
+        if(!allSelected && selected == activeControllers.Count)
+        {
+            allSelected = true;
+            OnAllSelected.Invoke();
+        }
+        else if(allSelected && selected != activeControllers.Count)
+        {
+            allSelected = false;
+        }
 	}
 
     private bool ContainsController(Rewired.Player p)

@@ -8,6 +8,13 @@ public class PlayerSelectManager : MonoBehaviour
 {
 
     public UnityEvent OnAllConfirmed;
+
+    public void AllSelectedCallback()
+    {
+        if (!gameObject.activeInHierarchy) return;
+
+        OnAllConfirmed.Invoke();
+    }
     
     public void PlayerSelected(MultiplayerSelectable selectable, MultiplayerUIController controller)
     {
