@@ -27,6 +27,9 @@ public class MultiplayerUIManager : MonoBehaviour
     private UnityEvent OnAllSelected;
     private bool allSelected = false;
 
+    [SerializeField]
+    private UnityEvent OnEnabled;
+
     private List<MultiplayerUIController> activeControllers;
 
     private bool playersJoined = false;
@@ -43,6 +46,7 @@ public class MultiplayerUIManager : MonoBehaviour
         ReInput.ControllerPreDisconnectEvent += ReInputOnControllerPreDisconnectEvent;
         FindObjectOfType<RewiredStandaloneInputModule>().enabled = false;
         playersJoined = false;
+        OnEnabled.Invoke();
     }
 
     void OnDisable()
