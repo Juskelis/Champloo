@@ -57,7 +57,19 @@ public class InAir : MovementState
 
         if (controller.collisions.Above && velocity.y > 0) velocity.y = 0;
 
-        velocity.y -= player.Gravity*Time.deltaTime;
+
+        //if player releases the jump button,change the momentum
+        //if the player is not holding the jump button and is is moving up
+        if(player.InputPlayer.GetButtonUp("Jump") && velocity.y > 0)
+        {
+            velocity.y = Mathf.Sqrt(velocity.y);
+        }
+        
+        velocity.y -= player.Gravity * Time.deltaTime;
+       
+
+
+
 
         if (velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
         

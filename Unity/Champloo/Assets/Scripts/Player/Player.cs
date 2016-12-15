@@ -54,6 +54,16 @@ public class Player : NetworkBehaviour
     [SerializeField]
     private float deathForce = 20f;
 
+    [Space]
+    [SerializeField]
+    public float maxJumpHeight = 4;
+
+    [SerializeField]
+    public float minJumpHeight = 2;
+
+    [SerializeField]
+    public float Gravity = 50;
+
     public float hitReactionTime;
 
     #endregion
@@ -79,7 +89,7 @@ public class Player : NetworkBehaviour
     [SyncVar]
     private Vector3 externalForce = Vector3.zero;
 
-    public float Gravity { get; set; }
+    //public float Gravity { get; set; }
 
     private Weapon hitWith;
 
@@ -134,6 +144,7 @@ public class Player : NetworkBehaviour
         weapon.PickUp();
 
         //change colors of child sprites
+        playerColor = GetComponent<PlayerSettings>().Color;
         foreach(SpriteRenderer s in coloredSprites)
         {
             s.color = playerColor;
