@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(CanvasGroup))]
 public class Menu : MonoBehaviour
 {
     private Animator anim;
@@ -33,14 +35,16 @@ public class Menu : MonoBehaviour
 
     private MultiplayerUIManager UIManager;
 
+    private RectTransform rect;
+
     public void Awake()
     {
         anim = GetComponent<Animator>();
         cgroup = GetComponent<CanvasGroup>();
         //eventSystem = FindObjectOfType<EventSystem>();
 
-        var rect = GetComponent<RectTransform>();
-        rect.offsetMax = rect.offsetMin = new Vector2(0, 0);
+        rect = GetComponent<RectTransform>();
+        rect.offsetMax = rect.offsetMin = Vector2.zero;
         UIManager = GetComponent<MultiplayerUIManager>();
 
         if(UIManager != null) UIManager.enabled = false;
@@ -49,5 +53,8 @@ public class Menu : MonoBehaviour
     public void Update()
     {
         cgroup.blocksRaycasts = cgroup.interactable = anim.GetCurrentAnimatorStateInfo(0).IsName("Open");
+
+        //sometimes network stuff is wonky so reset menu location to make sure things aren't dumb
+        rect.offsetMax = rect.offsetMin = Vector2.zero;
     }
 }

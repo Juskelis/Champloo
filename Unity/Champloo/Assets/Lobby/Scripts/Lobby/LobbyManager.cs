@@ -136,17 +136,17 @@ namespace Prototype.NetworkLobby
                 Menu newPanelMenu = newPanel.GetComponent<Menu>();
                 if (newPanelMenu != null)
                 {
-                    FindObjectOfType<MenuManager>().ShowMenu(newPanelMenu);
+                    GetComponent<MenuManager>().ShowMenu(newPanelMenu);
                 }
                 else
                 {
-                    FindObjectOfType<MenuManager>().ShowMenu(null);
+                    GetComponent<MenuManager>().ShowMenu(null);
                     newPanel.gameObject.SetActive(true);
                 }
             }
             else
             {
-                FindObjectOfType<MenuManager>().ShowMenu(null);
+                GetComponent<MenuManager>().ShowMenu(null);
             }
 
             currentPanel = newPanel;

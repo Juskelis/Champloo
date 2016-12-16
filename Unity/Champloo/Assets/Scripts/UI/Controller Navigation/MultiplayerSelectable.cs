@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Prototype.NetworkLobby;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
@@ -26,6 +27,21 @@ public class MultiplayerSelectable : Selectable
         {
             if (controller.hasSelected) ret++;
         }
+
+        if (LobbyManager.s_Singleton != null)
+        {
+            //potentially have network players who have voted for this
+            LobbyPlayer player;
+            foreach (var netPlayer in LobbyManager.s_Singleton.lobbySlots)
+            {
+                player = (LobbyPlayer) netPlayer;
+                if (player.selectedSelectable == ToString())
+                {
+                    ret++;
+                }
+            }
+        }
+
         return ret;
     }
 
@@ -96,5 +112,22 @@ public class MultiplayerSelectable : Selectable
     public void OnClickCallback(MultiplayerSelectable selectable, MultiplayerUIController controller)
     {
         print("Clicked with " + controller.ControllerNumber);
+    }
+
+    private string HeirarchyPath()
+    {
+        Transform t = transform;
+        string path = t.name;
+        while (t.parent != null)
+        {
+            t = t.parent;
+            path = t.name + "." + path;
+        }
+        return path;
+    }
+
+    public override string ToString()
+    {
+        return "MultiplayerSelectable_" + gameObject.tag + "_" + HeirarchyPath();
     }
 }

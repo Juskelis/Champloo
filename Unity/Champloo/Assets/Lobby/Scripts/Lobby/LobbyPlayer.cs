@@ -31,6 +31,17 @@ namespace Prototype.NetworkLobby
         public Color playerColor = Color.white;
         [SyncVar]
         public string playerPrefabName = "";
+        [SyncVar]
+        public int playerControllerNumber = -1;
+        [SyncVar]
+        public bool activated = false;
+
+        /*
+            string to identify cross-client objects that are logically the same
+            this implementation uses heirarchy (full path) as equivalence identifier
+        */
+        [SyncVar]
+        public string selectedSelectable;
 
         public Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         public Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);

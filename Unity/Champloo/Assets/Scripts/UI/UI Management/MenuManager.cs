@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    public Menu CurrentMenu;
+    [SerializeField]
+    private Menu CurrentMenu;
 
     private bool firstFrame = true;
 

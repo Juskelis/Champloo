@@ -1,13 +1,20 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Prototype.NetworkLobby;
 using Rewired;
 using Rewired.Integration.UnityUI;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+[Serializable]
+public class UIManagerEvent : UnityEvent<Rewired.Player> { }
+
 public class MultiplayerUIManager : MonoBehaviour
 {
+    [SerializeField]
+    private bool autoAddPlayers = false;
+
     [SerializeField]
     private MultiplayerSelectable firstSelected;
 
@@ -21,8 +28,14 @@ public class MultiplayerUIManager : MonoBehaviour
     private string leaveAction = "UILeave";
 
     [SerializeField]
-    private UnityEvent OnPlayersLeave;
+    private UIManagerEvent OnPlayerJoin;
 
+    [SerializeField]
+    private UIManagerEvent OnPlayerLeave;
+
+    [SerializeField]
+    private UnityEvent OnAllPlayersLeave;
+    
     [SerializeField]
     private UnityEvent OnAllSelected;
     private bool allSelected = false;
@@ -32,13 +45,16 @@ public class MultiplayerUIManager : MonoBehaviour
 
     private List<MultiplayerUIController> activeControllers;
 
+    private static Dictionary<Rewired.Player, bool> hasJoinedDictionary;
+
     private bool playersJoined = false;
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
 	{
         activeControllers = new List<MultiplayerUIController>();
-
+        if(hasJoinedDictionary == null)
+            hasJoinedDictionary = new Dictionary<Rewired.Player, bool>();
 	}
 
     void OnEnable()
@@ -46,6 +62,19 @@ public class MultiplayerUIManager : MonoBehaviour
         ReInput.ControllerPreDisconnectEvent += ReInputOnControllerPreDisconnectEvent;
         FindObjectOfType<RewiredStandaloneInputModule>().enabled = false;
         playersJoined = false;
+        allSelected = false;
+        if (autoAddPlayers)
+        {
+            List<Rewired.Player> toAdd = new List<Rewired.Player>();
+            foreach (var pair in hasJoinedDictionary)
+            {
+                if(pair.Value) toAdd.Add(pair.Key);
+            }
+            foreach (var player in toAdd)
+            {
+                AddController(player, true);
+            }
+        }
         OnEnabled.Invoke();
     }
 
@@ -55,6 +84,13 @@ public class MultiplayerUIManager : MonoBehaviour
         RewiredStandaloneInputModule module = FindObjectOfType<RewiredStandaloneInputModule>();
         if (module == null) return;
         module.enabled = true;
+
+        //clear all active controllers
+        foreach (var controller in activeControllers)
+        {
+            Destroy(controller.gameObject);
+        }
+        activeControllers.Clear();
     }
 
     private void ReInputOnControllerPreDisconnectEvent(ControllerStatusChangedEventArgs controllerStatusChangedEventArgs)
@@ -87,7 +123,11 @@ public class MultiplayerUIManager : MonoBehaviour
 	    }
 
         //check all the controllers
-        if (activeControllers.Count == 0) return;
+        if (activeControllers.Count == 0)
+        {
+            allSelected = false;
+            return;
+        }
         int selected = 0;
         foreach(var controller in activeControllers)
         {
@@ -104,22 +144,74 @@ public class MultiplayerUIManager : MonoBehaviour
         }
 	}
 
-    private bool ContainsController(Rewired.Player p)
+    void LateUpdate()
     {
+        //update lobbyplayers with correct info
         foreach (var controller in activeControllers)
         {
-            if (controller.ControllerNumber == p.id) return true;
+            foreach (var player in GetLocalPlayers(controller.ControllerNumber))
+            {
+                player.selectedSelectable = controller.CurrentlySelected.ToString();
+            }
         }
-        return false;
     }
 
-    private void AddController(Rewired.Player p)
+    private bool ContainsController(Rewired.Player p)
+    {
+        return hasJoinedDictionary.ContainsKey(p) && hasJoinedDictionary[p];
+    }
+
+    private void AddController(Rewired.Player p, bool startupAdd = false)
     {
         MultiplayerUIController controller = Instantiate(controllerPrefab);
         controller.ControllerNumber = p.id;
         controller.ChangeSelected(firstSelected);
         activeControllers.Add(controller);
         playersJoined = true;
+        hasJoinedDictionary[p] = true;
+        if (!startupAdd)
+        {
+            OnPlayerJoin.Invoke(p);
+            AddLocalPlayer(p.id);
+        }
+    }
+
+    private void AddLocalPlayer(int controllerNumber)
+    {
+        LobbyManager.s_Singleton.AddLocalPlayer();
+        LobbyPlayer lp;
+        foreach (var networkLobbyPlayer in LobbyManager.s_Singleton.lobbySlots)
+        {
+            lp = networkLobbyPlayer as LobbyPlayer;
+            if (lp != null && lp.isLocalPlayer && lp.playerControllerNumber < 0)
+            {
+                lp.playerControllerNumber = controllerNumber;
+            }
+        }
+    }
+
+    private void RemoveLocalPlayer(int controllerNumber)
+    {
+        List<LobbyPlayer> toRemove = GetLocalPlayers(controllerNumber);
+        foreach (LobbyPlayer t in toRemove)
+        {
+            LobbyManager.s_Singleton.RemovePlayer(t);
+        }
+    }
+
+    private List<LobbyPlayer> GetLocalPlayers(int controllerNumber)
+    {
+        List<LobbyPlayer> ret = new List<LobbyPlayer>();
+        LobbyPlayer toAdd;
+        foreach (var nlp in LobbyManager.s_Singleton.lobbySlots)
+        {
+            toAdd = nlp as LobbyPlayer;
+            if (toAdd != null && toAdd.isLocalPlayer && toAdd.playerControllerNumber == controllerNumber)
+            {
+                ret.Add(toAdd);
+            }
+        }
+        return ret;
     }
 
     private void RemoveController(Rewired.Player p)
@@ -128,14 +220,18 @@ public class MultiplayerUIManager : MonoBehaviour
         {
             if (activeControllers[i].ControllerNumber == p.id)
             {
+                RemoveLocalPlayer(p.id);
                 Destroy(activeControllers[i].gameObject);
                 activeControllers.RemoveAt(i);
             }
         }
+        hasJoinedDictionary[p] = false;
+        OnPlayerLeave.Invoke(p);
+
         if (playersJoined && activeControllers.Count <= 0)
         {
             //all players have left!
-            OnPlayersLeave.Invoke();
+            OnAllPlayersLeave.Invoke();
         }
     }
 }

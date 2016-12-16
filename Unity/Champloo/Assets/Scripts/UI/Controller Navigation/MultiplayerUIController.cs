@@ -15,6 +15,11 @@ public class MultiplayerUIController : MonoBehaviour
 
     private MultiplayerSelectable currentlySelected;
 
+    public MultiplayerSelectable CurrentlySelected
+    {
+        get { return currentlySelected; }
+    }
+
     [SerializeField]
     private int controllerNumber = 0;
 
@@ -42,17 +47,9 @@ public class MultiplayerUIController : MonoBehaviour
     void Update()
     {
         if (currentlySelected == null) return;
-
         
         if (controller.GetButtonDown(rewiredEventSystem.submitButton))
         {
-            /*
-            Button b = currentlySelected.GetComponent<Button>();
-            if (b != null)
-            {
-                b.onClick.Invoke();
-            }
-            */
             hasSelected = true;
             currentlySelected.OnClick.Invoke(currentlySelected, this);
         }

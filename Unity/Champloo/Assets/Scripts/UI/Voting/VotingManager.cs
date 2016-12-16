@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Prototype.NetworkLobby;
 using UnityEngine.Events;
 
 [Serializable]
@@ -68,7 +69,12 @@ public class VotingManager : MonoBehaviour
 
     public void AllSelectedCallback()
     {
-        if (!gameObject.activeInHierarchy) return;
+        print("Checking active status: " + gameObject.activeInHierarchy + " " + gameObject.activeSelf);
+        if (!gameObject.activeInHierarchy || !gameObject.activeSelf)
+        {
+            print("Not active");
+            return;
+        }
 
         //do things
         electedOption = TallyVotes();
