@@ -123,25 +123,36 @@ public class MultiplayerUIManager : MonoBehaviour
 	    }
 
         //check all the controllers
-        if (activeControllers.Count == 0)
+        if (LobbyManager.s_Singleton.lobbySlots.Length == 0)
         {
             allSelected = false;
             return;
         }
-        int selected = 0;
-        foreach(var controller in activeControllers)
-        {
-            if (controller.hasSelected) selected++;
-        }
-        if(!allSelected && selected == activeControllers.Count)
-        {
-            allSelected = true;
+
+	    bool noneSelected = true;
+	    bool allHaveSelected = true;
+	    LobbyPlayer lobbyPlayer;
+	    foreach (var netPlayer in LobbyManager.s_Singleton.lobbySlots)
+	    {
+	        lobbyPlayer = (LobbyPlayer) netPlayer;
+	        if (lobbyPlayer.activated)
+	        {
+	            noneSelected = false;
+	        }
+	        else
+	        {
+	            allHaveSelected = false;
+	        }
+	    }
+	    if (noneSelected && allSelected)
+	    {
+	        allSelected = false;
+	    }
+	    else if (allHaveSelected && !allSelected)
+	    {
+	        allSelected = true;
             OnAllSelected.Invoke();
-        }
-        else if(allSelected && selected != activeControllers.Count)
-        {
-            allSelected = false;
-        }
+	    }
 	}
 
     void LateUpdate()
