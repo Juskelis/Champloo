@@ -437,7 +437,7 @@ public class Player : NetworkBehaviour
     protected void ChooseNextState(ref MovementState next)
     {
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
-        if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack))
+        if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack) && !movementSpecial.isInUse)
         {
             //weapon.Attack();
             CmdAttack();

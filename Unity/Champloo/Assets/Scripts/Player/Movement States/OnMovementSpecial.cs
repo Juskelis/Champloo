@@ -9,12 +9,12 @@ public class OnMovementSpecial : MovementState
     protected float cooldownTime;
 
 
-    protected float specialTimer;
-    protected float cooldownTimer;
+    protected float specialTimeLeft;
+    protected float cooldownTimeLeft;
 
     //bools for determining current state
-    public bool canUse { get { return !isInUse && !isDisabled; } }
-    public bool isInUse { get { return specialTime >= 0; } }
+    public bool canUse { get { return !isInUse && !isDisabled && cooldownTimeLeft > 0; } }
+    public bool isInUse { get { return specialTimeLeft > 0; } }
     public bool isDisabled { get; set; }
 
     protected override void Start()
