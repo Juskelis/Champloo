@@ -185,9 +185,8 @@
     <Compile Include="Assets\Scripts\UI\GIF Encoder\NeuQuant.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby\ButtonKeyTrigger.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby\LobbyCodeHookTEST.cs" />
+    <Compile Include="Assets\Scripts\UI\Lobby\LobbyFlowManager.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby\LobbyManagementHooks.cs" />
-    <Compile Include="Assets\Scripts\UI\Menu.cs" />
-    <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
     <Compile Include="Assets\Scripts\UI\NetworkLobbyHook.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\Carousels\Carousel.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\Carousels\NameCarousel.cs" />
@@ -199,6 +198,9 @@
     <Compile Include="Assets\Scripts\UI\Scene.cs" />
     <Compile Include="Assets\Scripts\UI\ScoreCardInstantiator.cs" />
     <Compile Include="Assets\Scripts\UI\TitleGenerator.cs" />
+    <Compile Include="Assets\Scripts\UI\UI Management\Menu.cs" />
+    <Compile Include="Assets\Scripts\UI\UI Management\MenuManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UI Management\NetworkedMenuManager.cs" />
     <Compile Include="Assets\Scripts\UI\UpdatePlayerNumber.cs" />
     <Compile Include="Assets\Scripts\UI\Voting\VotingManager.cs" />
     <Compile Include="Assets\Scripts\Utility\Interpolate.cs" />

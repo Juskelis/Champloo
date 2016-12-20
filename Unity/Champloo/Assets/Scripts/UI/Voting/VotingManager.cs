@@ -64,7 +64,8 @@ public class VotingManager : MonoBehaviour
 
     public void OnVote(MultiplayerSelectable selected, MultiplayerUIController controller)
     {
-        electedOption = TallyVotes();
+        //on an individual vote
+        //electedOption = TallyVotes();
     }
 
     public void AllSelectedCallback()
