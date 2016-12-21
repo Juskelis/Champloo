@@ -3,19 +3,18 @@ using System.Collections;
 
 public class OnGround : MovementState
 {
-    [SerializeField] private float maxJumpHeight = 4;
-    [SerializeField] private float minJumpHeight = 1;
-    [SerializeField] private float timeToJumpApex = 0.4f;
-    [Space]
-    [SerializeField] private float maxSpeed = 6;
-    [SerializeField] private float stopToMaxSpeedTime = 0.1f;
-    [SerializeField] private float maxSpeedToStopTime = 0.2f;
-    [SerializeField] private float fullTurnTime = 0.2f;
+    [SerializeField]
+    private float maxSpeed = 6;
+    [SerializeField]
+    private float stopToMaxSpeedTime = 0.1f;
+    [SerializeField]
+    private float maxSpeedToStopTime = 0.2f;
+    [SerializeField]
+    private float fullTurnTime = 0.2f;
 
     public float MaxSpeed { get { return maxSpeed; } }
 
-    private float maxJumpVelocity;
-    private float minJumpVelocity;
+    private float jumpVelocity;
 
     private float acceleration;
     private float deceleration;
@@ -26,16 +25,14 @@ public class OnGround : MovementState
     protected override void Start()
     {
         base.Start();
-        player.Gravity = (2 * maxJumpHeight) / (timeToJumpApex * timeToJumpApex);
+        //maxJumpVelocity = player.Gravity * player.timeToJumpApex;
 
-        maxJumpVelocity = player.Gravity * timeToJumpApex;
-
-        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(player.Gravity) * minJumpHeight);
+        jumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(player.Gravity) * player.maxJumpHeight);
 
         //vT = v0 + at
-        acceleration = maxSpeed/stopToMaxSpeedTime;
-        deceleration = maxSpeed/maxSpeedToStopTime;
-        turningDeceleration = (maxSpeed*2)/fullTurnTime;
+        acceleration = maxSpeed / stopToMaxSpeedTime;
+        deceleration = maxSpeed / maxSpeedToStopTime;
+        turningDeceleration = (maxSpeed * 2) / fullTurnTime;
     }
 
     public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
@@ -69,20 +66,20 @@ public class OnGround : MovementState
 
         Jumped = false;
         //if (input.jump.Down)
-        if(player.InputPlayer.GetButtonDown("Jump"))
+        if (player.InputPlayer.GetButtonDown("Jump"))
         {
             Jumped = true;
             //input.jump.ResetTimers();
-            velocity.y = maxJumpVelocity;
+            velocity.y = jumpVelocity;
         }
 
         DecayExternalForces(ref externalForces);
 
-        controller.Move(velocity*Time.deltaTime + externalForces*Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime + externalForces * Time.deltaTime);
 
         if (!controller.collisions.Below || Jumped)
         {
-            
+
             if (controller.collisions.Left || controller.collisions.Right)
             {
                 return GetComponent<OnWall>(); //wallriding

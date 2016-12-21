@@ -7,7 +7,7 @@ public class OnDash : OnMovementSpecial
     private float dashForce;
     public float DashForce { get { return dashForce; } }
     
-    private float timeLeft;
+    //private float timeLeft;
 
     [SerializeField]
     private float gravityModifier = 1f;
@@ -46,10 +46,10 @@ public class OnDash : OnMovementSpecial
         }
         else
         {
-            timeLeft = -1;
+            specialTimeLeft = -1;
         }
 
-        if (timeLeft < 0)
+        if (specialTimeLeft < 0)
         {
             //this probably needs to be changed so that it doesn't trigger on enemy players being below or to the side
             if (controller.collisions.Below)
@@ -62,13 +62,13 @@ public class OnDash : OnMovementSpecial
             }
             return GetComponent<InAir>();
         }
-        timeLeft -= Time.deltaTime;
+        specialTimeLeft -= Time.deltaTime;
         return null;
     }
 
     public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
     {
-        timeLeft = specialTime;
+        specialTimeLeft = specialTime;
 
         //set up the dash visual trail
         tail.enabled = true;
