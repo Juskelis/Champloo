@@ -18,6 +18,8 @@ public class MultiplayerSelectable : Selectable
     //public Action OnClick;
     public MultiplayerSelectableEvent OnClick;
 
+    public MultiplayerSelectableEvent OnHover;
+
     private LayoutGroup playerContainer;
     
     /// <summary>
@@ -48,17 +50,6 @@ public class MultiplayerSelectable : Selectable
         }
 
         return ret;
-    }
-
-    public bool HasControllerSelected(MultiplayerUIController controller)
-    {
-        if (!controller.hasSelected) return false;
-
-        foreach (var child in playerContainer.GetComponentsInChildren<MultiplayerUIController>())
-        {
-            if (child == controller) return true;
-        }
-        return false;
     }
 
     protected override void Start()
@@ -112,6 +103,8 @@ public class MultiplayerSelectable : Selectable
 
         r.SetParent(playerContainer.transform, false);
         r.SetSiblingIndex(sortIndex);
+
+        OnHover.Invoke(this, r.GetComponent<MultiplayerUIController>());
     }
 
     public void OnClickCallback(MultiplayerSelectable selectable, MultiplayerUIController controller)
