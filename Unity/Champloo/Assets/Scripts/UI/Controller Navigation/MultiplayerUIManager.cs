@@ -166,7 +166,10 @@ public class MultiplayerUIManager : MonoBehaviour
         {
             foreach (var player in GetLocalPlayers(controller.ControllerNumber))
             {
-                player.selectedSelectable = controller.CurrentlySelected.ToString();
+                MultiplayerSelectable selected = controller.CurrentlySelected;
+                bool actuallySelected = selected != null && controller.hasSelected;
+                player.selectedSelectable = actuallySelected ? selected.ToString() : "";
+                player.activated = controller.hasSelected;
             }
         }
     }
