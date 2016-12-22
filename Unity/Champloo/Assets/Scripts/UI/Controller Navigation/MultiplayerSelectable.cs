@@ -40,7 +40,7 @@ public class MultiplayerSelectable : Selectable
             foreach (var netPlayer in LobbyManager.s_Singleton.lobbySlots)
             {
                 player = (LobbyPlayer) netPlayer;
-                if (player.selectedSelectable == ToString())
+                if (player && player.selectedSelectable == ToString())
                 {
                     ret++;
                 }
