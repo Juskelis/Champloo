@@ -1,14 +1,14 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections.Generic;
-using Prototype.NetworkLobby;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 [Serializable]
 public class VotingEvent : UnityEvent<VotingManager.Option> { }
 
 public class VotingManager : MonoBehaviour
 {
+    public Outline selectedOutline;
     
     [Serializable]
     public class Option
@@ -65,7 +65,16 @@ public class VotingManager : MonoBehaviour
     public void OnVote(MultiplayerSelectable selected, MultiplayerUIController controller)
     {
         //on an individual vote
-        //electedOption = TallyVotes();
+        Option prevElectedOption = electedOption;
+        electedOption = TallyVotes();
+        if(prevElectedOption != null)
+        {
+            //visuals for winner change
+            Destroy(prevElectedOption.selectable.GetComponent<Outline>());
+        }
+        Outline o = electedOption.selectable.gameObject.AddComponent<Outline>();
+        o.effectColor = selectedOutline.effectColor;
+        o.effectDistance = selectedOutline.effectDistance;
     }
 
     public void AllSelectedCallback()
