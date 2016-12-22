@@ -20,6 +20,11 @@ public class MultiplayerSelectable : Selectable
 
     private LayoutGroup playerContainer;
     
+    /// <summary>
+    /// Get the number of players selecting this controller
+    ///     takes into account networked players as well
+    /// </summary>
+    /// <returns></returns>
     public int ControllersSelecting()
     {
         int ret = 0;
