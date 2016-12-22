@@ -134,6 +134,7 @@ public class MultiplayerUIManager : MonoBehaviour
 	    LobbyPlayer lobbyPlayer;
 	    foreach (var netPlayer in LobbyManager.s_Singleton.lobbySlots)
 	    {
+            if (!netPlayer) continue;
 	        lobbyPlayer = (LobbyPlayer) netPlayer;
 	        if (lobbyPlayer.activated)
 	        {
