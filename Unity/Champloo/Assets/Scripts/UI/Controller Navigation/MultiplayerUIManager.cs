@@ -196,7 +196,8 @@ public class MultiplayerUIManager : MonoBehaviour
 
     private void AddLocalPlayer(int controllerNumber)
     {
-        LobbyManager.s_Singleton.AddLocalPlayer();
+        //check and see if any lobby players lack a controller
+        bool added = false;
         LobbyPlayer lp;
         foreach (var networkLobbyPlayer in LobbyManager.s_Singleton.lobbySlots)
         {
@@ -204,6 +205,21 @@ public class MultiplayerUIManager : MonoBehaviour
             if (lp != null && lp.isLocalPlayer && lp.playerControllerNumber < 0)
             {
                 lp.playerControllerNumber = controllerNumber;
+                added = true;
+            }
+        }
+
+        if(!added)
+        {
+            //create a new lobby player
+            LobbyManager.s_Singleton.AddLocalPlayer();
+            foreach(var networkLobbyPlayer in LobbyManager.s_Singleton.lobbySlots)
+            {
+                lp = networkLobbyPlayer as LobbyPlayer;
+                if(lp != null && lp.isLocalPlayer && lp.playerControllerNumber < 0)
+                {
+                    lp.playerControllerNumber = controllerNumber;
+                }
             }
         }
     }
