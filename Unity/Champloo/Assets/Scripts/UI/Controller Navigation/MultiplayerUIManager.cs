@@ -123,18 +123,15 @@ public class MultiplayerUIManager : MonoBehaviour
 	    }
 
         //check all the controllers
-        if (LobbyManager.s_Singleton.lobbySlots.Length == 0)
-        {
-            allSelected = false;
-            return;
-        }
 
 	    bool noneSelected = true;
 	    bool allHaveSelected = true;
 	    LobbyPlayer lobbyPlayer;
+        int count = 0;
 	    foreach (var netPlayer in LobbyManager.s_Singleton.lobbySlots)
 	    {
             if (!netPlayer) continue;
+            count++;
 	        lobbyPlayer = (LobbyPlayer) netPlayer;
 	        if (lobbyPlayer.activated)
 	        {
@@ -144,8 +141,14 @@ public class MultiplayerUIManager : MonoBehaviour
 	        {
 	            allHaveSelected = false;
 	        }
-	    }
-	    if (noneSelected && allSelected)
+        }
+        if (count <= 0)
+        {
+            allSelected = false;
+            return;
+        }
+
+        if (noneSelected && allSelected)
 	    {
 	        allSelected = false;
 	    }
