@@ -73,8 +73,22 @@
     <Reference Include="Rewired_Windows_Lib">
       <HintPath>Assets\Rewired\Internal\Libraries\Runtime\Rewired_Windows_Lib.dll</HintPath>
     </Reference>
+    <Reference Include="NATTraversalForUNET">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\NATTraversalForUNET.dll</HintPath>
+    </Reference>
+    <Reference Include="RakNetSwig">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\RakNetSwig.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="Open.Nat">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\Open.Nat.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Plugins\NAT Traversal for UNET\AdvancedMigrationManager.cs" />
+    <Compile Include="Assets\Plugins\NAT Traversal for UNET\AdvancedNetworkManager.cs" />
     <Compile Include="Assets\Standard Assets\Utility\ActivateTrigger.cs" />
     <Compile Include="Assets\Standard Assets\Utility\EventSystemChecker.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FollowTarget.cs" />
@@ -88,6 +102,8 @@
     <None Include="Assets\Fonts\OFL.txt" />
     <None Include="Assets\Lobby\Documentation.txt" />
     <None Include="Assets\Lobby\Instruction.txt" />
+    <None Include="Assets\Plugins\NAT Traversal for UNET\RakNet LICENSE.txt" />
+    <None Include="Assets\Plugins\NAT Traversal for UNET\System.Threading.xml" />
     <None Include="Assets\Resources\Video_Game_Names.txt" />
     <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
     <None Include="Assets\Rewired\Documentation\ReleaseNotes.txt" />
