@@ -4,6 +4,7 @@ using System.Collections;
 public class InAttack : MovementState
 {
     Weapon playerWeapon;
+    Vector3 initialVelocity;
 
     protected override void Start()
     {
@@ -35,11 +36,13 @@ public class InAttack : MovementState
 
     public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
     {
+        initialVelocity = velocity;
         movementSpecial.OnEnterAttack(ref velocity, ref externalForces);
     }
 
     public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
     {
         movementSpecial.OnExitAttack(ref velocity, ref externalForces);
+        velocity = initialVelocity; 
     }
 }
