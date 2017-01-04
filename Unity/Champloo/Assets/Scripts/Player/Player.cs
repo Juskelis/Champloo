@@ -439,6 +439,7 @@ public class Player : NetworkBehaviour
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
         if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack) && !movementSpecial.isInUse)
         {
+            Debug.Log("can Attack and is hitting button");
             //weapon.Attack();
             CmdAttack();
             next = GetComponent<InAttack>();
