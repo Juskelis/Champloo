@@ -61,20 +61,11 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Rewired_Core">
-      <HintPath>Assets\Rewired\Internal\Libraries\Runtime\Rewired_Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Rewired_Windows_Lib">
-      <HintPath>Assets\Rewired\Internal\Libraries\Runtime\Rewired_Windows_Lib.dll</HintPath>
-    </Reference>
     <Reference Include="NATTraversalForUNET">
       <HintPath>Assets\Plugins\NAT Traversal for UNET\NATTraversalForUNET.dll</HintPath>
+    </Reference>
+    <Reference Include="Open.Nat">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\Open.Nat.dll</HintPath>
     </Reference>
     <Reference Include="RakNetSwig">
       <HintPath>Assets\Plugins\NAT Traversal for UNET\RakNetSwig.dll</HintPath>
@@ -82,8 +73,11 @@
     <Reference Include="System.Threading">
       <HintPath>Assets\Plugins\NAT Traversal for UNET\System.Threading.dll</HintPath>
     </Reference>
-    <Reference Include="Open.Nat">
-      <HintPath>Assets\Plugins\NAT Traversal for UNET\Open.Nat.dll</HintPath>
+    <Reference Include="Rewired_Core">
+      <HintPath>Assets\Rewired\Internal\Libraries\Runtime\Rewired_Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Rewired_Windows_Lib">
+      <HintPath>Assets\Rewired\Internal\Libraries\Runtime\Rewired_Windows_Lib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
