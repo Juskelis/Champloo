@@ -248,6 +248,24 @@ public class MultiplayerUIManager : MonoBehaviour
         return ret;
     }
 
+    public void SetPlayersReady()
+    {
+        foreach(var player in LobbyManager.s_Singleton.lobbySlots)
+        {
+            if (player == null) continue;
+            player.SendReadyToBeginMessage();
+        }
+    }
+
+    public void SetPlayersNotReady()
+    {
+        foreach(var player in LobbyManager.s_Singleton.lobbySlots)
+        {
+            if (player == null) continue;
+            player.SendNotReadyToBeginMessage();
+        }
+    }
+
     private void RemoveController(Rewired.Player p)
     {
         for (int i = 0; i < activeControllers.Count; i++)
