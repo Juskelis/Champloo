@@ -32,6 +32,7 @@ public class NetworkedMenuManager : NetworkBehaviour {
 
     private void LoadDefaultMenu()
     {
+        if (CurrentMenu == null) return;
         ShowMenu(CurrentMenu);
     }
 
