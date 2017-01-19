@@ -13,7 +13,13 @@ public class UIManagerEvent : UnityEvent<Rewired.Player> { }
 public class MultiplayerUIManager : MonoBehaviour
 {
     [SerializeField]
+    private bool playersCanJoin = true;
+
+    [SerializeField]
     private bool autoAddPlayers = false;
+
+    [SerializeField]
+    private int minPlayersToAdvance = 0;
 
     [SerializeField]
     private MultiplayerSelectable firstSelected;
@@ -63,7 +69,7 @@ public class MultiplayerUIManager : MonoBehaviour
         FindObjectOfType<RewiredStandaloneInputModule>().enabled = false;
         playersJoined = false;
         allSelected = false;
-        if (autoAddPlayers)
+        if (!playersCanJoin)
         {
             List<Rewired.Player> toAdd = new List<Rewired.Player>();
             foreach (var pair in hasJoinedDictionary)
@@ -110,7 +116,7 @@ public class MultiplayerUIManager : MonoBehaviour
 	void Update () {
 	    foreach (var player in ReInput.players.Players)
 	    {
-	        if (player.GetButtonDown(joinAction) && !ContainsController(player))
+	        if (playersCanJoin && player.GetButtonDown(joinAction) && !ContainsController(player))
 	        {
 	            //player has joined
                 AddController(player);
@@ -123,7 +129,6 @@ public class MultiplayerUIManager : MonoBehaviour
 	    }
 
         //check all the controllers
-
 	    bool noneSelected = true;
 	    bool allHaveSelected = true;
 	    LobbyPlayer lobbyPlayer;
@@ -152,7 +157,7 @@ public class MultiplayerUIManager : MonoBehaviour
 	    {
 	        allSelected = false;
 	    }
-	    else if (allHaveSelected && !allSelected)
+	    else if (allHaveSelected && !allSelected && count >= minPlayersToAdvance)
 	    {
 	        allSelected = true;
             OnAllSelected.Invoke();

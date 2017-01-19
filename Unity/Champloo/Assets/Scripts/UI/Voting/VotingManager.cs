@@ -31,6 +31,7 @@ public class VotingManager : MonoBehaviour
 
     private Option TallyVotes()
     {
+        print("Tally");
         Option mostVotes = null;
         Option ret = null;
         foreach (Option option in options)
@@ -75,6 +76,7 @@ public class VotingManager : MonoBehaviour
         Outline o = electedOption.selectable.gameObject.AddComponent<Outline>();
         o.effectColor = selectedOutline.effectColor;
         o.effectDistance = selectedOutline.effectDistance;
+        OnElected.Invoke(electedOption);
     }
 
     public void AllSelectedCallback()

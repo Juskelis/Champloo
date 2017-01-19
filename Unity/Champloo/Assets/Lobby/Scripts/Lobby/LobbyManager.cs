@@ -47,6 +47,9 @@ namespace Prototype.NetworkLobby
         [HideInInspector]
         public bool _isMatchmaking = false;
 
+        [HideInInspector]
+        public bool _isLocalMatch = false;
+
         protected bool _disconnectServer = false;
         
         protected ulong _currentMatchID;
@@ -153,7 +156,7 @@ namespace Prototype.NetworkLobby
 
             if (currentPanel != mainMenuPanel)
             {
-                backButton.gameObject.SetActive(true);
+                //backButton.gameObject.SetActive(true);
             }
             else
             {

@@ -3,11 +3,12 @@ using System.Collections;
 using Prototype.NetworkLobby;
 
 public class MapSelect : MonoBehaviour {
-    public void SetMap(MultiplayerSelectable selectable, MultiplayerUIController controller)
+    public void SetMap(VotingManager.Option electedMap)
     {
-        MapOption option = selectable.GetComponent<MapOption>();
+        MapOption option = electedMap.selectable.GetComponent<MapOption>();
         if(option != null)
         {
+            print("Changing map to " + option.mapName);
             LobbyManager.s_Singleton.playScene = option.mapName;
         }
         else

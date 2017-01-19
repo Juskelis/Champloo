@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Prototype.NetworkLobby
 {
@@ -20,6 +21,7 @@ namespace Prototype.NetworkLobby
         public Button readyButton;
         public Button waitingPlayerButton;
         public Button removePlayerButton;
+        public Text playerNumberText;
 
         public GameObject localIcone;
         public GameObject remoteIcone;
@@ -29,12 +31,14 @@ namespace Prototype.NetworkLobby
         public string playerName = "";
         [SyncVar(hook = "OnMyColor")]
         public Color playerColor = Color.white;
-        [SyncVar]
+        [SyncVar(hook = "OnMyPrefab")]
         public string playerPrefabName = "";
-        [SyncVar]
+        [SyncVar(hook = "OnMyControllerNumber")]
         public int playerControllerNumber = -1;
         [SyncVar]
         public bool activated = false;
+        
+        private int playerNumber = -1;
 
         /*
             string to identify cross-client objects that are logically the same
@@ -62,7 +66,8 @@ namespace Prototype.NetworkLobby
             if (LobbyManager.s_Singleton != null) LobbyManager.s_Singleton.OnPlayersNumberModified(1);
 
             LobbyPlayerList._instance.AddPlayer(this);
-            LobbyPlayerList._instance.DisplayDirectServerWarning(isServer && LobbyManager.s_Singleton.matchMaker == null);
+            LobbyPlayerList._instance.DisplayDirectServerWarning(
+                isServer && LobbyManager.s_Singleton.matchMaker == null && !LobbyManager.s_Singleton._isLocalMatch);
 
             if (isLocalPlayer)
             {
@@ -130,11 +135,13 @@ namespace Prototype.NetworkLobby
 
             //have to use child count of player prefab already setup as "this.slot" is not set yet
             if (playerName == "")
-                CmdNameChanged("Player" + (LobbyPlayerList._instance.playerListContentTransform.childCount-1));
+            {
+                CmdNameChanged("Select a player");
+            }
 
             //we switch from simple name display to name input
-            colorButton.interactable = true;
-            nameInput.interactable = true;
+            //colorButton.interactable = true;
+            //nameInput.interactable = true;
 
             nameInput.onEndEdit.RemoveAllListeners();
             nameInput.onEndEdit.AddListener(OnNameChanged);
@@ -207,6 +214,19 @@ namespace Prototype.NetworkLobby
             playerColor = newColor;
             colorButton.GetComponent<Image>().color = newColor;
         }
+
+        public void OnMyControllerNumber(int newNumber)
+        {
+            playerControllerNumber = newNumber;
+            playerNumberText.text = newNumber.ToString();
+        }
+
+        public void OnMyPrefab(string newPrefab)
+        {
+            playerPrefabName = newPrefab;
+            OnMyName(newPrefab);
+        }
+        
 
         //===== UI Handler
 

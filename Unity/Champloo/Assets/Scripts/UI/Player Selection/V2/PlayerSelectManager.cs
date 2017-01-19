@@ -29,7 +29,7 @@ public class PlayerSelectManager : MonoBehaviour
                 player = networkPlayer as LobbyPlayer;
                 if(player != null && player.isLocalPlayer && player.playerControllerId == controller.ControllerNumber)
                 {
-                    player.playerPrefabName = selectedOption.playerPrefabName;
+                    player.playerPrefabName = (selectedOption.playerPrefabName);
                 }
             }
         }
