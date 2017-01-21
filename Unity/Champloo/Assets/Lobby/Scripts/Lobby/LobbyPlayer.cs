@@ -247,6 +247,16 @@ namespace Prototype.NetworkLobby
             CmdNameChanged(str);
         }
 
+        public void OnPrefabChanged(string str)
+        {
+            CmdPrefabNameChanged(str);
+        }
+
+        public void OnControllerNumberChanged(int num)
+        {
+            CmdControllerNumberChanged(num);
+        }
+
         public void OnRemovePlayerClick()
         {
             if (isLocalPlayer)
@@ -322,6 +332,18 @@ namespace Prototype.NetworkLobby
         public void CmdNameChanged(string name)
         {
             playerName = name;
+        }
+
+        [Command]
+        public void CmdPrefabNameChanged(string prefabName)
+        {
+            playerPrefabName = prefabName;
+        }
+
+        [Command]
+        public void CmdControllerNumberChanged(int controllerNumber)
+        {
+            playerControllerNumber = controllerNumber;
         }
 
         //Cleanup thing when get destroy (which happen when client kick or disconnect)

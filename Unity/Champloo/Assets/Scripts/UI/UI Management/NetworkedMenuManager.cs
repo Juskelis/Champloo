@@ -38,7 +38,7 @@ public class NetworkedMenuManager : NetworkBehaviour {
 
     public void ShowMenu(Menu menu)
     {
-        CmdUpdateMenu(menu.name);
+        if(hasAuthority) CmdUpdateMenu(menu.name);
     }
 
     private void GoToMenu(Menu menu)

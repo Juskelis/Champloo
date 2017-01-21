@@ -209,7 +209,7 @@ public class MultiplayerUIManager : MonoBehaviour
             lp = networkLobbyPlayer as LobbyPlayer;
             if (lp != null && lp.isLocalPlayer && lp.playerControllerNumber < 0)
             {
-                lp.playerControllerNumber = controllerNumber;
+                lp.OnControllerNumberChanged(controllerNumber);
                 added = true;
             }
         }
@@ -223,7 +223,7 @@ public class MultiplayerUIManager : MonoBehaviour
                 lp = networkLobbyPlayer as LobbyPlayer;
                 if(lp != null && lp.isLocalPlayer && lp.playerControllerNumber < 0)
                 {
-                    lp.playerControllerNumber = controllerNumber;
+                    lp.OnControllerNumberChanged(controllerNumber);
                 }
             }
         }
