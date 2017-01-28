@@ -5,53 +5,16 @@ using System.Collections;
 public class NetworkedMenuManager : NetworkBehaviour {
 
     [SerializeField]
-    private Menu CurrentMenu;
-
-    private Menu startMenu;
-
-    private bool firstFrame = true;
-
-    private void Awake()
-    {
-        startMenu = CurrentMenu;
-    }
-
-    private void LateUpdate()
-    {
-        if (firstFrame)
-        {
-            firstFrame = false;
-            LoadDefaultMenu();
-        }
-    }
-
-    private void OnEnable()
-    {
-        GoToMenu(startMenu);
-    }
-
-    private void LoadDefaultMenu()
-    {
-        if (CurrentMenu == null) return;
-        ShowMenu(CurrentMenu);
-    }
+    private MenuManager target;
 
     public void ShowMenu(Menu menu)
     {
         if(hasAuthority) CmdUpdateMenu(menu.name);
     }
-
+    
     private void GoToMenu(Menu menu)
     {
-        if (CurrentMenu != null)
-        {
-            CurrentMenu.IsOpen = false;
-        }
-        CurrentMenu = menu;
-        if (menu != null)
-        {
-            CurrentMenu.IsOpen = true;
-        }
+        target.ShowMenu(menu);
     }
 
     [Command]
@@ -65,11 +28,11 @@ public class NetworkedMenuManager : NetworkBehaviour {
     {
         Menu[] menus = GameObject.FindObjectsOfType<Menu>();
         bool found = false;
-        for (int i =0; i < menus.Length; i++)
+        foreach (Menu m in menus)
         {
-            if(menus[i].name == menuObjectName)
+            if(m.name == menuObjectName)
             {
-                GoToMenu(menus[i]);
+                GoToMenu(m);
                 found = true;
             }
         }

@@ -174,7 +174,8 @@ public class MultiplayerUIManager : MonoBehaviour
                 MultiplayerSelectable selected = controller.CurrentlySelected;
                 bool actuallySelected = selected != null && controller.hasSelected;
                 player.selectedSelectable = actuallySelected ? selected.ToString() : "";
-                player.activated = controller.hasSelected;
+                //player.activated = controller.hasSelected;
+                player.OnActivationChanged(controller.hasSelected);
             }
         }
     }

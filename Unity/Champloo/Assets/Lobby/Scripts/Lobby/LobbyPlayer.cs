@@ -35,7 +35,7 @@ namespace Prototype.NetworkLobby
         public string playerPrefabName = "";
         [SyncVar(hook = "OnMyControllerNumber")]
         public int playerControllerNumber = -1;
-        [SyncVar]
+        [SyncVar(hook = "OnActivate")]
         public bool activated = false;
         
         private int playerNumber = -1;
@@ -226,6 +226,11 @@ namespace Prototype.NetworkLobby
             playerPrefabName = newPrefab;
             OnMyName(newPrefab);
         }
+
+        public void OnActivate(bool activation)
+        {
+            activated = activation;
+        }
         
 
         //===== UI Handler
@@ -255,6 +260,11 @@ namespace Prototype.NetworkLobby
         public void OnControllerNumberChanged(int num)
         {
             CmdControllerNumberChanged(num);
+        }
+
+        public void OnActivationChanged(bool activation)
+        {
+            CmdActivationChanged(activation);
         }
 
         public void OnRemovePlayerClick()
@@ -344,6 +354,12 @@ namespace Prototype.NetworkLobby
         public void CmdControllerNumberChanged(int controllerNumber)
         {
             playerControllerNumber = controllerNumber;
+        }
+
+        [Command]
+        public void CmdActivationChanged(bool activation)
+        {
+            activated = activation;
         }
 
         //Cleanup thing when get destroy (which happen when client kick or disconnect)
