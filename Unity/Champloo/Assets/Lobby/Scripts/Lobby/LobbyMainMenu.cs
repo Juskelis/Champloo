@@ -36,6 +36,7 @@ namespace Prototype.NetworkLobby
         {
             lobbyServerInfo.gameObject.SetActive(true);
             lobbyManager._isLocalMatch = false;
+            lobbyManager.serverBindToIP = true;
             lobbyManager.StartHost();
         }
 
@@ -43,6 +44,7 @@ namespace Prototype.NetworkLobby
         {
             lobbyServerInfo.gameObject.SetActive(false);
             lobbyManager._isLocalMatch = true;
+            lobbyManager.serverBindToIP = false;
             lobbyManager.StartHost();
         }
 
