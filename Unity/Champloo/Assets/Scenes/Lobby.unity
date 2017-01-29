@@ -2486,7 +2486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NetworkPort: 7766
-  m_ServerBindToIP: 1
+  m_ServerBindToIP: 0
   m_ServerBindAddress: 192.168.0.105
   m_NetworkAddress: 
   m_DontDestroyOnLoad: 1
