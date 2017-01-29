@@ -10,7 +10,7 @@ public class Player : NetworkBehaviour
     #region Variables
 
     #region State Variables
-    [SyncVar]
+    [SyncVar(hook = "OnDeath")]
     private bool dead = false;
 
     //[SerializeField]
@@ -74,9 +74,9 @@ public class Player : NetworkBehaviour
         private set { inputPlayer = value; }
     }
 
-    [SyncVar]
+    [SyncVar(hook = "OnVelocity")]
     private Vector3 velocity = Vector3.zero;
-    [SyncVar]
+    [SyncVar(hook = "OnExternalForce")]
     private Vector3 externalForce = Vector3.zero;
 
     public float Gravity { get; set; }
@@ -129,7 +129,7 @@ public class Player : NetworkBehaviour
         //transform.position = Random.insideUnitCircle;
         transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
 
-        dead = false;
+        OnDeathChanged(false);
 
         weapon.PickUp();
 
@@ -184,9 +184,12 @@ public class Player : NetworkBehaviour
     {
         gameObject.SetActive(true);
         transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
-        dead = false;
-        velocity = Vector3.zero;
-        externalForce = Vector3.zero;
+        //dead = false;
+        OnDeathChanged(false);
+        //velocity = Vector3.zero;
+        //externalForce = Vector3.zero;
+        OnVelocityChanged(Vector3.zero);
+        OnExternalForceChanged(Vector3.zero);
         weapon.PickUp();
     }
 
@@ -226,10 +229,11 @@ public class Player : NetworkBehaviour
     {
         ShakeCamera();
 
-        velocity = Vector3.zero;
+        //velocity = Vector3.zero;
+        //externalForce = Vector3.zero;
+        OnVelocityChanged(Vector3.zero);
+        OnExternalForceChanged(Vector3.zero);
 
-        velocity = Vector3.zero;
-        externalForce = Vector3.zero;
         hitWith = null;
 
         if (spawnOnDeath != null)
@@ -241,7 +245,8 @@ public class Player : NetworkBehaviour
         }
 
         gameObject.SetActive(false);
-        dead = true;
+        //dead = true;
+        OnDeathChanged(true);
         float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
         Invoke("Spawn", time);
     }
@@ -371,9 +376,11 @@ public class Player : NetworkBehaviour
     {
         //velocity = force;
         float threshold = 0.25f;
-        if (Mathf.Abs(force.x) > threshold) velocity.x = force.x;
-        if (Mathf.Abs(force.y) > threshold) velocity.y = force.y;
-        if (Mathf.Abs(force.z) > threshold) velocity.z = force.z;
+        Vector3 newVelocity = velocity;
+        if (Mathf.Abs(force.x) > threshold) newVelocity.x = force.x;
+        if (Mathf.Abs(force.y) > threshold) newVelocity.y = force.y;
+        if (Mathf.Abs(force.z) > threshold) newVelocity.z = force.z;
+        OnVelocityChanged(newVelocity);
     }
 
     private void ShakeCamera()
@@ -391,6 +398,67 @@ public class Player : NetworkBehaviour
     #endregion
 
     #region Data Syncronization
+
+    #region SyncVar Hooks
+
+    public void OnDeath(bool deathState)
+    {
+        dead = deathState;
+    }
+
+    public void OnVelocity(Vector3 newVelocity)
+    {
+        velocity = newVelocity;
+    }
+
+    public void OnExternalForce(Vector3 newExternalForce)
+    {
+        externalForce = newExternalForce;
+    }
+
+    #endregion
+
+    #region Command Hooks
+
+    public void OnDeathChanged(bool deathState)
+    {
+        CmdDeathChange(deathState);
+    }
+
+    public void OnVelocityChanged(Vector3 newVelocity)
+    {
+        CmdVelocityChange(newVelocity);
+    }
+
+    public void OnExternalForceChanged(Vector3 newExternalForce)
+    {
+        CmdExternalForceChange(newExternalForce);
+    }
+
+    #endregion
+
+    #region Commands
+
+    [Command]
+    public void CmdDeathChange(bool deathState)
+    {
+        dead = deathState;
+    }
+
+    [Command]
+    public void CmdVelocityChange(Vector3 newVelocity)
+    {
+        velocity = newVelocity;
+    }
+
+    [Command]
+    public void CmdExternalForceChange(Vector3 newExternalForce)
+    {
+        externalForce = newExternalForce;
+    }
+
+    #endregion
+
     [Command]
     private void CmdUpdateMovementState(string state)
     {
@@ -461,8 +529,10 @@ public class Player : NetworkBehaviour
             return;
         }
         //inputs.UpdateInputs();
-        
-        MovementState next = movementState.UpdateState(ref velocity, ref externalForce);
+        Vector3 newVelocity = velocity;
+        Vector3 newExternalForce = externalForce;
+
+        MovementState next = movementState.UpdateState(ref newVelocity, ref newExternalForce);
 
         ChooseNextState(ref next);
 
@@ -470,11 +540,14 @@ public class Player : NetworkBehaviour
 
         if (next != null)
         {
-            movementState.OnExit(ref velocity, ref externalForce);
-            next.OnEnter(ref velocity, ref externalForce);
+            movementState.OnExit(ref newVelocity, ref newExternalForce);
+            next.OnEnter(ref newVelocity, ref newExternalForce);
             movementState = next;
             CmdUpdateMovementState(movementState.GetType().ToString());
         }
+
+        OnVelocityChanged(newVelocity);
+        OnExternalForceChanged(newExternalForce);
 
         //handle blocking/parrying
         if (hitWith != null)
