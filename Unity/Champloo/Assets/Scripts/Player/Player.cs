@@ -54,6 +54,16 @@ public class Player : NetworkBehaviour
     [SerializeField]
     private float deathForce = 20f;
 
+    [Space]
+    [SerializeField]
+    public float maxJumpHeight = 4;
+
+    [SerializeField]
+    public float minJumpHeight = 2;
+
+    [SerializeField]
+    public float Gravity = 50;
+
     public float hitReactionTime;
 
     #endregion
@@ -79,7 +89,7 @@ public class Player : NetworkBehaviour
     [SyncVar(hook = "OnExternalForce")]
     private Vector3 externalForce = Vector3.zero;
 
-    public float Gravity { get; set; }
+    //public float Gravity { get; set; }
 
     private Weapon hitWith;
 
@@ -495,8 +505,9 @@ public class Player : NetworkBehaviour
     protected void ChooseNextState(ref MovementState next)
     {
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
-        if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack))
+        if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack) && !movementSpecial.isInUse)
         {
+            Debug.Log("can Attack and is hitting button");
             //weapon.Attack();
             CmdAttack();
             next = GetComponent<InAttack>();
