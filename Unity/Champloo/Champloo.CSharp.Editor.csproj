@@ -85,6 +85,9 @@
     <Reference Include="UnityEditor.Android.Extensions">
       <HintPath>Library\UnityAssemblies\UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.WebGL.Extensions">
       <HintPath>Library\UnityAssemblies\UnityEditor.WebGL.Extensions.dll</HintPath>
     </Reference>
@@ -99,6 +102,24 @@
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NATTraversalForUNET">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\NATTraversalForUNET.dll</HintPath>
+    </Reference>
+    <Reference Include="Open.Nat">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\Open.Nat.dll</HintPath>
+    </Reference>
+    <Reference Include="RakNetSwig">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\RakNetSwig.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\System.Threading.dll</HintPath>
     </Reference>
     <Reference Include="Rewired_Editor">
       <HintPath>Assets\Rewired\Internal\Libraries\Editor\Rewired_Editor.dll</HintPath>
@@ -138,6 +159,8 @@
     <None Include="Assets\Fonts\OFL.txt" />
     <None Include="Assets\Lobby\Documentation.txt" />
     <None Include="Assets\Lobby\Instruction.txt" />
+    <None Include="Assets\Plugins\NAT Traversal for UNET\RakNet LICENSE.txt" />
+    <None Include="Assets\Plugins\NAT Traversal for UNET\System.Threading.xml" />
     <None Include="Assets\Resources\Video_Game_Names.txt" />
     <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
     <None Include="Assets\Rewired\Documentation\ReleaseNotes.txt" />

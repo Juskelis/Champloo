@@ -15,19 +15,36 @@ namespace Prototype.NetworkLobby
         public InputField ipInput;
         public InputField matchNameInput;
 
+        public RectTransform lobbyServerInfo;
+
         public void OnEnable()
         {
             lobbyManager.topPanel.ToggleVisibility(true);
+            lobbyServerInfo.gameObject.SetActive(false);
 
             ipInput.onEndEdit.RemoveAllListeners();
             ipInput.onEndEdit.AddListener(onEndEditIP);
 
-            matchNameInput.onEndEdit.RemoveAllListeners();
-            matchNameInput.onEndEdit.AddListener(onEndEditGameName);
+            if (matchNameInput != null)
+            {
+                matchNameInput.onEndEdit.RemoveAllListeners();
+                matchNameInput.onEndEdit.AddListener(onEndEditGameName);
+            }
         }
 
         public void OnClickHost()
         {
+            lobbyServerInfo.gameObject.SetActive(true);
+            lobbyManager._isLocalMatch = false;
+            lobbyManager.serverBindToIP = true;
+            lobbyManager.StartHost();
+        }
+
+        public void OnClickPlayLocal()
+        {
+            lobbyServerInfo.gameObject.SetActive(false);
+            lobbyManager._isLocalMatch = true;
+            lobbyManager.serverBindToIP = false;
             lobbyManager.StartHost();
         }
 

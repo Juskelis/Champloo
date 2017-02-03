@@ -170,9 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff29916317b71e4da09a43e059a80af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startupTime: 0
   attackTime: 0.2
-  cooldownTime: 0.5
+  reloadTime: 0.2
   thrownVersion: {fileID: 11441408, guid: 666604262c26fa543801e5b6cfd8983b, type: 2}
   alwaysVisible: 0
   visuals: {fileID: 21225980}

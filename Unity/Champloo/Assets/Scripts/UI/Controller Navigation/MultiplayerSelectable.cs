@@ -1,42 +1,95 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Prototype.NetworkLobby;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
-[RequireComponent(typeof(Selectable))]
-public class MultiplayerSelectable : MonoBehaviour
+[System.Serializable]
+public class MultiplayerSelectableEvent : UnityEvent<MultiplayerSelectable, MultiplayerUIController> {}
+
+//[RequireComponent(typeof(Selectable))]
+public class MultiplayerSelectable : Selectable
 {
     [Tooltip("Where player indicators are held (ie Horizontal/Vertical Layout Groups)")]
     public LayoutGroup playerContainerPrefab;
 
     public bool addToNeighbors = false;
 
-    private LayoutGroup playerContainer;
+    //public Action OnClick;
+    public MultiplayerSelectableEvent OnClick;
 
-    void Start()
+    public MultiplayerSelectableEvent OnHover;
+
+    private LayoutGroup playerContainer;
+    
+    /// <summary>
+    /// Get the number of players selecting this controller
+    ///     takes into account networked players as well
+    /// </summary>
+    /// <returns></returns>
+    public int ControllersSelecting()
     {
-        playerContainer = Instantiate(playerContainerPrefab);
-        playerContainer.transform.SetParent(transform, false);
+        int ret = 0;
+        foreach (var controller in playerContainer.GetComponentsInChildren<MultiplayerUIController>())
+        {
+            if (controller.hasSelected) ret++;
+        }
+
+        if (LobbyManager.s_Singleton != null)
+        {
+            //potentially have network players who have voted for this
+            LobbyPlayer player;
+            foreach (var netPlayer in LobbyManager.s_Singleton.lobbySlots)
+            {
+                player = (LobbyPlayer) netPlayer;
+                if (player && player.selectedSelectable == ToString())
+                {
+                    ret++;
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        playerContainer = GetComponentInChildren<LayoutGroup>();
+        if (playerContainer == null)
+        {
+            //print("Error: MultiplayerSelectable needs a child LayoutGroup");
+            Debug.LogError("MultiplayerSelectable needs a child LayoutGroup");
+        }
+
 
         if (addToNeighbors)
         {
-            Selectable us = GetComponent<Selectable>();
-            if (us.FindSelectableOnDown().GetComponent<MultiplayerSelectable>() == null)
+            //Selectable us = GetComponent<Selectable>();
+            if (FindSelectableOnDown().GetComponent<MultiplayerSelectable>() == null)
             {
-                Utility.CopyComponent(this, us.FindSelectableOnDown().gameObject);
+                Utility.CopyComponent(this, FindSelectableOnDown().gameObject);
             }
-            if (us.FindSelectableOnUp().GetComponent<MultiplayerSelectable>() == null)
+            if (FindSelectableOnUp().GetComponent<MultiplayerSelectable>() == null)
             {
-                Utility.CopyComponent(this, us.FindSelectableOnUp().gameObject);
+                Utility.CopyComponent(this, FindSelectableOnUp().gameObject);
             }
-            if (us.FindSelectableOnLeft().GetComponent<MultiplayerSelectable>() == null)
+            if (FindSelectableOnLeft().GetComponent<MultiplayerSelectable>() == null)
             {
-                Utility.CopyComponent(this, us.FindSelectableOnLeft().gameObject);
+                Utility.CopyComponent(this, FindSelectableOnLeft().gameObject);
             }
-            if (us.FindSelectableOnRight().GetComponent<MultiplayerSelectable>() == null)
+            if (FindSelectableOnRight().GetComponent<MultiplayerSelectable>() == null)
             {
-                Utility.CopyComponent(this, us.FindSelectableOnRight().gameObject);
+                Utility.CopyComponent(this, FindSelectableOnRight().gameObject);
             }
         }
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        DestroyImmediate(playerContainer);
     }
 
     public void AddPlayerIndicator(Transform r)
@@ -45,10 +98,34 @@ public class MultiplayerSelectable : MonoBehaviour
 
         int sortIndex;
         MultiplayerUIController[] children = transform.GetComponentsInChildren<MultiplayerUIController>();
-        for(sortIndex = 0; sortIndex < children.Length && sortR < children[sortIndex].ControllerNumber; sortIndex++)
+        for(sortIndex = 0; sortIndex < children.Length && sortR > children[sortIndex].ControllerNumber; sortIndex++)
         { }
 
         r.SetParent(playerContainer.transform, false);
         r.SetSiblingIndex(sortIndex);
+
+        OnHover.Invoke(this, r.GetComponent<MultiplayerUIController>());
+    }
+
+    public void OnClickCallback(MultiplayerSelectable selectable, MultiplayerUIController controller)
+    {
+        print("Clicked with " + controller.ControllerNumber);
+    }
+
+    private string HeirarchyPath()
+    {
+        Transform t = transform;
+        string path = t.name;
+        while (t.parent != null)
+        {
+            t = t.parent;
+            path = t.name + "." + path;
+        }
+        return path;
+    }
+
+    public override string ToString()
+    {
+        return "MultiplayerSelectable_" + gameObject.tag + "_" + HeirarchyPath();
     }
 }

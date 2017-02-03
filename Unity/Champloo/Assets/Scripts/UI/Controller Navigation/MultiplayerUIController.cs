@@ -13,7 +13,12 @@ public class MultiplayerUIController : MonoBehaviour
     private EventSystem eventSystem;
     private RewiredStandaloneInputModule rewiredEventSystem;
 
-    private Selectable currentlySelected;
+    private MultiplayerSelectable currentlySelected;
+
+    public MultiplayerSelectable CurrentlySelected
+    {
+        get { return currentlySelected; }
+    }
 
     [SerializeField]
     private int controllerNumber = 0;
@@ -23,6 +28,8 @@ public class MultiplayerUIController : MonoBehaviour
         get { return controllerNumber; }
         set { controllerNumber = value; }
     }
+
+    public bool hasSelected = false;
 
     private Vector2 prev_move = Vector2.zero;
     private int move_count = 0;
@@ -40,15 +47,11 @@ public class MultiplayerUIController : MonoBehaviour
     void Update()
     {
         if (currentlySelected == null) return;
-
         
         if (controller.GetButtonDown(rewiredEventSystem.submitButton))
         {
-            Button b = currentlySelected.GetComponent<Button>();
-            if (b != null)
-            {
-                b.onClick.Invoke();
-            }
+            hasSelected = true;
+            currentlySelected.OnClick.Invoke(currentlySelected, this);
         }
         
         Selectable next = null;
@@ -118,7 +121,8 @@ public class MultiplayerUIController : MonoBehaviour
         if (next == null || next == currentlySelected) return;
 
         //if(currentlySelected != null) currentlySelected.OnDeselect(new BaseEventData(eventSystem));
-        currentlySelected = next.GetComponent<Selectable>();
+        currentlySelected = next;
+        hasSelected = false;
         //currentlySelected.OnSelect(new BaseEventData(eventSystem));
 
         /*

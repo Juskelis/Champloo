@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Prototype.NetworkLobby
 {
@@ -20,6 +21,7 @@ namespace Prototype.NetworkLobby
         public Button readyButton;
         public Button waitingPlayerButton;
         public Button removePlayerButton;
+        public Text playerNumberText;
 
         public GameObject localIcone;
         public GameObject remoteIcone;
@@ -29,6 +31,21 @@ namespace Prototype.NetworkLobby
         public string playerName = "";
         [SyncVar(hook = "OnMyColor")]
         public Color playerColor = Color.white;
+        [SyncVar(hook = "OnMyPrefab")]
+        public string playerPrefabName = "";
+        [SyncVar(hook = "OnMyControllerNumber")]
+        public int playerControllerNumber = -1;
+        [SyncVar(hook = "OnActivate")]
+        public bool activated = false;
+        
+        private int playerNumber = -1;
+
+        /*
+            string to identify cross-client objects that are logically the same
+            this implementation uses heirarchy (full path) as equivalence identifier
+        */
+        [SyncVar]
+        public string selectedSelectable;
 
         public Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         public Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
@@ -49,7 +66,8 @@ namespace Prototype.NetworkLobby
             if (LobbyManager.s_Singleton != null) LobbyManager.s_Singleton.OnPlayersNumberModified(1);
 
             LobbyPlayerList._instance.AddPlayer(this);
-            LobbyPlayerList._instance.DisplayDirectServerWarning(isServer && LobbyManager.s_Singleton.matchMaker == null);
+            LobbyPlayerList._instance.DisplayDirectServerWarning(
+                isServer && LobbyManager.s_Singleton.matchMaker == null && !LobbyManager.s_Singleton._isLocalMatch);
 
             if (isLocalPlayer)
             {
@@ -117,11 +135,13 @@ namespace Prototype.NetworkLobby
 
             //have to use child count of player prefab already setup as "this.slot" is not set yet
             if (playerName == "")
-                CmdNameChanged("Player" + (LobbyPlayerList._instance.playerListContentTransform.childCount-1));
+            {
+                CmdNameChanged("Select a player");
+            }
 
             //we switch from simple name display to name input
-            colorButton.interactable = true;
-            nameInput.interactable = true;
+            //colorButton.interactable = true;
+            //nameInput.interactable = true;
 
             nameInput.onEndEdit.RemoveAllListeners();
             nameInput.onEndEdit.AddListener(OnNameChanged);
@@ -195,6 +215,24 @@ namespace Prototype.NetworkLobby
             colorButton.GetComponent<Image>().color = newColor;
         }
 
+        public void OnMyControllerNumber(int newNumber)
+        {
+            playerControllerNumber = newNumber;
+            playerNumberText.text = newNumber.ToString();
+        }
+
+        public void OnMyPrefab(string newPrefab)
+        {
+            playerPrefabName = newPrefab;
+            OnMyName(newPrefab);
+        }
+
+        public void OnActivate(bool activation)
+        {
+            activated = activation;
+        }
+        
+
         //===== UI Handler
 
         //Note that those handler use Command function, as we need to change the value on the server not locally
@@ -212,6 +250,21 @@ namespace Prototype.NetworkLobby
         public void OnNameChanged(string str)
         {
             CmdNameChanged(str);
+        }
+
+        public void OnPrefabChanged(string str)
+        {
+            CmdPrefabNameChanged(str);
+        }
+
+        public void OnControllerNumberChanged(int num)
+        {
+            CmdControllerNumberChanged(num);
+        }
+
+        public void OnActivationChanged(bool activation)
+        {
+            CmdActivationChanged(activation);
         }
 
         public void OnRemovePlayerClick()
@@ -289,6 +342,24 @@ namespace Prototype.NetworkLobby
         public void CmdNameChanged(string name)
         {
             playerName = name;
+        }
+
+        [Command]
+        public void CmdPrefabNameChanged(string prefabName)
+        {
+            playerPrefabName = prefabName;
+        }
+
+        [Command]
+        public void CmdControllerNumberChanged(int controllerNumber)
+        {
+            playerControllerNumber = controllerNumber;
+        }
+
+        [Command]
+        public void CmdActivationChanged(bool activation)
+        {
+            activated = activation;
         }
 
         //Cleanup thing when get destroy (which happen when client kick or disconnect)

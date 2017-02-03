@@ -47,6 +47,9 @@ namespace Prototype.NetworkLobby
         [HideInInspector]
         public bool _isMatchmaking = false;
 
+        [HideInInspector]
+        public bool _isLocalMatch = false;
+
         protected bool _disconnectServer = false;
         
         protected ulong _currentMatchID;
@@ -136,20 +139,24 @@ namespace Prototype.NetworkLobby
                 Menu newPanelMenu = newPanel.GetComponent<Menu>();
                 if (newPanelMenu != null)
                 {
-                    FindObjectOfType<MenuManager>().ShowMenu(newPanelMenu);
+                    GetComponent<MenuManager>().ShowMenu(newPanelMenu);
                 }
                 else
                 {
-                    FindObjectOfType<MenuManager>().ShowMenu(null);
+                    GetComponent<MenuManager>().ShowMenu(null);
                     newPanel.gameObject.SetActive(true);
                 }
+            }
+            else
+            {
+                GetComponent<MenuManager>().ShowMenu(null);
             }
 
             currentPanel = newPanel;
 
             if (currentPanel != mainMenuPanel)
             {
-                backButton.gameObject.SetActive(true);
+                //backButton.gameObject.SetActive(true);
             }
             else
             {

@@ -61,6 +61,24 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NATTraversalForUNET">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\NATTraversalForUNET.dll</HintPath>
+    </Reference>
+    <Reference Include="Open.Nat">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\Open.Nat.dll</HintPath>
+    </Reference>
+    <Reference Include="RakNetSwig">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\RakNetSwig.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>Assets\Plugins\NAT Traversal for UNET\System.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="Rewired_Core">
       <HintPath>Assets\Rewired\Internal\Libraries\Runtime\Rewired_Core.dll</HintPath>
     </Reference>
@@ -92,6 +110,10 @@
     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyServerEntry.cs" />
     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyServerList.cs" />
     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyTopPanel.cs" />
+    <Compile Include="Assets\NAT Traversal Example\ExampleMigrationManager.cs" />
+    <Compile Include="Assets\NAT Traversal Example\ExampleNetworkManager.cs" />
+    <Compile Include="Assets\NAT Traversal Example\NATHelperTester.cs" />
+    <Compile Include="Assets\NAT Traversal Example\NATTraversalExamplePlayer.cs" />
     <Compile Include="Assets\Rewired\Examples\ControlRemapping1\Scripts\ControlRemappingDemo1.cs" />
     <Compile Include="Assets\Rewired\Examples\CustomControllersTilt\Scripts\CustomControllersTiltDemo.cs" />
     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo.cs" />
@@ -179,19 +201,28 @@
     <Compile Include="Assets\Scripts\UI\GIF Encoder\NeuQuant.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby\ButtonKeyTrigger.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby\LobbyCodeHookTEST.cs" />
+    <Compile Include="Assets\Scripts\UI\Lobby\LobbyFlowManager.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby\LobbyManagementHooks.cs" />
-    <Compile Include="Assets\Scripts\UI\Menu.cs" />
-    <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Map Select\MapOption.cs" />
+    <Compile Include="Assets\Scripts\UI\Map Select\MapSelect.cs" />
     <Compile Include="Assets\Scripts\UI\NetworkLobbyHook.cs" />
+    <Compile Include="Assets\Scripts\UI\Networking\DisplayExternalIP.cs" />
+    <Compile Include="Assets\Scripts\UI\Networking\GetExternalIP.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\Carousels\Carousel.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\Carousels\NameCarousel.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\PlayerSelect.cs" />
     <Compile Include="Assets\Scripts\UI\Player Selection\PlayerSelectConfirmation.cs" />
+    <Compile Include="Assets\Scripts\UI\Player Selection\V2\PlayerOption.cs" />
+    <Compile Include="Assets\Scripts\UI\Player Selection\V2\PlayerSelectManager.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerScoreCard.cs" />
     <Compile Include="Assets\Scripts\UI\Scene.cs" />
     <Compile Include="Assets\Scripts\UI\ScoreCardInstantiator.cs" />
     <Compile Include="Assets\Scripts\UI\TitleGenerator.cs" />
+    <Compile Include="Assets\Scripts\UI\UI Management\Menu.cs" />
+    <Compile Include="Assets\Scripts\UI\UI Management\MenuManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UI Management\NetworkedMenuManager.cs" />
     <Compile Include="Assets\Scripts\UI\UpdatePlayerNumber.cs" />
+    <Compile Include="Assets\Scripts\UI\Voting\VotingManager.cs" />
     <Compile Include="Assets\Scripts\Utility\Interpolate.cs" />
     <Compile Include="Assets\Scripts\Utility\Utility.cs" />
     <Compile Include="Assets\Scripts\Weapons\Shield.cs" />
@@ -203,6 +234,8 @@
     <None Include="Assets\Fonts\OFL.txt" />
     <None Include="Assets\Lobby\Documentation.txt" />
     <None Include="Assets\Lobby\Instruction.txt" />
+    <None Include="Assets\Plugins\NAT Traversal for UNET\RakNet LICENSE.txt" />
+    <None Include="Assets\Plugins\NAT Traversal for UNET\System.Threading.xml" />
     <None Include="Assets\Resources\Video_Game_Names.txt" />
     <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
     <None Include="Assets\Rewired\Documentation\ReleaseNotes.txt" />
