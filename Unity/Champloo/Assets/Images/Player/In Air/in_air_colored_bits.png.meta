@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ffb5b6fffba6e0f468cfa444251c6498
-timeCreated: 1486231085
+timeCreated: 1486238189
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -60,9 +60,9 @@ TextureImporter:
       name: in_air_colored_bits_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 3
         y: 0
-        width: 29
+        width: 28
         height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -86,9 +86,9 @@ TextureImporter:
       name: in_air_colored_bits_2
       rect:
         serializedVersion: 2
-        x: 66
+        x: 65
         y: 0
-        width: 27
+        width: 28
         height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -99,9 +99,9 @@ TextureImporter:
       name: in_air_colored_bits_3
       rect:
         serializedVersion: 2
-        x: 97
+        x: 98
         y: 0
-        width: 29
+        width: 28
         height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}

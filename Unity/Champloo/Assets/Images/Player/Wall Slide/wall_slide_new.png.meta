@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3c6c8ac67023ed3488eec4fd9ac96086
-timeCreated: 1486231311
+timeCreated: 1486238037
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -60,9 +60,9 @@ TextureImporter:
       name: wall_slide_new_0
       rect:
         serializedVersion: 2
-        x: 4
+        x: 2
         y: 0
-        width: 20
+        width: 22
         height: 28
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -73,9 +73,9 @@ TextureImporter:
       name: wall_slide_new_1
       rect:
         serializedVersion: 2
-        x: 33
+        x: 34
         y: 0
-        width: 23
+        width: 22
         height: 28
       alignment: 7
       pivot: {x: 0.5, y: 0}
