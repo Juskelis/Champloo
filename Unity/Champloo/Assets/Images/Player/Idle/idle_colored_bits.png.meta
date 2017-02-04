@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 2211b76e4ca960645bc9f4d960df5f12
-timeCreated: 1468025097
+timeCreated: 1486150510
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -50,85 +50,64 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 32
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: idle_colored_bits_0
+    - serializedVersion: 2
+      name: idle_colored_bits_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 5
         y: 0
-        width: 32
-        height: 32
+        width: 22
+        height: 22
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -9, y: 18}
-        - {x: -10, y: 11}
-        - {x: -10, y: 3}
-        - {x: -8, y: 0}
-        - {x: 12, y: 0}
-        - {x: 12, y: 17}
-        - {x: 11, y: 18}
-    - name: idle_colored_bits_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: idle_colored_bits_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 37
         y: 0
-        width: 32
-        height: 32
+        width: 22
+        height: 22
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -10, y: 5}
-        - {x: -6, y: 0}
-        - {x: 12, y: 0}
-        - {x: 12, y: 17}
-        - {x: 11, y: 18}
-        - {x: -4, y: 18}
-        - {x: -10, y: 15}
-    - name: idle_colored_bits_2
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: idle_colored_bits_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 69
         y: 0
-        width: 32
-        height: 32
+        width: 22
+        height: 22
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 10, y: 18}
-        - {x: -5, y: 18}
-        - {x: -10, y: 15}
-        - {x: -10, y: 3}
-        - {x: -6, y: 0}
-        - {x: 10, y: 0}
-        - {x: 12, y: 1}
-        - {x: 12, y: 17}
-    - name: idle_colored_bits_3
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: idle_colored_bits_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 101
         y: 0
-        width: 32
-        height: 32
+        width: 22
+        height: 22
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 11, y: 18}
-        - {x: -1, y: 18}
-        - {x: -8, y: 17}
-        - {x: -10, y: 15}
-        - {x: -10, y: 3}
-        - {x: -9, y: 0}
-        - {x: 9, y: 0}
-        - {x: 12, y: 2}
-        - {x: 12, y: 17}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: 
   userData: 

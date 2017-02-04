@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ffb5b6fffba6e0f468cfa444251c6498
-timeCreated: 1468024044
+timeCreated: 1486231085
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -50,115 +50,64 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 32
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: in_air_colored_bits_0
+    - serializedVersion: 2
+      name: in_air_colored_bits_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 2
         y: 0
-        width: 32
-        height: 32
+        width: 29
+        height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -2, y: 25}
-        - {x: -4, y: 24}
-        - {x: -2, y: 21}
-        - {x: 0, y: 19}
-        - {x: 2, y: 19}
-        - {x: 2, y: 18}
-        - {x: -3, y: 20}
-        - {x: -6, y: 20}
-        - {x: -13, y: 17}
-        - {x: -16, y: 15}
-        - {x: -16, y: 8}
-        - {x: 16, y: 8}
-        - {x: 16, y: 19}
-        - {x: 11, y: 25}
-    - name: in_air_colored_bits_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: in_air_colored_bits_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 34
         y: 0
-        width: 32
-        height: 32
+        width: 28
+        height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 7, y: 25}
-        - {x: 0, y: 25}
-        - {x: -2, y: 23}
-        - {x: -2, y: 21}
-        - {x: 0, y: 19}
-        - {x: 2, y: 19}
-        - {x: 2, y: 18}
-        - {x: -5, y: 21}
-        - {x: -10, y: 23}
-        - {x: -16, y: 14}
-        - {x: -16, y: 9}
-        - {x: -15, y: 8}
-        - {x: 14, y: 8}
-        - {x: 16, y: 12}
-        - {x: 16, y: 17}
-    - name: in_air_colored_bits_2
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: in_air_colored_bits_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 66
         y: 0
-        width: 32
-        height: 32
+        width: 27
+        height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -2, y: 25}
-        - {x: -2, y: 21}
-        - {x: 0, y: 19}
-        - {x: 2, y: 19}
-        - {x: 1, y: 18}
-        - {x: -7, y: 22}
-        - {x: -13, y: 24}
-        - {x: -16, y: 20}
-        - {x: -16, y: 10}
-        - {x: -5, y: 7}
-        - {x: 14, y: 7}
-        - {x: 15, y: 8}
-        - {x: 15, y: 22}
-        - {x: 5, y: 25}
-    - name: in_air_colored_bits_3
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: in_air_colored_bits_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 97
         y: 0
-        width: 32
-        height: 32
+        width: 29
+        height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 9, y: 25}
-        - {x: 0, y: 25}
-        - {x: -3, y: 24}
-        - {x: -2, y: 21}
-        - {x: 0, y: 19}
-        - {x: 2, y: 19}
-        - {x: -2, y: 19}
-        - {x: -4, y: 21}
-        - {x: -14, y: 23}
-        - {x: -16, y: 19}
-        - {x: -16, y: 12}
-        - {x: -13, y: 11}
-        - {x: -2, y: 9}
-        - {x: 8, y: 8}
-        - {x: 14, y: 8}
-        - {x: 16, y: 10}
-        - {x: 16, y: 17}
-        - {x: 14, y: 22}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: 
   userData: 

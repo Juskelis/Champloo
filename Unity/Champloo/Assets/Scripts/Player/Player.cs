@@ -107,6 +107,7 @@ public class Player : NetworkBehaviour
 
     private OnMovementSpecial movementSpecial;
 
+    private SpriteRenderer currentSprite;
     #endregion
 
     #endregion
@@ -156,6 +157,9 @@ public class Player : NetworkBehaviour
         controller.Collision += Collided;
         SceneManager.sceneLoaded += OnSceneLoaded;
 
+        
+
+        currentSprite = visuals.GetChild(0).GetComponent<SpriteRenderer>();
         //add to score register
         Score.AddPlayer(ourNetworkID);
     }
@@ -555,7 +559,10 @@ public class Player : NetworkBehaviour
             next.OnEnter(ref newVelocity, ref newExternalForce);
             movementState = next;
             CmdUpdateMovementState(movementState.GetType().ToString());
+            
         }
+
+        box.size = currentSprite.bounds.size;
 
         OnVelocityChanged(newVelocity);
         OnExternalForceChanged(newExternalForce);

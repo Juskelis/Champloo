@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7df7d02fb6dec224a821d3e6607f2314
-timeCreated: 1468005309
+timeCreated: 1486151798
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -50,100 +50,64 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 32
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: run_colored_bits_0
+    - serializedVersion: 2
+      name: run_colored_bits_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 0
-        width: 32
-        height: 32
+        width: 24
+        height: 24
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 2, y: 20}
-        - {x: 0, y: 18}
-        - {x: 0, y: 15}
-        - {x: 1, y: 13}
-        - {x: -3, y: 15}
-        - {x: -9, y: 16}
-        - {x: -16, y: 12}
-        - {x: -16, y: 3}
-        - {x: -11, y: 0}
-        - {x: 7, y: 0}
-        - {x: 8, y: 2}
-        - {x: 8, y: 18}
-        - {x: 4, y: 20}
-    - name: run_colored_bits_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: run_colored_bits_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 34
         y: 0
-        width: 32
-        height: 32
+        width: 21
+        height: 25
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 1, y: 14}
-        - {x: 5, y: 14}
-        - {x: 8, y: 15}
-        - {x: 8, y: 19}
-        - {x: 6, y: 21}
-        - {x: 1, y: 21}
-        - {x: -13, y: 17}
-        - {x: -16, y: 12}
-        - {x: -16, y: 0}
-        - {x: 5, y: 0}
-        - {x: 7, y: 2}
-        - {x: 8, y: 13}
-        - {x: 5, y: 14}
-    - name: run_colored_bits_2
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: run_colored_bits_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 65
         y: 0
-        width: 32
-        height: 32
+        width: 25
+        height: 24
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16, y: 0}
-        - {x: 6, y: 0}
-        - {x: 8, y: 1}
-        - {x: 8, y: 20}
-        - {x: -15, y: 20}
-        - {x: -16, y: 17}
-    - name: run_colored_bits_3
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: run_colored_bits_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 98
         y: 0
-        width: 32
-        height: 32
+        width: 21
+        height: 25
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -9, y: 16}
-        - {x: -16, y: 12}
-        - {x: -16, y: 4}
-        - {x: -15, y: 0}
-        - {x: 2, y: 0}
-        - {x: 7, y: 2}
-        - {x: 7, y: 13}
-        - {x: -1, y: 16}
-      - - {x: -1, y: 21}
-        - {x: -1, y: 14}
-        - {x: 6, y: 14}
-        - {x: 8, y: 15}
-        - {x: 8, y: 19}
-        - {x: 7, y: 21}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: 
   userData: 
