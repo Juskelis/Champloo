@@ -13,7 +13,6 @@ public class RaycastController : MonoBehaviour
     protected RaycastOrigins raycastOrigins;
 
     protected const float skinWidth = 0.3f;//.015f;
-
     private BoxCollider2D _collider;
 
     [SerializeField]
@@ -32,9 +31,10 @@ public class RaycastController : MonoBehaviour
 
     protected void UpdateRaycastOrigins()
     {
+        CalculateRaySpacing();
         Bounds bounds = _collider.bounds;
         bounds.Expand(skinWidth * -2);
-
+        
         raycastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
         raycastOrigins.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
         raycastOrigins.topLeft = new Vector2(bounds.min.x, bounds.max.y);
