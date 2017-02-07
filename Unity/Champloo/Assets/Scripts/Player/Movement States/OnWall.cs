@@ -24,7 +24,7 @@ public class OnWall : MovementState
         {
             velocity.x = 0;
 
-            if (moveX != 0 && moveX != wallDirX)
+            if (moveX != 0 && Mathf.Sign(moveX) != Mathf.Sign(wallDirX))
             {
                 timeToWallUnstick -= Time.deltaTime;
             }
@@ -35,7 +35,8 @@ public class OnWall : MovementState
         }
         else
         {
-            timeToWallUnstick = wallStickTime;
+            //actively speed up until off the wall
+            velocity.x = moveX * (2 + Mathf.Abs(timeToWallUnstick));
         }
 
         velocity.y -= player.Gravity * Time.deltaTime;

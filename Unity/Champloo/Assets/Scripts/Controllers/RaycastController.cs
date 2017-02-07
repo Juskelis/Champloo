@@ -12,7 +12,7 @@ public class RaycastController : MonoBehaviour
 
     protected RaycastOrigins raycastOrigins;
 
-    protected const float skinWidth = 0.3f;//.015f;
+    protected const float skinWidth = 0.15f;//.015f;
     private BoxCollider2D _collider;
 
     [SerializeField]

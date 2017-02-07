@@ -546,7 +546,7 @@ MonoBehaviour:
   wallJumpClimbForces: {x: 14, y: 20}
   wallJumpOffForces: {x: 18, y: 10}
   wallLeapForces: {x: 20, y: 15}
-  wallStickTime: 0.1
+  wallStickTime: 0.2
 --- !u!114 &11458148
 MonoBehaviour:
   m_ObjectHideFlags: 1
