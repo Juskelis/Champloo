@@ -31,7 +31,6 @@ public class VotingManager : MonoBehaviour
 
     private Option TallyVotes()
     {
-        print("Tally");
         Option mostVotes = null;
         Option ret = null;
         foreach (Option option in options)

@@ -8,7 +8,6 @@ public class MapSelect : MonoBehaviour {
         MapOption option = electedMap.selectable.GetComponent<MapOption>();
         if(option != null)
         {
-            print("Changing map to " + option.mapName);
             LobbyManager.s_Singleton.playScene = option.mapName;
         }
         else
