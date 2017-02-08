@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections;
 
+/// <summary>
+/// Provides a networked MenuManager solution by wrapping local MenuManagers in a networked call
+/// </summary>
 public class NetworkedMenuManager : NetworkBehaviour {
 
     [SerializeField]
@@ -9,7 +11,16 @@ public class NetworkedMenuManager : NetworkBehaviour {
 
     public void ShowMenu(Menu menu)
     {
-        if(hasAuthority) CmdUpdateMenu(menu.name);
+        if (hasAuthority)
+        {
+            CmdUpdateMenu(menu != null?menu.name:null);
+        }
+    }
+    
+    /// <see cref="MenuManager"/>
+    public void ClearMenu()
+    {
+        ShowMenu(null);
     }
     
     private void GoToMenu(Menu menu)
@@ -26,6 +37,11 @@ public class NetworkedMenuManager : NetworkBehaviour {
     [ClientRpc]
     private void RpcUpdateMenu(string menuObjectName)
     {
+        if (string.IsNullOrEmpty(menuObjectName))
+        {
+            target.ClearMenu();
+        }
+
         Menu[] menus = GameObject.FindObjectsOfType<Menu>();
         bool found = false;
         foreach (Menu m in menus)

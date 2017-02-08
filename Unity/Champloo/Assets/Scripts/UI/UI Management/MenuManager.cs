@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
@@ -23,11 +20,19 @@ public class MenuManager : MonoBehaviour
     {
         ShowMenu(CurrentMenu);
     }
-    /*
-    public void Start()
+    
+    /// <summary>
+    /// Calls ShowMenu(null)
+    /// </summary>
+    /// <remarks>
+    /// This is purely used because UnityEvents will throw
+    /// NullReferenceExceptions if you send them an empty parameter
+    /// </remarks>
+    public void ClearMenu()
     {
+        ShowMenu(null);
     }
-    */
+
     public void ShowMenu(Menu menu)
     {
 
