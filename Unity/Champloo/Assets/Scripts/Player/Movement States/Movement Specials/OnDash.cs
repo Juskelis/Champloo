@@ -21,6 +21,8 @@ public class OnDash : OnMovementSpecial
     private Vector2 direction;
     private Vector3 dashVelocity;
 
+    
+    private bool earlyDashInput;
     TrailRenderer tail;
 
     protected override void Start()
@@ -28,6 +30,7 @@ public class OnDash : OnMovementSpecial
         base.Start();
         currentDashes = dashLimit;
         tail = GetComponent<TrailRenderer>();
+        earlyDashInput = false;
     }
 
     public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
@@ -52,6 +55,12 @@ public class OnDash : OnMovementSpecial
         if (specialTimeLeft < 0)
         {
             //this probably needs to be changed so that it doesn't trigger on enemy players being below or to the side
+          
+            if(earlyDashInput)
+            {
+                Debug.Log("IN EARLY DASH");
+                return GetComponent<OnDash>();
+            }
             if (controller.collisions.Below)
             {
                 return GetComponent<OnGround>();
@@ -62,6 +71,17 @@ public class OnDash : OnMovementSpecial
             }
             return GetComponent<InAir>();
         }
+
+        //Buffer for attacks and movement specials done too early
+
+        if (specialTimeLeft < (specialTime / 5))
+        {
+            if(player.InputPlayer.GetButtonDown("Movement Special"))
+            {
+                earlyDashInput = true;
+            }
+        }
+
         specialTimeLeft -= Time.deltaTime;
         return null;
     }
@@ -101,6 +121,7 @@ public class OnDash : OnMovementSpecial
 
     public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
     {
+        earlyDashInput = false;
         tail.enabled = false;
     }
     
