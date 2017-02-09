@@ -505,9 +505,9 @@ MonoBehaviour:
   spawnOnDeath: {fileID: 487684, guid: f76ffe80673a7004dace221606a3111b, type: 2}
   bounceForce: 15
   deathForce: 20
-  maxJumpHeight: 4
-  minJumpHeight: 2
-  Gravity: 50
+  maxJumpHeight: 5
+  minJumpHeight: 2.5
+  Gravity: 75
   hitReactionTime: 0.2
 --- !u!114 &11437896
 MonoBehaviour:
@@ -636,10 +636,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
+  maxSpeed: 15
   stopToMaxSpeedTime: 0.2
-  maxSpeedToStopTime: 0.3
-  fullTurnTime: 0.25
+  maxSpeedToStopTime: 0.4
+  fullTurnTime: 0.2
 --- !u!114 &11492208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -875,9 +875,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34b07b148acf0f3458b93dacce52bcdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  specialTime: 0.25
+  specialTime: 0.2
   cooldownTime: 0.1
-  dashForce: 10
+  dashForce: 15
   gravityModifier: 0.1
   dashLimit: 3
 --- !u!114 &114000013946945302
