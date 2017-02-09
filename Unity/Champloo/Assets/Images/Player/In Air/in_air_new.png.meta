@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a2d54b0f35ccb894a85f5f85da177b53
-timeCreated: 1468024029
+timeCreated: 1486238196
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -50,85 +50,64 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 32
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: in_air_new_0
+    - serializedVersion: 2
+      name: in_air_new_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 3
         y: 0
-        width: 32
-        height: 32
+        width: 28
+        height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -3, y: 31}
-        - {x: -8, y: 27}
-        - {x: -8, y: 2}
-        - {x: -6, y: 0}
-        - {x: 12, y: 0}
-        - {x: 14, y: 4}
-        - {x: 14, y: 14}
-        - {x: 7, y: 31}
-    - name: in_air_new_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: in_air_new_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 34
         y: 0
-        width: 32
-        height: 32
+        width: 28
+        height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -3, y: 31}
-        - {x: -8, y: 27}
-        - {x: -8, y: 2}
-        - {x: -6, y: 0}
-        - {x: 12, y: 0}
-        - {x: 14, y: 4}
-        - {x: 14, y: 14}
-        - {x: 7, y: 31}
-    - name: in_air_new_2
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: in_air_new_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 65
         y: 0
-        width: 32
-        height: 32
+        width: 28
+        height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -3, y: 31}
-        - {x: -8, y: 27}
-        - {x: -8, y: 2}
-        - {x: -6, y: 0}
-        - {x: 12, y: 0}
-        - {x: 14, y: 4}
-        - {x: 14, y: 14}
-        - {x: 7, y: 31}
-    - name: in_air_new_3
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: in_air_new_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 98
         y: 0
-        width: 32
-        height: 32
+        width: 28
+        height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -3, y: 31}
-        - {x: -8, y: 27}
-        - {x: -8, y: 0}
-        - {x: 12, y: 0}
-        - {x: 14, y: 4}
-        - {x: 14, y: 14}
-        - {x: 7, y: 31}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: 
   userData: 

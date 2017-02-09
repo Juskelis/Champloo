@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 097f5716e2283a84db98979b2e470ea6
-timeCreated: 1468734075
+timeCreated: 1486238086
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -50,89 +50,64 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 32
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: wall_slide_colored_bits_0
+    - serializedVersion: 2
+      name: wall_slide_colored_bits_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 2
         y: 0
-        width: 32
-        height: 32
+        width: 22
+        height: 28
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -11, y: 26}
-        - {x: -14, y: 25}
-        - {x: -14, y: 5}
-        - {x: -9, y: 2}
-        - {x: 2, y: 2}
-        - {x: 8, y: 11}
-        - {x: 8, y: 26}
-    - name: wall_slide_colored_bits_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: wall_slide_colored_bits_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 34
         y: 0
-        width: 32
-        height: 32
+        width: 22
+        height: 28
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -10, y: 25}
-        - {x: -16, y: 18}
-        - {x: -16, y: 8}
-        - {x: -12, y: 3}
-        - {x: -5, y: 3}
-        - {x: 2, y: 4}
-        - {x: 9, y: 15}
-        - {x: 9, y: 24}
-        - {x: 7, y: 25}
-    - name: wall_slide_colored_bits_2
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: wall_slide_colored_bits_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 66
         y: 0
-        width: 32
-        height: 32
+        width: 22
+        height: 28
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -9, y: 25}
-        - {x: -16, y: 21}
-        - {x: -16, y: 10}
-        - {x: -11, y: 6}
-        - {x: 1, y: 6}
-        - {x: 8, y: 11}
-        - {x: 8, y: 24}
-        - {x: 7, y: 25}
-    - name: wall_slide_colored_bits_3
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: wall_slide_colored_bits_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 98
         y: 0
-        width: 32
-        height: 32
+        width: 22
+        height: 28
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 5, y: 26}
-        - {x: 2, y: 26}
-        - {x: 0, y: 24}
-        - {x: -7, y: 25}
-        - {x: -13, y: 24}
-        - {x: -16, y: 15}
-        - {x: -16, y: 8}
-        - {x: -12, y: 4}
-        - {x: 1, y: 4}
-        - {x: 9, y: 13}
-        - {x: 9, y: 23}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: 
   userData: 
