@@ -1323,7 +1323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0889a75e99ba6394da853008d253de4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentMenu: {fileID: 868940557}
+  CurrentMenu: {fileID: 0}
 --- !u!1 &470523820
 GameObject:
   m_ObjectHideFlags: 0
@@ -4378,6 +4378,8 @@ MonoBehaviour:
   ipInput: {fileID: 487260393}
   matchNameInput: {fileID: 0}
   lobbyServerInfo: {fileID: 1689231638}
+  playerSelectFlow: {fileID: 405664236}
+  playerSelectStart: {fileID: 868940557}
 --- !u!1 &1214918248
 GameObject:
   m_ObjectHideFlags: 0
