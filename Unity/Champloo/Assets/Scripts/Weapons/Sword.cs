@@ -9,13 +9,18 @@ public class Sword : Weapon {
     [SerializeField]
     private SpriteRenderer visuals;
 
-    
+    private Player player;
+
+    private Animator anim;
+
+    private Vector2 previousPosition;
 
     protected override void Start()
     {
         base.Start();
 
-        input = transform.parent.GetComponentInParent<Player>().InputPlayer;
+        player = transform.parent.GetComponentInParent<Player>();
+        input = player.InputPlayer;
         //ren = GetComponent<MeshRenderer>();
         col = GetComponent<BoxCollider2D>();
 
@@ -31,6 +36,12 @@ public class Sword : Weapon {
         {
             //transform.parent.localScale = transform.parent.parent.localScale;
             Vector2 aim = Vector2.right*input.GetAxis("Aim Horizontal") + Vector2.up*input.GetAxis("Aim Vertical");
+            if (aim.sqrMagnitude <= 0)
+            {
+                //default to forward
+                aim.x = player.HorizontalDirection;
+                aim.y = 0;
+            }
             //print(input.leftStickAngle);
             transform.parent.rotation = Quaternion.AngleAxis(
                 Utility.Vector2AsAngle(aim),//input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
