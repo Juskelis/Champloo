@@ -32,6 +32,11 @@ public class Player : NetworkBehaviour
         get { return movementState; }
     }
 
+    public int HorizontalDirection
+    {
+        get { return (int)visuals.localScale.x; }
+    }
+
     #endregion
 
     #region Customization Variables
