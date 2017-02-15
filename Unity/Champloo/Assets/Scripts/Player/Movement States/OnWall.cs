@@ -14,10 +14,11 @@ public class OnWall : MovementState
     private float wallStickTime;
     private float timeToWallUnstick;
 
-    public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
+    private bool jumped = false;
+
+    public override Vector3 ApplyFriction(Vector3 velocity)
     {
         int wallDirX = (controller.collisions.Left) ? -1 : 1;
-        //velocity.x = input.leftStick.x;
         float moveX = player.InputPlayer.GetAxis("Move Horizontal");
         velocity.x = moveX;
         if (timeToWallUnstick > 0)
@@ -42,39 +43,48 @@ public class OnWall : MovementState
         velocity.y -= player.Gravity * Time.deltaTime;
         if (velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
 
-        DecayExternalForces(ref externalForces);
+        return velocity;
+    }
 
-        bool jumped = false;
-        //if (input.jump.Down)
+    public override void ApplyInputs(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
+    {
+        base.ApplyInputs(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+
+        int wallDirX = (controller.collisions.Left) ? -1 : 1;
+        float moveX = player.InputPlayer.GetAxis("Move Horizontal");
+
+        jumped = false;
         if (player.InputPlayer.GetButtonDown("Jump"))
         {
             jumped = true;
-            //input.jump.ResetTimers();
 
             if (Mathf.Abs(wallDirX - moveX) < 0.5f)
             {
-                velocity.x = -wallDirX * wallJumpClimbForces.x;
-                velocity.y = wallJumpClimbForces.y;
+                outVelocity.x = -wallDirX * wallJumpClimbForces.x;
+                outVelocity.y = wallJumpClimbForces.y;
             }
             else if (moveX == 0)
             {
-                velocity.x = -wallDirX * wallJumpOffForces.x;
-                velocity.y = wallJumpOffForces.y;
+                outVelocity.x = -wallDirX * wallJumpOffForces.x;
+                outVelocity.y = wallJumpOffForces.y;
             }
             else
             {
-                velocity.x = -wallDirX * wallLeapForces.x;
-                velocity.y = wallLeapForces.y;
+                outVelocity.x = -wallDirX * wallLeapForces.x;
+                outVelocity.y = wallLeapForces.y;
             }
         }
+    }
 
-        controller.Move(velocity*Time.deltaTime + externalForces * Time.deltaTime);
-
+    public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
+    {
         if (controller.collisions.Below)
         {
             return GetComponent<OnGround>();
         }
-        else if (jumped || !(controller.collisions.Left || controller.collisions.Right))
+
+        if (jumped || !(controller.collisions.Left || controller.collisions.Right))
         {
             return GetComponent<InAir>();
         }
@@ -82,14 +92,18 @@ public class OnWall : MovementState
         return null;
     }
 
-    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
+        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         timeToWallUnstick = wallStickTime;
-        movementSpecial.OnEnterWall(ref velocity, ref externalForces);
+        movementSpecial.OnEnterWall(inVelocity, inExternalForces);
     }
 
-    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
-        movementSpecial.OnExitWall(ref velocity, ref externalForces);
+        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+        movementSpecial.OnExitWall(inVelocity, inExternalForces);
     }
 }

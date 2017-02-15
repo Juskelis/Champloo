@@ -549,28 +549,37 @@ public class Player : NetworkBehaviour
             return;
         }
         //inputs.UpdateInputs();
-        Vector3 newVelocity = velocity;
-        Vector3 newExternalForce = externalForce;
+        OnVelocityChanged(movementState.ApplyFriction(velocity));
+        OnExternalForceChanged(movementState.DecayExternalForces(externalForce));
 
-        MovementState next = movementState.UpdateState(ref newVelocity, ref newExternalForce);
+        Vector3 newVelocity;
+        Vector3 newExternalForce;
+
+        movementState.ApplyInputs(velocity, externalForce, out newVelocity, out newExternalForce);
+        OnVelocityChanged(newVelocity);
+        OnExternalForceChanged(newExternalForce);
+
+        controller.Move(velocity * Time.deltaTime + externalForce * Time.deltaTime);
+
+        MovementState next = movementState.DecideNextState(velocity, externalForce);
 
         ChooseNextState(ref next);
 
-        //HandleCollisions();
-
         if (next != null)
         {
-            movementState.OnExit(ref newVelocity, ref newExternalForce);
-            next.OnEnter(ref newVelocity, ref newExternalForce);
+            movementState.OnExit(velocity, externalForce, out newVelocity, out newExternalForce);
+            OnVelocityChanged(newVelocity);
+            OnExternalForceChanged(newExternalForce);
+
+            next.OnEnter(velocity, externalForce, out newVelocity, out newExternalForce);
+            OnVelocityChanged(newVelocity);
+            OnExternalForceChanged(newExternalForce);
+
             movementState = next;
             CmdUpdateMovementState(movementState.GetType().ToString());
-            
         }
 
         box.size = currentSprite.bounds.size;
-
-        OnVelocityChanged(newVelocity);
-        OnExternalForceChanged(newExternalForce);
 
         //handle blocking/parrying
         if (hitWith != null)

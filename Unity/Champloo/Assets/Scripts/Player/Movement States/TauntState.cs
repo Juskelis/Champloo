@@ -6,13 +6,19 @@ public class TauntState : MovementState {
     private float tauntDuration;
     private float tauntTimer;
 
-    public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
+    public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        velocity = Vector3.zero;
-        externalForces = Vector3.zero;
+        return Vector3.zero;
+    }
 
-        controller.Move(velocity * Time.deltaTime + externalForces*Time.deltaTime);
+    public override Vector3 DecayExternalForces(Vector3 externalForces)
+    {
+        return Vector3.zero;
+    }
 
+    public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
+    {
+        tauntTimer -= Time.deltaTime;
         if (tauntTimer <= 0)
         {
             if (controller.collisions.Below)
@@ -25,18 +31,21 @@ public class TauntState : MovementState {
             }
             return GetComponent<InAir>();
         }
-        tauntTimer -= Time.deltaTime;
         return null;
     }
 
-    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
+        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         tauntTimer = tauntDuration;
-        movementSpecial.OnEnterTaunt(ref velocity, ref externalForces);
+        movementSpecial.OnEnterTaunt(inVelocity, inExternalForces);
     }
 
-    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
-        movementSpecial.OnExitTaunt(ref velocity, ref externalForces);
+        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+        movementSpecial.OnExitTaunt(inVelocity, inExternalForces);
     }
 }

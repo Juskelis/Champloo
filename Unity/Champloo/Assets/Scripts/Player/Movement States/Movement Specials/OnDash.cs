@@ -33,26 +33,25 @@ public class OnDash : OnMovementSpecial
         earlyDashInput = false;
     }
 
-    public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
+    public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        if (!isDisabled)
-        {
-            velocity.y -= player.Gravity * Time.deltaTime * gravityModifier;
+        if(isDisabled) return velocity;
 
-            //check for collisions in the x direction that the player is dashing
-            if ((controller.collisions.Left && direction.x < 0) || (controller.collisions.Right && direction.x > 0))
-            {
-                velocity.x = 0;
-            }
-            DecayExternalForces(ref externalForces);
-            controller.Move(velocity * Time.deltaTime + externalForces * Time.deltaTime);
-        }
-        else
+        velocity.y -= player.Gravity * Time.deltaTime * gravityModifier;
+
+        //check for collisions in the x direction that the player is dashing
+        if ((controller.collisions.Left && direction.x < 0) || (controller.collisions.Right && direction.x > 0))
         {
-            specialTimeLeft = -1;
+            velocity.x = 0;
         }
 
-        if (specialTimeLeft < 0)
+        return velocity;
+    }
+
+    public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
+    {
+        specialTimeLeft -= Time.deltaTime;
+        if (specialTimeLeft < 0 || isDisabled)
         {
             //this probably needs to be changed so that it doesn't trigger on enemy players being below or to the side
           
@@ -71,7 +70,6 @@ public class OnDash : OnMovementSpecial
             }
             return GetComponent<InAir>();
         }
-
         //Buffer for attacks and movement specials done too early
 
         if (specialTimeLeft < (specialTime / 5))
@@ -81,13 +79,14 @@ public class OnDash : OnMovementSpecial
                 earlyDashInput = true;
             }
         }
-
-        specialTimeLeft -= Time.deltaTime;
+        
         return null;
     }
 
-    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
+        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         specialTimeLeft = specialTime;
 
         //set up the dash visual trail
@@ -109,7 +108,7 @@ public class OnDash : OnMovementSpecial
                 (Vector2.right * player.InputPlayer.GetAxis("Aim Horizontal") +
                  Vector2.up * player.InputPlayer.GetAxis("Aim Vertical")).normalized;
             
-            velocity = ((leftStickDir == Vector2.zero) ? Vector2.up : leftStickDir) * DashForce;
+            outVelocity = ((leftStickDir == Vector2.zero) ? Vector2.up : leftStickDir) * DashForce;
         }
 
         //If player does not have dashes
@@ -119,8 +118,11 @@ public class OnDash : OnMovementSpecial
         }
     }
 
-    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
+        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+
         earlyDashInput = false;
         tail.enabled = false;
     }
@@ -128,14 +130,14 @@ public class OnDash : OnMovementSpecial
     //Functions to be called on state changes
 
     //ground state changes
-    public override void OnEnterGround(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnEnterGround(Vector3 velocity, Vector3 externalForces)
     {
         currentDashes = DashLimit;
         isDisabled = false;
     }
 
     //wallride state changes
-    public override void OnEnterWall(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnEnterWall(Vector3 velocity, Vector3 externalForces)
     {
         if (currentDashes < 1)
         {

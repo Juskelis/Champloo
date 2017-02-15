@@ -23,44 +23,35 @@ public class OnMovementSpecial : MovementState
         isDisabled = false;
     }
 
-    public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
-    {
-        return null;
-    }
-
-    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
-    {
-    }
-
-    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
-    {
-    }
-
-    //Functions to be called on state changes if necessary
+    /*
+        Functions to be called on state changes if necessary
+        Shouldn't modify state. If necessary, do so through player.OnVelocityChanged(newVelocity)
+        and document it
+    */
 
     //ground state changes
-    public virtual void OnEnterGround(ref Vector3 velocity, ref Vector3 externalForces) {}
-    public virtual void OnExitGround(ref Vector3 velocity, ref Vector3 externalForces){}
+    public virtual void OnEnterGround(Vector3 velocity, Vector3 externalForces) {}
+    public virtual void OnExitGround(Vector3 velocity, Vector3 externalForces){}
 
     //air state changes
-    public virtual void OnEnterAir(ref Vector3 velocity, ref Vector3 externalForces) { }
-    public virtual void OnExitAir(ref Vector3 velocity, ref Vector3 externalForces) { }
+    public virtual void OnEnterAir(Vector3 velocity, Vector3 externalForces) { }
+    public virtual void OnExitAir(Vector3 velocity, Vector3 externalForces) { }
 
     //wallride state changes
-    public virtual void OnEnterWall(ref Vector3 velocity, ref Vector3 externalForces) { }
-    public virtual void OnExitWall(ref Vector3 velocity, ref Vector3 externalForces) { }
+    public virtual void OnEnterWall(Vector3 velocity, Vector3 externalForces) { }
+    public virtual void OnExitWall(Vector3 velocity, Vector3 externalForces) { }
 
     //attack state changes
-    public virtual void OnEnterAttack(ref Vector3 velocity, ref Vector3 externalForces) { }
-    public virtual void OnExitAttack(ref Vector3 velocity, ref Vector3 externalForces) { }
+    public virtual void OnEnterAttack(Vector3 velocity, Vector3 externalForces) { }
+    public virtual void OnExitAttack(Vector3 velocity, Vector3 externalForces) { }
 
     //block state changes
-    public virtual void OnEnterBlock(ref Vector3 velocity, ref Vector3 externalForces) { }
-    public virtual void OnExitBlock(ref Vector3 velocity, ref Vector3 externalForces) { }
+    public virtual void OnEnterBlock(Vector3 velocity, Vector3 externalForces) { }
+    public virtual void OnExitBlock(Vector3 velocity, Vector3 externalForces) { }
 
     //taunt state changes
-    public virtual void OnEnterTaunt(ref Vector3 velocity, ref Vector3 externalForces) { }
-    public virtual void OnExitTaunt(ref Vector3 velocity, ref Vector3 externalForces) { }
+    public virtual void OnEnterTaunt(Vector3 velocity, Vector3 externalForces) { }
+    public virtual void OnExitTaunt(Vector3 velocity, Vector3 externalForces) { }
 
     //May want to add in a bounce state later for when you bounce off of an opponent's head
 }

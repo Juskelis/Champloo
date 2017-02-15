@@ -32,61 +32,61 @@ public class OnTether : OnMovementSpecial
         base.Start();
         tail = GetComponent<TrailRenderer>();
         weapon = GetComponentInChildren<Weapon>();
+        col = GetComponent<Collider2D>();
     }
 
-    public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
+    public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        col = GetComponent<Collider2D>();
+        if (!isThrown || !temp || temp.Moving) return velocity;
 
-        //check to see if the tether has been thrown
-        if (isThrown)
+        //find the angle between the player and the stopped weapon
+        //then pull the player continuously towards the tether
+        Vector2 pullDirection = temp.transform.position - player.transform.position;
+        velocity = pullDirection*tetherForce;
+
+        if ((controller.collisions.Left && direction.x < 0) || (controller.collisions.Right && direction.x > 0))
         {
-            //check if temp exists, and if so, is it moving
-            if (temp && !temp.Moving)
-            {
-                //find the angle between the player and the stopped weapon
-                //then pull the player continuously towards the tether
-                Vector2 pullDirection = temp.transform.position - player.transform.position;
-                velocity = pullDirection * tetherForce;
-
-                //check for collisions in the x  and y directions that the player is moving
-                if ((controller.collisions.Left && direction.x < 0) || (controller.collisions.Right && direction.x > 0))
-                {
-                    velocity.x = 0;
-                }
-                if ((controller.collisions.Above && direction.y > 0) || (controller.collisions.Below && direction.x < 0))
-                {
-                    velocity.y = 0;
-                }
-
-                DecayExternalForces(ref externalForces);
-                controller.Move(velocity * Time.deltaTime + externalForces * Time.deltaTime);
-            }
-            //If no on existing, exit the state
-            if (!temp)
-            {
-                return checkState();
-            }
-
-            //otherwise update the state as it would if the tether wasn't thrown
-            else
-            {
-                currentState = checkState();
-                currentState = currentState.UpdateState(ref velocity, ref externalForces);
-            }
+            velocity.x = 0;
         }
-        //if not thrown, exit state
-        else
+        if ((controller.collisions.Above && direction.y > 0) || (controller.collisions.Below && direction.x < 0))
         {
-            return checkState();
+            velocity.y = 0;
         }
 
+        return velocity;
+    }
+
+    public override Vector3 DecayExternalForces(Vector3 externalForces)
+    {
+        if (!isThrown || !temp || temp.Moving) return externalForces;
+        return base.DecayExternalForces(externalForces);
+    }
+
+    public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
+    {
         timeLeft -= Time.deltaTime;
+        if (timeLeft < 0 || !isThrown || temp == null || temp.Moving)
+        {
+            if (controller.collisions.Below)
+            {
+                return GetComponent<OnGround>();
+            }
+
+            if (controller.collisions.Left || controller.collisions.Right)
+            {
+                return GetComponent<OnWall>();
+            }
+
+            return GetComponent<InAir>();
+        }
         return null;
     }
 
-    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
+        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+
         Rewired.Player p = player.InputPlayer;
 
         //set up the tether visual trail
@@ -119,28 +119,12 @@ public class OnTether : OnMovementSpecial
 
     }
 
-    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
+        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         tail.enabled = false;
         isThrown = false;
         isDisabled = false;
     }
-
-    private MovementState checkState()
-    {
-        //this probably needs to be changed so that it doesn't trigger on enemy players being below or to the side
-        if (controller.collisions.Below)
-        {
-            return GetComponent<OnGround>();
-        }
-        else if (controller.collisions.Left || controller.collisions.Right)
-        {
-            return GetComponent<OnWall>();
-        }
-        else
-        {
-            return GetComponent<InAir>();
-        }
-    }
-
 }
