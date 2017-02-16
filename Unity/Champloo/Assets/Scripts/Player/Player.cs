@@ -516,9 +516,6 @@ public class Player : NetworkBehaviour
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
         if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack) && !movementSpecial.isInUse)
         {
-            Debug.Log("can Attack and is hitting button");
-            //weapon.Attack();
-            CmdAttack();
             next = GetComponent<InAttack>();
         }
         //else if (inputs.block.Down && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
@@ -570,6 +567,11 @@ public class Player : NetworkBehaviour
             movementState.OnExit(velocity, externalForce, out newVelocity, out newExternalForce);
             OnVelocityChanged(newVelocity);
             OnExternalForceChanged(newExternalForce);
+
+            if(next is InAttack)
+            {
+                CmdAttack();
+            }
 
             next.OnEnter(velocity, externalForce, out newVelocity, out newExternalForce);
             OnVelocityChanged(newVelocity);
