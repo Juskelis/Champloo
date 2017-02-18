@@ -12,13 +12,18 @@ public class InAttack : MovementState
         playerWeapon = GetComponentInChildren<Weapon>();
     }
 
-    public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
+    public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        velocity = Vector3.zero;
-        externalForces = Vector3.zero;
+        return Vector3.zero;
+    }
 
-        controller.Move(velocity * Time.deltaTime + externalForces * Time.deltaTime);
+    public override Vector3 DecayExternalForces(Vector3 externalForces)
+    {
+        return Vector3.zero;
+    }
 
+    public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
+    {
         if (!playerWeapon.IsAttacking)
         {
             if (controller.collisions.Below)
@@ -34,15 +39,19 @@ public class InAttack : MovementState
         return null;
     }
 
-    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
-        initialVelocity = velocity;
-        movementSpecial.OnEnterAttack(ref velocity, ref externalForces);
+        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+        initialVelocity = inVelocity;
+        movementSpecial.OnEnterAttack(inVelocity, inExternalForces);
     }
 
-    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
-        movementSpecial.OnExitAttack(ref velocity, ref externalForces);
-        velocity = initialVelocity; 
+        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+        movementSpecial.OnExitAttack(inVelocity, inExternalForces);
+        outVelocity = initialVelocity; 
     }
 }

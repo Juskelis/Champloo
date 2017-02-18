@@ -20,7 +20,7 @@ public class InBlock : MovementState
         ourShield = GetComponentInChildren<Shield>();
     }
 
-    public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
+    public override Vector3 ApplyFriction(Vector3 velocity)
     {
         velocity.x = Mathf.MoveTowards(velocity.x, 0f, deceleration * Time.deltaTime);
 
@@ -29,12 +29,16 @@ public class InBlock : MovementState
         velocity.y -= player.Gravity * Time.deltaTime;
 
         if (velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
+        return velocity;
+    }
 
-        externalForces = Vector3.zero;
+    public override Vector3 DecayExternalForces(Vector3 externalForces)
+    {
+        return Vector3.zero;
+    }
 
-        controller.Move(velocity * Time.deltaTime + externalForces * Time.deltaTime);
-
-        //if(!input.block.Pressed || !ourShield.Up)
+    public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
+    {
         if(!player.InputPlayer.GetButton("Block") || !ourShield.Up)
         {
             if (controller.collisions.Below)
@@ -50,17 +54,25 @@ public class InBlock : MovementState
         return null;
     }
 
-    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnEnter(
+        Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
-        movementSpecial.OnEnterBlock(ref velocity, ref externalForces);
+        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+
+        movementSpecial.OnEnterBlock(inVelocity, inExternalForces);
         deceleration = GetComponent<OnGround>().MaxSpeed/maxSpeedToStopTime;
         maxFallSpeed = GetComponent<InAir>().MaxFallSpeed;
         ourShield.ActivateShield();
     }
 
-    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnExit(
+        Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
-        movementSpecial.OnExitBlock(ref velocity, ref externalForces);
+        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+
+        movementSpecial.OnExitBlock(inVelocity, inExternalForces);
         ourShield.DeactivateShield();
     }
 }

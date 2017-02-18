@@ -32,6 +32,11 @@ public class Player : NetworkBehaviour
         get { return movementState; }
     }
 
+    public int HorizontalDirection
+    {
+        get { return (int)visuals.localScale.x; }
+    }
+
     #endregion
 
     #region Customization Variables
@@ -511,9 +516,6 @@ public class Player : NetworkBehaviour
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
         if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack) && !movementSpecial.isInUse)
         {
-            Debug.Log("can Attack and is hitting button");
-            //weapon.Attack();
-            CmdAttack();
             next = GetComponent<InAttack>();
         }
         //else if (inputs.block.Down && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
@@ -544,28 +546,42 @@ public class Player : NetworkBehaviour
             return;
         }
         //inputs.UpdateInputs();
-        Vector3 newVelocity = velocity;
-        Vector3 newExternalForce = externalForce;
+        OnVelocityChanged(movementState.ApplyFriction(velocity));
+        OnExternalForceChanged(movementState.DecayExternalForces(externalForce));
 
-        MovementState next = movementState.UpdateState(ref newVelocity, ref newExternalForce);
+        Vector3 newVelocity;
+        Vector3 newExternalForce;
+
+        movementState.ApplyInputs(velocity, externalForce, out newVelocity, out newExternalForce);
+        OnVelocityChanged(newVelocity);
+        OnExternalForceChanged(newExternalForce);
+
+        controller.Move(velocity * Time.deltaTime + externalForce * Time.deltaTime);
+
+        MovementState next = movementState.DecideNextState(velocity, externalForce);
 
         ChooseNextState(ref next);
 
-        //HandleCollisions();
-
         if (next != null)
         {
-            movementState.OnExit(ref newVelocity, ref newExternalForce);
-            next.OnEnter(ref newVelocity, ref newExternalForce);
+            movementState.OnExit(velocity, externalForce, out newVelocity, out newExternalForce);
+            OnVelocityChanged(newVelocity);
+            OnExternalForceChanged(newExternalForce);
+
+            if(next is InAttack)
+            {
+                CmdAttack();
+            }
+
+            next.OnEnter(velocity, externalForce, out newVelocity, out newExternalForce);
+            OnVelocityChanged(newVelocity);
+            OnExternalForceChanged(newExternalForce);
+
             movementState = next;
             CmdUpdateMovementState(movementState.GetType().ToString());
-            
         }
 
         box.size = currentSprite.bounds.size;
-
-        OnVelocityChanged(newVelocity);
-        OnExternalForceChanged(newExternalForce);
 
         //handle blocking/parrying
         if (hitWith != null)

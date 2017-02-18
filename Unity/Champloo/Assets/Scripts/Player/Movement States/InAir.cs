@@ -31,9 +31,8 @@ public class InAir : MovementState
         turningDeceleration = (maxSpeed * 2) / fullTurnTime;
     }
 
-    public override MovementState UpdateState(ref Vector3 velocity, ref Vector3 externalForces)
+    public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        //float inputDirection = Mathf.Sign(input.leftStick.x);
         float moveX = player.InputPlayer.GetAxis("Move Horizontal");
         float inputDirection = Mathf.Sign(moveX);
         if (Mathf.Abs(moveX) > float.Epsilon)
@@ -57,28 +56,27 @@ public class InAir : MovementState
 
         if (controller.collisions.Above && velocity.y > 0) velocity.y = 0;
 
+        velocity.y -= player.Gravity * Time.deltaTime;
+
+        if (velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
+
+        return velocity;
+    }
+
+    public override void ApplyInputs(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
+    {
+        base.ApplyInputs(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
         //if player releases the jump button,change the momentum
         //if the player is not holding the jump button and is is moving up
-        if(player.InputPlayer.GetButtonUp("Jump") && velocity.y > 0)
+        if (player.InputPlayer.GetButtonUp("Jump") && inVelocity.y > 0)
         {
-            velocity.y = Mathf.Sqrt(velocity.y);
+            outVelocity.y = Mathf.Sqrt(inVelocity.y);
         }
-        
-        velocity.y -= player.Gravity * Time.deltaTime;
-       
+    }
 
-
-
-
-        if (velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
-        
-
-        DecayExternalForces(ref externalForces);
-
-        controller.Move(velocity*Time.deltaTime + externalForces*Time.deltaTime);
-
-
+    public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
+    {
         if (controller.collisions.Below)
         {
             return GetComponent<OnGround>();
@@ -90,13 +88,17 @@ public class InAir : MovementState
         return null;
     }
 
-    public override void OnEnter(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
-        movementSpecial.OnEnterAir(ref velocity, ref externalForces);
+        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+        movementSpecial.OnEnterAir(inVelocity, inExternalForces);
     }
 
-    public override void OnExit(ref Vector3 velocity, ref Vector3 externalForces)
+    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
     {
-        movementSpecial.OnExitAir(ref velocity, ref externalForces);
+        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+        movementSpecial.OnExitAir(inVelocity, inExternalForces);
     }
 }
