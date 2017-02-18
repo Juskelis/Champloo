@@ -21,7 +21,7 @@ public class OnDash : OnMovementSpecial
     private Vector2 direction;
     private Vector3 dashVelocity;
 
-    
+    private bool earlyAttackInput;
     private bool earlyDashInput;
     TrailRenderer tail;
 
@@ -30,6 +30,7 @@ public class OnDash : OnMovementSpecial
         base.Start();
         currentDashes = dashLimit;
         tail = GetComponent<TrailRenderer>();
+        earlyAttackInput = false;
         earlyDashInput = false;
     }
 
@@ -55,12 +56,15 @@ public class OnDash : OnMovementSpecial
         {
             //this probably needs to be changed so that it doesn't trigger on enemy players being below or to the side
           
-            if(earlyDashInput)
+            if(earlyAttackInput)
             {
-                Debug.Log("IN EARLY DASH");
+                return GetComponent<InAttack>();
+            }
+            else if(earlyDashInput)
+            {
                 return GetComponent<OnDash>();
             }
-            if (controller.collisions.Below)
+            else if (controller.collisions.Below)
             {
                 return GetComponent<OnGround>();
             }
@@ -74,6 +78,10 @@ public class OnDash : OnMovementSpecial
 
         if (specialTimeLeft < (specialTime / 5))
         {
+            if(player.InputPlayer.GetButtonDown("Movement Special"))
+            {
+                earlyAttackInput = true;
+            }
             if(player.InputPlayer.GetButtonDown("Movement Special"))
             {
                 earlyDashInput = true;
@@ -123,6 +131,7 @@ public class OnDash : OnMovementSpecial
     {
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
+        earlyAttackInput = false;
         earlyDashInput = false;
         tail.enabled = false;
     }
