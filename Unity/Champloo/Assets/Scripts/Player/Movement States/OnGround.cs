@@ -57,12 +57,6 @@ public class OnGround : MovementState
             //stopping
             velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
         }
-
-        if ((controller.collisions.Above && velocity.y > 0) || (controller.collisions.Below && velocity.y < 0))
-        {
-            velocity.y = 0;
-        }
-
         return velocity;
     }
 
@@ -98,6 +92,7 @@ public class OnGround : MovementState
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         movementSpecial.OnEnterGround(inVelocity, inExternalForces);
+        outVelocity.y = 0;
     }
 
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
