@@ -6,11 +6,11 @@ public class OnDash : OnMovementSpecial
     [SerializeField]
     private float dashForce;
     public float DashForce { get { return dashForce; } }
-    
+
     //private float timeLeft;
 
     [SerializeField]
-    private float gravityModifier = 1f;
+    private float gravityModifier;
 
     [SerializeField]
     private int dashLimit;
