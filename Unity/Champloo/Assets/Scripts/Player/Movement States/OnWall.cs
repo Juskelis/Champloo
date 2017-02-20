@@ -59,16 +59,19 @@ public class OnWall : MovementState
         {
             jumped = true;
 
+            //if the input is pointed towards the wall
             if (Mathf.Abs(wallDirX - moveX) < 0.5f)
             {
                 outVelocity.x = -wallDirX * wallJumpClimbForces.x;
                 outVelocity.y = wallJumpClimbForces.y;
             }
+            //if the player has no x input
             else if (moveX == 0)
             {
                 outVelocity.x = -wallDirX * wallJumpOffForces.x;
                 outVelocity.y = wallJumpOffForces.y;
             }
+            //assuming that the player is pointing away from the wall
             else
             {
                 outVelocity.x = -wallDirX * wallLeapForces.x;

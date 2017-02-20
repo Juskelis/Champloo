@@ -507,7 +507,7 @@ MonoBehaviour:
   deathForce: 20
   maxJumpHeight: 4
   minJumpHeight: 2
-  Gravity: 50
+  Gravity: 60
   hitReactionTime: 0.2
 --- !u!114 &11437896
 MonoBehaviour:
@@ -543,9 +543,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 7
-  wallJumpClimbForces: {x: 14, y: 20}
-  wallJumpOffForces: {x: 18, y: 10}
-  wallLeapForces: {x: 20, y: 15}
+  wallJumpClimbForces: {x: 15, y: 25}
+  wallJumpOffForces: {x: 24, y: 15}
+  wallLeapForces: {x: 26, y: 20}
   wallStickTime: 0.2
 --- !u!114 &11458148
 MonoBehaviour:
@@ -593,8 +593,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startupTime: 0
-  attackTime: 0.2
-  cooldownTime: 0
+  attackTime: 0.1
+  cooldownTime: 0.4
   thrownVersion: {fileID: 11441408, guid: 666604262c26fa543801e5b6cfd8983b, type: 2}
   alwaysVisible: 0
   visuals: {fileID: 21275032}
@@ -621,8 +621,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 20
-  maxSpeed: 14
-  stopToMaxSpeedTime: 0.225
+  maxSpeed: 20
+  stopToMaxSpeedTime: 0.25
   maxSpeedToStopTime: 0.35
   fullTurnTime: 0.25
 --- !u!114 &11491664
@@ -636,10 +636,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
+  maxSpeed: 15
   stopToMaxSpeedTime: 0.2
-  maxSpeedToStopTime: 0.3
-  fullTurnTime: 0.25
+  maxSpeedToStopTime: 0.4
+  fullTurnTime: 0.2
 --- !u!114 &11492208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -875,9 +875,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34b07b148acf0f3458b93dacce52bcdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  specialTime: 0.25
-  cooldownTime: 0.1
-  dashForce: 10
+  specialTime: 0.18
+  cooldownTime: 0.08
+  dashForce: 20
   gravityModifier: 0.1
   dashLimit: 3
 --- !u!114 &114000013946945302
