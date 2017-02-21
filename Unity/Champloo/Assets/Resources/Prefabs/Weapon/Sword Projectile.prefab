@@ -164,7 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 1280
   speed: 30
 --- !u!1001 &100100000
 Prefab:
