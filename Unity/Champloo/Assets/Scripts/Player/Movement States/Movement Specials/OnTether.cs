@@ -87,8 +87,6 @@ public class OnTether : OnMovementSpecial
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
-        Rewired.Player p = player.InputPlayer;
-
         //set up the tether visual trail
         tail.enabled = true;
         tail.Clear();
@@ -100,7 +98,7 @@ public class OnTether : OnMovementSpecial
             weapon.InHand = false;
             isThrown = true;
 
-            Vector2 aim = Vector2.right * player.InputPlayer.GetAxis("Aim Horizontal") + Vector2.up * player.InputPlayer.GetAxis("Aim Vertical");
+            Vector2 aim = player.AimDirection;
             temp = (Projectile)Instantiate(
                 weapon.ThrownVersion,
                 weapon.transform.position,

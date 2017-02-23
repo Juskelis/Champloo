@@ -37,6 +37,21 @@ public class Player : NetworkBehaviour
         get { return (int)visuals.localScale.x; }
     }
 
+    public Vector2 AimDirection
+    {
+        get
+        {
+            Vector2 aim = Vector2.right * inputPlayer.GetAxis("Aim Horizontal") + Vector2.up * inputPlayer.GetAxis("Aim Vertical");
+            if (aim.sqrMagnitude <= 0)
+            {
+                //default to forward
+                aim.x = HorizontalDirection;
+                aim.y = 0;
+            }
+            return aim;
+        }
+    }
+
     #endregion
 
     #region Customization Variables

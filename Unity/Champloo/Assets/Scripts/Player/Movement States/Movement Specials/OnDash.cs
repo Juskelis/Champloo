@@ -102,8 +102,7 @@ public class OnDash : OnMovementSpecial
         tail.Clear();
 
         //Establish the direction of the dash
-        Rewired.Player p = player.InputPlayer;
-        direction = Vector2.right * p.GetAxis("Aim Horizontal") + Vector2.up * p.GetAxis("Aim Vertical");
+        direction = player.AimDirection;
 
         //Check if the player still has dashes
         if (currentDashes > 0)
@@ -112,9 +111,7 @@ public class OnDash : OnMovementSpecial
             isDisabled = false;
 
             //actually apply dash forces
-            Vector2 leftStickDir =
-                (Vector2.right * player.InputPlayer.GetAxis("Aim Horizontal") +
-                 Vector2.up * player.InputPlayer.GetAxis("Aim Vertical")).normalized;
+            Vector2 leftStickDir = direction;
             
             outVelocity = ((leftStickDir == Vector2.zero) ? Vector2.up : leftStickDir) * DashForce;
         }

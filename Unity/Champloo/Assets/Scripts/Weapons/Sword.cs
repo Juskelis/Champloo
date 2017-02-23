@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class Sword : Weapon {
-    private Rewired.Player input;
     //private MeshRenderer ren;
     private BoxCollider2D col;
 
@@ -20,7 +19,6 @@ public class Sword : Weapon {
         base.Start();
 
         player = transform.parent.GetComponentInParent<Player>();
-        input = player.InputPlayer;
         //ren = GetComponent<MeshRenderer>();
         col = GetComponent<BoxCollider2D>();
 
@@ -35,13 +33,7 @@ public class Sword : Weapon {
         if (CanAttack)
         {
             //transform.parent.localScale = transform.parent.parent.localScale;
-            Vector2 aim = Vector2.right*input.GetAxis("Aim Horizontal") + Vector2.up*input.GetAxis("Aim Vertical");
-            if (aim.sqrMagnitude <= 0)
-            {
-                //default to forward
-                aim.x = player.HorizontalDirection;
-                aim.y = 0;
-            }
+            Vector2 aim = player.AimDirection;
             //print(input.leftStickAngle);
             transform.parent.rotation = Quaternion.AngleAxis(
                 Utility.Vector2AsAngle(aim),//input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
@@ -57,7 +49,7 @@ public class Sword : Weapon {
         if (InHand)
         {
             InHand = false;
-            Vector2 aim = Vector2.right * input.GetAxis("Aim Horizontal") + Vector2.up * input.GetAxis("Aim Vertical");
+            Vector2 aim = player.AimDirection;
             Projectile temp = (Projectile)Instantiate(
                 thrownVersion,
                 transform.position,
