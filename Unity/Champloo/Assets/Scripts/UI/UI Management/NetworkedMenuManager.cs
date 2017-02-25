@@ -40,6 +40,7 @@ public class NetworkedMenuManager : NetworkBehaviour {
         if (string.IsNullOrEmpty(menuObjectName))
         {
             target.ClearMenu();
+            return;
         }
 
         Menu[] menus = GameObject.FindObjectsOfType<Menu>();
