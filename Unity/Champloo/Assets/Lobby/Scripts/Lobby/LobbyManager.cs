@@ -35,6 +35,9 @@ namespace Prototype.NetworkLobby
 
         public Button backButton;
 
+        public MenuManager playerSelectFlow;
+        public Menu playerSelectStart;
+
         public Text statusInfo;
         public Text hostInfo;
 
@@ -105,6 +108,9 @@ namespace Prototype.NetworkLobby
                         {
                             backDelegate = StopClientClbk;
                         }
+
+                        //returning to player select
+                        playerSelectFlow.ShowMenu(playerSelectStart);
                     }
                 }
                 else

@@ -17,9 +17,6 @@ namespace Prototype.NetworkLobby
 
         public RectTransform lobbyServerInfo;
 
-        public MenuManager playerSelectFlow;
-        public Menu playerSelectStart;
-
         public void OnEnable()
         {
             lobbyManager.topPanel.ToggleVisibility(true);
@@ -41,7 +38,7 @@ namespace Prototype.NetworkLobby
             lobbyManager._isLocalMatch = false;
             lobbyManager.serverBindToIP = true;
             lobbyManager.StartHost();
-            playerSelectFlow.ShowMenu(playerSelectStart);
+            lobbyManager.playerSelectFlow.ShowMenu(lobbyManager.playerSelectStart);
         }
 
         public void OnClickPlayLocal()
@@ -50,7 +47,7 @@ namespace Prototype.NetworkLobby
             lobbyManager._isLocalMatch = true;
             lobbyManager.serverBindToIP = false;
             lobbyManager.StartHost();
-            playerSelectFlow.ShowMenu(playerSelectStart);
+            lobbyManager.playerSelectFlow.ShowMenu(lobbyManager.playerSelectStart);
         }
 
         public void OnClickJoin()
@@ -65,7 +62,7 @@ namespace Prototype.NetworkLobby
 
             lobbyManager.SetServerInfo("Connecting...", lobbyManager.networkAddress);
 
-            playerSelectFlow.ShowMenu(playerSelectStart);
+            lobbyManager.playerSelectFlow.ShowMenu(lobbyManager.playerSelectStart);
         }
 
         public void OnClickDedicated()
