@@ -14,6 +14,9 @@ public class RaycastController : MonoBehaviour
 
     protected const float skinWidth = 0.15f;//.015f;
     private BoxCollider2D _collider;
+    private Bounds _previousColliderBounds;
+    public Bounds ColliderBounds { get { return _collider.bounds; } }
+    public Bounds PreviousColliderBounds { get { return _previousColliderBounds; } }
 
     [SerializeField]
     protected int horizontalRayCount = 4;
@@ -29,7 +32,14 @@ public class RaycastController : MonoBehaviour
         CalculateRaySpacing();
     }
 
-    protected void UpdateRaycastOrigins()
+    public virtual void UpdateBounds(Bounds newBounds)
+    {
+        _previousColliderBounds = _collider.bounds;
+        _collider.size = newBounds.size;
+        _collider.offset = transform.InverseTransformPoint(newBounds.center);
+    }
+
+    public void UpdateRaycastOrigins()
     {
         CalculateRaySpacing();
         Bounds bounds = _collider.bounds;
