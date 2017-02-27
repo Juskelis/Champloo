@@ -13,7 +13,7 @@ using System.Collections;
 public class ExampleNetworkManager : NATTraversal.NetworkManager
 {
     
-#if UNITY_5_4
+#if UNITY_5_4_OR_NEWER
     public override void OnMatchList(bool success, string extendedInfo, List<MatchInfoSnapshot> matchList)
     {
         int matchCount = matchList.Count;
@@ -43,7 +43,7 @@ public class ExampleNetworkManager : NATTraversal.NetworkManager
             // try and join our own old match. This can happen when quickly switching
             // from hosting to joining because old matches are not cleaned up immediately
             // and there's no way to be notified when they are cleaned up
-#if UNITY_5_4
+#if UNITY_5_4_OR_NEWER
             foreach (MatchInfoSnapshot m in matchList)
 #else
             foreach (MatchDesc m in matchList.matches)
@@ -65,7 +65,7 @@ public class ExampleNetworkManager : NATTraversal.NetworkManager
         }
         else
         {
-#if UNITY_5_4
+#if UNITY_5_4_OR_NEWER
             match = matchList[0];
 #else
             match = matchList.matches[0];
@@ -97,7 +97,7 @@ public class ExampleNetworkManager : NATTraversal.NetworkManager
         {
             if (matchMaker == null) matchMaker = gameObject.AddComponent<NetworkMatch>();
 
-#if UNITY_5_4
+#if UNITY_5_4_OR_NEWER
             matchMaker.ListMatches(0, 10, "", true, 0, 0, OnMatchList);
 #else
             matchMaker.ListMatches(0, 10, "", OnMatchList);

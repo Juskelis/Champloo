@@ -596,7 +596,7 @@ public class Player : NetworkBehaviour
             CmdUpdateMovementState(movementState.GetType().ToString());
         }
 
-        box.size = currentSprite.bounds.size;
+        controller.UpdateBounds(currentSprite.bounds);
 
         //handle blocking/parrying
         if (hitWith != null)
