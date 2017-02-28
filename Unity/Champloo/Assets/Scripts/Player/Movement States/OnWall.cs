@@ -12,6 +12,12 @@ public class OnWall : MovementState
     private Vector2 wallLeapForces;
     [SerializeField]
     private float wallStickTime;
+
+    [SerializeField]
+    private PlayRandomSource wallSlideSound;
+    [SerializeField]
+    private PlayRandomSource jumpSound;
+
     private float timeToWallUnstick;
 
     private bool jumped = false;
@@ -58,6 +64,7 @@ public class OnWall : MovementState
         if (player.InputPlayer.GetButtonDown("Jump"))
         {
             jumped = true;
+            jumpSound.Play();
 
             //if the input is pointed towards the wall
             if (Mathf.Abs(wallDirX - moveX) < 0.5f)
@@ -77,6 +84,11 @@ public class OnWall : MovementState
                 outVelocity.x = -wallDirX * wallLeapForces.x;
                 outVelocity.y = wallLeapForces.y;
             }
+        }
+
+        if (!wallSlideSound.Playing)
+        {
+            wallSlideSound.Play();
         }
     }
 
@@ -108,5 +120,7 @@ public class OnWall : MovementState
     {
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         movementSpecial.OnExitWall(inVelocity, inExternalForces);
+        jumped = false;
+        wallSlideSound.Stop();
     }
 }
