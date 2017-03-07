@@ -11,8 +11,6 @@ public class MovementStateFootDust : MonoBehaviour
     private ParticleSystem particle;
     private Player p;
 
-    private bool playing = true;
-
     void Awake()
     {
         particle = GetComponent<ParticleSystem>();
@@ -27,18 +25,23 @@ public class MovementStateFootDust : MonoBehaviour
     {
         if (p.CurrentMovementState.GetType() == movementState.Type)
         {
-            if(!playing) SetPlaying(true);
+            if(!particle.isEmitting) SetPlaying(true);
         }
         else
         {
-            if(playing) SetPlaying(false);
+            if(particle.isEmitting) SetPlaying(false);
         }
     }
 
     void SetPlaying(bool playing)
     {
-        this.playing = playing;
-        ParticleSystem.EmissionModule module = particle.emission;
-        module.enabled = playing;
+        if (!playing)
+        {
+            particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
+        else
+        {
+            particle.Play(true);
+        }
     }
 }

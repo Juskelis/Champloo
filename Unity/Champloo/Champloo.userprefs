@@ -1,8 +1,9 @@
-﻿<Properties StartupItem="Champloo.CSharp.Plugins.csproj">
+﻿<Properties StartupItem="Champloo.Plugins.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\Movement States\InAir.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Effects\Foot Dust\MovementStateFootDust.cs">
     <Files>
       <File FileName="Assets\Scripts\Player\Movement States\InAir.cs" Line="18" Column="14" />
+      <File FileName="Assets\Scripts\Effects\Foot Dust\MovementStateFootDust.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
