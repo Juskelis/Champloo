@@ -15,6 +15,9 @@ public class OnDash : OnMovementSpecial
     [SerializeField]
     private int dashLimit;
     public int DashLimit { get { return dashLimit; } }
+
+    [SerializeField]
+    private PlayRandomSource dashSound;
     
     private int currentDashes;
 
@@ -114,6 +117,7 @@ public class OnDash : OnMovementSpecial
             Vector2 leftStickDir = direction;
             
             outVelocity = ((leftStickDir == Vector2.zero) ? Vector2.up : leftStickDir) * DashForce;
+            dashSound.Play();
         }
 
         //If player does not have dashes
