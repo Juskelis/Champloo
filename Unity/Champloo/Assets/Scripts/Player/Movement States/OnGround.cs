@@ -12,6 +12,12 @@ public class OnGround : MovementState
     [SerializeField]
     private float fullTurnTime = 0.2f;
 
+    [SerializeField]
+    private PlayRandomSource jumpSound;
+
+    [SerializeField]
+    private PlayRandomSource runSound;
+
     public float MaxSpeed { get { return maxSpeed; } }
 
     private float jumpVelocity;
@@ -38,21 +44,7 @@ public class OnGround : MovementState
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
         float moveX = player.InputPlayer.GetAxis("Move Horizontal");
-        float inputDirection = Mathf.Sign(moveX);
-        if (Mathf.Abs(moveX) > float.Epsilon)
-        {
-            if (inputDirection != Mathf.Sign(velocity.x))
-            {
-                //turning
-                velocity.x = Mathf.MoveTowards(velocity.x, maxSpeed * moveX, turningDeceleration * Time.deltaTime);
-            }
-            else
-            {
-                //speeding up
-                velocity.x = Mathf.MoveTowards(velocity.x, maxSpeed * moveX, acceleration * Time.deltaTime);
-            }
-        }
-        else
+        if (Mathf.Abs(moveX) <= float.Epsilon)
         {
             //stopping
             velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
@@ -69,7 +61,25 @@ public class OnGround : MovementState
         if (player.InputPlayer.GetButtonDown("Jump"))
         {
             Jumped = true;
+            jumpSound.Play();
             outVelocity.y = jumpVelocity;
+        }
+
+        float moveX = player.InputPlayer.GetAxis("Move Horizontal");
+        float inputDirection = Mathf.Sign(moveX);
+        if (Mathf.Abs(moveX) >= float.Epsilon)
+        {
+            float delta = inputDirection != Mathf.Sign(inVelocity.x) ? turningDeceleration : acceleration;
+            outVelocity.x = Mathf.MoveTowards(inVelocity.x, maxSpeed*moveX, delta*Time.deltaTime);
+        }
+
+        if (Mathf.Abs(outVelocity.x) >= float.Epsilon && !runSound.Playing)
+        {
+            runSound.Play();
+        }
+        else if (Mathf.Abs(outVelocity.x) < float.Epsilon)
+        {
+            runSound.Stop();
         }
     }
 
@@ -100,6 +110,8 @@ public class OnGround : MovementState
     {
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         movementSpecial.OnExitGround(inVelocity, inExternalForces);
+        runSound.Stop();
+        Jumped = false;
     }
 
 }
