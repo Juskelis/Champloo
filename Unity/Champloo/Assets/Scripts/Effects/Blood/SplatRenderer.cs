@@ -17,49 +17,35 @@ public class SplatRenderer : MonoBehaviour
 
     private RenderTexture tex;
 
-    private Camera cam;
-
-    private MeshRenderer child;
-
     private bool firstPass = true;
 
     void Start()
     {
 
-        child = GetComponentInChildren<MeshRenderer>();
-
         Vector3 parentScale = transform.parent.localScale;
 
         //make render texture that fits the object
-        if(parentScale.x <= parentScale.y)
-            tex = new RenderTexture(Mathf.CeilToInt(parentScale.x) * scaleFactor, Mathf.CeilToInt(parentScale.y) * scaleFactor, 0);
-        else
-            tex = new RenderTexture(Mathf.CeilToInt(parentScale.x) * scaleFactor, Mathf.CeilToInt(parentScale.y) * scaleFactor/2, 0);
-
-        //tex.Create();
-
-        tex.filterMode = FilterMode.Point;
-        tex.anisoLevel = 0;
-
-        tex.depth = (int)Depth;
-
-        tex.filterMode = textureFilterMode;
-
-        //tex.Create();
+        //  note: this only allocates a block of memory for the texture; it does NOT clear that memory first.
+        //  clearing must be done manually
+        tex = new RenderTexture(Mathf.CeilToInt(parentScale.x*scaleFactor), Mathf.CeilToInt(parentScale.y*scaleFactor), 0)
+        {
+            filterMode = textureFilterMode,
+            anisoLevel = 0,
+            depth = (int) Depth
+        };
 
         //get camera
-        cam = GetComponent<Camera>();
+        Camera cam = GetComponent<Camera>();
         cam.orthographicSize = parentScale.y/2;
 
         cam.targetTexture = tex;
 
-        //cam.clearFlags = CameraClearFlags.Depth;
-
-        child.material.mainTexture = tex;
+        GetComponentInChildren<MeshRenderer>().material.mainTexture = tex;
     }
 
     void Update()
     {
+        //clears the render texture we created
         if (firstPass)
         {
             Graphics.SetRenderTarget(tex);
