@@ -56,6 +56,7 @@ public class TitleGenerator : MonoBehaviour
         return secretPhraseList.Contains(title);
     }
 
+    [ContextMenu("Create Title")]
     private void CreateTitle()
     {
         toChange.text = Generate();
