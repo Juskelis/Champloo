@@ -113,8 +113,17 @@ public class MultiplayerUIManager : MonoBehaviour
     }
 
     // Update is called once per frame
-	void Update () {
-	    foreach (var player in ReInput.players.Players)
+	void Update ()
+    {
+        //set join status to all unjoined player cards
+        foreach (var networkLobbyPlayer in LobbyManager.s_Singleton.lobbySlots)
+        {
+            LobbyPlayer lp = networkLobbyPlayer as LobbyPlayer;
+            if (lp == null) continue;
+            lp.ToggleJoinButton(lp.playerControllerNumber < 0);
+        }
+
+        foreach (var player in ReInput.players.Players)
 	    {
 	        if (playersCanJoin && player.GetButtonDown(joinAction) && !ContainsController(player))
 	        {
