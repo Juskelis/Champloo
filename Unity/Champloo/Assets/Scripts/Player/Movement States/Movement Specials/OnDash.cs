@@ -81,7 +81,7 @@ public class OnDash : OnMovementSpecial
 
         if (specialTimeLeft < (specialTime / 5))
         {
-            if(player.InputPlayer.GetButtonDown("Movement Special"))
+            if(player.InputPlayer.GetButtonDown("Attack"))
             {
                 earlyAttackInput = true;
             }
@@ -104,6 +104,7 @@ public class OnDash : OnMovementSpecial
         tail.enabled = true;
         tail.Clear();
 
+
         //Establish the direction of the dash
         direction = player.AimDirection;
 
@@ -114,9 +115,30 @@ public class OnDash : OnMovementSpecial
             isDisabled = false;
 
             //actually apply dash forces
-            Vector2 leftStickDir = direction;
-            
-            outVelocity = ((leftStickDir == Vector2.zero) ? Vector2.up : leftStickDir) * DashForce;
+            //take player directional input, apply dash force in that direction, clamping on max speed
+
+
+            //Potential Code if we want to replicate the auto-dash-angles in the demo when you jump and dash 
+            //Vector3 dashVector = direction * DashForce;
+            //if (dashVector.y != 0)
+            //{
+            //    //if the dash is in the opposite direction the player is currently going
+            //    if (Mathf.Sign(dashVector.y) != Mathf.Sign(inVelocity.y))
+            //    {
+            //        inVelocity.y = 0;
+            //    }
+            //}
+            //if (dashVector.x != 0)
+            //{
+            //    //if the dash is in the opposite direction the player is currently going
+            //    if (Mathf.Sign(dashVector.x) != Mathf.Sign(inVelocity.x))
+            //    {
+            //        inVelocity.x = 0;
+            //    }
+            //}
+            //outVelocity = inVelocity + dashVector;
+
+            outVelocity = direction * DashForce;
             dashSound.Play();
         }
 
