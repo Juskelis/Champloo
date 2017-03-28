@@ -517,6 +517,18 @@ public class Player : NetworkBehaviour
     {
         weapon.Attack();
     }
+
+    [Command]
+    private void CmdSpecialAttack()
+    {
+        RpcSpecialAttack();
+    }
+
+    [ClientRpc]
+    private void RpcSpecialAttack()
+    {
+        weapon.Special();
+    }
     #endregion
 
     #region Main Loop
@@ -529,7 +541,8 @@ public class Player : NetworkBehaviour
     protected void ChooseNextState(ref MovementState next)
     {
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
-        if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack) && !movementSpecial.isInUse)
+        //if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack) && !movementSpecial.isInUse)
+        if(weapon.AttackState == Weapon.TimingState.IN_PROGRESS && !(movementState is InAttack))
         {
             next = GetComponent<InAttack>();
         }
@@ -577,16 +590,20 @@ public class Player : NetworkBehaviour
 
         ChooseNextState(ref next);
 
+        if (InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !movementSpecial.isInUse)
+        {
+            CmdAttack();
+        }
+        else if (InputPlayer.GetButtonDown("Weapon Special"))
+        {
+            CmdSpecialAttack();
+        }
+
         if (next != null)
         {
             movementState.OnExit(velocity, externalForce, out newVelocity, out newExternalForce);
             OnVelocityChanged(newVelocity);
             OnExternalForceChanged(newExternalForce);
-
-            if(next is InAttack)
-            {
-                CmdAttack();
-            }
 
             next.OnEnter(velocity, externalForce, out newVelocity, out newExternalForce);
             OnVelocityChanged(newVelocity);
@@ -613,12 +630,6 @@ public class Player : NetworkBehaviour
                 hitWith.InHand = false;
                 hitWith = null;
             }
-        }
-
-        //if (inputs.weaponSpecial.Down)
-        if (InputPlayer.GetButtonDown("Weapon Special"))
-        {
-            weapon.Special();
         }
 
         //update animation states

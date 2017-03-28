@@ -42,9 +42,9 @@ public class Sword : Weapon {
         }
     }
 
-    public override void Special()
+    protected override void StartSpecial()
     {
-        base.Special();
+        base.StartSpecial();
         
         if (InHand)
         {
