@@ -1,10 +1,13 @@
-﻿Shader "Splatter/Surface"
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+Shader "Splatter/Surface"
 {
 	Properties
 	{
 		_MainTex("Sprite Texture", 2D) = "white" {}
 		_Color("Tint", Color) = (1,1,1,1)
 		[MaterialToggle] PixelSnap("Pixel snap", Float) = 0
+		[MaterialToggle] WorldSpace("World space", Float) = 0
 		_AlphaCutoff("Alpha Cutoff", Range(0.01, 1.0)) = 0.01
 	}
 
@@ -37,6 +40,7 @@
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma multi_compile _ PIXELSNAP_ON
+			#pragma multi_compile _ WORLDSPACE_ON
 			#include "UnityCG.cginc"
 
 			struct appdata_t
@@ -56,22 +60,28 @@
 			fixed4 _Color;
 			fixed _AlphaCutoff;
 
+			sampler2D _MainTex;
+			float4 _MainTex_ST;
+			sampler2D _AlphaTex;
+			float _AlphaSplitEnabled;
+
 			v2f vert(appdata_t IN)
 			{
 				v2f OUT;
 				OUT.vertex = mul(UNITY_MATRIX_MVP, IN.vertex);
-				OUT.texcoord = IN.texcoord;
+				OUT.texcoord = TRANSFORM_TEX(IN.texcoord, _MainTex);
 				OUT.color = IN.color * _Color;
 				#ifdef PIXELSNAP_ON
 					OUT.vertex = UnityPixelSnap(OUT.vertex);
 				#endif
 
+				#ifdef WORLDSPACE_ON
+					float2 worldXY = mul(unity_ObjectToWorld, IN.vertex).xy;
+					OUT.texcoord = TRANSFORM_TEX(worldXY, _MainTex);
+				#endif
+
 				return OUT;
 			}
-
-			sampler2D _MainTex;
-			sampler2D _AlphaTex;
-			float _AlphaSplitEnabled;
 
 			fixed4 SampleSpriteTexture(float2 uv)
 			{

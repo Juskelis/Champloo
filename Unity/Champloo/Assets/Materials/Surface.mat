@@ -74,6 +74,9 @@ Material:
         name: PixelSnap
       second: 0
     - first:
+        name: WorldSpace
+      second: 0
+    - first:
         name: _AlphaCutoff
       second: 0.01
     - first:
