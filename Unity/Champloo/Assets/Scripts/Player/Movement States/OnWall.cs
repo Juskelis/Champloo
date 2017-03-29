@@ -14,6 +14,19 @@ public class OnWall : MovementState
     private float wallStickTime;
 
     [SerializeField]
+    private Vector2 wallJumpVelocity;
+
+
+    private Vector2 direction;
+
+    //Wallride variables being made accessable
+
+    public Vector2 WallJumpClimbForces { get { return wallJumpClimbForces; } }
+    public Vector2 WallJumpOffForces { get { return wallJumpOffForces; } }
+    public Vector2 WallLeapForces { get { return wallLeapForces; } }
+    public float WallStickTime { get { return wallStickTime; } }
+
+    [SerializeField]
     private PlayRandomSource wallSlideSound;
     [SerializeField]
     private PlayRandomSource jumpSound;
@@ -21,34 +34,40 @@ public class OnWall : MovementState
     private float timeToWallUnstick;
 
     private bool jumped = false;
+    protected override void Start()
+    {
+        base.Start();
+    }
+
 
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
         int wallDirX = (controller.collisions.Left) ? -1 : 1;
         float moveX = player.InputPlayer.GetAxis("Move Horizontal");
-        velocity.x = moveX;
-        if (timeToWallUnstick > 0)
+        if (!jumped)
         {
-            velocity.x = 0;
-
-            if (moveX != 0 && Mathf.Sign(moveX) != Mathf.Sign(wallDirX))
+            if (timeToWallUnstick > 0)
             {
-                timeToWallUnstick -= Time.deltaTime;
+                velocity.x = 0;
+
+                if (moveX != 0 && Mathf.Sign(moveX) != Mathf.Sign(wallDirX))
+                {
+                    timeToWallUnstick -= Time.deltaTime;
+                }
+                else
+                {
+                    timeToWallUnstick = wallStickTime;
+                }
             }
             else
             {
-                timeToWallUnstick = wallStickTime;
+                //actively speed up until off the wall
+                velocity.x = moveX * (2 + Mathf.Abs(timeToWallUnstick));
             }
-        }
-        else
-        {
-            //actively speed up until off the wall
-            velocity.x = moveX * (2 + Mathf.Abs(timeToWallUnstick));
-        }
 
-        velocity.y -= player.Gravity * Time.deltaTime;
-        if (velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
-
+            velocity.y -= player.Gravity * Time.deltaTime;
+            if (velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
+        }
         return velocity;
     }
 
@@ -57,33 +76,62 @@ public class OnWall : MovementState
     {
         base.ApplyInputs(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
+        //normalize the direction so that it just gives the wall jump angle
+        direction = player.AimDirection.normalized;
         int wallDirX = (controller.collisions.Left) ? -1 : 1;
-        float moveX = player.InputPlayer.GetAxis("Move Horizontal");
+        //float moveX = player.InputPlayer.GetAxis("Move Horizontal");
 
         jumped = false;
         if (player.InputPlayer.GetButtonDown("Jump"))
         {
+
+            Debug.Log("direction x: " + direction.x + " direction y: " + direction.y);
             jumped = true;
             jumpSound.Play();
 
+            //PLayer will always jump off of a wall a little bit
+            outVelocity.x = (wallJumpVelocity.x / 2) * (-wallDirX) ;
+
             //if the input is pointed towards the wall
-            if (Mathf.Abs(wallDirX - moveX) < 0.5f)
+            if (Mathf.Abs(wallDirX - direction.x) < 0.5f)
             {
-                outVelocity.x = -wallDirX * wallJumpClimbForces.x;
-                outVelocity.y = wallJumpClimbForces.y;
+                outVelocity.x = (-wallDirX) * (wallJumpVelocity.x / 2);
+                outVelocity.y = wallJumpVelocity.y;
             }
-            //if the player has no x input
-            else if (moveX == 0)
+            //if player has no input
+            else if(direction.x == 0)
             {
-                outVelocity.x = -wallDirX * wallJumpOffForces.x;
-                outVelocity.y = wallJumpOffForces.y;
+                outVelocity.x = -wallDirX * wallJumpVelocity.x;
+                outVelocity.y = wallJumpVelocity.y * .5f;
+
             }
-            //assuming that the player is pointing away from the wall
+            //If player has directional input
             else
             {
-                outVelocity.x = -wallDirX * wallLeapForces.x;
-                outVelocity.y = wallLeapForces.y;
+                outVelocity.x = wallJumpVelocity.x * direction.x;
+                outVelocity.y = wallJumpVelocity.y * direction.y;
+
             }
+
+
+            //if the input is pointed towards the wall
+            //if (Mathf.Abs(wallDirX - moveX) < 0.5f)
+            //{
+            //    outVelocity.x = -wallDirX * wallJumpClimbForces.x;
+            //    outVelocity.y = wallJumpClimbForces.y;
+            //}
+            ////if the player has no x input
+            //else if (moveX == 0)
+            //{
+            //    outVelocity.x = -wallDirX * wallJumpOffForces.x;
+            //    outVelocity.y = wallJumpOffForces.y;
+            //}
+            ////assuming that the player is pointing away from the wall
+            //else
+            //{
+            //    outVelocity.x = -wallDirX * wallLeapForces.x;
+            //    outVelocity.y = wallLeapForces.y;
+            //}
         }
 
         if (!wallSlideSound.Playing)
