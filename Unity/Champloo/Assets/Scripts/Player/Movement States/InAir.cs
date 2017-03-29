@@ -20,6 +20,7 @@ public class InAir : MovementState
     private float acceleration;
     private float deceleration;
     private float turningDeceleration;
+    private bool hasShortened;
 
     protected override void Start()
     {
@@ -67,11 +68,12 @@ public class InAir : MovementState
     {
         base.ApplyInputs(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
-        //if player releases the jump button,change the momentum
-        //if the player is not holding the jump button and is is moving up
-        if (player.InputPlayer.GetButtonUp("Jump") && inVelocity.y > 0)
+        //if the player releases the jump button and is is moving up
+        //if (player.InputPlayer.GetButtonUp("Jump") && inVelocity.y > 0 && !hasShortened)
+        if (player.InputPlayer.GetButtonUp("Jump") && !hasShortened)
         {
-            outVelocity.y = Mathf.Sqrt(inVelocity.y);
+            outVelocity.y = inVelocity.y / 2;
+            hasShortened = true;
         }
     }
 
@@ -93,6 +95,7 @@ public class InAir : MovementState
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         movementSpecial.OnEnterAir(inVelocity, inExternalForces);
+        hasShortened = false;
     }
 
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
