@@ -4,13 +4,6 @@ using System.Collections;
 public class OnWall : MovementState
 {
     [SerializeField] private float maxFallSpeed = 10f;
-    [SerializeField]
-    private Vector2 wallJumpClimbForces;
-    [SerializeField]
-    private Vector2 wallJumpOffForces;
-    [SerializeField]
-    private Vector2 wallLeapForces;
-    [SerializeField]
     private float wallStickTime;
 
     [SerializeField]
@@ -21,9 +14,6 @@ public class OnWall : MovementState
 
     //Wallride variables being made accessable
 
-    public Vector2 WallJumpClimbForces { get { return wallJumpClimbForces; } }
-    public Vector2 WallJumpOffForces { get { return wallJumpOffForces; } }
-    public Vector2 WallLeapForces { get { return wallLeapForces; } }
     public float WallStickTime { get { return wallStickTime; } }
 
     [SerializeField]
