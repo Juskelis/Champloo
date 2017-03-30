@@ -61,22 +61,22 @@ public class Weapon : MonoBehaviour
             return;
         }
         attackingState = TimingState.WARMUP;
-        Invoke("StartAttack", startupTime);
+        Invoke("OnStart", startupTime);
     }
 
-    protected virtual void StartAttack()
+    protected virtual void OnStart()
     {
-        Invoke("EndAttack", attackTime);
+        Invoke("OnEnd", attackTime);
         attackingState = TimingState.IN_PROGRESS;
     }
 
-    protected virtual void EndAttack()
+    protected virtual void OnEnd()
     {
         attackingState = TimingState.COOLDOWN;
-        Invoke("EnableAttack", cooldownTime);
+        Invoke("OnCooledDown", cooldownTime);
     }
 
-    public virtual void EnableAttack()
+    public virtual void OnCooledDown()
     {
         attackingState = TimingState.DONE;
     }
@@ -88,22 +88,22 @@ public class Weapon : MonoBehaviour
             return;
         }
         specialAttackingState = TimingState.WARMUP;
-        Invoke("StartSpecial", specialStartupTime);
+        Invoke("OnStartSpecial", specialStartupTime);
     }
 
-    protected virtual void StartSpecial()
+    protected virtual void OnStartSpecial()
     {
-        Invoke("EndSpecial", specialTime);
+        Invoke("OnEndSpecial", specialTime);
         specialAttackingState = TimingState.IN_PROGRESS;
     }
 
-    protected virtual void EndSpecial()
+    protected virtual void OnEndSpecial()
     {
         specialAttackingState = TimingState.COOLDOWN;
-        Invoke("EnableSpecial", specialCooldownTime);
+        Invoke("OnCooledDownSpecial", specialCooldownTime);
     }
 
-    protected virtual void EnableSpecial()
+    protected virtual void OnCooledDownSpecial()
     {
         specialAttackingState = TimingState.DONE;
     }
