@@ -3,10 +3,17 @@ using System.Collections;
 
 public class OnMovementSpecial : MovementState
 {
+    protected TimingState timingState;
+    public TimingState Progress { get { return timingState; } }
+
+    [SerializeField]
+    protected float startupTime;
     [SerializeField]
     protected float specialTime;
     [SerializeField]
     protected float cooldownTime;
+    [SerializeField]
+    protected float rechargeTime;
 
 
     protected float specialTimeLeft;
@@ -21,6 +28,41 @@ public class OnMovementSpecial : MovementState
     {
         base.Start();
         isDisabled = false;
+    }
+
+    public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
+    {
+        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+        Invoke("OnStart", startupTime);
+        timingState = TimingState.WARMUP;
+    }
+
+    public void OnStart()
+    {
+        Invoke("OnEnd", specialTime);
+        timingState = TimingState.IN_PROGRESS;
+    }
+
+    public void OnEnd()
+    {
+        Invoke("OnCooledDown", cooldownTime);
+        timingState = TimingState.COOLDOWN;
+    }
+
+    public void OnCooledDown()
+    {
+        Invoke("OnRecharge", rechargeTime);
+        timingState = TimingState.DONE;
+    }
+
+    public void OnRecharge()
+    {
+
+    }
+
+    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
+    {
+        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
     }
 
     /*
