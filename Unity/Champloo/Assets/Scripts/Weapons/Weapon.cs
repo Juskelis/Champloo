@@ -24,6 +24,8 @@ public class Weapon : MonoBehaviour
     protected float attackTime;
     [SerializeField]
     protected float cooldownTime;
+    [SerializeField]
+    protected float rechargeTime;
 
     [SerializeField]
     protected float specialStartupTime;
@@ -31,6 +33,8 @@ public class Weapon : MonoBehaviour
     protected float specialTime;
     [SerializeField]
     protected float specialCooldownTime;
+    [SerializeField]
+    protected float specialRechargeTime;
 
     [SerializeField]
     protected Projectile thrownVersion;
@@ -79,6 +83,12 @@ public class Weapon : MonoBehaviour
     public virtual void OnCooledDown()
     {
         attackingState = TimingState.DONE;
+        Invoke("OnRecharge", rechargeTime);
+    }
+
+    public virtual void OnRecharge()
+    {
+        
     }
 
     public virtual void Special()
@@ -106,6 +116,12 @@ public class Weapon : MonoBehaviour
     protected virtual void OnCooledDownSpecial()
     {
         specialAttackingState = TimingState.DONE;
+        Invoke("OnRechargeSpecial", specialRechargeTime);
+    }
+
+    protected virtual void OnRechargeSpecial()
+    {
+        
     }
 
     public virtual void PickUp()
