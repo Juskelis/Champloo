@@ -79,59 +79,43 @@ public class OnWall : MovementState
         //normalize the direction so that it just gives the wall jump angle
         direction = player.AimDirection.normalized;
         int wallDirX = (controller.collisions.Left) ? -1 : 1;
-        //float moveX = player.InputPlayer.GetAxis("Move Horizontal");
 
         jumped = false;
+
+        Debug.Log("direction x: " + direction.x + " direction y: " + direction.y);
         if (player.InputPlayer.GetButtonDown("Jump"))
         {
-
-            Debug.Log("direction x: " + direction.x + " direction y: " + direction.y);
             jumped = true;
             jumpSound.Play();
 
             //PLayer will always jump off of a wall a little bit
             outVelocity.x = (wallJumpVelocity.x / 2) * (-wallDirX) ;
 
-            //if the input is pointed towards the wall
-            if (Mathf.Abs(wallDirX - direction.x) < 0.5f)
+            //if player has no input
+            if (direction.x == 0)
+            {
+                outVelocity.x = -wallDirX * wallJumpVelocity.x * 2;
+                outVelocity.y = wallJumpVelocity.y;
+
+            }
+            //if the input is pointed towards the wall or slightly away and up
+            else if (Mathf.Abs(wallDirX - direction.x) < 0.5f ||  ((Mathf.Abs(wallDirX - direction.x) < 1.16) && (Mathf.Abs(1 - direction.y) < .25 )))
             {
                 outVelocity.x = (-wallDirX) * (wallJumpVelocity.x / 2);
                 outVelocity.y = wallJumpVelocity.y;
             }
-            //if player has no input
-            else if(direction.x == 0)
+            //if the input is down and slightly away
+            else if(Mathf.Abs(wallDirX - direction.x) < 1.16  && Mathf.Abs(1 - direction.y) > .25)
             {
-                outVelocity.x = -wallDirX * wallJumpVelocity.x;
-                outVelocity.y = wallJumpVelocity.y * .5f;
-
+                outVelocity.x = (-wallDirX) * (wallJumpVelocity.x / 2);
+                outVelocity.y = -wallJumpVelocity.y;
             }
-            //If player has directional input
+            //If player has other directional input
             else
             {
                 outVelocity.x = wallJumpVelocity.x * direction.x;
                 outVelocity.y = wallJumpVelocity.y * direction.y;
-
             }
-
-
-            //if the input is pointed towards the wall
-            //if (Mathf.Abs(wallDirX - moveX) < 0.5f)
-            //{
-            //    outVelocity.x = -wallDirX * wallJumpClimbForces.x;
-            //    outVelocity.y = wallJumpClimbForces.y;
-            //}
-            ////if the player has no x input
-            //else if (moveX == 0)
-            //{
-            //    outVelocity.x = -wallDirX * wallJumpOffForces.x;
-            //    outVelocity.y = wallJumpOffForces.y;
-            //}
-            ////assuming that the player is pointing away from the wall
-            //else
-            //{
-            //    outVelocity.x = -wallDirX * wallLeapForces.x;
-            //    outVelocity.y = wallLeapForces.y;
-            //}
         }
 
         if (!wallSlideSound.Playing)
