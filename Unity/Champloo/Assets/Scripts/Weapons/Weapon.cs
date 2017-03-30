@@ -5,14 +5,6 @@ using System.Collections.Generic;
 
 public class Weapon : MonoBehaviour
 {
-    public enum TimingState
-    {
-        WARMUP,
-        IN_PROGRESS,
-        COOLDOWN,
-        DONE
-    }
-
     public bool InHand { get; set; }
 
     protected TimingState attackingState = TimingState.DONE;

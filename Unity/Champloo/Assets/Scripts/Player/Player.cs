@@ -542,7 +542,7 @@ public class Player : NetworkBehaviour
     {
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
         //if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack) && !movementSpecial.isInUse)
-        if(weapon.AttackState == Weapon.TimingState.IN_PROGRESS && !(movementState is InAttack))
+        if(weapon.AttackState == TimingState.IN_PROGRESS && !(movementState is InAttack))
         {
             next = GetComponent<InAttack>();
         }
