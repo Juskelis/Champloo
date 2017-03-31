@@ -37,25 +37,25 @@ public class OnMovementSpecial : MovementState
         timingState = TimingState.WARMUP;
     }
 
-    public void OnStart()
+    protected virtual void OnStart()
     {
         Invoke("OnEnd", specialTime);
         timingState = TimingState.IN_PROGRESS;
     }
 
-    public void OnEnd()
+    protected virtual void OnEnd()
     {
         Invoke("OnCooledDown", cooldownTime);
         timingState = TimingState.COOLDOWN;
     }
 
-    public void OnCooledDown()
+    protected virtual void OnCooledDown()
     {
         Invoke("OnRecharge", rechargeTime);
         timingState = TimingState.DONE;
     }
 
-    public void OnRecharge()
+    protected virtual void OnRecharge()
     {
 
     }
