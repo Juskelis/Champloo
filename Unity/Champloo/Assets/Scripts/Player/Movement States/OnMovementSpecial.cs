@@ -51,7 +51,6 @@ public class OnMovementSpecial : MovementState
 
     protected virtual void OnCooledDown()
     {
-        Invoke("OnRecharge", rechargeTime);
         timingState = TimingState.DONE;
     }
 
@@ -63,6 +62,8 @@ public class OnMovementSpecial : MovementState
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+        Invoke("OnRecharge", rechargeTime);
+        timingState = TimingState.DONE;
     }
 
     /*
