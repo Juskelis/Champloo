@@ -26,6 +26,7 @@ public class OnDash : OnMovementSpecial
 
     private bool earlyAttackInput;
     private bool earlyDashInput;
+    private bool justStarted;
     TrailRenderer tail;
 
     protected override void Start()
@@ -37,9 +38,30 @@ public class OnDash : OnMovementSpecial
         earlyDashInput = false;
     }
 
+    // simulate inair while we are starting up or cooling down
+    private Vector3 ApplyFrictionInactive(Vector3 velocity)
+    {
+        if ((controller.collisions.Below && velocity.y <= 0)
+            || (controller.collisions.Above && velocity.y >= 0))
+        {
+            velocity.y = 0;
+        }
+
+        velocity.y -= player.Gravity * Time.deltaTime;
+        if (velocity.y < -dashForce) velocity.y = -dashForce;
+
+        if ((controller.collisions.Left && direction.x < 0) || (controller.collisions.Right && direction.x > 0))
+        {
+            velocity.x = 0;
+        }
+
+        return velocity;
+    }
+
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        if(isDisabled) return velocity;
+        if (isDisabled || timingState != TimingState.IN_PROGRESS) return ApplyFrictionInactive(velocity);
+        if (justStarted) return direction;
 
         velocity.y -= player.Gravity * Time.deltaTime * gravityModifier;
 
@@ -55,10 +77,22 @@ public class OnDash : OnMovementSpecial
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
     {
         specialTimeLeft -= Time.deltaTime;
-        if (specialTimeLeft < 0 || isDisabled)
+
+        //Buffer for attacks and movement specials done too early
+        if (specialTimeLeft < (specialTime / 5))
         {
-            //this probably needs to be changed so that it doesn't trigger on enemy players being below or to the side
-          
+            if (player.InputPlayer.GetButtonDown("Movement Special"))
+            {
+                earlyAttackInput = true;
+            }
+            if (player.InputPlayer.GetButtonDown("Movement Special"))
+            {
+                earlyDashInput = true;
+            }
+        }
+
+        if (isDisabled || timingState == TimingState.DONE)
+        {
             if(earlyAttackInput)
             {
                 return GetComponent<InAttack>();
@@ -77,19 +111,6 @@ public class OnDash : OnMovementSpecial
             }
             return GetComponent<InAir>();
         }
-        //Buffer for attacks and movement specials done too early
-
-        if (specialTimeLeft < (specialTime / 5))
-        {
-            if(player.InputPlayer.GetButtonDown("Movement Special"))
-            {
-                earlyAttackInput = true;
-            }
-            if(player.InputPlayer.GetButtonDown("Movement Special"))
-            {
-                earlyDashInput = true;
-            }
-        }
         
         return null;
     }
@@ -97,34 +118,41 @@ public class OnDash : OnMovementSpecial
     public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces,
         out Vector3 outVelocity, out Vector3 outExternalForces)
     {
+        //short out
+        if (currentDashes <= 0)
+        {
+            timingState = TimingState.DONE;
+
+            outVelocity = inVelocity;
+            outExternalForces = inExternalForces;
+
+            return;
+        }
+
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+
+        //Establish the direction of the dash
+        direction = player.AimDirection;
+
+        currentDashes--;
+        isDisabled = false;
+
+        //actually apply dash forces
+        direction = (direction == Vector2.zero ? Vector2.up : direction) * DashForce;
+        dashSound.Play();
+        justStarted = false;
+    }
+
+    protected override void OnStart()
+    {
+        base.OnStart();
+        justStarted = true;
+
         specialTimeLeft = specialTime;
 
         //set up the dash visual trail
         tail.enabled = true;
         tail.Clear();
-
-        //Establish the direction of the dash
-        direction = player.AimDirection;
-
-        //Check if the player still has dashes
-        if (currentDashes > 0)
-        {
-            currentDashes--;
-            isDisabled = false;
-
-            //actually apply dash forces
-            Vector2 leftStickDir = direction;
-            
-            outVelocity = ((leftStickDir == Vector2.zero) ? Vector2.up : leftStickDir) * DashForce;
-            dashSound.Play();
-        }
-
-        //If player does not have dashes
-        else
-        {
-            isDisabled = true;
-        }
     }
 
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
@@ -143,7 +171,6 @@ public class OnDash : OnMovementSpecial
     public override void OnEnterGround(Vector3 velocity, Vector3 externalForces)
     {
         currentDashes = DashLimit;
-        isDisabled = false;
     }
 
     //wallride state changes
@@ -153,6 +180,5 @@ public class OnDash : OnMovementSpecial
         {
             currentDashes = 1;
         }
-        isDisabled = false;
     }
 }
