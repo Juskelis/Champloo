@@ -534,7 +534,8 @@ public class Player : NetworkBehaviour
             next = GetComponent<InAttack>();
         }
         //else if (inputs.block.Down && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
-        else if (InputPlayer.GetButtonDown("Block") && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
+        else if ((InputPlayer.GetButtonDown("Block") || InputPlayer.GetButton("Block")) && weapon.InHand
+            && shield.CanActivate && !(movementState is InBlock || movementState is InAttack) && !movementSpecial.isInUse)
         {
             next = GetComponent<InBlock>();
         }
