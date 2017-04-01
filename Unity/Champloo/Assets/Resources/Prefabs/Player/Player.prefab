@@ -573,7 +573,7 @@ MonoBehaviour:
   deathForce: 20
   maxJumpHeight: 4
   minJumpHeight: 2
-  Gravity: 60
+  Gravity: 50
   hitReactionTime: 0.2
 --- !u!114 &11437896
 MonoBehaviour:
@@ -610,8 +610,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxFallSpeed: 7
   wallJumpClimbForces: {x: 15, y: 25}
-  wallJumpOffForces: {x: 24, y: 15}
-  wallLeapForces: {x: 26, y: 20}
+  wallJumpOffForces: {x: 25, y: 20}
+  wallLeapForces: {x: 30, y: 15}
   wallStickTime: 0.2
   wallSlideSound: {fileID: 114390118544998976}
   jumpSound: {fileID: 114522529339769152}
@@ -687,10 +687,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 20
-  maxSpeed: 20
+  maxSpeed: 17
   stopToMaxSpeedTime: 0.25
-  maxSpeedToStopTime: 0.35
-  fullTurnTime: 0.25
+  maxSpeedToStopTime: 0.4
+  fullTurnTime: 0.75
 --- !u!114 &11491664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -702,10 +702,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 15
-  stopToMaxSpeedTime: 0.2
-  maxSpeedToStopTime: 0.4
-  fullTurnTime: 0.2
+  maxSpeed: 12
+  stopToMaxSpeedTime: 0.1
+  maxSpeedToStopTime: 0.2
+  fullTurnTime: 0.3
   jumpSound: {fileID: 114522529339769152}
   runSound: {fileID: 114703973357391022}
 --- !u!114 &11492208
@@ -1702,9 +1702,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   specialTime: 0.18
-  cooldownTime: 0.08
-  dashForce: 20
-  gravityModifier: 0.1
+  cooldownTime: 0.07
+  dashForce: 22
+  gravityModifier: 0.5
   dashLimit: 3
   dashSound: {fileID: 114875939206548418}
 --- !u!114 &114000013946945302
