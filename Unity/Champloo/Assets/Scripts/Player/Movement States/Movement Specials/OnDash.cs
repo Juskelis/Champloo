@@ -38,30 +38,16 @@ public class OnDash : OnMovementSpecial
         earlyDashInput = false;
     }
 
-    // simulate inair while we are starting up or cooling down
-    private Vector3 ApplyFrictionInactive(Vector3 velocity)
-    {
-        if ((controller.collisions.Below && velocity.y <= 0)
-            || (controller.collisions.Above && velocity.y >= 0))
-        {
-            velocity.y = 0;
-        }
-
-        velocity.y -= player.Gravity * Time.deltaTime;
-        if (velocity.y < -dashForce) velocity.y = -dashForce;
-
-        if ((controller.collisions.Left && direction.x < 0) || (controller.collisions.Right && direction.x > 0))
-        {
-            velocity.x = 0;
-        }
-
-        return velocity;
-    }
-
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        if (isDisabled || timingState != TimingState.IN_PROGRESS) return ApplyFrictionInactive(velocity);
-        if (justStarted) return direction;
+        if (isDisabled || timingState != TimingState.IN_PROGRESS)
+        {
+            return GetSimulatedState().ApplyFriction(velocity);
+        }
+        if (justStarted)
+        {
+            return direction;
+        }
 
         velocity.y -= player.Gravity * Time.deltaTime * gravityModifier;
 
