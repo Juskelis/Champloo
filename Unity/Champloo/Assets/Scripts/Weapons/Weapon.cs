@@ -64,26 +64,39 @@ public class Weapon : MonoBehaviour
         {
             return;
         }
+        StartCoroutine(TimingCoroutine());
+    }
+
+    private IEnumerator TimingCoroutine()
+    {
         attackingState = TimingState.WARMUP;
-        Invoke("OnStart", startupTime);
+        yield return new WaitForSeconds(startupTime);
+        OnStart();
+        yield return new WaitForSeconds(attackTime);
+        OnEnd();
+        yield return new WaitForSeconds(cooldownTime);
+        OnCooledDown();
+        yield return null;
+    }
+
+    protected virtual IEnumerator RechargeCoroutine()
+    {
+        yield return null;
     }
 
     protected virtual void OnStart()
     {
-        Invoke("OnEnd", attackTime);
         attackingState = TimingState.IN_PROGRESS;
     }
 
     protected virtual void OnEnd()
     {
         attackingState = TimingState.COOLDOWN;
-        Invoke("OnCooledDown", cooldownTime);
     }
 
     public virtual void OnCooledDown()
     {
         attackingState = TimingState.DONE;
-        Invoke("OnRecharge", rechargeTime);
     }
 
     public virtual void OnRecharge()
@@ -97,26 +110,39 @@ public class Weapon : MonoBehaviour
         {
             return;
         }
+        StartCoroutine(SpecialTimingCoroutine());
+    }
+
+    private IEnumerator SpecialTimingCoroutine()
+    {
         specialAttackingState = TimingState.WARMUP;
-        Invoke("OnStartSpecial", specialStartupTime);
+        yield return new WaitForSeconds(specialStartupTime);
+        OnStartSpecial();
+        yield return new WaitForSeconds(specialTime);
+        OnEndSpecial();
+        yield return new WaitForSeconds(specialCooldownTime);
+        OnCooledDownSpecial();
+        yield return null;
+    }
+
+    protected virtual IEnumerator SpecialRechargeCoroutine()
+    {
+        yield return null;
     }
 
     protected virtual void OnStartSpecial()
     {
-        Invoke("OnEndSpecial", specialTime);
         specialAttackingState = TimingState.IN_PROGRESS;
     }
 
     protected virtual void OnEndSpecial()
     {
         specialAttackingState = TimingState.COOLDOWN;
-        Invoke("OnCooledDownSpecial", specialCooldownTime);
     }
 
     protected virtual void OnCooledDownSpecial()
     {
         specialAttackingState = TimingState.DONE;
-        Invoke("OnRechargeSpecial", specialRechargeTime);
     }
 
     protected virtual void OnRechargeSpecial()

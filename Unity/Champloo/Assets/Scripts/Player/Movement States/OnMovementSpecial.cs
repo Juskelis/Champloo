@@ -33,19 +33,33 @@ public class OnMovementSpecial : MovementState
     public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-        Invoke("OnStart", startupTime);
+        StartCoroutine(TimingCoroutine());
+    }
+
+    private IEnumerator TimingCoroutine()
+    {
         timingState = TimingState.WARMUP;
+        yield return new WaitForSeconds(startupTime);
+        OnStart();
+        yield return new WaitForSeconds(specialTime);
+        OnEnd();
+        yield return new WaitForSeconds(cooldownTime);
+        OnCooledDown();
+        yield return null;
+    }
+
+    protected virtual IEnumerator RechargeCoroutine()
+    {
+        yield return null;
     }
 
     protected virtual void OnStart()
     {
-        Invoke("OnEnd", specialTime);
         timingState = TimingState.IN_PROGRESS;
     }
 
     protected virtual void OnEnd()
     {
-        Invoke("OnCooledDown", cooldownTime);
         timingState = TimingState.COOLDOWN;
     }
 
@@ -57,13 +71,6 @@ public class OnMovementSpecial : MovementState
     protected virtual void OnRecharge()
     {
 
-    }
-
-    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
-    {
-        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-        Invoke("OnRecharge", rechargeTime);
-        timingState = TimingState.DONE;
     }
 
     /*
