@@ -36,7 +36,7 @@ public class OnMovementSpecial : MovementState
         StartCoroutine(TimingCoroutine());
     }
 
-    private IEnumerator TimingCoroutine()
+    protected virtual IEnumerator TimingCoroutine()
     {
         timingState = TimingState.WARMUP;
         yield return new WaitForSeconds(startupTime);
@@ -45,7 +45,6 @@ public class OnMovementSpecial : MovementState
         OnEnd();
         yield return new WaitForSeconds(cooldownTime);
         OnCooledDown();
-        yield return null;
     }
 
     protected virtual IEnumerator RechargeCoroutine()
