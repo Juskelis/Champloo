@@ -35,17 +35,38 @@ public class OnTether : OnMovementSpecial
         col = GetComponent<Collider2D>();
     }
 
+    //overridden so we can manually trigger OnEnd()
+    protected override IEnumerator TimingCoroutine()
+    {
+        timingState = TimingState.WARMUP;
+        yield return new WaitForSeconds(startupTime);
+        OnStart();
+        while (timingState == TimingState.IN_PROGRESS)
+        {
+            yield return null;
+        }
+        //we don't end up calling OnEnd here b/c
+        //  we want user (other methods in this class)
+        //  to call it to transition between states
+        yield return new WaitForSeconds(cooldownTime);
+        OnCooledDown();
+    }
+
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        if (timingState != TimingState.IN_PROGRESS
-            || !isThrown || !temp || temp.Moving)
+        if (timingState != TimingState.IN_PROGRESS)
         {
             return GetSimulatedState().ApplyFriction(velocity);
         }
+        if (!isThrown || !temp)
+        {
+            OnEnd();
+            return GetSimulatedState().ApplyFriction(velocity);
+        }
 
-        //find the angle between the player and the stopped weapon
+        //find the direction between the player and the stopped weapon
         //then pull the player continuously towards the tether
-        Vector2 pullDirection = temp.transform.position - player.transform.position;
+        Vector2 pullDirection = (temp.transform.position - player.transform.position).normalized;
         velocity = pullDirection*tetherForce;
 
         if ((controller.collisions.Left && direction.x < 0) || (controller.collisions.Right && direction.x > 0))
@@ -62,14 +83,17 @@ public class OnTether : OnMovementSpecial
 
     public override Vector3 DecayExternalForces(Vector3 externalForces)
     {
-        if (timingState != TimingState.IN_PROGRESS || !isThrown || !temp || temp.Moving) return externalForces;
+        if (timingState != TimingState.IN_PROGRESS) return externalForces;
         return base.DecayExternalForces(externalForces);
     }
 
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
     {
-        if (timingState == TimingState.WARMUP) return null;
-        if (timingState == TimingState.DONE || !isThrown || temp == null)
+        if (timingState == TimingState.WARMUP)
+        {
+            return null;
+        }
+        if (timingState == TimingState.DONE)
         {
             if (controller.collisions.Below)
             {
