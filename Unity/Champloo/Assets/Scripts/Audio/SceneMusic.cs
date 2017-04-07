@@ -10,7 +10,9 @@ public class SceneMusic : MonoBehaviour
     private float startLevel;
     private float endLevel;
     private float startTime;
-    private float totalTime;
+    private float fadeTime;
+    
+    public float defaultFadeTime = 1f;
 
     private bool fading = false;
 
@@ -23,7 +25,7 @@ public class SceneMusic : MonoBehaviour
     {
         if (fading)
         {
-            source.volume = Mathf.Lerp(startLevel, endLevel, (Time.time - startTime)/totalTime);
+            source.volume = Mathf.Lerp(startLevel, endLevel, (Time.time - startTime)/fadeTime);
         }
     }
 
@@ -32,7 +34,16 @@ public class SceneMusic : MonoBehaviour
         startLevel = source.volume;
         endLevel = level;
         startTime = Time.time;
-        totalTime = Mathf.Max(time, Time.fixedDeltaTime);
+        fadeTime = Mathf.Max(time, Time.fixedDeltaTime);
+        fading = true;
+    }
+
+    public void FadeTo(float level)
+    {
+        startLevel = source.volume;
+        endLevel = level;
+        startTime = Time.time;
+        fadeTime = defaultFadeTime;
         fading = true;
     }
 
