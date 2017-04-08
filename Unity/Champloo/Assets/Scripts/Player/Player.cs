@@ -639,10 +639,11 @@ public class Player : NetworkBehaviour
             float velMag = Mathf.Abs(velocity.x);
             anim.SetFloat("HorizontalSpeed", velMag);
             anim.SetBool("OnGround", movementState is OnGround);
-            //anim.SetBool("OnDash", movementState is OnDash);
+            anim.SetBool("OnDash", movementState is OnDash);
             anim.SetBool("OnWall", movementState is OnWall);
-            //anim.SetBool("InAttack", movementState is InAttack);
+            anim.SetBool("InAttack", movementState is InAttack);
             anim.SetBool("InAir", movementState is InAir);
+            anim.SetBool("Blocking", movementState is InBlock);
             anim.SetBool("Hit", hitWith != null);
         }
     }
