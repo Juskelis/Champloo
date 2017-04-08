@@ -3,24 +3,80 @@ using System.Collections;
 
 public class OnMovementSpecial : MovementState
 {
+    protected TimingState timingState;
+    public TimingState Progress { get { return timingState; } }
+
+    [SerializeField]
+    protected float startupTime;
     [SerializeField]
     protected float specialTime;
     [SerializeField]
     protected float cooldownTime;
+    [SerializeField]
+    protected float rechargeTime;
 
 
     protected float specialTimeLeft;
     protected float cooldownTimeLeft;
 
     //bools for determining current state
-    public bool canUse { get { return !isInUse && !isDisabled && cooldownTimeLeft > 0; } }
-    public bool isInUse { get { return specialTimeLeft > 0; } }
+    public bool canUse { get { return !isDisabled && timingState == TimingState.DONE; } }
+    public bool isInUse { get { return timingState == TimingState.IN_PROGRESS; } }
     public bool isDisabled { get; set; }
 
     protected override void Start()
     {
         base.Start();
         isDisabled = false;
+    }
+
+    public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
+    {
+        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+        StartCoroutine(TimingCoroutine());
+    }
+
+    protected virtual IEnumerator TimingCoroutine()
+    {
+        timingState = TimingState.WARMUP;
+        yield return new WaitForSeconds(startupTime);
+        OnStart();
+        yield return new WaitForSeconds(specialTime);
+        OnEnd();
+        yield return new WaitForSeconds(cooldownTime);
+        OnCooledDown();
+    }
+
+    protected virtual IEnumerator RechargeCoroutine()
+    {
+        yield return null;
+    }
+
+    protected virtual void OnStart()
+    {
+        timingState = TimingState.IN_PROGRESS;
+    }
+
+    protected virtual void OnEnd()
+    {
+        timingState = TimingState.COOLDOWN;
+    }
+
+    protected virtual void OnCooledDown()
+    {
+        timingState = TimingState.DONE;
+    }
+
+    protected virtual void OnRecharge()
+    {
+
+    }
+
+    protected virtual MovementState GetSimulatedState()
+    {
+        if (controller.collisions.Below) return GetComponent<OnGround>();
+        if (controller.collisions.Left || controller.collisions.Right) return GetComponent<OnWall>();
+        return GetComponent<InAir>();
     }
 
     /*

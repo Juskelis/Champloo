@@ -42,9 +42,9 @@ public class Sword : Weapon {
         }
     }
 
-    public override void Special()
+    protected override void OnStartSpecial()
     {
-        base.Special();
+        base.OnStartSpecial();
         
         if (InHand)
         {
@@ -62,18 +62,18 @@ public class Sword : Weapon {
         }
     }
 
-    protected override void StartAttack()
+    protected override void OnStart()
     {
-        base.StartAttack();
+        base.OnStart();
 
         //ren.enabled = true;
         visuals.enabled = true;
         col.enabled = true;
     }
 
-    protected override void EndAttack()
+    protected override void OnEnd()
     {
-        base.EndAttack();
+        base.OnEnd();
 
         //ren.enabled = alwaysVisible;
         visuals.enabled = alwaysVisible;

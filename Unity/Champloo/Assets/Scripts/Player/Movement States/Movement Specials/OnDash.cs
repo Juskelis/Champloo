@@ -26,6 +26,7 @@ public class OnDash : OnMovementSpecial
 
     private bool earlyAttackInput;
     private bool earlyDashInput;
+    private bool justStarted;
     TrailRenderer tail;
 
     protected override void Start()
@@ -39,7 +40,14 @@ public class OnDash : OnMovementSpecial
 
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        if(isDisabled) return velocity;
+        if (isDisabled || timingState != TimingState.IN_PROGRESS)
+        {
+            return GetSimulatedState().ApplyFriction(velocity);
+        }
+        if (justStarted)
+        {
+            return direction;
+        }
 
         velocity.y -= player.Gravity * Time.deltaTime * gravityModifier;
 
@@ -55,10 +63,22 @@ public class OnDash : OnMovementSpecial
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
     {
         specialTimeLeft -= Time.deltaTime;
-        if (specialTimeLeft < 0 || isDisabled)
+
+        //Buffer for attacks and movement specials done too early
+        if (specialTimeLeft < (specialTime / 5))
         {
-            //this probably needs to be changed so that it doesn't trigger on enemy players being below or to the side
-          
+            if (player.InputPlayer.GetButtonDown("Attack"))
+            {
+                earlyAttackInput = true;
+            }
+            if (player.InputPlayer.GetButtonDown("Movement Special"))
+            {
+                earlyDashInput = true;
+            }
+        }
+
+        if (isDisabled || timingState == TimingState.DONE)
+        {
             if(earlyAttackInput)
             {
                 return GetComponent<InAttack>();
@@ -77,19 +97,6 @@ public class OnDash : OnMovementSpecial
             }
             return GetComponent<InAir>();
         }
-        //Buffer for attacks and movement specials done too early
-
-        if (specialTimeLeft < (specialTime / 5))
-        {
-            if(player.InputPlayer.GetButtonDown("Attack"))
-            {
-                earlyAttackInput = true;
-            }
-            if(player.InputPlayer.GetButtonDown("Movement Special"))
-            {
-                earlyDashInput = true;
-            }
-        }
         
         return null;
     }
@@ -97,56 +104,65 @@ public class OnDash : OnMovementSpecial
     public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces,
         out Vector3 outVelocity, out Vector3 outExternalForces)
     {
-        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-        specialTimeLeft = specialTime;
+        //short out
+        if (currentDashes <= 0)
+        {
+            timingState = TimingState.DONE;
 
-        //set up the dash visual trail
-        tail.enabled = true;
-        tail.Clear();
+            outVelocity = inVelocity;
+            outExternalForces = inExternalForces;
+
+            return;
+        }
+
+        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
 
         //Establish the direction of the dash
         direction = player.AimDirection;
 
-        //Check if the player still has dashes
-        if (currentDashes > 0)
-        {
-            currentDashes--;
-            isDisabled = false;
+        currentDashes--;
+        isDisabled = false;
 
-            //actually apply dash forces
-            //take player directional input, apply dash force in that direction, clamping on max speed
+		//actually apply dash forces
+		//take player directional input, apply dash force in that direction, clamping on max speed
 
 
-            //Potential Code if we want to replicate the auto-dash-angles in the demo when you jump and dash 
-            //Vector3 dashVector = direction * DashForce;
-            //if (dashVector.y != 0)
-            //{
-            //    //if the dash is in the opposite direction the player is currently going
-            //    if (Mathf.Sign(dashVector.y) != Mathf.Sign(inVelocity.y))
-            //    {
-            //        inVelocity.y = 0;
-            //    }
-            //}
-            //if (dashVector.x != 0)
-            //{
-            //    //if the dash is in the opposite direction the player is currently going
-            //    if (Mathf.Sign(dashVector.x) != Mathf.Sign(inVelocity.x))
-            //    {
-            //        inVelocity.x = 0;
-            //    }
-            //}
-            //outVelocity = inVelocity + dashVector;
+		//Potential Code if we want to replicate the auto-dash-angles in the demo when you jump and dash 
+		//Vector3 dashVector = direction * DashForce;
+		//if (dashVector.y != 0)
+		//{
+		//    //if the dash is in the opposite direction the player is currently going
+		//    if (Mathf.Sign(dashVector.y) != Mathf.Sign(inVelocity.y))
+		//    {
+		//        inVelocity.y = 0;
+		//    }
+		//}
+		//if (dashVector.x != 0)
+		//{
+		//    //if the dash is in the opposite direction the player is currently going
+		//    if (Mathf.Sign(dashVector.x) != Mathf.Sign(inVelocity.x))
+		//    {
+		//        inVelocity.x = 0;
+		//    }
+		//}
+		//direction = inVelocity + dashVector;
+		
+        direction = direction * DashForce;
+        dashSound.Play();
+        justStarted = false;
+    }
 
-            outVelocity = direction * DashForce;
-            dashSound.Play();
-        }
+    protected override void OnStart()
+    {
+        base.OnStart();
+        justStarted = true;
 
-        //If player does not have dashes
-        else
-        {
-            isDisabled = true;
-        }
+        specialTimeLeft = specialTime;
+
+        //set up the dash visual trail
+        tail.enabled = true;
+        tail.Clear();
     }
 
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
@@ -165,7 +181,6 @@ public class OnDash : OnMovementSpecial
     public override void OnEnterGround(Vector3 velocity, Vector3 externalForces)
     {
         currentDashes = DashLimit;
-        isDisabled = false;
     }
 
     //wallride state changes
@@ -175,6 +190,5 @@ public class OnDash : OnMovementSpecial
         {
             currentDashes = 1;
         }
-        isDisabled = false;
     }
 }

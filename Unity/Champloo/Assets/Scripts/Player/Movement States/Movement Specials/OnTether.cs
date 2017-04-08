@@ -35,13 +35,38 @@ public class OnTether : OnMovementSpecial
         col = GetComponent<Collider2D>();
     }
 
+    //overridden so we can manually trigger OnEnd()
+    protected override IEnumerator TimingCoroutine()
+    {
+        timingState = TimingState.WARMUP;
+        yield return new WaitForSeconds(startupTime);
+        OnStart();
+        while (timingState == TimingState.IN_PROGRESS)
+        {
+            yield return null;
+        }
+        //we don't end up calling OnEnd here b/c
+        //  we want user (other methods in this class)
+        //  to call it to transition between states
+        yield return new WaitForSeconds(cooldownTime);
+        OnCooledDown();
+    }
+
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        if (!isThrown || !temp || temp.Moving) return velocity;
+        if (timingState != TimingState.IN_PROGRESS)
+        {
+            return GetSimulatedState().ApplyFriction(velocity);
+        }
+        if (!isThrown || !temp)
+        {
+            OnEnd();
+            return GetSimulatedState().ApplyFriction(velocity);
+        }
 
-        //find the angle between the player and the stopped weapon
+        //find the direction between the player and the stopped weapon
         //then pull the player continuously towards the tether
-        Vector2 pullDirection = temp.transform.position - player.transform.position;
+        Vector2 pullDirection = (temp.transform.position - player.transform.position).normalized;
         velocity = pullDirection*tetherForce;
 
         if ((controller.collisions.Left && direction.x < 0) || (controller.collisions.Right && direction.x > 0))
@@ -58,14 +83,17 @@ public class OnTether : OnMovementSpecial
 
     public override Vector3 DecayExternalForces(Vector3 externalForces)
     {
-        if (!isThrown || !temp || temp.Moving) return externalForces;
+        if (timingState != TimingState.IN_PROGRESS) return externalForces;
         return base.DecayExternalForces(externalForces);
     }
 
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
     {
-        timeLeft -= Time.deltaTime;
-        if (timeLeft < 0 || !isThrown || temp == null || temp.Moving)
+        if (timingState == TimingState.WARMUP)
+        {
+            return null;
+        }
+        if (timingState == TimingState.DONE)
         {
             if (controller.collisions.Below)
             {
@@ -82,17 +110,14 @@ public class OnTether : OnMovementSpecial
         return null;
     }
 
-    public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces,
-        out Vector3 outVelocity, out Vector3 outExternalForces)
+    protected override void OnStart()
     {
-        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-
-        //set up the tether visual trail
-        tail.enabled = true;
-        tail.Clear();
-
-        //actually throw the weapon
-        if (weapon.InHand && !isDisabled)
+        base.OnStart();
+        if(!weapon.InHand)
+        {
+            isThrown = false;
+        }
+        else if(!isDisabled)
         {
             isDisabled = true;
             weapon.InHand = false;
@@ -107,13 +132,19 @@ public class OnTether : OnMovementSpecial
                     weapon.transform.parent.forward
                 )
             );
-            
+
             temp.PlayerNumber = player.PlayerNumber;
         }
-        else if (!weapon.InHand)
-        {
-            isThrown = false;
-        }
+    }
+
+    public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
+    {
+        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+
+        //set up the tether visual trail
+        tail.enabled = true;
+        tail.Clear();
 
     }
 
