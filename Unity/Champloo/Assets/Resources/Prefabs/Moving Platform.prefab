@@ -10,7 +10,7 @@ GameObject:
   - component: {fileID: 408116}
   - component: {fileID: 11458900}
   - component: {fileID: 2073052}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Splat Masker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ GameObject:
   - component: {fileID: 6191188}
   - component: {fileID: 11493976}
   - component: {fileID: 114399302485024820}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Moving Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 418912}
   - component: {fileID: 3354352}
   - component: {fileID: 2363618}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
