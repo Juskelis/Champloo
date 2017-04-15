@@ -66,6 +66,9 @@ public class Player : NetworkBehaviour
     private Transform visuals;
 
     [SerializeField]
+    private Transform hitbox;
+
+    [SerializeField]
     private Transform spawnOnDeath;
 
     [SerializeField]
@@ -119,6 +122,7 @@ public class Player : NetworkBehaviour
 
     private InputController inputs;
     private BoxCollider2D box;
+    private BoxCollider2D hitbox_collider;
     private Controller2D controller;
     private Animator anim;
 
@@ -149,6 +153,7 @@ public class Player : NetworkBehaviour
         box = GetComponent<BoxCollider2D>();
         controller = GetComponent<Controller2D>();
         anim = GetComponent<Animator>();
+        hitbox_collider = hitbox.GetComponent<BoxCollider2D>();
 
         inputs = GetComponent<InputController>();
 
@@ -354,17 +359,8 @@ public class Player : NetworkBehaviour
             ShakeCamera();
             Invoke("GetHit", hitReactionTime);
         }
-    }
 
-    [ClientCallback]
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (!col.gameObject.activeSelf)
-        {
-            return;
-        }
-
-        Projectile p = col.gameObject.GetComponent<Projectile>();
+        Projectile p = col.GetComponent<Projectile>();
         if (p != null)
         {
             if (p.PlayerNumber == playerNumber)
@@ -415,6 +411,11 @@ public class Player : NetworkBehaviour
         if (Mathf.Abs(force.y) > threshold) newVelocity.y = force.y;
         if (Mathf.Abs(force.z) > threshold) newVelocity.z = force.z;
         OnVelocityChanged(newVelocity);
+    }
+
+    protected void UpdateHitbox(Bounds bounds)
+    {
+        hitbox_collider.size = bounds.size;
     }
 
     private void ShakeCamera()
@@ -613,7 +614,8 @@ public class Player : NetworkBehaviour
             CmdUpdateMovementState(movementState.GetType().ToString());
         }
 
-        controller.UpdateBounds(currentSprite.bounds);
+        //controller.UpdateBounds(currentSprite.bounds);
+        UpdateHitbox(currentSprite.bounds);
 
         //handle blocking/parrying
         if (hitWith != null)
