@@ -37,11 +37,14 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D c)
+    void OnTriggerEnter2D(Collider2D c)
     {
         if (!moving) return;
         if ((collisionMask.value & (1 << c.gameObject.layer)) > 0)
         {
+            Player p = c.GetComponent<Player>();
+            p = p != null ? p : c.GetComponentInParent<Player>();
+            if (p != null && p.PlayerNumber == PlayerNumber) return;
             follow = c.transform;
             relativePos = follow.position - transform.position;
             moving = false;
