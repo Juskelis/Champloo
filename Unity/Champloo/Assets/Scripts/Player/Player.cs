@@ -619,7 +619,8 @@ public class Player : NetworkBehaviour
         }
 
         //controller.UpdateBounds(currentSprite.bounds);
-        UpdateHitbox(currentSprite.bounds);
+        UpdateHitbox();
+        UpdateSprite();
 
         //handle blocking/parrying
         if (hitWith != null)
@@ -663,6 +664,28 @@ public class Player : NetworkBehaviour
                 localScale.x = Mathf.Sign(velocity.x);
                 visuals.localScale = localScale;
             }
+    }
+
+    protected void UpdateHitbox()
+    {
+        hitbox_collider.size = currentSprite.bounds.size;
+        Vector2 newOffset = Vector2.zero;
+        newOffset.x = Mathf.Sign(visuals.localScale.x)
+            * SpriteXOffset()
+            * (box.bounds.extents.x - currentSprite.sprite.bounds.extents.x);
+
+        newOffset.y = currentSprite.sprite.bounds.extents.y - box.bounds.extents.y;
+        hitbox_collider.offset = newOffset;
+    }
+
+    protected void UpdateSprite()
+    {
+        Vector3 newPos = Vector3.zero;
+
+        newPos.x = SpriteXOffset() * box.bounds.extents.x;
+        newPos.y = -box.bounds.extents.y;
+
+        visuals.localPosition = newPos;
     }
     #endregion
 }
