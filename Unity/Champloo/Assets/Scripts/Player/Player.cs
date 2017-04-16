@@ -413,9 +413,13 @@ public class Player : NetworkBehaviour
         OnVelocityChanged(newVelocity);
     }
 
-    protected void UpdateHitbox(Bounds bounds)
+    /// <summary>
+    /// Gets the sprite pivot as a -1 to 1 value, where 0 is the middle of the sprite
+    /// </summary>
+    /// <returns></returns>
+    private float SpriteXOffset()
     {
-        hitbox_collider.size = bounds.size;
+        return (currentSprite.sprite.pivot.x / currentSprite.sprite.rect.width)*2 - 1;
     }
 
     private void ShakeCamera()
