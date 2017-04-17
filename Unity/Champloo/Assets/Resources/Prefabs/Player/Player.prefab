@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 11470960}
   - component: {fileID: 3338068}
   - component: {fileID: 2346016}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Physical Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 474692}
   - component: {fileID: 21275032}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 454134}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,6 +193,7 @@ Transform:
   - {fileID: 454134}
   - {fileID: 417310}
   - {fileID: 4935072532513990}
+  - {fileID: 4698183678824832}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -568,6 +569,7 @@ MonoBehaviour:
   coloredSprites:
   - {fileID: 21256950}
   visuals: {fileID: 463322}
+  hitbox: {fileID: 4698183678824832}
   spawnOnDeath: {fileID: 487684, guid: f76ffe80673a7004dace221606a3111b, type: 2}
   bounceForce: 15
   deathForce: 20
@@ -632,10 +634,10 @@ MonoBehaviour:
   maxSlopeAngle: 80
   collisionMask:
     serializedVersion: 2
-    m_Bits: 1792
+    m_Bits: 768
   crushMask:
     serializedVersion: 2
-    m_Bits: 1792
+    m_Bits: 768
 --- !u!114 &11467646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -662,6 +664,11 @@ MonoBehaviour:
   startupTime: 0
   attackTime: 0.1
   cooldownTime: 0.4
+  rechargeTime: 0
+  specialStartupTime: 0
+  specialTime: 0
+  specialCooldownTime: 0
+  specialRechargeTime: 0
   thrownVersion: {fileID: 11441408, guid: 666604262c26fa543801e5b6cfd8983b, type: 2}
   alwaysVisible: 0
   visuals: {fileID: 21275032}
@@ -943,6 +950,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1021398880432524
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4698183678824832}
+  - component: {fileID: 61618947722179394}
+  m_Layer: 10
+  m_Name: Hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1228198980723156
 GameObject:
   m_ObjectHideFlags: 1
@@ -987,7 +1010,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4757340922482180}
   - component: {fileID: 82648479376435256}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1095,6 +1118,19 @@ Transform:
   m_Father: {fileID: 4935072532513990}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4698183678824832
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1021398880432524}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 429522}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4729048395884066
 Transform:
   m_ObjectHideFlags: 1
@@ -1151,6 +1187,20 @@ Transform:
   m_Father: {fileID: 429522}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61618947722179394
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1021398880432524}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!82 &82291436931744554
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1702,8 +1752,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34b07b148acf0f3458b93dacce52bcdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startupTime: 0
   specialTime: 0.18
   cooldownTime: 0.07
+  rechargeTime: 0
   dashForce: 22
   gravityModifier: 0.5
   dashLimit: 3
