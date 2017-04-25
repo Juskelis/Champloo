@@ -18,6 +18,9 @@ public class Weapon : MonoBehaviour
     public bool CanSpecialAttack { get { return InHand && specialAttackingState == TimingState.DONE; } }
     public bool IsSpecialAttacking { get { return specialAttackingState == TimingState.IN_PROGRESS; } }
 
+    private int playerNumber;
+    public int PlayerNumber { get; }
+
     [SerializeField]
     protected float startupTime;
     [SerializeField]
@@ -50,6 +53,7 @@ public class Weapon : MonoBehaviour
     {
         InHand = true;
         isLocalPlayer = GetComponentInParent<NetworkIdentity>().isLocalPlayer;
+        playerNumber = (GetComponent<Player>() ?? GetComponentInParent<Player>()).PlayerNumber;
     }
 
     //[ClientCallback]

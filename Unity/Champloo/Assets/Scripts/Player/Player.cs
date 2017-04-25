@@ -395,7 +395,7 @@ public class Player : NetworkBehaviour
     /// <param name="otherWeapon">The weapon that hit us</param>
     public void GetHit(Weapon otherWeapon)
     {
-        if (otherWeapon != null && hitWith == null)
+        if (otherWeapon != null && hitWith == null && PlayerNumber != otherWeapon.PlayerNumber)
         {
             hitWith = otherWeapon;
             ShakeCamera();
