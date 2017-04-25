@@ -357,7 +357,7 @@ public class Player : NetworkBehaviour
         {
             hitWith = otherWeapon;
             ShakeCamera();
-            Invoke("GetHit", hitReactionTime);
+            Invoke("ProcessHit", hitReactionTime);
         }
 
         Projectile p = col.GetComponent<Projectile>();
@@ -380,7 +380,7 @@ public class Player : NetworkBehaviour
         }
     }
 
-    void GetHit()
+    void ProcessHit()
     {
         if (hitWith == null) return;
 
