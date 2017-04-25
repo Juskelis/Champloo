@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
+using TypeReferences;
 
 public class Projectile : MonoBehaviour
 {
     public int PlayerNumber { get; set; }
 
-    [SerializeField] private LayerMask collisionMask;
+    [SerializeField] private LayerMask obstacleMask;
 
     [SerializeField] private float speed = 1f;
 
@@ -39,12 +40,11 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D c)
     {
-        if (!moving) return;
-        if ((collisionMask.value & (1 << c.gameObject.layer)) > 0)
+        ProcessHit(c.gameObject);
+
+        //check whether we need to stop
+        if (moving && (obstacleMask.value & (1 << c.gameObject.layer)) > 0)
         {
-            Player p = c.GetComponent<Player>();
-            p = p != null ? p : c.GetComponentInParent<Player>();
-            if (p != null && p.PlayerNumber == PlayerNumber) return;
             follow = c.transform;
             relativePos = follow.position - transform.position;
             moving = false;
@@ -53,5 +53,13 @@ public class Projectile : MonoBehaviour
 
             GetComponent<TrailRenderer>().enabled = false;
         }
+    }
+
+    protected void ProcessHit(GameObject g)
+    {
+        Player p = g.GetComponent<Player>();
+        p = p ?? g.GetComponentInParent<Player>();
+        if (p == null) return;
+        p.GetHit(this);
     }
 }
