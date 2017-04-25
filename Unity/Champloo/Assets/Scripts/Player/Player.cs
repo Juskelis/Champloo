@@ -115,6 +115,7 @@ public class Player : NetworkBehaviour
     //public float Gravity { get; set; }
 
     private Weapon hitWith;
+    private Projectile hitWithProjectile;
 
     #endregion
 
@@ -351,7 +352,13 @@ public class Player : NetworkBehaviour
         {
             return;
         }
-
+        /*
+        Projectile p = col.GetComponent<Projectile>();
+        if (p != null && !p.Moving && !weapon.InHand && p.PlayerNumber == playerNumber)
+        {
+            weapon.PickUp();
+            Destroy(p.gameObject);
+        }
         Weapon otherWeapon = col.GetComponent<Weapon>();
         if (otherWeapon != null && hitWith == null)
         {
@@ -359,7 +366,8 @@ public class Player : NetworkBehaviour
             ShakeCamera();
             Invoke("ProcessHit", hitReactionTime);
         }
-
+        */
+        /*
         Projectile p = col.GetComponent<Projectile>();
         if (p != null)
         {
@@ -378,6 +386,55 @@ public class Player : NetworkBehaviour
                 Kill(p.transform.right * deathForce);
             }
         }
+        */
+    }
+
+    /// <summary>
+    /// Triggers the process of getting hit with a weapon
+    /// </summary>
+    /// <param name="otherWeapon">The weapon that hit us</param>
+    public void GetHit(Weapon otherWeapon)
+    {
+        if (otherWeapon != null && hitWith == null)
+        {
+            hitWith = otherWeapon;
+            ShakeCamera();
+            Invoke("ProcessHit", hitReactionTime);
+        }
+    }
+
+    /// <summary>
+    /// Triggers the process of getting hit with a projectile
+    /// </summary>
+    /// <param name="p"></param>
+    public void GetHit(Projectile p)
+    {
+        if (p != null && p != hitWithProjectile)
+        {
+            if (p.PlayerNumber == playerNumber)
+            {
+                if (!p.Moving && !weapon.InHand)
+                {
+                    weapon.PickUp();
+                    Destroy(p.gameObject);
+                }
+            }
+            else if (p.Moving)
+            {
+                //Score.instance.AddScore(p.PlayerNumber);
+                hitWithProjectile = p;
+                Score.instance.CmdScore(p.PlayerNumber);
+                Kill(p.transform.right * deathForce);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Triggers the process of being stunned
+    /// </summary>
+    public void GetStunned()
+    {
+        
     }
 
     void ProcessHit()
