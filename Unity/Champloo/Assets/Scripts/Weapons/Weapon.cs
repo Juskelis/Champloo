@@ -19,7 +19,7 @@ public class Weapon : MonoBehaviour
     public bool IsSpecialAttacking { get { return specialAttackingState == TimingState.IN_PROGRESS; } }
 
     private int playerNumber;
-    public int PlayerNumber { get; }
+    public int PlayerNumber { get {return playerNumber;} }
 
     [SerializeField]
     protected float startupTime;
