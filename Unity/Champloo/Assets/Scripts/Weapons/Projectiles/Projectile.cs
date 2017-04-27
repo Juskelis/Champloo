@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] protected LayerMask obstacleMask;
 
-    [SerializeField] private float speed = 1f;
+    [SerializeField] protected float speed = 1f;
 
     private bool moving = true;
     public bool Moving { get { return moving; } }
@@ -18,7 +18,7 @@ public class Projectile : MonoBehaviour
     private Transform follow;
     private Vector3 relativePos;
 
-    private Rigidbody2D body;
+    protected Rigidbody2D body;
 
     protected virtual void Awake()
     {
