@@ -15,7 +15,7 @@ public class BombProjectile : Projectile {
     protected override void Awake()
     {
         base.Awake();
-        fuseTimeLeft -= Time.deltaTime;
+        Invoke("Explode", fuseLength);
     }
 
     protected override void ProcessHitPlayer(GameObject o)
