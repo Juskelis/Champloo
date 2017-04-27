@@ -45,4 +45,18 @@ public class BombProjectile : Projectile {
         float angleToBounce = Vector3.Angle(transform.right, bounce);
         transform.Rotate(0, 0, -angleToBounce);
     }
+
+    private void Explode()
+    {
+        //go through all players and push them away
+        foreach (Player player in FindObjectsOfType<Player>())
+        {
+            Vector3 pushDir = (player.transform.position - transform.position).normalized;
+            player.ApplyForce(pushDir * explosionForce);
+        }
+
+        Instantiate(explosion, transform.position, transform.rotation);
+
+        Destroy(gameObject);
+    }
 }
