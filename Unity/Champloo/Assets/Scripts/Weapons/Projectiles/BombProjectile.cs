@@ -18,6 +18,16 @@ public class BombProjectile : Projectile {
         Invoke("Explode", fuseLength);
     }
 
+    protected override void Update()
+    {
+        speed = Mathf.Max(0, speed - Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            Quaternion.Euler(0, 0, -90f),
+            45f * Time.deltaTime);
+        base.Update();
+    }
+
     protected override void ProcessHitPlayer(GameObject o)
     {
         //turn off parent functionality
