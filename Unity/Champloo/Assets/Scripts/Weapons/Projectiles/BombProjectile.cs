@@ -4,6 +4,12 @@ public class BombProjectile : Projectile {
     [SerializeField]
     private float fuseLength;
 
+    [SerializeField]
+    private float explosionForce;
+
+    [SerializeField]
+    private Transform explosion;
+
     private float fuseTimeLeft = 0f;
 
     protected override void Awake()
