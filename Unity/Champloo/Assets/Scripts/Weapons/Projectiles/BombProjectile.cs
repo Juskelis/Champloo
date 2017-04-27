@@ -37,11 +37,12 @@ public class BombProjectile : Projectile {
     {
         RaycastHit2D hit = Physics2D.Raycast(
             transform.position,
-            transform.forward,
+            transform.right,
             Mathf.Infinity,
             obstacleMask);
-        Vector3 bounce = -(Vector3.Reflect(transform.forward, hit.normal).normalized);
-        float angleToBounce = Vector3.Angle(transform.forward, bounce);
-        transform.Rotate(0, 0, angleToBounce);
+        Vector3 reflection = Vector3.Reflect(transform.right, hit.normal);
+        Vector3 bounce = reflection.normalized;
+        float angleToBounce = Vector3.Angle(transform.right, bounce);
+        transform.Rotate(0, 0, -angleToBounce);
     }
 }
