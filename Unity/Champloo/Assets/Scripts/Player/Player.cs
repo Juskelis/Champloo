@@ -682,7 +682,9 @@ public class Player : NetworkBehaviour
     {
         Vector3 newPos = Vector3.zero;
 
-        newPos.x = SpriteXOffset() * box.bounds.extents.x;
+        newPos.x = Mathf.Sign(visuals.localScale.x)
+            * SpriteXOffset()
+            * box.bounds.extents.x;
         newPos.y = -box.bounds.extents.y;
 
         visuals.localPosition = newPos;
