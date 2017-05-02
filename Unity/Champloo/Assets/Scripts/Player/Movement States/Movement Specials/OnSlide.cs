@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class OnSlide : OnMovementSpecial
 {
+
     [SerializeField]
-    private Vector2 wallSlideForce;
+    private float wallSlideUpForce;
+    [SerializeField]
+    private float wallSlideDownForce;
     [SerializeField]
     private float wallSlideUpDecay;
     [SerializeField]
@@ -18,61 +21,71 @@ public class OnSlide : OnMovementSpecial
     [SerializeField]
     private PlayRandomSource wallSlideSound;
 
-    private bool goingRight = true;
+    private bool goingRight;
 
-    private bool goingUp = true;
+    private bool goingUp;
 
+    private Vector3 appliedForce;
+
+    private Vector2 test;
+
+    private bool isOnWall;
+    protected override void Start()
+    {
+        base.Start();
+        goingUp = false;
+        goingRight = false;
+    }
 
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        //if not sliding or in the air
-        if (timingState != TimingState.IN_PROGRESS || GetSimulatedState() == GetComponent<InAir>())
+        if (isDisabled || !isInUse )
         {
             return GetSimulatedState().ApplyFriction(velocity);
         }
 
+        test = player.AimDirection;
+
         goingRight = velocity.x > 0;
+        goingUp = velocity.y > 0;
         if (velocity.x == 0) goingRight = player.AimDirection.x > 0;
+
         if (GetSimulatedState() == GetComponent<OnWall>())
         {
-            //if sliding down and hit ground;
-            //this may not work as GetSimulatedState may return OnGround before this, so we'll need to change if that is the case
-            if (!goingUp && controller.collisions.Below)
-            {
-                Debug.Log("on wall, detected collison below");
-                if (controller.collisions.Left)
-                {
-                    goingRight = true;
-                    velocity.x += velocity.y;
-                }
-                else if(controller.collisions.Right)
-                {
-                    goingRight = false;
-                    velocity.x -= velocity.y;
-                }
-            }
-            else
-            {
-                velocity.y += (goingUp ? wallSlideUpDecay : -wallSlideDownDecay);
-            }
+            velocity.x = 0;
+            goingRight = controller.collisions.Left;
+            //decrease in speed going up, increase going down
+            velocity.y += (goingUp ? -wallSlideUpDecay : -wallSlideDownDecay);
+            
         }
         else if (GetSimulatedState() == GetComponent<OnGround>())
         {
-            //if the player hits something 
-            if (controller.collisions.Right && goingRight)
+            isOnWall = false;
+            //if the player hits something while going horizontally
+            if (controller.collisions.Right && velocity.x > 0)
             {
                 velocity.y += velocity.x;
             }
-            else if (controller.collisions.Left && !goingRight)
+            else if (controller.collisions.Left && velocity.x < 0)
             {
                 velocity.y += -velocity.x;
+            }
+            //if no horizontal velocity, but there is negative vertical, assume the player is sliding down a wall
+            else if (controller.collisions.Right && velocity.x == 0 && velocity.y < 0)
+            {
+                velocity.x += velocity.y;
+                velocity.y = 0;
+            }
+            else if (controller.collisions.Left && velocity.x == 0 && velocity.y < 0)
+            {
+                velocity.x -= velocity.y;
+                velocity.y = 0;
             }
             else
             {
                 //add in any potential -y velocity if there is any, otherwise just decay the speed
-
                 velocity.x += (goingRight ? (groundSlideDecay - velocity.y) : -(groundSlideDecay - velocity.y));
-                velocity.y = 0;
+                //velocity.y = 0;
             }
         }
         return velocity;
@@ -94,21 +107,54 @@ public class OnSlide : OnMovementSpecial
         return null;
     }
 
+
     public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
     {
+        //short out
+        if(GetSimulatedState() == GetComponent<InAir>())
+        {
+            timingState = TimingState.DONE;
+            outVelocity = inVelocity;
+            outExternalForces = inExternalForces;
+            return;
+        }
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-        goingRight = inVelocity.x > 0;
+
+        goingUp = player.Velocity.y > 0;
+        goingRight = player.Velocity.x > 0;
+    }
+
+
+    protected override void OnStart()
+    {
+        //if player has somehow entered the air since the OnEnter method, short out again
+        if (GetSimulatedState() == GetComponent<InAir>())
+        {
+            timingState = TimingState.DONE;
+            return;
+        }
+
+        base.OnStart();
+
+        test = player.AimDirection;
+
+        goingUp = player.Velocity.y > 0;
+        goingRight = player.Velocity.x > 0;
+
         //if a player isn't moving, get their aim direction/direction they are facing, otherwise you can only slide the way you are running
-        if (inVelocity.x == 0) goingRight = player.AimDirection.x > 0; 
-        goingUp = inVelocity.y > 0;
-        //if onWall
+        if (player.Velocity.x == 0) goingRight = player.AimDirection.x > 0;
+
+        
         if (GetSimulatedState() == GetComponent<OnWall>())
         {
-            outVelocity.y = goingUp ? wallSlideForce.y : -wallSlideForce.y;
+            appliedForce.y = goingUp ? wallSlideUpForce : -wallSlideDownForce;
         }
         else if (GetSimulatedState() == GetComponent<OnGround>())
         {
-            outVelocity.x = goingRight ? groundSlideForce.x : -groundSlideForce.x;
+            appliedForce.y = 0;
+            appliedForce.x = goingRight ? groundSlideForce.x : -groundSlideForce.x;
         }
+
+        player.ApplyForce(appliedForce);
     }
 }

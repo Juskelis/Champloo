@@ -24,12 +24,14 @@ public class OnMovementSpecial : MovementState
     public bool isInUse { get { return timingState == TimingState.IN_PROGRESS; } }
     public bool isDisabled { get; set; }
 
+    //Used On the start of the player object
     protected override void Start()
     {
         base.Start();
         isDisabled = false;
     }
 
+    //Used on the entering of the movement special
     public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
@@ -52,26 +54,31 @@ public class OnMovementSpecial : MovementState
         yield return null;
     }
 
+    //used on the start of the move, after the warmup
     protected virtual void OnStart()
     {
         timingState = TimingState.IN_PROGRESS;
     }
 
+    //used on the end of the move, before the cooldown
     protected virtual void OnEnd()
     {
         timingState = TimingState.COOLDOWN;
     }
 
+    //used at the end of the cooldown period
     protected virtual void OnCooledDown()
     {
         timingState = TimingState.DONE;
     }
 
+    //used at the end of the recharge period, when the move is available to be used again
     protected virtual void OnRecharge()
     {
 
     }
 
+    //gets the current state the player object would be in if not in OnMovementSpecial
     protected virtual MovementState GetSimulatedState()
     {
         if (controller.collisions.Below) return GetComponent<OnGround>();
