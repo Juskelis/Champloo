@@ -21,23 +21,22 @@ public class OnSlide : OnMovementSpecial
 
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
+        MovementState simulatedState = GetSimulatedState();
         if (isDisabled || !isInUse )
         {
-            return GetSimulatedState().ApplyFriction(velocity);
+            return simulatedState.ApplyFriction(velocity);
         }
-
         bool goingRight = velocity.x > 0;
         bool goingUp = velocity.y > 0;
         if (velocity.x == 0) goingRight = player.AimDirection.x > 0;
 
-        if (GetSimulatedState() == GetComponent<OnWall>())
+        if (simulatedState is OnWall)
         {
             velocity.x = 0;
             //decrease in speed going up, increase going down
             velocity.y += (goingUp ? -wallSlideUpMod: -wallSlideDownMod);
-            
         }
-        else if (GetSimulatedState() == GetComponent<OnGround>())
+        else if (simulatedState is OnGround)
         {
             if(!controller.collisions.Left && !controller.collisions.Right)
             {
@@ -78,12 +77,7 @@ public class OnSlide : OnMovementSpecial
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
     {
         MovementState simulatedState = GetSimulatedState();
-        if (timingState == TimingState.DONE)
-        {
-            return GetSimulatedState();
-        }
-        //if InAir, or hit something from below
-        else if(simulatedState is InAir)
+        if (timingState == TimingState.DONE || simulatedState is InAir)
         {
             return simulatedState;
         }
@@ -113,7 +107,8 @@ public class OnSlide : OnMovementSpecial
     {
         Vector3 appliedForce = Vector3.zero;
         //if player has somehow entered the air since the OnEnter method, short out again
-        if (GetSimulatedState() is InAir)
+        MovementState simulatedState = GetSimulatedState();
+        if (simulatedState is InAir)
         {
             timingState = TimingState.DONE;
             return;
@@ -128,11 +123,11 @@ public class OnSlide : OnMovementSpecial
         if (player.Velocity.x == 0) goingRight = player.AimDirection.x > 0;
 
         
-        if (GetSimulatedState() is OnWall)
+        if (simulatedState is OnWall)
         {
             appliedForce.y = goingUp ? wallSlideUpForce : -wallSlideDownForce;
         }
-        else if (GetSimulatedState() is OnGround)
+        else if (simulatedState is OnGround)
         {
             appliedForce.y = 0;
             appliedForce.x = goingRight ? groundSlideForce : -groundSlideForce;
