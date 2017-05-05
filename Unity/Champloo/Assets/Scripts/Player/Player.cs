@@ -109,6 +109,12 @@ public class Player : NetworkBehaviour
 
     [SyncVar(hook = "OnVelocity")]
     private Vector3 velocity = Vector3.zero;
+
+    public Vector3 Velocity
+    {
+        get { return velocity; }
+    }
+
     [SyncVar(hook = "OnExternalForce")]
     private Vector3 externalForce = Vector3.zero;
 
