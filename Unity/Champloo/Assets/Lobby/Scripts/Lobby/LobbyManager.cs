@@ -357,6 +357,37 @@ namespace Prototype.NetworkLobby
 
         }
 
+        // for more information on how this works check out:
+        //  "https://bitbucket.org/Unity-Technologies/networking/src/78ca8544bbf4e87c310ce2a9a3fc33cdad2f9bb1/Runtime/NetworkLobbyManager.cs?at=5.3&fileviewer=file-view-default#NetworkLobbyManager.cs-109"
+        public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
+        {
+            foreach (NetworkLobbyPlayer lobbyPlayer in lobbySlots)
+            {
+                NetworkIdentity id = lobbyPlayer.GetComponent<NetworkIdentity>();
+                int controllerIndex = id.connectionToClient.playerControllers.FindIndex(
+                    x => x.playerControllerId == playerControllerId);
+                if (controllerIndex < 0) continue;
+                PlayerController controller = id.connectionToClient.playerControllers[controllerIndex];
+
+                //the equivalent of lobbyPlayer in OnLobbyServerSceneLoadedForPlayer
+                LobbyPlayer lp = controller.gameObject.GetComponent<LobbyPlayer>();
+                Transform startPos = GetStartPosition();
+                if (startPos != null)
+                {
+                    return Instantiate(
+                        PlayerSelectManager.Instance.playerPrefabs[lp.playerPrefabIndex].gameObject,
+                        startPos.position,
+                        startPos.rotation);
+                }
+                return Instantiate(
+                        PlayerSelectManager.Instance.playerPrefabs[lp.playerPrefabIndex].gameObject,
+                        Vector3.zero,
+                        Quaternion.identity);
+            }
+            return base.OnLobbyServerCreateGamePlayer(conn, playerControllerId);
+        }
+
+
         public override bool OnLobbyServerSceneLoadedForPlayer(GameObject lobbyPlayer, GameObject gamePlayer)
         {
             //This hook allows you to apply state data from the lobby-player to the game-player

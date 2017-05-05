@@ -11,6 +11,5 @@ public class NetworkLobbyHook : LobbyHook {
 
         playerSettings.Name = lobby.playerName;
         playerSettings.Color = lobby.playerColor;
-        playerSettings.PrefabPath = lobby.playerPrefabName;
     }
 }

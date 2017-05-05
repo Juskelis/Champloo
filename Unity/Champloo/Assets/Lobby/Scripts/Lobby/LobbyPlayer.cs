@@ -32,13 +32,11 @@ namespace Prototype.NetworkLobby
         [SyncVar(hook = "OnMyColor")]
         public Color playerColor = Color.white;
         [SyncVar(hook = "OnMyPrefab")]
-        public string playerPrefabName = "";
+        public int playerPrefabIndex = 0;
         [SyncVar(hook = "OnMyControllerNumber")]
         public int playerControllerNumber = -1;
         [SyncVar(hook = "OnActivate")]
         public bool activated = false;
-        
-        private int playerNumber = -1;
 
         /*
             string to identify cross-client objects that are logically the same
@@ -221,10 +219,11 @@ namespace Prototype.NetworkLobby
             playerNumberText.text = newNumber.ToString();
         }
 
-        public void OnMyPrefab(string newPrefab)
+        public void OnMyPrefab(int newPrefab)
         {
-            playerPrefabName = newPrefab;
-            OnMyName(newPrefab);
+            playerPrefabIndex = newPrefab;
+            string prefabName = PlayerSelectManager.Instance.playerPrefabs[newPrefab].name;
+            OnMyName(prefabName);
         }
 
         public void OnActivate(bool activation)
@@ -252,9 +251,9 @@ namespace Prototype.NetworkLobby
             CmdNameChanged(str);
         }
 
-        public void OnPrefabChanged(string str)
+        public void OnPrefabChanged(int listPosition)
         {
-            CmdPrefabNameChanged(str);
+            CmdPrefabIndexChanged(listPosition);
         }
 
         public void OnControllerNumberChanged(int num)
@@ -345,9 +344,9 @@ namespace Prototype.NetworkLobby
         }
 
         [Command]
-        public void CmdPrefabNameChanged(string prefabName)
+        public void CmdPrefabIndexChanged(int prefabIndex)
         {
-            playerPrefabName = prefabName;
+            playerPrefabIndex = prefabIndex;
         }
 
         [Command]
