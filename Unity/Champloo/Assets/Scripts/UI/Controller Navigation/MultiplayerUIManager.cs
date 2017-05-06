@@ -299,6 +299,7 @@ public class MultiplayerUIManager : MonoBehaviour
         {
             //all players have left!
             OnAllPlayersLeave.Invoke();
+            playersJoined = false;
         }
     }
 }
