@@ -1436,7 +1436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startupTime: 0
   attackTime: 0.1
-  cooldownTime: 0.4
+  cooldownTime: 0.25
   rechargeTime: 0
   specialStartupTime: 0
   specialTime: 0
