@@ -236,6 +236,7 @@ public class Player : NetworkBehaviour
         //externalForce = Vector3.zero;
         OnVelocityChanged(Vector3.zero);
         OnExternalForceChanged(Vector3.zero);
+        movementState = GetComponent<OnGround>();
         weapon.PickUp();
     }
 
