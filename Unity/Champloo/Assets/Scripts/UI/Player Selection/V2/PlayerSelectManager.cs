@@ -40,7 +40,7 @@ public class PlayerSelectManager : MonoBehaviour
             foreach(var networkPlayer in LobbyManager.s_Singleton.lobbySlots)
             {
                 player = networkPlayer as LobbyPlayer;
-                if(player != null && player.isLocalPlayer && player.playerControllerId == controller.ControllerNumber)
+                if(player != null && player.isLocalPlayer && player.playerControllerNumber == controller.ControllerNumber)
                 {
                     player.OnPrefabChanged(selectedOption.playerPrefabIndex);
                 }
