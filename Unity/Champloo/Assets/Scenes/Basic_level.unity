@@ -1958,8 +1958,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnZones:
-  - topLeft: {x: -6.97, y: 4.82, z: 0}
-    bottomRight: {x: 6.84, y: 1.99, z: 0}
+  - topLeft: {x: -4.7, y: 4.82, z: 0}
+    bottomRight: {x: 4.7, y: 1.99, z: 0}
   spawnTime: 5
   players:
   - {fileID: 0}
