@@ -69,17 +69,15 @@ public class MultiplayerUIManager : MonoBehaviour
         FindObjectOfType<RewiredStandaloneInputModule>().enabled = false;
         playersJoined = false;
         allSelected = false;
-        if (!playersCanJoin)
+
+        List<Rewired.Player> toAdd = new List<Rewired.Player>();
+        foreach (var pair in hasJoinedDictionary)
         {
-            List<Rewired.Player> toAdd = new List<Rewired.Player>();
-            foreach (var pair in hasJoinedDictionary)
-            {
-                if(pair.Value) toAdd.Add(pair.Key);
-            }
-            foreach (var player in toAdd)
-            {
-                AddController(player, true);
-            }
+            if (pair.Value) toAdd.Add(pair.Key);
+        }
+        foreach (var player in toAdd)
+        {
+            AddController(player, true);
         }
         OnEnabled.Invoke();
     }
@@ -299,6 +297,7 @@ public class MultiplayerUIManager : MonoBehaviour
         {
             //all players have left!
             OnAllPlayersLeave.Invoke();
+            playersJoined = false;
         }
     }
 }

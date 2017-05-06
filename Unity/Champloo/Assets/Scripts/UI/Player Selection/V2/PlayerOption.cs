@@ -3,5 +3,14 @@ using System.Collections.Generic;
 
 public class PlayerOption : MonoBehaviour
 {
-    public string playerPrefabName;
+    public Player option;
+
+    public int playerPrefabIndex
+    {
+        get
+        {
+            return PlayerSelectManager.Instance.playerPrefabs.FindIndex(
+                player => player == option);
+        }
+    }
 }

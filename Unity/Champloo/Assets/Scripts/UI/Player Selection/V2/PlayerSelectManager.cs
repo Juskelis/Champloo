@@ -6,8 +6,21 @@ using UnityEngine.Events;
 
 public class PlayerSelectManager : MonoBehaviour
 {
+    public List<Player> playerPrefabs;
 
     public UnityEvent OnAllConfirmed;
+
+    private static PlayerSelectManager _instance;
+
+    public static PlayerSelectManager Instance
+    {
+        get { return _instance; }
+    }
+
+    public void Awake()
+    {
+        _instance = this;
+    }
 
     public void AllSelectedCallback()
     {
@@ -27,9 +40,9 @@ public class PlayerSelectManager : MonoBehaviour
             foreach(var networkPlayer in LobbyManager.s_Singleton.lobbySlots)
             {
                 player = networkPlayer as LobbyPlayer;
-                if(player != null && player.isLocalPlayer && player.playerControllerId == controller.ControllerNumber)
+                if(player != null && player.isLocalPlayer && player.playerControllerNumber == controller.ControllerNumber)
                 {
-                    player.OnPrefabChanged(selectedOption.playerPrefabName);
+                    player.OnPrefabChanged(selectedOption.playerPrefabIndex);
                 }
             }
         }

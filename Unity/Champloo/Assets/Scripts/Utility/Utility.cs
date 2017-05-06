@@ -50,7 +50,7 @@ public class Utility {
         {
             if (ClientScene.localPlayers[i].playerControllerId == networkControllerID)
             {
-                return i;
+                return ClientScene.localPlayers[i].gameObject.GetComponent<PlayerSettings>().LocaInputPlayerID;
             }
         }
         return -1;

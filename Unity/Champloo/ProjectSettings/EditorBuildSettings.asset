@@ -12,4 +12,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/combat_test.unity
   - enabled: 1
-    path: Assets/Scenes/training_test.unity
+    path: Assets/Scenes/crush.unity
+  - enabled: 1
+    path: Assets/Scenes/Basic_level.unity

@@ -7,6 +7,7 @@ public class PlayerSettings : MonoBehaviour
 {
     public Color Color;
     public string Name;
+    public int LocaInputPlayerID;
     public string PrefabPath; //useful for Resources
     public Transform Prefab;  //used for AssetBundles
 

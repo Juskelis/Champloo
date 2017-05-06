@@ -1048,7 +1048,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: JOE SCHMOE
+  m_Text: xXdarkblade420Xx
 --- !u!222 &296613738
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3500,7 +3500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac5b52bc50a2cf74da1181fa6329459a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefabName: PlayerPrefabName
+  option: {fileID: 114599821988778560, guid: 788ae7ffef4800449a05b7d9cc98157c, type: 2}
 --- !u!222 &755109973
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3996,6 +3996,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75a3a941082509e4eb70a9f4eb3d1e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefabs:
+  - {fileID: 114599821988778560, guid: 788ae7ffef4800449a05b7d9cc98157c, type: 2}
+  - {fileID: 114210435056296970, guid: 650d8f37a976f884cb7016110c7f97b1, type: 2}
   OnAllConfirmed:
     m_PersistentCalls:
       m_Calls: []
@@ -6187,7 +6190,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Dark Blade 420
+  m_Text: Hitomi     Ryuzaki
 --- !u!222 &1399509901
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8003,7 +8006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac5b52bc50a2cf74da1181fa6329459a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefabName: Other Prefab Name
+  option: {fileID: 114210435056296970, guid: 650d8f37a976f884cb7016110c7f97b1, type: 2}
 --- !u!222 &1835561518
 CanvasRenderer:
   m_ObjectHideFlags: 0
