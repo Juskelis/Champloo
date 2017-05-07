@@ -683,8 +683,6 @@ public class Player : NetworkBehaviour
         }
 
         //controller.UpdateBounds(currentSprite.bounds);
-        UpdateHitbox();
-        UpdateSprite();
 
         //handle blocking/parrying
         if (hitWith != null)
@@ -706,7 +704,6 @@ public class Player : NetworkBehaviour
         //update animation states
         if (anim != null)
         {
-            UpdateDirection();
             float velMag = Mathf.Abs(velocity.x);
             anim.SetFloat("HorizontalSpeed", velMag);
             anim.SetBool("OnGround", movementState is OnGround);
@@ -719,6 +716,19 @@ public class Player : NetworkBehaviour
         }
     }
 
+    [ClientCallback]
+    void LateUpdate()
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
+        UpdateDirection();
+        UpdateHitbox();
+        UpdateSprite();
+    }
+
     private void UpdateDirection()
     {
         float velMag = Mathf.Abs(velocity.x);
@@ -728,6 +738,13 @@ public class Player : NetworkBehaviour
                 localScale.x = Mathf.Sign(velocity.x);
                 visuals.localScale = localScale;
             }
+    }
+
+    public void UpdateDirection(bool right)
+    {
+        Vector3 localScale = visuals.localScale;
+        localScale.x = right ? 1f : -1f;
+        visuals.localScale = localScale;
     }
 
     protected void UpdateHitbox()
