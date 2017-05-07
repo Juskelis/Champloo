@@ -1469,10 +1469,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 12
+  maxSpeed: 13
   stopToMaxSpeedTime: 0.1
-  maxSpeedToStopTime: 0.2
-  fullTurnTime: 0.3
+  maxSpeedToStopTime: 0.1
+  fullTurnTime: 0.2
   jumpSound: {fileID: 114196940015131362}
   runSound: {fileID: 114958792587567482}
 --- !u!114 &114567913374022186
@@ -1501,7 +1501,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startupTime: 0
   attackTime: 0.1
-  cooldownTime: 0.4
+  cooldownTime: 0.25
   rechargeTime: 0
   specialStartupTime: 0
   specialTime: 0
