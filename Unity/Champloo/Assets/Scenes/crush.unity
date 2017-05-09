@@ -1059,7 +1059,7 @@ MonoBehaviour:
   zoomInSpeed: 0.8
   zoomOutBoundary: 0.64
   zoomInBoundary: 0.4
-  zoomMin: 20
+  zoomMin: 5
   zoomMax: 50
   zoomCurve:
     serializedVersion: 2
