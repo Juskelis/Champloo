@@ -117,6 +117,15 @@ public class OnWall : MovementState
         {
             wallSlideSound.Play();
         }
+
+        if (jumped)
+        {
+            player.UpdateDirection(wallDirX < 0);
+        }
+        else
+        {
+            player.UpdateDirection(wallDirX > 0);
+        }
     }
 
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
