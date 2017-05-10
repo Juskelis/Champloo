@@ -1734,7 +1734,7 @@ MonoBehaviour:
   spawnZones:
   - topLeft: {x: -4.7, y: 4.82, z: 0}
     bottomRight: {x: 4.7, y: 1.99, z: 0}
-  spawnTime: 5
+  spawnTime: 1
   players:
   - {fileID: 0}
   - {fileID: 0}
