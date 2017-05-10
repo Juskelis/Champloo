@@ -662,7 +662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0cf1b8f37532f141bcc4d95669e2e54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelSeconds: 90
+  levelSeconds: 180
   displayText: {fileID: 90929904}
   OnTimeout:
     m_PersistentCalls:
