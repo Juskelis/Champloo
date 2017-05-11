@@ -21,6 +21,10 @@ public class PlayerSpawner : MonoBehaviour {
     [SerializeField]
     private List<Player> players;
 
+    [SerializeField]
+    [Tooltip("Spaces out colliders when finding spawn points")]
+    private float sizeMultiplier = 1f;
+
     private List<float> playerSpawnTimes;
 
     void Awake()
@@ -131,7 +135,9 @@ public class PlayerSpawner : MonoBehaviour {
             test.x = UnityEngine.Random.Range(zone.topLeft.x, zone.bottomRight.x);
             test.y = UnityEngine.Random.Range(zone.bottomRight.y, zone.topLeft.y);
 
-            if(!CollisionChecking.Place.Meeting(col, test, 0f))
+            //if(!CollisionChecking.Place.Meeting(col, test, 0f))
+            Collider2D[] cols = Physics2D.OverlapBoxAll(test, col.size * sizeMultiplier, 0f);
+            if (cols == null || cols.Length <= 0)
             {
                 valid = true;
             }
