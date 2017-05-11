@@ -258,27 +258,16 @@ public class Player : NetworkBehaviour
     //[Client]
     void Kill(Vector3 direction = default(Vector3))
     {
-        if (isLocalPlayer && hasAuthority)
-    {
+        if (isLocalPlayer && hasAuthority && !dead)
+        {
             CmdKill(direction);
         }
-        /*
-        else if (isServer)
-        {
-            RpcKilled(direction);
-        }
-        else
-        {
-            //local copy of other player got killed
-            //  so we need to notify authoritative version
-            //  of other player that they died
-        }
-        */
     }
 
     [ClientRpc]
     void RpcKilled(Vector3 direction)
     {
+        if (dead) return;
         ShakeCamera();
 
         //velocity = Vector3.zero;
