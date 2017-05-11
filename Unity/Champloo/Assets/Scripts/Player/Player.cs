@@ -267,6 +267,7 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     void RpcKilled(Vector3 direction)
     {
+        if (dead) return;
         ShakeCamera();
 
         //velocity = Vector3.zero;
