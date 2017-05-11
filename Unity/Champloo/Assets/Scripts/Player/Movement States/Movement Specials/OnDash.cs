@@ -46,15 +46,20 @@ public class OnDash : OnMovementSpecial
         }
         if (justStarted)
         {
+            justStarted = false;
             return direction;
         }
-
         velocity.y -= player.Gravity * Time.deltaTime * gravityModifier;
 
         //check for collisions in the x direction that the player is dashing
-        if ((controller.collisions.Left && direction.x < 0) || (controller.collisions.Right && direction.x > 0))
+        if ((controller.collisions.Left && velocity.x < 0) || (controller.collisions.Right && velocity.x > 0))
         {
             velocity.x = 0;
+        }
+
+        if (controller.collisions.Above && velocity.y > 0)
+        {
+            velocity.y = 0;
         }
 
         return velocity;
