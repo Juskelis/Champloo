@@ -46,6 +46,7 @@ public class OnDash : OnMovementSpecial
         }
         if (justStarted)
         {
+            justStarted = false;
             return direction;
         }
 
