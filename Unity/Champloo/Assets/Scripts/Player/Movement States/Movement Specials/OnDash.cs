@@ -57,6 +57,11 @@ public class OnDash : OnMovementSpecial
             velocity.x = 0;
         }
 
+        if (controller.collisions.Above && velocity.y > 0)
+        {
+            velocity.y = 0;
+        }
+
         return velocity;
     }
 
