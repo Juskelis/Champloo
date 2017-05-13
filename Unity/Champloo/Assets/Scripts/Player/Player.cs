@@ -12,6 +12,10 @@ public class Player : NetworkBehaviour
     #region State Variables
     [SyncVar(hook = "OnDeath")]
     private bool dead = false;
+    public bool Dead
+    {
+        get { return dead; }
+    }
 
     //[SerializeField]
     //[Range(1, 4)]
