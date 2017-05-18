@@ -145,6 +145,10 @@ public class SmashCamera : MonoBehaviour
         center.y = cubic_lerp(center.y, newCenter.y, panSpeed);
         center.z = transform.position.z;
 
+        //clamp position to within bounds
+        center.x = Mathf.Clamp(center.x, bottomLeft.position.x + size.x / 2, topRight.position.x - size.x / 2);
+        center.y = Mathf.Clamp(center.y, bottomLeft.position.y + size.y / 2, topRight.position.y - size.y / 2);
+
 
         //zoom camera to bounds
         transform.position = center;
