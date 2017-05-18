@@ -52,14 +52,14 @@ public class SmashCamera : MonoBehaviour
         cam = GetComponent<Camera>();
         if (cam == null) cam = GetComponentInChildren<Camera>();
         //ren = GetComponent<Renderer>();
+        bottomLeft.SetParent(null, true);
+        topRight.SetParent(null, true);
     }
 
     void Start()
     {
         screenSpaceTopRight = new Vector3(cam.pixelWidth, cam.pixelHeight, 0);
 
-        bottomLeft.position = cam.ScreenToWorldPoint(Vector3.zero);
-        topRight.position = cam.ScreenToWorldPoint(screenSpaceTopRight);
 
         size = topRight.position - bottomLeft.position;
 
@@ -149,9 +149,9 @@ public class SmashCamera : MonoBehaviour
         //zoom camera to bounds
         transform.position = center;
 
-        bottomLeft.position = cam.ScreenToWorldPoint(Vector3.zero);
-        topRight.position = cam.ScreenToWorldPoint(screenSpaceTopRight);
-        Vector3 camSize = bottomLeft.position - topRight.position;
+        Vector3 camBottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
+        Vector3 camTopRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, 0));
+        Vector3 camSize = camBottomLeft - camTopRight;
 
         cam.orthographicSize *= size.magnitude/camSize.magnitude;
     }
