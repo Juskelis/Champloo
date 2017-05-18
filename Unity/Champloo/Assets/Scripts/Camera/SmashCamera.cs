@@ -58,6 +58,8 @@ public class SmashCamera : MonoBehaviour
     {
         size = topRight.position - bottomLeft.position;
 
+        zoomMax = Mathf.Min(zoomMax, size.x, size.y*cam.aspect);
+
         zoomIn = zoomInBoundary * size;
         zoomOut = zoomOutBoundary * size;
 
