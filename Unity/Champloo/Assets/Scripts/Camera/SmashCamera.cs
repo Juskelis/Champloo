@@ -170,6 +170,9 @@ public class SmashCamera : MonoBehaviour
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube(center, zoomIn);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube((bottomLeft.position + topRight.position)/2f, (topRight.position - bottomLeft.position));
     }
 
     public float Median(params float[] values)
