@@ -15,8 +15,6 @@ public class SmashCamera : MonoBehaviour
     [SerializeField]
     private Transform topRight;
 
-    private Vector3 screenSpaceTopRight;
-
     private Vector3 size;
 
     private Vector3 zoomOut;
@@ -58,9 +56,6 @@ public class SmashCamera : MonoBehaviour
 
     void Start()
     {
-        screenSpaceTopRight = new Vector3(cam.pixelWidth, cam.pixelHeight, 0);
-
-
         size = topRight.position - bottomLeft.position;
 
         zoomIn = zoomInBoundary * size;
