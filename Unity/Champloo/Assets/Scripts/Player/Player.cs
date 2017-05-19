@@ -634,6 +634,8 @@ public class Player : NetworkBehaviour
         {
             //controller.Move(velocity * Time.deltaTime);
             UpdateDirection();
+            UpdateHitbox();
+            UpdateSprite();
             return;
         }
         //inputs.UpdateInputs();
