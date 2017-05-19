@@ -198,16 +198,16 @@ MonoBehaviour:
   zoomInSpeed: 0.8
   zoomOutBoundary: 0.64
   zoomInBoundary: 0.4
-  zoomMin: 5
-  zoomMax: 50
+  zoomMin: 12
+  zoomMax: 32
   zoomCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
     - serializedVersion: 2
       time: 1

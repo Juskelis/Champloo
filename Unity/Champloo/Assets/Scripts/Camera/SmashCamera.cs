@@ -15,8 +15,6 @@ public class SmashCamera : MonoBehaviour
     [SerializeField]
     private Transform topRight;
 
-    private Vector3 screenSpaceTopRight;
-
     private Vector3 size;
 
     private Vector3 zoomOut;
@@ -52,16 +50,15 @@ public class SmashCamera : MonoBehaviour
         cam = GetComponent<Camera>();
         if (cam == null) cam = GetComponentInChildren<Camera>();
         //ren = GetComponent<Renderer>();
+        bottomLeft.SetParent(null, true);
+        topRight.SetParent(null, true);
     }
 
     void Start()
     {
-        screenSpaceTopRight = new Vector3(cam.pixelWidth, cam.pixelHeight, 0);
-
-        bottomLeft.position = cam.ScreenToWorldPoint(Vector3.zero);
-        topRight.position = cam.ScreenToWorldPoint(screenSpaceTopRight);
-
         size = topRight.position - bottomLeft.position;
+
+        zoomMax = Mathf.Min(zoomMax, size.x, size.y*cam.aspect);
 
         zoomIn = zoomInBoundary * size;
         zoomOut = zoomOutBoundary * size;
@@ -87,11 +84,13 @@ public class SmashCamera : MonoBehaviour
         {
             newCenter.x += toFollow[i].position.x;
             newCenter.y += toFollow[i].position.y;
-
-            maxDist.x = Mathf.Max(maxDist.x, Mathf.Abs(toFollow[i].position.x - center.x));
-            maxDist.y = Mathf.Max(maxDist.y, Mathf.Abs(toFollow[i].position.y - center.y));
         }
         newCenter = newCenter / (toFollow.Length > 0 ? toFollow.Length : 1);
+        for (int i = 0; i < toFollow.Length; i++)
+        {
+            maxDist.x = Mathf.Max(maxDist.x, Mathf.Abs(toFollow[i].position.x - newCenter.x));
+            maxDist.y = Mathf.Max(maxDist.y, Mathf.Abs(toFollow[i].position.y - newCenter.y));
+        }
 
         if (maxDist.x >= zoomOut.x || maxDist.y >= zoomOut.y)
         {
@@ -145,13 +144,17 @@ public class SmashCamera : MonoBehaviour
         center.y = cubic_lerp(center.y, newCenter.y, panSpeed);
         center.z = transform.position.z;
 
+        //clamp position to within bounds
+        center.x = Mathf.Clamp(center.x, bottomLeft.position.x + size.x / 2, topRight.position.x - size.x / 2);
+        center.y = Mathf.Clamp(center.y, bottomLeft.position.y + size.y / 2, topRight.position.y - size.y / 2);
+
 
         //zoom camera to bounds
         transform.position = center;
 
-        bottomLeft.position = cam.ScreenToWorldPoint(Vector3.zero);
-        topRight.position = cam.ScreenToWorldPoint(screenSpaceTopRight);
-        Vector3 camSize = bottomLeft.position - topRight.position;
+        Vector3 camBottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
+        Vector3 camTopRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, 0));
+        Vector3 camSize = camBottomLeft - camTopRight;
 
         cam.orthographicSize *= size.magnitude/camSize.magnitude;
     }
@@ -166,6 +169,9 @@ public class SmashCamera : MonoBehaviour
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube(center, zoomIn);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube((bottomLeft.position + topRight.position)/2f, (topRight.position - bottomLeft.position));
     }
 
     public float Median(params float[] values)
