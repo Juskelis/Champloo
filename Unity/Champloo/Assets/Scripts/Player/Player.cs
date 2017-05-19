@@ -127,6 +127,8 @@ public class Player : NetworkBehaviour
     private Weapon hitWith;
     private Projectile hitWithProjectile;
 
+    private bool manuallyUpdatedDirection = false;
+
     #endregion
 
     #region Component Variables
@@ -638,8 +640,11 @@ public class Player : NetworkBehaviour
         {
             //controller.Move(velocity * Time.deltaTime);
             UpdateDirection();
+            UpdateHitbox();
+            UpdateSprite();
             return;
         }
+
         //inputs.UpdateInputs();
         OnVelocityChanged(movementState.ApplyFriction(velocity));
         OnExternalForceChanged(movementState.DecayExternalForces(externalForce));
@@ -722,7 +727,12 @@ public class Player : NetworkBehaviour
             return;
         }
 
-        UpdateDirection();
+        if (!manuallyUpdatedDirection)
+        {
+            UpdateDirection();
+        }
+        manuallyUpdatedDirection = false;
+
         UpdateHitbox();
         UpdateSprite();
     }
@@ -740,6 +750,7 @@ public class Player : NetworkBehaviour
 
     public void UpdateDirection(bool right)
     {
+        manuallyUpdatedDirection = true;
         Vector3 localScale = visuals.localScale;
         localScale.x = right ? 1f : -1f;
         visuals.localScale = localScale;
