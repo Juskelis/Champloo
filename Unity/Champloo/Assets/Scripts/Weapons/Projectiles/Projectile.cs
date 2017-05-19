@@ -25,6 +25,15 @@ public class Projectile : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
     }
 
+    protected virtual void Start()
+    {
+        //check collisions
+        foreach (var col in Physics2D.OverlapBoxAll(transform.position, transform.localScale, transform.rotation.eulerAngles.z, obstacleMask))
+        {
+            OnTriggerEnter2D(col);
+        }
+    }
+
     protected virtual void Update()
     {
         body.velocity = Vector2.zero;
