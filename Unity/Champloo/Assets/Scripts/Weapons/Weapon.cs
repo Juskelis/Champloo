@@ -160,8 +160,8 @@ public class Weapon : MonoBehaviour
         {
             InHand = true;
         }
-        attackingState = TimingState.DONE;
-        specialAttackingState = TimingState.DONE;
+        OnEnd();
+        OnEndSpecial();
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D col)
