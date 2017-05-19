@@ -52,7 +52,7 @@ public class Sword : Weapon {
             Vector2 aim = player.AimDirection;
             Projectile temp = (Projectile)Instantiate(
                 thrownVersion,
-                transform.position,
+                player.transform.position,
                 Quaternion.AngleAxis(
                     Utility.Vector2AsAngle(aim),//input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
                     transform.parent.forward
