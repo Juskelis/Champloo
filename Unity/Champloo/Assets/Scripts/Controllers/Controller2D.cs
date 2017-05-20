@@ -181,6 +181,15 @@ public class Controller2D : RaycastController
     {
         Bounds crushBounds = ColliderBounds;
         crushBounds.Expand(skinWidth*-2);
+
+        //Draw box
+        Vector3 boxMin = transform.position - crushBounds.extents;
+        Vector3 boxMax = transform.position + crushBounds.extents;
+        Debug.DrawLine(boxMin, boxMin + Vector3.up * crushBounds.size.y, Color.yellow);
+        Debug.DrawLine(boxMin, boxMin + Vector3.right * crushBounds.size.x, Color.yellow);
+        Debug.DrawLine(boxMax, boxMax + Vector3.down * crushBounds.size.y, Color.yellow);
+        Debug.DrawLine(boxMax, boxMax + Vector3.left * crushBounds.size.x, Color.yellow);
+
         return Physics2D.OverlapBoxAll(
             transform.position,
             crushBounds.size,
