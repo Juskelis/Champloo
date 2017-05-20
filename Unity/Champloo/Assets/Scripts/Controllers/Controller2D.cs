@@ -195,11 +195,6 @@ public class Controller2D : RaycastController
 
         UpdateRaycastOrigins();
 
-        foreach (GameObject obj in GetCrushers())
-        {
-            OnCrushed(obj);
-        }
-
         previousVelocity = velocity;
         collisions.Reset();
 
@@ -223,6 +218,11 @@ public class Controller2D : RaycastController
         if (standingOnPlatform)
         {
             collisions.Below = true;
+        }
+
+        foreach (GameObject obj in GetCrushers())
+        {
+            OnCrushed(obj);
         }
     }
 
