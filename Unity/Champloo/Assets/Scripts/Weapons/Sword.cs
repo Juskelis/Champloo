@@ -27,6 +27,13 @@ public class Sword : Weapon {
         visuals.enabled = alwaysVisible;
     }
 
+    public override void Reset()
+    {
+        base.Reset();
+        if (col != null) col.enabled = false;
+        if (visuals != null) visuals.enabled = alwaysVisible;
+    }
+
     protected override void Update()
     {
         base.Update();

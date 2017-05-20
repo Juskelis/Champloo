@@ -248,7 +248,7 @@ public class Player : NetworkBehaviour
         movementState = GetComponent<OnGround>();
         movementState.OnEnter(velocity, externalForce, out garbageVelocity, out garbageExternalForces);
         CmdUpdateMovementState(movementState.GetType().ToString());
-        weapon.PickUp();
+        weapon.Reset();
     }
 
     #endregion
