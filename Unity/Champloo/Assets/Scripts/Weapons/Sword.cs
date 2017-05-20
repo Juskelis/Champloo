@@ -27,6 +27,13 @@ public class Sword : Weapon {
         visuals.enabled = alwaysVisible;
     }
 
+    public override void Reset()
+    {
+        base.Reset();
+        if (col != null) col.enabled = false;
+        if (visuals != null) visuals.enabled = alwaysVisible;
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -52,7 +59,7 @@ public class Sword : Weapon {
             Vector2 aim = player.AimDirection;
             Projectile temp = (Projectile)Instantiate(
                 thrownVersion,
-                player.transform.position,
+                transform.position,
                 Quaternion.AngleAxis(
                     Utility.Vector2AsAngle(aim),//input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
                     transform.parent.forward
