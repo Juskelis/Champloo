@@ -21,8 +21,6 @@ public class OnWall : MovementState
 
     private float allowedMinAngle = 1.16f;
 
-    private Vector2 direction;
-
 
     [SerializeField]
     private PlayRandomSource wallSlideSound;
@@ -75,11 +73,10 @@ public class OnWall : MovementState
         base.ApplyInputs(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
         //normalize the direction so that it just gives the wall jump normalized vector
-        direction = player.AimDirection.normalized;
+        Vector2 direction = player.AimDirection.normalized;
         int wallDirX = (controller.collisions.Left) ? -1 : 1;
 
         jumped = false;
-        
         if (player.InputPlayer.GetButtonDown("Jump"))
         {
             jumped = true;
@@ -89,7 +86,8 @@ public class OnWall : MovementState
             outVelocity.x = (wallJumpVelocity.x / 2) * (-wallDirX) ;
 
             //if player has no input
-            if (direction.x == 0)
+            //Player defaults no input to direction player is facing
+            if (Mathf.Abs(direction.x) == 1 && direction.y == 0)
             {
                 outVelocity.x = -wallDirX * wallJumpVelocity.x * noAngleJumpModifier.x;
                 outVelocity.y = wallJumpVelocity.y;

@@ -1581,7 +1581,7 @@ MonoBehaviour:
   maxFallSpeed: 8
   wallStickTime: 0.2
   wallJumpVelocity: {x: 20, y: 20}
-  noAngleJumpModifier: {x: 0.5, y: 0}
+  noAngleJumpModifier: {x: 1.25, y: 0}
   towardsWallJumpModifier: {x: 1, y: 0}
   slightAngleJumpModifier: {x: 2, y: 0}
   wallSlideSound: {fileID: 114318839925309246}
