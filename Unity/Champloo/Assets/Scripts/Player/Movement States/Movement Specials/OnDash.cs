@@ -124,7 +124,7 @@ public class OnDash : OnMovementSpecial
 
 
         //Establish the direction of the dash
-        direction = player.AimDirection;
+        direction = player.AimDirection.normalized;
 
         currentDashes--;
         isDisabled = false;
