@@ -1520,10 +1520,13 @@ MonoBehaviour:
   maxSlopeAngle: 80
   collisionMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 256
+  notifyMask:
+    serializedVersion: 2
+    m_Bits: 512
   crushMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 256
 --- !u!114 &114482399192333578
 MonoBehaviour:
   m_ObjectHideFlags: 1
