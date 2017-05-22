@@ -20,6 +20,8 @@ public class Projectile : MonoBehaviour
 
     protected Rigidbody2D body;
 
+    protected Player player;
+
     protected virtual void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -32,6 +34,11 @@ public class Projectile : MonoBehaviour
         {
             OnTriggerEnter2D(col);
         }
+        player = FindPlayer();
+        if (player == null)
+        {
+            Debug.LogError("Could not find player!");
+        }
     }
 
     protected virtual void Update()
@@ -42,10 +49,28 @@ public class Projectile : MonoBehaviour
             //transform.Translate(Vector2.right*speed*Time.deltaTime);
             body.velocity = transform.TransformVector(Vector2.right*speed);
         }
-        else if(follow != null)
-        {
-            transform.position = follow.position - relativePos;
+        else {
+            if (follow != null)
+            {
+                transform.position = follow.position - relativePos;
+            }
+            if (player.Dead)
+            {
+                Destroy(gameObject);
+            }
         }
+    }
+
+    private Player FindPlayer()
+    {
+        foreach (var p in FindObjectsOfType<Player>())
+        {
+            if (p.PlayerNumber == PlayerNumber)
+            {
+                return p;
+            }
+        }
+        return null;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D c)
