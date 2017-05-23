@@ -268,7 +268,7 @@ public class Controller2D : RaycastController
     private GameObject[] GetCrushers()
     {
         Bounds crushBounds = ColliderBounds;
-        crushBounds.Expand(skinWidth*-2);
+        crushBounds.Expand(skinWidth*-2.5f);
 
         //Draw box
         Vector3 boxMin = transform.position - crushBounds.extents;
