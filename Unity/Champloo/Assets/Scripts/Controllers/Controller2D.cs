@@ -68,6 +68,7 @@ public class Controller2D : RaycastController
 
     private RaycastHit2D Raycast(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
     {
+        Debug.DrawLine(rayOrigin, rayOrigin + direction * distance, Color.red);
         RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask.value);
         for (int i = 0; i < hits.Length; i++)
         {
@@ -82,6 +83,7 @@ public class Controller2D : RaycastController
 
     private RaycastHit2D[] RaycastAll(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
     {
+        Debug.DrawLine(rayOrigin, rayOrigin + direction*distance, Color.red);
         RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask.value);
         List<RaycastHit2D> hitsList = new List<RaycastHit2D>();
         for (int i = 0; i < hits.Length; i++)
@@ -275,8 +277,6 @@ public class Controller2D : RaycastController
             rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
             RaycastHit2D hit = Raycast(rayOrigin, Vector2.up*directionY, magnitudeY, collisionMask);
 
-            Debug.DrawRay(rayOrigin, Vector2.up * directionY * magnitudeY, Color.red);
-
             if (hit)
             {
                 velocity.y = (hit.distance - skinWidth)*directionY;
@@ -324,8 +324,6 @@ public class Controller2D : RaycastController
             Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
             rayOrigin += Vector2.up * (horizontalRaySpacing * i);
             RaycastHit2D hit = Raycast(rayOrigin, Vector2.right*directionX, magnitudeX, collisionMask);
-
-            Debug.DrawRay(rayOrigin, Vector2.right * directionX * magnitudeX, Color.red);
 
             if (hit)
             {
