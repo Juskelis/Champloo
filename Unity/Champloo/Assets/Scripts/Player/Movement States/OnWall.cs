@@ -3,7 +3,7 @@ using System.Collections;
 
 public class OnWall : MovementState
 {
-    [SerializeField] 
+    [SerializeField]
     private float maxFallSpeed = 10f;
 
     [SerializeField]
@@ -16,9 +16,10 @@ public class OnWall : MovementState
     private Vector2 noAngleJumpModifier;
     [SerializeField]
     private Vector2 towardsWallJumpModifier;
-    [SerializeField]
-    private Vector2 slightAngleJumpModifier;
+    //[SerializeField]
+    //private Vector2 slightAngleJumpModifier;
 
+    [SerializeField]
     private float allowedMinAngle = 1.16f;
 
 
@@ -83,7 +84,7 @@ public class OnWall : MovementState
             jumpSound.Play();
 
             //PLayer will always jump off of a wall a little bit
-            outVelocity.x = (wallJumpVelocity.x / 2) * (-wallDirX) ;
+            outVelocity.x = (wallJumpVelocity.x / 2) * (-wallDirX);
 
             //if player has no input
             //Player defaults no input to direction player is facing
@@ -93,14 +94,13 @@ public class OnWall : MovementState
                 outVelocity.y = wallJumpVelocity.y;
             }
             //if the input is pointed towards the wall or slightly away and up
-            else if (Mathf.Abs(wallDirX - direction.x) < 0.5f ||  ((Mathf.Abs(wallDirX - direction.x) < allowedMinAngle) && (Mathf.Abs(1 - direction.y) < .25 )))
+            else if (Mathf.Abs(wallDirX - direction.x) < 0.5f || ((Mathf.Abs(wallDirX - direction.x) < allowedMinAngle) && (Mathf.Abs(1 - direction.y) < .25)))
             {
                 outVelocity.y = wallJumpVelocity.y;
             }
             //if the input is down and slightly away
-            else if(Mathf.Abs(wallDirX - direction.x) < allowedMinAngle && Mathf.Abs(1 - direction.y) > .25)
+            else if (Mathf.Abs(wallDirX - direction.x) < allowedMinAngle && Mathf.Abs(1 - direction.y) > .25)
             {
-                outVelocity.x = (-wallDirX) * wallJumpVelocity.x *slightAngleJumpModifier.x ;
                 outVelocity.y = -wallJumpVelocity.y;
             }
             //If player has other directional input
