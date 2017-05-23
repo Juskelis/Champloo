@@ -309,6 +309,12 @@ public class Controller2D : RaycastController
         {
             VerticalCollisions(ref velocity);
         }
+
+        if (velocity.sqrMagnitude > float.Epsilon)
+        {
+            BoxCollisions(ref velocity);
+        }
+
         transform.Translate(velocity);
 
         if (standingOnPlatform)
@@ -322,6 +328,27 @@ public class Controller2D : RaycastController
         foreach (GameObject obj in GetCrushers())
         {
             OnCrushed(obj);
+        }
+    }
+
+    void BoxCollisions(ref Vector3 velocity)
+    {
+        float magnitude = velocity.magnitude;
+        Vector2 center = transform.position;
+        Vector3 shrunkSize = ColliderBounds.size*(1 - skinWidth*2);
+        float magMod = Vector3.Project(ColliderBounds.size - shrunkSize, velocity.normalized).magnitude;
+        RaycastHit2D[] hits = BoxcastAll(
+            center,
+            shrunkSize,
+            velocity.normalized,
+            magnitude + magMod,
+            collisionMask);
+        if (hits.Length > 0)
+        {
+            float sqrMinDistance = hits
+                .Select(hit => (hit.centroid - center).sqrMagnitude)
+                .Min();
+            velocity = velocity.normalized * (Mathf.Sqrt(sqrMinDistance) - magMod/2);
         }
     }
 
