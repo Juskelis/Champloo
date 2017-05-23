@@ -99,6 +99,63 @@ public class Controller2D : RaycastController
         return hitsList.ToArray();
     }
 
+    private RaycastHit2D Boxcast(Vector2 origin, Vector2 size, Vector2 direction, float distance, LayerMask mask)
+    {
+        DebugBoxCast(origin, size, direction, distance);
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(origin, size, 0f, direction, distance, mask.value);
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.gameObject != gameObject
+                && hits[i].transform.gameObject.activeInHierarchy)
+            {
+                return hits[i];
+            }
+        }
+        return new RaycastHit2D();
+    }
+
+    private RaycastHit2D[] BoxcastAll(Vector2 origin, Vector2 size, Vector2 direction, float distance, LayerMask mask)
+    {
+        DebugBoxCast(origin, size, direction, distance);
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(origin, size, 0f, direction, distance, mask.value);
+        List<RaycastHit2D> hitsList = new List<RaycastHit2D>();
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.gameObject != gameObject
+                && hits[i].transform.gameObject.activeInHierarchy
+                && !hitsList.Contains(hits[i]))
+            {
+                hitsList.Add(hits[i]);
+            }
+        }
+
+        return hitsList.ToArray();
+    }
+
+    private void DebugBoxCast(Vector2 origin, Vector2 size, Vector2 direction, float distance)
+    {
+        Vector2 delta = direction*distance;
+
+        Vector2 startBoxMin = origin - size * 0.5f;
+        Vector2 startBoxMax = origin + size * 0.5f;
+
+        Vector2 endBoxMin = origin + delta - size * 0.5f;
+        Vector2 endBoxMax = origin + delta + size * 0.5f;
+
+        Debug.DrawLine(startBoxMin, startBoxMin + Vector2.up * size.y, Color.white);
+        Debug.DrawLine(startBoxMin, startBoxMin + Vector2.right * size.x, Color.white);
+        Debug.DrawLine(startBoxMax, startBoxMax + Vector2.down * size.y, Color.white);
+        Debug.DrawLine(startBoxMax, startBoxMax + Vector2.left * size.x, Color.white);
+
+        Debug.DrawLine(endBoxMin, endBoxMin + Vector2.up * size.y, Color.white);
+        Debug.DrawLine(endBoxMin, endBoxMin + Vector2.right * size.x, Color.white);
+        Debug.DrawLine(endBoxMax, endBoxMax + Vector2.down * size.y, Color.white);
+        Debug.DrawLine(endBoxMax, endBoxMax + Vector2.left * size.x, Color.white);
+
+        Debug.DrawLine(startBoxMin, endBoxMin, Color.white);
+        Debug.DrawLine(startBoxMax, endBoxMax, Color.white);
+    }
+
     private void NotifyContact()
     {
         //above and below
