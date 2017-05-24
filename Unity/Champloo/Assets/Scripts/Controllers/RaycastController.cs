@@ -44,11 +44,12 @@ public class RaycastController : MonoBehaviour
         CalculateRaySpacing();
         Bounds bounds = _collider.bounds;
         bounds.Expand(skinWidth * -2);
-        
-        raycastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
-        raycastOrigins.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
-        raycastOrigins.topLeft = new Vector2(bounds.min.x, bounds.max.y);
-        raycastOrigins.topRight = new Vector2(bounds.max.x, bounds.max.y);
+
+        raycastOrigins.bottomLeft = transform.position - bounds.extents;
+        raycastOrigins.topRight = transform.position + bounds.extents;
+
+        raycastOrigins.bottomRight = raycastOrigins.bottomLeft + Vector2.right * bounds.size.x;
+        raycastOrigins.topLeft = raycastOrigins.bottomLeft + Vector2.up * bounds.size.y;
     }
 
     protected void CalculateRaySpacing()
