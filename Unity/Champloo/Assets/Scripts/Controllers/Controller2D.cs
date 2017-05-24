@@ -158,35 +158,7 @@ public class Controller2D : RaycastController
 
     private void NotifyContact()
     {
-        //above and below
         List<GameObject> allHitObjects = new List<GameObject>();
-        for (int i = 0; i < horizontalRayCount; i++)
-        {
-            Vector2 rayOrigin = raycastOrigins.topLeft;
-            rayOrigin += Vector2.right * (horizontalRaySpacing * i);
-            RaycastHit2D[] hits = RaycastAll(rayOrigin, Vector2.up, skinWidth * 2, notifyMask);
-            foreach (RaycastHit2D hit in hits)
-            {
-                if (!allHitObjects.Contains(hit.transform.gameObject))
-                {
-                    allHitObjects.Add(hit.transform.gameObject);
-                    OnCollision(hit.transform.gameObject, new CollisionInfo { Above = true });
-                }
-            }
-
-
-            rayOrigin = raycastOrigins.bottomLeft;
-            rayOrigin += Vector2.right * (horizontalRaySpacing * i);
-            hits = RaycastAll(rayOrigin, Vector2.down, skinWidth * 2, notifyMask);
-            foreach (RaycastHit2D hit in hits)
-            {
-                if (!allHitObjects.Contains(hit.transform.gameObject))
-                {
-                    allHitObjects.Add(hit.transform.gameObject);
-                    OnCollision(hit.transform.gameObject, new CollisionInfo { Below = true });
-                }
-            }
-        }
 
         //left and right
         for (int i = 0; i < verticalRayCount; i++)
@@ -215,6 +187,35 @@ public class Controller2D : RaycastController
                 }
             }
         }
+
+        //above and below
+        for (int i = 0; i < horizontalRayCount; i++)
+        {
+            Vector2 rayOrigin = raycastOrigins.topLeft;
+            rayOrigin += Vector2.right * (horizontalRaySpacing * i);
+            RaycastHit2D[] hits = RaycastAll(rayOrigin, Vector2.up, skinWidth * 2, notifyMask);
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (!allHitObjects.Contains(hit.transform.gameObject))
+                {
+                    allHitObjects.Add(hit.transform.gameObject);
+                    OnCollision(hit.transform.gameObject, new CollisionInfo { Above = true });
+                }
+            }
+
+
+            rayOrigin = raycastOrigins.bottomLeft;
+            rayOrigin += Vector2.right * (horizontalRaySpacing * i);
+            hits = RaycastAll(rayOrigin, Vector2.down, skinWidth * 2, notifyMask);
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (!allHitObjects.Contains(hit.transform.gameObject))
+                {
+                    allHitObjects.Add(hit.transform.gameObject);
+                    OnCollision(hit.transform.gameObject, new CollisionInfo { Below = true });
+                }
+            }
+        }
     }
 
     private void UpdateTouching()
@@ -222,7 +223,6 @@ public class Controller2D : RaycastController
         //above and below
         collisions.Above = false;
         collisions.Below = false;
-        List<GameObject> allHitObjects = new List<GameObject>();
         for (int i = 0; i < horizontalRayCount; i++)
         {
             Vector2 rayOrigin = raycastOrigins.topLeft;
