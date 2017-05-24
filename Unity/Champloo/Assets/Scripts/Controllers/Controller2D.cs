@@ -295,6 +295,9 @@ public class Controller2D : RaycastController
         previousVelocity = velocity;
         collisions.Reset();
 
+        UpdateTouching();
+        NotifyContact();
+
         if (velocity.y < 0)
         {
             DescendSlope(ref velocity);
@@ -321,9 +324,6 @@ public class Controller2D : RaycastController
         {
             collisions.Below = true;
         }
-
-        UpdateTouching();
-        NotifyContact();
 
         foreach (GameObject obj in GetCrushers())
         {
