@@ -68,7 +68,7 @@ public class Controller2D : RaycastController
 
     private RaycastHit2D Raycast(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
     {
-        Debug.DrawLine(rayOrigin, rayOrigin + direction * distance, Color.red);
+        Debug.DrawLine(rayOrigin, rayOrigin + direction * distance, Color.blue);
         RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask.value);
         for (int i = 0; i < hits.Length; i++)
         {
@@ -83,7 +83,7 @@ public class Controller2D : RaycastController
 
     private RaycastHit2D[] RaycastAll(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
     {
-        Debug.DrawLine(rayOrigin, rayOrigin + direction*distance, Color.red);
+        Debug.DrawLine(rayOrigin, rayOrigin + direction*distance, Color.blue);
         RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask.value);
         List<RaycastHit2D> hitsList = new List<RaycastHit2D>();
         for (int i = 0; i < hits.Length; i++)
