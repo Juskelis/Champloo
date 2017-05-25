@@ -17,6 +17,9 @@ public class InAir : MovementState
     [SerializeField]
     private float fullTurnTime = 0.2f;
 
+    [SerializeField]
+    private bool analogMovementSpeed = false;
+
     private float acceleration;
     private float deceleration;
     private float turningDeceleration;
@@ -35,21 +38,7 @@ public class InAir : MovementState
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
         float moveX = player.InputPlayer.GetAxis("Move Horizontal");
-        float inputDirection = Mathf.Sign(moveX);
-        if (Mathf.Abs(moveX) > float.Epsilon)
-        {
-            if (inputDirection != Mathf.Sign(velocity.x))
-            {
-                //turning
-                velocity.x = Mathf.MoveTowards(velocity.x, maxSpeed * moveX, turningDeceleration * Time.deltaTime);
-            }
-            else
-            {
-                //speeding up
-                velocity.x = Mathf.MoveTowards(velocity.x, maxSpeed * moveX, acceleration * Time.deltaTime);
-            }
-        }
-        else
+        if (Mathf.Abs(moveX) <= float.Epsilon)
         {
             //stopping
             velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
@@ -67,6 +56,17 @@ public class InAir : MovementState
     public override void ApplyInputs(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.ApplyInputs(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+
+        float moveX = player.InputPlayer.GetAxis("Move Horizontal");
+        float inputDirection = Mathf.Sign(moveX);
+        if (Mathf.Abs(moveX) > float.Epsilon)
+        {
+            float delta = inputDirection != Mathf.Sign(inVelocity.x) ? turningDeceleration : acceleration;
+            outVelocity.x = Mathf.MoveTowards(
+                inVelocity.x,
+                maxSpeed*(analogMovementSpeed ? moveX : inputDirection),
+                delta*Time.deltaTime);
+        }
 
         //if the player releases the jump button and is is moving up
         //if (player.InputPlayer.GetButtonUp("Jump") && inVelocity.y > 0 && !hasShortened)
