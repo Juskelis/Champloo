@@ -18,6 +18,9 @@ public class OnGround : MovementState
     [SerializeField]
     private PlayRandomSource runSound;
 
+    [SerializeField]
+    private bool analogMovementSpeed = false;
+
     public float MaxSpeed { get { return maxSpeed; } }
 
     private float jumpVelocity;
@@ -70,7 +73,10 @@ public class OnGround : MovementState
         if (Mathf.Abs(moveX) >= float.Epsilon)
         {
             float delta = inputDirection != Mathf.Sign(inVelocity.x) ? turningDeceleration : acceleration;
-            outVelocity.x = Mathf.MoveTowards(inVelocity.x, maxSpeed*moveX, delta*Time.deltaTime);
+            outVelocity.x = Mathf.MoveTowards(
+                inVelocity.x,
+                maxSpeed*(analogMovementSpeed?moveX:inputDirection),
+                delta*Time.deltaTime);
         }
 
         if (Mathf.Abs(outVelocity.x) >= float.Epsilon && !runSound.Playing)
