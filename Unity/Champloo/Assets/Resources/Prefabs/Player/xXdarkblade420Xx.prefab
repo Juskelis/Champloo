@@ -1476,6 +1476,7 @@ MonoBehaviour:
   fullTurnTime: 0.2
   jumpSound: {fileID: 114196940015131362}
   runSound: {fileID: 114958792587567482}
+  analogMovementSpeed: 0
 --- !u!114 &114567913374022186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1508,7 +1509,8 @@ MonoBehaviour:
   specialTime: 0
   specialCooldownTime: 0
   specialRechargeTime: 0
-  thrownVersion: {fileID: 11441408, guid: 666604262c26fa543801e5b6cfd8983b, type: 2}
+  thrownVersion: {fileID: 114811144672456160, guid: 666604262c26fa543801e5b6cfd8983b,
+    type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
 --- !u!114 &114599821988778560
@@ -1604,6 +1606,7 @@ MonoBehaviour:
   stopToMaxSpeedTime: 0.25
   maxSpeedToStopTime: 0.4
   fullTurnTime: 0.75
+  analogMovementSpeed: 0
 --- !u!114 &114835231177880446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1620,7 +1623,7 @@ MonoBehaviour:
   wallJumpVelocity: {x: 20, y: 20}
   noAngleJumpModifier: {x: 1.25, y: 0}
   towardsWallJumpModifier: {x: 1, y: 0}
-  slightAngleJumpModifier: {x: 2, y: 0}
+  allowedMinAngle: 1.16
   wallSlideSound: {fileID: 114262047935058518}
   jumpSound: {fileID: 114196940015131362}
 --- !u!114 &114852319061618254
