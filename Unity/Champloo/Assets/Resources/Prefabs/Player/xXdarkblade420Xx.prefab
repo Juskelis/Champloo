@@ -476,7 +476,7 @@ Transform:
   m_GameObject: {fileID: 1414592692947770}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4817007161896130}
   - {fileID: 4258109406082424}
@@ -1509,8 +1509,7 @@ MonoBehaviour:
   specialTime: 0
   specialCooldownTime: 0
   specialRechargeTime: 0
-  thrownVersion: {fileID: 114811144672456160, guid: 666604262c26fa543801e5b6cfd8983b,
-    type: 2}
+  thrownVersion: {fileID: 11441408, guid: 666604262c26fa543801e5b6cfd8983b, type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
 --- !u!114 &114599821988778560
