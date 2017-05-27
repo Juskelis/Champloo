@@ -616,10 +616,11 @@ public class Player : NetworkBehaviour
             next = GetComponent<InAttack>();
         }
         //else if (inputs.block.Down && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
-        else if (InputPlayer.GetButtonDown("Block") && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
+        else if (InputPlayer.GetButtonDown("Block") && weapon.InHand && shield.CanActivate && 
+            !(movementState is InBlock || movementState is InAttack || movementState is OnMovementSpecial))
         {
             next = GetComponent<InBlock>();
-        }
+        }   
 
         //else if(inputs.movementSpecial.Down && !(movementState is OnDash) && currentDashes > 0)
         else if(InputPlayer.GetButtonDown("Movement Special") && !(movementState is OnMovementSpecial) && !movementSpecial.isDisabled)
