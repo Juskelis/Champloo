@@ -44,10 +44,16 @@ public class Controller2D : RaycastController
 
     private static float stompBounce = 10f;
 
+    private List<RaycastHit2D> hitsList;
+    private List<GameObject> allHitObjects;
+
     protected override void Start()
     {
         base.Start();
         faceDirection = 1;
+
+        hitsList = new List<RaycastHit2D>();
+        allHitObjects = new List<GameObject>();
     }
 
     protected virtual void OnCrushed(GameObject other)
@@ -85,7 +91,8 @@ public class Controller2D : RaycastController
     {
         Debug.DrawLine(rayOrigin, rayOrigin + direction*distance, Color.blue);
         RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask.value);
-        List<RaycastHit2D> hitsList = new List<RaycastHit2D>();
+        //List<RaycastHit2D> hitsList = new List<RaycastHit2D>();
+        hitsList.Clear();
         for (int i = 0; i < hits.Length; i++)
         {
             if (hits[i].transform.gameObject != gameObject
@@ -101,7 +108,8 @@ public class Controller2D : RaycastController
 
     private void NotifyContact()
     {
-        List<GameObject> allHitObjects = new List<GameObject>();
+        //List<GameObject> allHitObjects = new List<GameObject>();
+        allHitObjects.Clear();
 
         //left and right
         for (int i = 0; i < verticalRayCount; i++)
