@@ -45,6 +45,9 @@ public class SmashCamera : MonoBehaviour
     private Vector3 center;
     private Vector3 maxDist;
 
+    private List<Transform> targetTransforms;
+    private List<float> medianCollection;
+
     void Awake()
     {
         cam = GetComponent<Camera>();
@@ -64,12 +67,16 @@ public class SmashCamera : MonoBehaviour
         zoomOut = zoomOutBoundary * size;
 
         center = Vector3.zero;
+
+        targetTransforms = new List<Transform>();
+        medianCollection = new List<float>();
     }
 
     void LateUpdate()
     {
         CameraTarget[] targets = FindObjectsOfType<CameraTarget>();
-        List<Transform> targetTransforms = new List<Transform>();
+        //List<Transform> targetTransforms = new List<Transform>();
+        targetTransforms.Clear();
         foreach(CameraTarget target in targets)
         {
             targetTransforms.Add(target.transform);
@@ -176,6 +183,16 @@ public class SmashCamera : MonoBehaviour
 
     public float Median(params float[] values)
     {
+        int middleIndex = values.Length/2;
+        medianCollection.Clear();
+        medianCollection.AddRange(values);
+        medianCollection.Sort();
+        return values.Length%2 != 0 ?
+            medianCollection[middleIndex] :
+            (medianCollection[middleIndex] + medianCollection[middleIndex - 1])/2f;
+
+
+        /*
         int half = values.Length / 2;
         var sorted = values.OrderBy(n => n);
         if (values.Length % 2 == 0)
@@ -186,6 +203,7 @@ public class SmashCamera : MonoBehaviour
         {
             return sorted.ElementAt(half);
         }
+        */
     }
 
     public float cubic_lerp(float start, float end, float speed)
