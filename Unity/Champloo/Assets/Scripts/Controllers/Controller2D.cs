@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 public class Controller2D : RaycastController
 {
@@ -77,7 +76,6 @@ public class Controller2D : RaycastController
     private RaycastHit2D Raycast(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
     {
         Debug.DrawLine(rayOrigin, rayOrigin + direction * distance, Color.blue);
-        //RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask.value);
         int hitCount = Physics2D.RaycastNonAlloc(rayOrigin, direction, hitsArray, distance, mask.value);
         for (int i = 0; i < hitCount; i++)
         {
@@ -93,9 +91,7 @@ public class Controller2D : RaycastController
     private void RaycastAll(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
     {
         Debug.DrawLine(rayOrigin, rayOrigin + direction*distance, Color.blue);
-        //RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask.value);
         int hitCount = Physics2D.RaycastNonAlloc(rayOrigin, direction, hitsArray, distance, mask.value);
-        //List<RaycastHit2D> hitsList = new List<RaycastHit2D>();
         hitsList.Clear();
         for (int i = 0; i < hitCount; i++)
         {
@@ -110,7 +106,6 @@ public class Controller2D : RaycastController
 
     private void NotifyContact()
     {
-        //List<GameObject> allHitObjects = new List<GameObject>();
         allHitObjects.Clear();
 
         //left and right

@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Linq;
 using System.Collections.Generic;
 
 public class SmashCamera : MonoBehaviour
 {
     private Camera cam;
-    //private Renderer ren;
 
     private Transform[] toFollow;
 
@@ -52,7 +49,6 @@ public class SmashCamera : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         if (cam == null) cam = GetComponentInChildren<Camera>();
-        //ren = GetComponent<Renderer>();
         bottomLeft.SetParent(null, true);
         topRight.SetParent(null, true);
     }
@@ -75,7 +71,6 @@ public class SmashCamera : MonoBehaviour
     void LateUpdate()
     {
         CameraTarget[] targets = FindObjectsOfType<CameraTarget>();
-        //List<Transform> targetTransforms = new List<Transform>();
         targetTransforms.Clear();
         foreach(CameraTarget target in targets)
         {
@@ -190,20 +185,6 @@ public class SmashCamera : MonoBehaviour
         return values.Length%2 != 0 ?
             medianCollection[middleIndex] :
             (medianCollection[middleIndex] + medianCollection[middleIndex - 1])/2f;
-
-
-        /*
-        int half = values.Length / 2;
-        var sorted = values.OrderBy(n => n);
-        if (values.Length % 2 == 0)
-        {
-            return (sorted.ElementAt(half) + sorted.ElementAt(half - 1)) / 2f;
-        }
-        else
-        {
-            return sorted.ElementAt(half);
-        }
-        */
     }
 
     public float cubic_lerp(float start, float end, float speed)
