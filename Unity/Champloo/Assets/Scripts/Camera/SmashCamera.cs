@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Linq;
 using System.Collections.Generic;
 
 public class SmashCamera : MonoBehaviour
 {
     private Camera cam;
-    //private Renderer ren;
 
     private Transform[] toFollow;
 
@@ -45,11 +42,13 @@ public class SmashCamera : MonoBehaviour
     private Vector3 center;
     private Vector3 maxDist;
 
+    private List<Transform> targetTransforms;
+    private List<float> medianCollection;
+
     void Awake()
     {
         cam = GetComponent<Camera>();
         if (cam == null) cam = GetComponentInChildren<Camera>();
-        //ren = GetComponent<Renderer>();
         bottomLeft.SetParent(null, true);
         topRight.SetParent(null, true);
     }
@@ -64,12 +63,15 @@ public class SmashCamera : MonoBehaviour
         zoomOut = zoomOutBoundary * size;
 
         center = Vector3.zero;
+
+        targetTransforms = new List<Transform>();
+        medianCollection = new List<float>();
     }
 
     void LateUpdate()
     {
         CameraTarget[] targets = FindObjectsOfType<CameraTarget>();
-        List<Transform> targetTransforms = new List<Transform>();
+        targetTransforms.Clear();
         foreach(CameraTarget target in targets)
         {
             targetTransforms.Add(target.transform);
@@ -176,16 +178,13 @@ public class SmashCamera : MonoBehaviour
 
     public float Median(params float[] values)
     {
-        int half = values.Length / 2;
-        var sorted = values.OrderBy(n => n);
-        if (values.Length % 2 == 0)
-        {
-            return (sorted.ElementAt(half) + sorted.ElementAt(half - 1)) / 2f;
-        }
-        else
-        {
-            return sorted.ElementAt(half);
-        }
+        int middleIndex = values.Length/2;
+        medianCollection.Clear();
+        medianCollection.AddRange(values);
+        medianCollection.Sort();
+        return values.Length%2 != 0 ?
+            medianCollection[middleIndex] :
+            (medianCollection[middleIndex] + medianCollection[middleIndex - 1])/2f;
     }
 
     public float cubic_lerp(float start, float end, float speed)

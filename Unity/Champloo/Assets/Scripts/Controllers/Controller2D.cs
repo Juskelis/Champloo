@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 public class Controller2D : RaycastController
 {
@@ -44,10 +43,18 @@ public class Controller2D : RaycastController
 
     private static float stompBounce = 10f;
 
+    private List<RaycastHit2D> hitsList;
+    private List<GameObject> allHitObjects;
+    private RaycastHit2D[] hitsArray = new RaycastHit2D[100];
+    private Collider2D[] crushersArray = new Collider2D[50];
+
     protected override void Start()
     {
         base.Start();
         faceDirection = 1;
+
+        hitsList = new List<RaycastHit2D>();
+        allHitObjects = new List<GameObject>();
     }
 
     protected virtual void OnCrushed(GameObject other)
@@ -69,47 +76,45 @@ public class Controller2D : RaycastController
     private RaycastHit2D Raycast(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
     {
         Debug.DrawLine(rayOrigin, rayOrigin + direction * distance, Color.blue);
-        RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask.value);
-        for (int i = 0; i < hits.Length; i++)
+        int hitCount = Physics2D.RaycastNonAlloc(rayOrigin, direction, hitsArray, distance, mask.value);
+        for (int i = 0; i < hitCount; i++)
         {
-            if (hits[i].transform.gameObject != gameObject
-                && hits[i].transform.gameObject.activeInHierarchy)
+            if (hitsArray[i].transform.gameObject != gameObject
+                && hitsArray[i].transform.gameObject.activeInHierarchy)
             {
-                return hits[i];
+                return hitsArray[i];
             }
         }
         return new RaycastHit2D();
     }
 
-    private RaycastHit2D[] RaycastAll(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
+    private void RaycastAll(Vector2 rayOrigin, Vector2 direction, float distance, LayerMask mask)
     {
         Debug.DrawLine(rayOrigin, rayOrigin + direction*distance, Color.blue);
-        RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, distance, mask.value);
-        List<RaycastHit2D> hitsList = new List<RaycastHit2D>();
-        for (int i = 0; i < hits.Length; i++)
+        int hitCount = Physics2D.RaycastNonAlloc(rayOrigin, direction, hitsArray, distance, mask.value);
+        hitsList.Clear();
+        for (int i = 0; i < hitCount; i++)
         {
-            if (hits[i].transform.gameObject != gameObject
-                && hits[i].transform.gameObject.activeInHierarchy
-                && !hitsList.Contains(hits[i]))
+            if (hitsArray[i].transform.gameObject != gameObject
+                && hitsArray[i].transform.gameObject.activeInHierarchy
+                && !hitsList.Contains(hitsArray[i]))
             {
-                hitsList.Add(hits[i]);
+                hitsList.Add(hitsArray[i]);
             }
         }
-
-        return hitsList.ToArray();
     }
 
     private void NotifyContact()
     {
-        List<GameObject> allHitObjects = new List<GameObject>();
+        allHitObjects.Clear();
 
         //left and right
         for (int i = 0; i < verticalRayCount; i++)
         {
             Vector2 rayOrigin = raycastOrigins.bottomLeft;
             rayOrigin += Vector2.up * (verticalRaySpacing * i);
-            RaycastHit2D[] hits = RaycastAll(rayOrigin, Vector2.left, skinWidth * 2, notifyMask);
-            foreach (RaycastHit2D hit in hits)
+            RaycastAll(rayOrigin, Vector2.left, skinWidth * 2, notifyMask);
+            foreach (RaycastHit2D hit in hitsList)
             {
                 if (!allHitObjects.Contains(hit.transform.gameObject))
                 {
@@ -120,8 +125,8 @@ public class Controller2D : RaycastController
 
             rayOrigin = raycastOrigins.bottomRight;
             rayOrigin += Vector2.up * (verticalRaySpacing * i);
-            hits = RaycastAll(rayOrigin, Vector2.right, skinWidth * 2, notifyMask);
-            foreach (RaycastHit2D hit in hits)
+            RaycastAll(rayOrigin, Vector2.right, skinWidth * 2, notifyMask);
+            foreach (RaycastHit2D hit in hitsList)
             {
                 if (!allHitObjects.Contains(hit.transform.gameObject))
                 {
@@ -136,8 +141,8 @@ public class Controller2D : RaycastController
         {
             Vector2 rayOrigin = raycastOrigins.topLeft;
             rayOrigin += Vector2.right * (horizontalRaySpacing * i);
-            RaycastHit2D[] hits = RaycastAll(rayOrigin, Vector2.up, skinWidth * 2, notifyMask);
-            foreach (RaycastHit2D hit in hits)
+            RaycastAll(rayOrigin, Vector2.up, skinWidth * 2, notifyMask);
+            foreach (RaycastHit2D hit in hitsList)
             {
                 if (!allHitObjects.Contains(hit.transform.gameObject))
                 {
@@ -149,8 +154,8 @@ public class Controller2D : RaycastController
 
             rayOrigin = raycastOrigins.bottomLeft;
             rayOrigin += Vector2.right * (horizontalRaySpacing * i);
-            hits = RaycastAll(rayOrigin, Vector2.down, skinWidth * 2, notifyMask);
-            foreach (RaycastHit2D hit in hits)
+            RaycastAll(rayOrigin, Vector2.down, skinWidth * 2, notifyMask);
+            foreach (RaycastHit2D hit in hitsList)
             {
                 if (!allHitObjects.Contains(hit.transform.gameObject))
                 {
@@ -170,16 +175,16 @@ public class Controller2D : RaycastController
         {
             Vector2 rayOrigin = raycastOrigins.topLeft;
             rayOrigin += Vector2.right * (horizontalRaySpacing * i);
-            RaycastHit2D[] hits = RaycastAll(rayOrigin, Vector2.up, skinWidth*2, collisionMask);
-            if(hits.Length > 0)
+            RaycastAll(rayOrigin, Vector2.up, skinWidth*2, collisionMask);
+            if(hitsList.Count > 0)
             {
                 collisions.Above = true;
             }
 
             rayOrigin = raycastOrigins.bottomLeft;
             rayOrigin += Vector2.right * (horizontalRaySpacing * i);
-            hits = RaycastAll(rayOrigin, Vector2.down, skinWidth * 2, collisionMask);
-            if (hits.Length > 0)
+            RaycastAll(rayOrigin, Vector2.down, skinWidth * 2, collisionMask);
+            if (hitsList.Count > 0)
             {
                 collisions.Below = true;
             }
@@ -192,23 +197,23 @@ public class Controller2D : RaycastController
         {
             Vector2 rayOrigin = raycastOrigins.bottomLeft;
             rayOrigin += Vector2.up * (verticalRaySpacing * i);
-            RaycastHit2D[] hits = RaycastAll(rayOrigin, Vector2.left, skinWidth * 2, collisionMask);
-            if (hits.Length > 0)
+            RaycastAll(rayOrigin, Vector2.left, skinWidth * 2, collisionMask);
+            if (hitsList.Count > 0)
             {
                 collisions.Left = true;
             }
 
             rayOrigin = raycastOrigins.bottomRight;
             rayOrigin += Vector2.up * (verticalRaySpacing * i);
-            hits = RaycastAll(rayOrigin, Vector2.right, skinWidth * 2, collisionMask);
-            if(hits.Length > 0)
+            RaycastAll(rayOrigin, Vector2.right, skinWidth * 2, collisionMask);
+            if(hitsList.Count > 0)
             {
                 collisions.Right = true;
             }
         }
     }
 
-    private GameObject[] GetCrushers()
+    private void GetCrushers()
     {
         Bounds crushBounds = ColliderBounds;
         crushBounds.Expand(skinWidth*-2.5f);
@@ -221,13 +226,22 @@ public class Controller2D : RaycastController
         Debug.DrawLine(boxMax, boxMax + Vector3.down * crushBounds.size.y, Color.yellow);
         Debug.DrawLine(boxMax, boxMax + Vector3.left * crushBounds.size.x, Color.yellow);
 
-        return Physics2D.OverlapBoxAll(
+        int crushCount = Physics2D.OverlapBoxNonAlloc(
             transform.position,
             crushBounds.size,
             0f,
-            crushMask)
-            .Select(item => item.transform.gameObject)
-            .Where(item => item != gameObject).ToArray();
+            crushersArray,
+            crushMask.value);
+
+        allHitObjects.Clear();
+        for (int i = 0; i < crushCount; i++)
+        {
+            Collider2D curr = crushersArray[i];
+            if (curr.transform.gameObject != gameObject)
+            {
+                allHitObjects.Add(curr.transform.gameObject);
+            }
+        }
     }
 
     public void Move(Vector3 velocity, bool standingOnPlatform = false)
@@ -263,7 +277,8 @@ public class Controller2D : RaycastController
             collisions.Below = true;
         }
 
-        foreach (GameObject obj in GetCrushers())
+        GetCrushers();
+        foreach (GameObject obj in allHitObjects)
         {
             OnCrushed(obj);
         }
