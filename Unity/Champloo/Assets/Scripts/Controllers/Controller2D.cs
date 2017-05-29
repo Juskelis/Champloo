@@ -32,6 +32,7 @@ public class Controller2D : RaycastController
     [SerializeField] public LayerMask collisionMask;
     [SerializeField] public LayerMask notifyMask; //notify us when we hit it, but don't interact with it directly
     [SerializeField] public LayerMask crushMask;
+    [SerializeField] public float touchWidth = 0.05f;
     public CollisionInfo collisions;
 
     private Vector3 previousVelocity;
@@ -175,7 +176,7 @@ public class Controller2D : RaycastController
         {
             Vector2 rayOrigin = raycastOrigins.topLeft;
             rayOrigin += Vector2.right * (horizontalRaySpacing * i);
-            RaycastAll(rayOrigin, Vector2.up, skinWidth*2, collisionMask);
+            RaycastAll(rayOrigin, Vector2.up, skinWidth + touchWidth, collisionMask);
             if(hitsList.Count > 0)
             {
                 collisions.Above = true;
@@ -183,7 +184,7 @@ public class Controller2D : RaycastController
 
             rayOrigin = raycastOrigins.bottomLeft;
             rayOrigin += Vector2.right * (horizontalRaySpacing * i);
-            RaycastAll(rayOrigin, Vector2.down, skinWidth * 2, collisionMask);
+            RaycastAll(rayOrigin, Vector2.down, skinWidth + touchWidth, collisionMask);
             if (hitsList.Count > 0)
             {
                 collisions.Below = true;
@@ -197,7 +198,7 @@ public class Controller2D : RaycastController
         {
             Vector2 rayOrigin = raycastOrigins.bottomLeft;
             rayOrigin += Vector2.up * (verticalRaySpacing * i);
-            RaycastAll(rayOrigin, Vector2.left, skinWidth * 2, collisionMask);
+            RaycastAll(rayOrigin, Vector2.left, skinWidth + touchWidth, collisionMask);
             if (hitsList.Count > 0)
             {
                 collisions.Left = true;
@@ -205,7 +206,7 @@ public class Controller2D : RaycastController
 
             rayOrigin = raycastOrigins.bottomRight;
             rayOrigin += Vector2.up * (verticalRaySpacing * i);
-            RaycastAll(rayOrigin, Vector2.right, skinWidth * 2, collisionMask);
+            RaycastAll(rayOrigin, Vector2.right, skinWidth + touchWidth, collisionMask);
             if(hitsList.Count > 0)
             {
                 collisions.Right = true;
