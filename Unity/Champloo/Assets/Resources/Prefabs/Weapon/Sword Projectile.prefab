@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6127024}
   - component: {fileID: 3351648}
   - component: {fileID: 2382158}
-  - component: {fileID: 11441408}
   - component: {fileID: 9683930}
+  - component: {fileID: 114811144672456160}
   m_Layer: 0
   m_Name: Sword Projectile
   m_TagString: Untagged
@@ -210,21 +210,6 @@ TrailRenderer:
     textureMode: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
---- !u!114 &11441408
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 187214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: add6babc2dcbed84f93e5508523997cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 256
-  speed: 30
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -236,3 +221,18 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 187214}
   m_IsPrefabParent: 1
+--- !u!114 &114811144672456160
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6711df6cf7a1c2a40ad1af2a4d6530a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 256
+  speed: 30
