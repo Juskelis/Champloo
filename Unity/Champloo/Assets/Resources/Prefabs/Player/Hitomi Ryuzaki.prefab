@@ -1443,7 +1443,7 @@ MonoBehaviour:
   specialTime: 0
   specialCooldownTime: 0
   specialRechargeTime: 0
-  thrownVersion: {fileID: 11441408, guid: 666604262c26fa543801e5b6cfd8983b, type: 2}
+  thrownVersion: {fileID: 0}
   alwaysVisible: 0
   visuals: {fileID: 212045121767493206}
 --- !u!114 &114305203156194238
@@ -1528,6 +1528,7 @@ MonoBehaviour:
   crushMask:
     serializedVersion: 2
     m_Bits: 256
+  touchWidth: 0.05
 --- !u!114 &114482399192333578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1552,6 +1553,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementState:
     _classRef: OnGround, Assembly-CSharp
+  leaveParticle: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859,
+    type: 2}
+  enterParticle: {fileID: 0}
 --- !u!114 &114592979247049092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1627,6 +1631,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementState:
     _classRef: OnWall, Assembly-CSharp
+  leaveParticle: {fileID: 0}
+  enterParticle: {fileID: 0}
 --- !u!114 &114821917502314688
 MonoBehaviour:
   m_ObjectHideFlags: 1

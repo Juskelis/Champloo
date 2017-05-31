@@ -8,6 +8,12 @@ public class MovementStateFootDust : MonoBehaviour
     [ClassExtends(typeof(MovementState))]
     public ClassTypeReference movementState;
 
+    [SerializeField]
+    private Transform leaveParticle;
+
+    [SerializeField]
+    private Transform enterParticle;
+
     private ParticleSystem particle;
     private Player p;
 
@@ -38,10 +44,12 @@ public class MovementStateFootDust : MonoBehaviour
         if (!playing)
         {
             particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            if(leaveParticle != null) Instantiate(leaveParticle, transform.position, Quaternion.identity);
         }
         else
         {
             particle.Play(true);
+            if (enterParticle != null) Instantiate(enterParticle, transform.position, Quaternion.identity);
         }
     }
 }

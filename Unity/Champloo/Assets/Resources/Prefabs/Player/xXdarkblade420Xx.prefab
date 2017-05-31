@@ -1389,6 +1389,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementState:
     _classRef: OnWall, Assembly-CSharp
+  leaveParticle: {fileID: 0}
+  enterParticle: {fileID: 0}
 --- !u!114 &114196940015131362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1490,6 +1492,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementState:
     _classRef: OnGround, Assembly-CSharp
+  leaveParticle: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859,
+    type: 2}
+  enterParticle: {fileID: 0}
 --- !u!114 &114573501144826524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1509,7 +1514,7 @@ MonoBehaviour:
   specialTime: 0
   specialCooldownTime: 0
   specialRechargeTime: 0
-  thrownVersion: {fileID: 11441408, guid: 666604262c26fa543801e5b6cfd8983b, type: 2}
+  thrownVersion: {fileID: 0}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
 --- !u!114 &114599821988778560
@@ -1577,6 +1582,7 @@ MonoBehaviour:
   crushMask:
     serializedVersion: 2
     m_Bits: 256
+  touchWidth: 0.05
 --- !u!114 &114754671075927648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1744,7 +1750,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 2007629422
+  randomSeed: 700026437
   InitialModule:
     serializedVersion: 3
     enabled: 1
