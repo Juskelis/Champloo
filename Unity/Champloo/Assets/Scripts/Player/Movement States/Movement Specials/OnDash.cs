@@ -18,6 +18,9 @@ public class OnDash : OnMovementSpecial
 
     [SerializeField]
     private PlayRandomSource dashSound;
+
+    [SerializeField]
+    private Transform dashPuff;
     
     private int currentDashes;
 
@@ -168,6 +171,7 @@ public class OnDash : OnMovementSpecial
         //set up the dash visual trail
         tail.enabled = true;
         tail.Clear();
+        Instantiate(dashPuff, transform.position, Quaternion.identity);
     }
 
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,

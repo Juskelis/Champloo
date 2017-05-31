@@ -25,15 +25,15 @@ public class MovementStateFootDust : MonoBehaviour
     {
         if (p.CurrentMovementState.GetType() == movementState.Type)
         {
-            if(!particle.isEmitting) SetPlaying(true);
+            if(!particle.isEmitting) togglePlaying(true);
         }
         else
         {
-            if(particle.isEmitting) SetPlaying(false);
+            if(particle.isEmitting) togglePlaying(false);
         }
     }
 
-    void SetPlaying(bool playing)
+    void togglePlaying(bool playing)
     {
         if (!playing)
         {
