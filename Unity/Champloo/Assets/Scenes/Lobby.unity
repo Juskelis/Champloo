@@ -6776,9 +6776,6 @@ MonoBehaviour:
   selectedOutline: {fileID: 114000011000989780, guid: 1b42a3206cd9ec04eb4bb19cafa26399,
     type: 2}
   options:
-  - selectable: {fileID: 0}
-    rating: 0
-    forceSelect: 0
   - selectable: {fileID: 866791522}
     rating: 0
     forceSelect: 0
@@ -6859,7 +6856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479243285b045d94bacf32d69051e291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initiallySelected: {fileID: 0}
+  initiallySelected: {fileID: 866791518}
 --- !u!95 &1562251556
 Animator:
   serializedVersion: 3
@@ -6905,7 +6902,7 @@ MonoBehaviour:
   playersCanJoin: 0
   autoAddPlayers: 0
   minPlayersToAdvance: 0
-  firstSelected: {fileID: 0}
+  firstSelected: {fileID: 866791522}
   controllerPrefab: {fileID: 114000013047878432, guid: 31c8d4ad627784e40848807e69b583ef,
     type: 2}
   joinAction: UIJoin
