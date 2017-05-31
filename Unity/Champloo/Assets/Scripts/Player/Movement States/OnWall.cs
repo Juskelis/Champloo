@@ -28,6 +28,11 @@ public class OnWall : MovementState
     [SerializeField]
     private PlayRandomSource jumpSound;
 
+    [SerializeField]
+    private MovementStateFootDust dust;
+    [SerializeField]
+    private Transform jumpPuff;
+
     private float timeToWallUnstick;
 
     private bool jumped = false;
@@ -82,6 +87,7 @@ public class OnWall : MovementState
         {
             jumped = true;
             jumpSound.Play();
+            Instantiate(jumpPuff, dust.transform.position, Quaternion.identity);
 
             //PLayer will always jump off of a wall a little bit
             outVelocity.x = (wallJumpVelocity.x / 2) * (-wallDirX);
