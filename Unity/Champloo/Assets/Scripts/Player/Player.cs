@@ -463,6 +463,11 @@ public class Player : NetworkBehaviour
         Kill(hitWith.transform.right * deathForce);
     }
 
+    protected void CancelHit()
+    {
+        hitWith = null;
+        CancelInvoke("ProcessHit");
+    }
     #endregion
 
     #region Helpers
@@ -693,7 +698,7 @@ public class Player : NetworkBehaviour
         {
             if (!hitWith.isActiveAndEnabled || (weapon.InHand && shield.TakeHit()))
             {
-                hitWith = null;
+                CancelHit();
             }
             //else if (!weapon.InHand && inputs.parry.Down)
             else if (!weapon.InHand && InputPlayer.GetButtonDown("Parry"))
@@ -701,7 +706,7 @@ public class Player : NetworkBehaviour
                 //steal weapon like a badass
                 weapon.InHand = true;
                 hitWith.InHand = false;
-                hitWith = null;
+                CancelHit();
             }
         }
 
