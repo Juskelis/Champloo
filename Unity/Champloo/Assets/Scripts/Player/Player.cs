@@ -405,7 +405,6 @@ public class Player : NetworkBehaviour
         if (otherWeapon != null && hitWith == null && PlayerNumber != otherWeapon.PlayerNumber)
         {
             hitWith = otherWeapon;
-            ShakeCamera();
             Invoke("ProcessHit", hitReactionTime);
         }
     }
