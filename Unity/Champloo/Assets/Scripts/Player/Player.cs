@@ -76,6 +76,9 @@ public class Player : NetworkBehaviour
     private Transform spawnOnDeath;
 
     [SerializeField]
+    private Transform spawnOnKlang;
+
+    [SerializeField]
     private float bounceForce = 10f;
 
     [SerializeField]
@@ -404,6 +407,12 @@ public class Player : NetworkBehaviour
     {
         if (otherWeapon != null && hitWith == null && PlayerNumber != otherWeapon.PlayerNumber)
         {
+            Player otherPlayer = otherWeapon.GetComponentInParent<Player>();
+            if (otherPlayer.hitWith != null && otherPlayer.hitWith.PlayerNumber == PlayerNumber)
+            {
+                Klang(otherWeapon);
+                return;
+            }
             hitWith = otherWeapon;
             Invoke("ProcessHit", hitReactionTime);
         }
@@ -467,6 +476,18 @@ public class Player : NetworkBehaviour
         hitWith = null;
         CancelInvoke("ProcessHit");
     }
+
+    protected void Klang(Weapon other)
+    {
+        ShakeCamera();
+        other.Reset();
+        weapon.Reset();
+        other.GetComponentInParent<Player>().CancelHit();
+        CancelHit();
+        Vector3 averagePosition = (weapon.transform.position + other.transform.position)/2f;
+        Instantiate(spawnOnKlang, averagePosition, Quaternion.identity);
+    } 
+
     #endregion
 
     #region Helpers
@@ -706,6 +727,14 @@ public class Player : NetworkBehaviour
                 weapon.InHand = true;
                 hitWith.InHand = false;
                 CancelHit();
+            }
+            else
+            {
+                Player p = hitWith.GetComponentInParent<Player>();
+                if (p.hitWith != null && p.hitWith.PlayerNumber == PlayerNumber)
+                {
+                    Klang(hitWith);
+                }
             }
         }
 
