@@ -441,7 +441,7 @@ public class Player : NetworkBehaviour
     /// </summary>
     public void GetStunned()
     {
-        
+        //TODO: add stun state
     }
 
     void ProcessHit()
