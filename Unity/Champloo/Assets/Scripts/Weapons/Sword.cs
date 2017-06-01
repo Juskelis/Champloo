@@ -89,6 +89,7 @@ public class Sword : Weapon {
 
     protected override void OnTriggerEnter2D(Collider2D col)
     {
+        base.OnTriggerEnter2D(col);
         Player p = col.GetComponent<Player>();
         p = p ?? col.GetComponentInParent<Player>();
         if (p != null)
