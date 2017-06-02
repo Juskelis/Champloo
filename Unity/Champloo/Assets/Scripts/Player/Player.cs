@@ -489,8 +489,6 @@ public class Player : NetworkBehaviour
         CancelHit();
         Vector3 averagePosition = (weapon.transform.position + other.transform.position)/2f;
         Instantiate(spawnOnKlang, averagePosition, Quaternion.identity);
-        GetStunned();
-        otherPlayer.GetStunned();
     } 
 
     #endregion
