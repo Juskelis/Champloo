@@ -49,6 +49,5 @@ public class InStun : MovementState
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         stunTimer = setStunDuration ? stunDuration : defaultStunDuration;
-        print("stunned");
     }
 }
