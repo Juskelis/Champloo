@@ -11,7 +11,7 @@ public class MovementStateFootDust : MonoBehaviour
     private ParticleSystem particle;
     private Player p;
 
-    void Awake()
+    void Start()
     {
         particle = GetComponent<ParticleSystem>();
         p = GetComponentInParent<Player>();
@@ -19,18 +19,22 @@ public class MovementStateFootDust : MonoBehaviour
         {
             throw new ArgumentNullException();
         }
+        GetComponentInParent<LocalEventDispatcher>().AddListener<MovementStateChangedEvent>(OnChange);
     }
 
-    void Update()
+    void OnDestroy()
     {
-        if (p.CurrentMovementState.GetType() == movementState.Type)
+        LocalEventDispatcher dispatcher = GetComponentInParent<LocalEventDispatcher>();
+        if (dispatcher != null)
         {
-            if(!particle.isEmitting) togglePlaying(true);
+            dispatcher.RemoveListener<MovementStateChangedEvent>(OnChange);
         }
-        else
-        {
-            if(particle.isEmitting) togglePlaying(false);
-        }
+    }
+
+    private void OnChange(object sender, EventArgs args)
+    {
+        MovementStateChangedEvent convertedArgs = (MovementStateChangedEvent) args;
+        togglePlaying(convertedArgs.Next.GetType() == movementState.Type);
     }
 
     void togglePlaying(bool playing)

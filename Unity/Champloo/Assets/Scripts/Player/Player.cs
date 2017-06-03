@@ -132,6 +132,8 @@ public class Player : NetworkBehaviour
 
     private bool manuallyUpdatedDirection = false;
 
+    private LocalEventDispatcher dispatcher;
+
     #endregion
 
     #region Component Variables
@@ -157,6 +159,7 @@ public class Player : NetworkBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        dispatcher = gameObject.AddComponent<LocalEventDispatcher>();
     }
 
     //[ClientCallback]
@@ -706,6 +709,8 @@ public class Player : NetworkBehaviour
             next.OnEnter(velocity, externalForce, out newVelocity, out newExternalForce);
             OnVelocityChanged(newVelocity);
             OnExternalForceChanged(newExternalForce);
+
+            dispatcher.FireEvent(this, new MovementStateChangedEvent {Next = next, Previous = movementState});
 
             movementState = next;
             CmdUpdateMovementState(movementState.GetType().ToString());
