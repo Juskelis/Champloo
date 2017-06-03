@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 114821917502314688}
   - component: {fileID: 114048623318915304}
   - component: {fileID: 114031144535157192}
+  - component: {fileID: 114101829842339342}
   - component: {fileID: 96202574160601256}
   - component: {fileID: 50196740923790892}
   - component: {fileID: 95949785917890580}
@@ -1355,6 +1356,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeedToStopTime: 0.5
+--- !u!114 &114101829842339342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1679150048336280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f03eee7916aab4c8f8025da7c3a152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultStunDuration: 0.2
 --- !u!114 &114105332960934092
 MonoBehaviour:
   m_ObjectHideFlags: 1

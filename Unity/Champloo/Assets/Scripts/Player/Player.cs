@@ -132,6 +132,8 @@ public class Player : NetworkBehaviour
 
     private bool manuallyUpdatedDirection = false;
 
+    private bool stunned = false;
+
     #endregion
 
     #region Component Variables
@@ -449,7 +451,7 @@ public class Player : NetworkBehaviour
     /// </summary>
     public void GetStunned()
     {
-        //TODO: add stun state
+        stunned = true;
     }
 
     void ProcessHit()
@@ -479,10 +481,11 @@ public class Player : NetworkBehaviour
 
     protected void Klang(Weapon other)
     {
+        Player otherPlayer = other.GetComponentInParent<Player>();
         ShakeCamera();
         other.Reset();
         weapon.Reset();
-        other.GetComponentInParent<Player>().CancelHit();
+        otherPlayer.CancelHit();
         CancelHit();
         Vector3 averagePosition = (weapon.transform.position + other.transform.position)/2f;
         Instantiate(spawnOnKlang, averagePosition, Quaternion.identity);
@@ -636,7 +639,12 @@ public class Player : NetworkBehaviour
     {
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
         //if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack) && !movementSpecial.isInUse)
-        if(weapon.AttackState == TimingState.IN_PROGRESS && !(movementState is InAttack))
+        if (stunned)
+        {
+            next = GetComponent<InStun>();
+            stunned = false;
+        }
+        else if(weapon.AttackState == TimingState.IN_PROGRESS && !(movementState is InAttack))
         {
             next = GetComponent<InAttack>();
         }
