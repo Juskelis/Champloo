@@ -1524,7 +1524,8 @@ MonoBehaviour:
   specialTime: 0
   specialCooldownTime: 0
   specialRechargeTime: 0
-  thrownVersion: {fileID: 0}
+  thrownVersion: {fileID: 114811144672456160, guid: 666604262c26fa543801e5b6cfd8983b,
+    type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
 --- !u!114 &114599821988778560
