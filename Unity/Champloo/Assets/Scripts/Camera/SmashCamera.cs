@@ -94,6 +94,12 @@ public class SmashCamera : MonoBehaviour
             maxDist.y = Mathf.Max(maxDist.y, Mathf.Abs(toFollow[i].position.y - newCenter.y));
         }
 
+        if (toFollow.Length <= 0)
+        {
+            newCenter = bottomLeft.position + (topRight.position - bottomLeft.position)/2f;
+            maxDist = Vector2.one * Mathf.Infinity;
+        }
+
         if (maxDist.x >= zoomOut.x || maxDist.y >= zoomOut.y)
         {
             //zoom out
