@@ -2322,6 +2322,11 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 10.18
       objectReference: {fileID: 0}
+    - target: {fileID: 114514546814566134, guid: fa5e2999790613e449a1103b378d9470,
+        type: 2}
+      propertyPath: zoomMax
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa5e2999790613e449a1103b378d9470, type: 2}
   m_IsPrefabParent: 0
