@@ -3,10 +3,16 @@ using System.Collections;
 
 public class OnInfiniteDash : OnDash
 {
+    private bool hitDashEarly;
+    protected override void Start()
+    {
+        base.Start();
+        hitDashEarly = false;
+    }
+    
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
     {
         specialTimeLeft -= Time.deltaTime;
-
         //Buffer for attacks and movement specials done too early
         if (specialTimeLeft < (specialTime * nextDashBufferWindow))
         {
@@ -14,15 +20,20 @@ public class OnInfiniteDash : OnDash
             {
                 earlyAttackInput = true;
             }
-            else if (player.InputPlayer.GetButtonDown("Movement Special"))
+            else if (player.InputPlayer.GetButtonDown("Movement Special") && !hitDashEarly)
             {
                 hitNextDashInput = true;
                 currentDashes++;
             }
         }
+        else if (player.InputPlayer.GetButtonDown("Movement Special"))
+        {
+            hitDashEarly = true;
+        }
 
         if (isDisabled || timingState == TimingState.DONE)
         {
+            hitDashEarly = false;
             if (earlyAttackInput)
             {
                 return GetComponent<InAttack>();
