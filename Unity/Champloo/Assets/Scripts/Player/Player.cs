@@ -428,15 +428,12 @@ public class Player : NetworkBehaviour
     {
         if (p != null && p != hitWithProjectile)
         {
-            if (p.PlayerNumber == playerNumber)
+            if (!p.Moving && !weapon.InHand)
             {
-                if (!p.Moving && !weapon.InHand)
-                {
-                    weapon.PickUp();
-                    Destroy(p.gameObject);
-                }
+                weapon.PickUp();
+                Destroy(p.gameObject);
             }
-            else if (p.Moving)
+            else if (p.Moving && p.PlayerNumber != playerNumber)
             {
                 //Score.instance.AddScore(p.PlayerNumber);
                 hitWithProjectile = p;
