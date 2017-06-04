@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 139616114}
   - component: {fileID: 139616113}
   - component: {fileID: 139616112}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -852,7 +852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelSeconds: 180
-  displayText: {fileID: 0}
+  displayText: {fileID: 692141271}
   OnTimeout:
     m_PersistentCalls:
       m_Calls:
@@ -912,7 +912,18 @@ MonoBehaviour:
       PublicKeyToken=null
   onEnd:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 427480704}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   onWin:
@@ -2310,6 +2321,11 @@ Prefab:
     - target: {fileID: 4996948966716204, guid: fa5e2999790613e449a1103b378d9470, type: 2}
       propertyPath: m_LocalPosition.y
       value: 10.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 114514546814566134, guid: fa5e2999790613e449a1103b378d9470,
+        type: 2}
+      propertyPath: zoomMax
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa5e2999790613e449a1103b378d9470, type: 2}

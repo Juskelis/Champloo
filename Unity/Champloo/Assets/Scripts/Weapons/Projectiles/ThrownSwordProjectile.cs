@@ -8,7 +8,7 @@ public class ThrownSwordProjectile : Projectile {
         Player p = g.GetComponent<Player>()
                    ?? g.GetComponentInParent<Player>();
         if (p == null) return;
-        if (p.CurrentMovementState is InBlock)
+        if (Moving && p.CurrentMovementState is InBlock)
         {
             Destroy(gameObject);
         }
