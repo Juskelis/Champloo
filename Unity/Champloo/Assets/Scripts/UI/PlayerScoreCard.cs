@@ -34,19 +34,20 @@ public class PlayerScoreCard : MonoBehaviour
 	    maxScore = scoreService.WinScore;
         playerNameText = GetComponentInChildren<Text>();
 
-	    for (int i = 0; i < maxScore; i++)
+
+        PlayerSettings settings = PlayerSettings.GetSettingsFor(playerNumber);
+        playerNameText.text = settings != null ? settings.Name : "Name";
+
+        for (int i = 0; i < maxScore; i++)
 	    {
 	        GameObject g = new GameObject(i.ToString());
 	        Image im = g.AddComponent<Image>();
 	        im.sprite = emptyScoreIndicator;
+	        if(settings != null) im.color = settings.Color;
 	        im.preserveAspect = true;
 	        g.transform.SetParent(indicatorParent, false);
             scores.Add(im);
         }
-
-
-        PlayerSettings settings = PlayerSettings.GetSettingsFor(playerNumber);
-	    playerNameText.text = settings != null ? settings.Name : "Name";
 
 	    /*
 	    PlayerSettings settings = FindObjectOfType<PlayerSettings>();
