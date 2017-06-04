@@ -1571,6 +1571,7 @@ MonoBehaviour:
   dashForce: 22
   gravityModifier: 0.5
   dashLimit: 3
+  nextDashBufferWindow: 0.2
   dashSound: {fileID: 114126585807203634}
   dashPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
 --- !u!114 &114679085550598218

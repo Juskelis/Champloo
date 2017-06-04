@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 114353328121409266}
   - component: {fileID: 114592979247049092}
   - component: {fileID: 114619213716886426}
-  - component: {fileID: 114986284636874590}
+  - component: {fileID: 114043471809597878}
   - component: {fileID: 114821917502314688}
   - component: {fileID: 114048623318915304}
   - component: {fileID: 114031144535157192}
@@ -1344,6 +1344,27 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &114043471809597878
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1679150048336280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef29b7e8e798b214397e1798f24f3412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startupTime: 0
+  specialTime: 0.25
+  cooldownTime: 0.1
+  rechargeTime: 0.1
+  dashForce: 25
+  gravityModifier: 0.5
+  dashLimit: 1
+  nextDashBufferWindow: 0.5
+  dashSound: {fileID: 114003977806225076}
+  dashPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
 --- !u!114 &114048623318915304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1691,26 +1712,6 @@ MonoBehaviour:
     i15: 177
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114986284636874590
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1679150048336280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b07b148acf0f3458b93dacce52bcdc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startupTime: 0
-  specialTime: 0.18
-  cooldownTime: 0.07
-  rechargeTime: 0
-  dashForce: 22
-  gravityModifier: 0.5
-  dashLimit: 3
-  dashSound: {fileID: 114003977806225076}
-  dashPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
 --- !u!198 &198025789431031954
 ParticleSystem:
   m_ObjectHideFlags: 1
