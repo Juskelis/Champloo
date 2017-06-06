@@ -19,6 +19,8 @@ public class Timer : NetworkBehaviour {
 
     public UnityEvent OnTimeout;
 
+    private bool running = true;
+
     void Start()
     {
         timerDone = false;
@@ -27,7 +29,7 @@ public class Timer : NetworkBehaviour {
 
     void Update()
     {
-        timer -= Time.deltaTime;
+        if(running) timer -= Time.deltaTime;
         if(!timerDone && timer <= 0f)
         {
             Timeout();
@@ -43,5 +45,10 @@ public class Timer : NetworkBehaviour {
     void Timeout()
     {
         OnTimeout.Invoke();
+    }
+
+    public void SetRunning(bool running)
+    {
+        this.running = running;
     }
 }
