@@ -21,6 +21,25 @@ public class Projectile : MonoBehaviour
     protected Player player;
 
     protected static List<Player> players;
+    protected static int destroyableProjectiles;
+
+    private bool destroyable_doNotModifyDirectly = false;
+    protected bool CanBeDestroyed
+    {
+        get
+        {
+            return destroyable_doNotModifyDirectly;
+        }
+        set
+        {
+            if (destroyable_doNotModifyDirectly != value)
+            {
+                destroyableProjectiles += value ? 1 : -1;
+            }
+            destroyable_doNotModifyDirectly = value;
+        }
+    }
+
     protected virtual void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -83,6 +102,11 @@ public class Projectile : MonoBehaviour
         return null;
     }
 
+    protected virtual void OnDestroy()
+    {
+        if (!Moving) destroyableProjectiles--;
+    }
+
     protected virtual void OnTriggerEnter2D(Collider2D c)
     {
         ProcessHitPlayer(c.gameObject);
@@ -107,6 +131,7 @@ public class Projectile : MonoBehaviour
         follow = c.transform;
         relativePos = follow.position - transform.position;
         moving = false;
+        CanBeDestroyed = true;
 
         EZCameraShake.CameraShaker.Instance.ShakeOnce(5, 5, 0, 0.5f);
 
