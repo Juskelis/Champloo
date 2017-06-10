@@ -82,6 +82,9 @@ public class Player : NetworkBehaviour
     private float bounceForce = 10f;
 
     [SerializeField]
+    private float klangForce = 10f;
+
+    [SerializeField]
     private float deathForce = 20f;
 
     [Space]
@@ -486,6 +489,8 @@ public class Player : NetworkBehaviour
         CancelHit();
         Vector3 averagePosition = (weapon.transform.position + other.transform.position)/2f;
         Instantiate(spawnOnKlang, averagePosition, Quaternion.identity);
+        ApplyForce((transform.position - averagePosition).normalized * klangForce);
+        otherPlayer.ApplyForce((otherPlayer.transform.position - averagePosition).normalized * otherPlayer.klangForce);
     } 
 
     #endregion
