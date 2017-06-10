@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
@@ -19,9 +20,30 @@ public class Projectile : MonoBehaviour
 
     protected Player player;
 
+    protected static List<Player> players;
+    protected static int destroyableProjectiles;
+
+    private bool destroyable_doNotModifyDirectly = false;
+    protected bool CanBeDestroyed
+    {
+        get
+        {
+            return destroyable_doNotModifyDirectly;
+        }
+        set
+        {
+            if (destroyable_doNotModifyDirectly != value)
+            {
+                destroyableProjectiles += value ? 1 : -1;
+            }
+            destroyable_doNotModifyDirectly = value;
+        }
+    }
+
     protected virtual void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        if(players == null) players = new List<Player>(FindObjectsOfType<Player>());
     }
 
     protected virtual void Start()
@@ -51,16 +73,28 @@ public class Projectile : MonoBehaviour
             {
                 transform.position = follow.position - relativePos;
             }
-            if (player.Dead)
+            //delete if stopped, and too many still ones on screen
+            if (CanBeDestroyed && player.Dead
+                && players.Count - DeadPlayerCount() < destroyableProjectiles)
             {
                 Destroy(gameObject);
             }
         }
     }
 
+    private int DeadPlayerCount()
+    {
+        int ret = 0;
+        foreach (var p in players)
+        {
+            if (p.Dead) ret++;
+        }
+        return ret;
+    }
+
     private Player FindPlayer()
     {
-        foreach (var p in FindObjectsOfType<Player>())
+        foreach (var p in players)
         {
             if (p.PlayerNumber == PlayerNumber)
             {
@@ -68,6 +102,11 @@ public class Projectile : MonoBehaviour
             }
         }
         return null;
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if (!Moving) destroyableProjectiles--;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D c)
@@ -94,6 +133,7 @@ public class Projectile : MonoBehaviour
         follow = c.transform;
         relativePos = follow.position - transform.position;
         moving = false;
+        CanBeDestroyed = true;
 
         EZCameraShake.CameraShaker.Instance.ShakeOnce(5, 5, 0, 0.5f);
 

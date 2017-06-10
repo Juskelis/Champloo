@@ -14,4 +14,17 @@ public class ActivateChildren : MonoBehaviour
     {
         Invoke("Activate", time);
     }
+
+    public void Deactivate()
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+    }
+
+    public void DeactivateAfter(float time)
+    {
+        Invoke("Deactivate", time);
+    }
 }
