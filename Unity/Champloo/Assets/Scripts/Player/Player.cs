@@ -726,7 +726,7 @@ public class Player : NetworkBehaviour
         //handle blocking/parrying
         if (hitWith != null)
         {
-            if (!hitWith.isActiveAndEnabled || (weapon.InHand && shield.TakeHit()))
+            if (weapon.InHand && shield.TakeHit())
             {
                 CancelHit();
             }
