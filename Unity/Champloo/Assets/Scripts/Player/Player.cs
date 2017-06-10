@@ -240,7 +240,6 @@ public class Player : NetworkBehaviour
     private void Spawn()
     {
         gameObject.SetActive(true);
-        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
         //dead = false;
         OnDeathChanged(false);
         //velocity = Vector3.zero;
@@ -300,6 +299,7 @@ public class Player : NetworkBehaviour
         //dead = true;
         OnDeathChanged(true);
         float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
+        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
         Invoke("Spawn", time);
     }
 
