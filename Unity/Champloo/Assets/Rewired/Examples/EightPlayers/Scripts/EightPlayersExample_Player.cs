@@ -16,6 +16,10 @@ namespace Rewired.Demos {
         public float bulletSpeed = 15.0f;
         public GameObject bulletPrefab;
 
+        public float angleDeadZone = 10f;
+        private float xAngleDeadZone;
+        private float yAngleDeadZone;
+
         private Player player; // The Rewired Player
         private CharacterController cc;
         private Vector3 moveVector;
@@ -34,6 +38,9 @@ namespace Rewired.Demos {
             player = ReInput.players.GetPlayer(playerId);
             
             initialized = true;
+
+            xAngleDeadZone = Mathf.Sin(angleDeadZone * Mathf.Deg2Rad); //divided by 2 to center it
+            yAngleDeadZone = Mathf.Cos(angleDeadZone * Mathf.Deg2Rad);
         }
 
         void Update() {
@@ -50,6 +57,13 @@ namespace Rewired.Demos {
 
             moveVector.x = player.GetAxis("Move Horizontal"); // get input by name or action id
             moveVector.y = player.GetAxis("Move Vertical");
+            
+            Vector2 normalizedMoveVector = moveVector.normalized;
+            if (Mathf.Abs(normalizedMoveVector.x) < xAngleDeadZone) moveVector.x = 0;
+            if (Mathf.Abs(normalizedMoveVector.y) < xAngleDeadZone) moveVector.y = 0;
+
+            moveVector.Normalize();
+            
             fire = player.GetButtonDown("Fire");
         }
 
