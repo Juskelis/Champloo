@@ -409,7 +409,7 @@ public class Player : NetworkBehaviour
     {
         if (otherWeapon != null && hitWith == null && PlayerNumber != otherWeapon.PlayerNumber)
         {
-            Player otherPlayer = otherWeapon.GetComponentInParent<Player>();
+            Player otherPlayer = otherWeapon.OurPlayer;
             if (otherPlayer.hitWith != null && otherPlayer.hitWith.PlayerNumber == PlayerNumber)
             {
                 Klang(otherWeapon);
@@ -456,7 +456,7 @@ public class Player : NetworkBehaviour
         if (hitWith == null) return;
 
         Score s = Score.instance;//FindObjectOfType<Score>();
-        Player other = hitWith.GetComponentInParent<Player>();
+        Player other = hitWith.OurPlayer;
         if (other == null) Debug.LogError("Get Hit other object is null");
 
         int otherNum = other.PlayerNumber;
@@ -478,7 +478,7 @@ public class Player : NetworkBehaviour
 
     protected void Klang(Weapon other)
     {
-        Player otherPlayer = other.GetComponentInParent<Player>();
+        Player otherPlayer = other.OurPlayer;
         ShakeCamera();
         other.Reset();
         weapon.Reset();
@@ -735,7 +735,7 @@ public class Player : NetworkBehaviour
             }
             else
             {
-                Player p = hitWith.GetComponentInParent<Player>();
+                Player p = hitWith.OurPlayer;
                 if (p.hitWith != null && p.hitWith.PlayerNumber == PlayerNumber)
                 {
                     Klang(hitWith);
