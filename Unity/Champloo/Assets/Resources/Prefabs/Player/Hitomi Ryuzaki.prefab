@@ -927,7 +927,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1007,7 +1007,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1087,7 +1087,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1352,17 +1352,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1679150048336280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef29b7e8e798b214397e1798f24f3412, type: 3}
+  m_Script: {fileID: 11500000, guid: e67fb4a0f1d755d408f6c82984948691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startupTime: 0
-  specialTime: 0.25
+  specialTime: 0.2
   cooldownTime: 0.1
-  rechargeTime: 0.2
+  rechargeTime: 0
   dashForce: 25
   gravityModifier: 0.5
   dashLimit: 1
-  nextDashBufferWindow: 0.13
+  nextDashBufferWindow: 0.2
   dashSound: {fileID: 114003977806225076}
   dashPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
 --- !u!114 &114048623318915304
