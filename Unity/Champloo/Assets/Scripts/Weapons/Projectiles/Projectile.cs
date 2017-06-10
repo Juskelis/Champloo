@@ -61,6 +61,16 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    private int DeadPlayerCount()
+    {
+        int ret = 0;
+        foreach (var p in players)
+        {
+            if (p.Dead) ret++;
+        }
+        return ret;
+    }
+
     private Player FindPlayer()
     {
         foreach (var p in players)
