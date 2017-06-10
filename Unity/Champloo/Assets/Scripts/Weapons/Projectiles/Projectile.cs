@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
@@ -19,9 +20,11 @@ public class Projectile : MonoBehaviour
 
     protected Player player;
 
+    protected static List<Player> players;
     protected virtual void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        if(players == null) players = new List<Player>(FindObjectsOfType<Player>());
     }
 
     protected virtual void Start()
@@ -60,7 +63,7 @@ public class Projectile : MonoBehaviour
 
     private Player FindPlayer()
     {
-        foreach (var p in FindObjectsOfType<Player>())
+        foreach (var p in players)
         {
             if (p.PlayerNumber == PlayerNumber)
             {
