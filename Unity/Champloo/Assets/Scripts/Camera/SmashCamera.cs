@@ -77,10 +77,10 @@ public class SmashCamera : MonoBehaviour
     void LateUpdate()
     {
         CameraTarget[] targets = FindObjectsOfType<CameraTarget>();
-        targetTransforms.Clear();
+        targetTransforms.RemoveAll(t => t == null);
         foreach(CameraTarget target in targets)
         {
-            targetTransforms.Add(target.transform);
+            if(!targetTransforms.Contains(target.transform)) targetTransforms.Add(target.transform);
         }
         toFollow = targetTransforms.ToArray();
 

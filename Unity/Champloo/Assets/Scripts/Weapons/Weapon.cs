@@ -21,6 +21,9 @@ public class Weapon : MonoBehaviour
     private int playerNumber;
     public int PlayerNumber { get {return playerNumber;} }
 
+    private Player player;
+    public Player OurPlayer { get { return player; } }
+
     [SerializeField]
     protected float startupTime;
     [SerializeField]
@@ -53,7 +56,8 @@ public class Weapon : MonoBehaviour
     {
         InHand = true;
         isLocalPlayer = GetComponentInParent<NetworkIdentity>().isLocalPlayer;
-        playerNumber = (GetComponent<Player>() ?? GetComponentInParent<Player>()).PlayerNumber;
+        player = (GetComponent<Player>() ?? GetComponentInParent<Player>());
+        playerNumber = player.PlayerNumber;
     }
 
     //[ClientCallback]
