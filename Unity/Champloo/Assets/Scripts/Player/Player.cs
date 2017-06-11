@@ -504,6 +504,7 @@ public class Player : NetworkBehaviour
         if (Mathf.Abs(force.x) > threshold) newVelocity.x = force.x;
         if (Mathf.Abs(force.y) > threshold) newVelocity.y = force.y;
         if (Mathf.Abs(force.z) > threshold) newVelocity.z = force.z;
+        ChangeMovementState(GetComponent<InAir>());
         OnVelocityChanged(newVelocity);
     }
 
