@@ -1455,6 +1455,7 @@ MonoBehaviour:
   spawnOnKlang: {fileID: 4014390779768856, guid: f6ddcdb14ffe2df45903ff56fd969b1b,
     type: 2}
   bounceForce: 15
+  klangForce: 20
   deathForce: 20
   maxJumpHeight: 5
   minJumpHeight: 2
