@@ -528,6 +528,21 @@ public class Player : NetworkBehaviour
         //FindObjectOfType<Score>().AddScore(playerNumber);
         Score.instance.AddScore(playerNumber);
     }
+
+    private void ChangeMovementState(MovementState next)
+    {
+        Vector3 newVelocity, newExternalForce;
+        movementState.OnExit(velocity, externalForce, out newVelocity, out newExternalForce);
+        OnVelocityChanged(newVelocity);
+        OnExternalForceChanged(newExternalForce);
+
+        next.OnEnter(velocity, externalForce, out newVelocity, out newExternalForce);
+        OnVelocityChanged(newVelocity);
+        OnExternalForceChanged(newExternalForce);
+
+        movementState = next;
+        CmdUpdateMovementState(movementState.GetType().ToString());
+    }
     #endregion
 
     #region Data Syncronization
@@ -709,16 +724,7 @@ public class Player : NetworkBehaviour
 
         if (next != null)
         {
-            movementState.OnExit(velocity, externalForce, out newVelocity, out newExternalForce);
-            OnVelocityChanged(newVelocity);
-            OnExternalForceChanged(newExternalForce);
-
-            next.OnEnter(velocity, externalForce, out newVelocity, out newExternalForce);
-            OnVelocityChanged(newVelocity);
-            OnExternalForceChanged(newExternalForce);
-
-            movementState = next;
-            CmdUpdateMovementState(movementState.GetType().ToString());
+            ChangeMovementState(next);
         }
 
         //controller.UpdateBounds(currentSprite.bounds);
