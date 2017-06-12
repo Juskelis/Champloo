@@ -494,6 +494,7 @@ public class Player : NetworkBehaviour
         if (Mathf.Abs(force.x) > threshold) newVelocity.x = force.x;
         if (Mathf.Abs(force.y) > threshold) newVelocity.y = force.y;
         if (Mathf.Abs(force.z) > threshold) newVelocity.z = force.z;
+        ChangeMovementState(GetComponent<InAir>());
         OnVelocityChanged(newVelocity);
     }
 
@@ -518,6 +519,23 @@ public class Player : NetworkBehaviour
         //FindObjectOfType<Score>().AddScore(playerNumber);
         Score.instance.AddScore(playerNumber);
     }
+	
+    private void ChangeMovementState(MovementState next)
+    {
+        Vector3 newVelocity, newExternalForce;
+        movementState.OnExit(velocity, externalForce, out newVelocity, out newExternalForce);
+        OnVelocityChanged(newVelocity);
+        OnExternalForceChanged(newExternalForce);
+
+        next.OnEnter(velocity, externalForce, out newVelocity, out newExternalForce);
+        OnVelocityChanged(newVelocity);
+        OnExternalForceChanged(newExternalForce);
+
+        FireEvent(new MovementStateChangedEvent {Next = next, Previous = movementState});
+
+        movementState = next;
+        CmdUpdateMovementState(movementState.GetType().ToString());
+	}
 
     private void FireEvent<T>(T e) where T : EventArgs
     {
@@ -705,18 +723,7 @@ public class Player : NetworkBehaviour
 
         if (next != null)
         {
-            movementState.OnExit(velocity, externalForce, out newVelocity, out newExternalForce);
-            OnVelocityChanged(newVelocity);
-            OnExternalForceChanged(newExternalForce);
-
-            next.OnEnter(velocity, externalForce, out newVelocity, out newExternalForce);
-            OnVelocityChanged(newVelocity);
-            OnExternalForceChanged(newExternalForce);
-
-            FireEvent(new MovementStateChangedEvent {Next = next, Previous = movementState});
-
-            movementState = next;
-            CmdUpdateMovementState(movementState.GetType().ToString());
+            ChangeMovementState(next);
         }
 
         //controller.UpdateBounds(currentSprite.bounds);
