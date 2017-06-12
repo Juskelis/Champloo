@@ -314,6 +314,7 @@ public class Player : NetworkBehaviour
             {
                 //kill them!
                 CmdScore();
+                FireEvent(new KillEvent {Killer = this, Victim = otherPlayer});
                 otherPlayer.Kill(Vector3.down);
             }
         }
@@ -323,6 +324,7 @@ public class Player : NetworkBehaviour
             if (otherPlayer.movementState is OnDash && !dead)
             {
                 //they killed us!
+                FireEvent(new KillEvent {Killer = otherPlayer, Victim = this});
                 Kill(Vector3.down);
                 otherPlayer.ApplyForce(Vector3.up * bounceForce);
                 otherPlayer.CmdScore();
@@ -420,7 +422,8 @@ public class Player : NetworkBehaviour
                 //Score.instance.AddScore(p.PlayerNumber);
                 hitWithProjectile = p;
                 Score.instance.CmdScore(p.PlayerNumber);
-                Kill(p.transform.right * deathForce);
+                FireEvent(new KillEvent {Killer = p.OurPlayer, Victim = this});
+                Kill(p.transform.right);
             }
         }
     }
@@ -449,7 +452,8 @@ public class Player : NetworkBehaviour
 
 
         //FindObjectOfType<Score>().AddScore(hitWith.GetComponentInParent<Player>().PlayerNumber);
-        Kill(hitWith.transform.right * deathForce);
+        FireEvent(new KillEvent {Killer = other, Victim = this});
+        Kill(hitWith.transform.right);
     }
 
     public void CancelHit()
