@@ -353,6 +353,15 @@ MonoBehaviour:
       _behaviorId: 0
       _userAssignable: 1
       _categoryId: 0
+    - _id: 25
+      _name: Parry
+      _type: 1
+      _descriptiveName: Parry
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 2
     actionCategories:
     - _name: Default
       _descriptiveName: Default
@@ -369,7 +378,7 @@ MonoBehaviour:
       - categoryId: 0
         actionIds: 0f00000010000000110000001200000013000000140000001500000018000000
       - categoryId: 2
-        actionIds: 00000000010000000600000002000000070000000300000004000000050000000800000017000000
+        actionIds: 0000000001000000060000000200000007000000030000000400000005000000080000001700000019000000
     inputBehaviors:
     - _id: 0
       _name: Default
@@ -570,7 +579,7 @@ MonoBehaviour:
       hardwareGuidString: 83b427e4-086f-47f3-bb06-be266abd1ca5
       customControllerUid: 0
       actionElementMaps:
-      - _actionCategoryId: 0
+      - _actionCategoryId: 2
         _actionId: 0
         _elementType: 0
         _elementIdentifierId: 0
@@ -581,7 +590,7 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
-      - _actionCategoryId: 0
+      - _actionCategoryId: 2
         _actionId: 6
         _elementType: 0
         _elementIdentifierId: 0
@@ -592,7 +601,7 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
-      - _actionCategoryId: 0
+      - _actionCategoryId: 2
         _actionId: 1
         _elementType: 0
         _elementIdentifierId: 1
@@ -603,7 +612,7 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
-      - _actionCategoryId: 0
+      - _actionCategoryId: 2
         _actionId: 2
         _elementType: 1
         _elementIdentifierId: 12
@@ -614,7 +623,7 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
-      - _actionCategoryId: 0
+      - _actionCategoryId: 2
         _actionId: 2
         _elementType: 1
         _elementIdentifierId: 13
@@ -625,7 +634,7 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
-      - _actionCategoryId: 0
+      - _actionCategoryId: 2
         _actionId: 7
         _elementType: 1
         _elementIdentifierId: 10
@@ -636,7 +645,7 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
-      - _actionCategoryId: 0
+      - _actionCategoryId: 2
         _actionId: 7
         _elementType: 1
         _elementIdentifierId: 11
@@ -647,7 +656,29 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
-      - _actionCategoryId: 0
+      - _actionCategoryId: 2
+        _actionId: 25
+        _elementType: 1
+        _elementIdentifierId: 10
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 0
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 2
+        _actionId: 25
+        _elementType: 1
+        _elementIdentifierId: 11
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 0
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 2
         _actionId: 3
         _elementType: 1
         _elementIdentifierId: 4
@@ -658,7 +689,7 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
-      - _actionCategoryId: 0
+      - _actionCategoryId: 2
         _actionId: 4
         _elementType: 1
         _elementIdentifierId: 7
@@ -669,7 +700,7 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
-      - _actionCategoryId: 0
+      - _actionCategoryId: 2
         _actionId: 5
         _elementType: 1
         _elementIdentifierId: 8
@@ -680,7 +711,7 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
-      - _actionCategoryId: 0
+      - _actionCategoryId: 2
         _actionId: 8
         _elementType: 1
         _elementIdentifierId: 14
@@ -707,7 +738,7 @@ MonoBehaviour:
     customControllerMaps: []
     customControllers: []
     playerIdCounter: 6
-    actionIdCounter: 25
+    actionIdCounter: 26
     actionCategoryIdCounter: 3
     inputBehaviorIdCounter: 1
     mapCategoryIdCounter: 4
