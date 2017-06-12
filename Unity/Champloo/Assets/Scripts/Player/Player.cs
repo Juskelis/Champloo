@@ -76,13 +76,7 @@ public class Player : NetworkBehaviour
     private Transform spawnOnDeath;
 
     [SerializeField]
-    private Transform spawnOnKlang;
-
-    [SerializeField]
     private float bounceForce = 10f;
-
-    [SerializeField]
-    private float klangForce = 10f;
 
     [SerializeField]
     private float deathForce = 20f;
@@ -476,7 +470,7 @@ public class Player : NetworkBehaviour
         Kill(hitWith.transform.right * deathForce);
     }
 
-    protected void CancelHit()
+    public void CancelHit()
     {
         hitWith = null;
         CancelInvoke("ProcessHit");
@@ -484,6 +478,12 @@ public class Player : NetworkBehaviour
 
     protected void Klang(Weapon other)
     {
+        FireEvent(new KlangEvent
+        {
+            A = weapon,
+            B = other
+        });
+        /*
         Player otherPlayer = other.OurPlayer;
         ShakeCamera();
         other.Reset();
@@ -494,6 +494,7 @@ public class Player : NetworkBehaviour
         Instantiate(spawnOnKlang, averagePosition, Quaternion.identity);
         ApplyForce((transform.position - averagePosition).normalized * klangForce);
         otherPlayer.ApplyForce((otherPlayer.transform.position - averagePosition).normalized * otherPlayer.klangForce);
+        */
     } 
 
     #endregion

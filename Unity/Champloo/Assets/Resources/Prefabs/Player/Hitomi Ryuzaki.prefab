@@ -1453,8 +1453,6 @@ MonoBehaviour:
   visuals: {fileID: 4489892607494418}
   hitbox: {fileID: 4206746112528752}
   spawnOnDeath: {fileID: 487684, guid: f76ffe80673a7004dace221606a3111b, type: 2}
-  spawnOnKlang: {fileID: 4014390779768856, guid: f6ddcdb14ffe2df45903ff56fd969b1b,
-    type: 2}
   bounceForce: 15
   deathForce: 20
   maxJumpHeight: 5
