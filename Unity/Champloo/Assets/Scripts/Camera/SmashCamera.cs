@@ -45,6 +45,8 @@ public class SmashCamera : MonoBehaviour
     private List<Transform> targetTransforms;
     private List<float> medianCollection;
 
+    private Vector3 defaultCenter;
+
     void Awake()
     {
         cam = GetComponent<Camera>();
@@ -56,8 +58,12 @@ public class SmashCamera : MonoBehaviour
     void Start()
     {
         size = topRight.position - bottomLeft.position;
+        defaultCenter = new Vector3(
+            Mathf.Abs(topRight.position.x) - Mathf.Abs(bottomLeft.position.x),
+            Mathf.Abs(topRight.position.y) - Mathf.Abs(bottomLeft.position.y),
+            Mathf.Abs(topRight.position.z) - Mathf.Abs(bottomLeft.position.z));
 
-        zoomMax = Mathf.Min(zoomMax, size.x, size.y*cam.aspect);
+        zoomMax = Mathf.Max(zoomMax, Mathf.Abs(size.x), Mathf.Abs(size.y*cam.aspect));
 
         zoomIn = zoomInBoundary * size;
         zoomOut = zoomOutBoundary * size;
@@ -71,10 +77,10 @@ public class SmashCamera : MonoBehaviour
     void LateUpdate()
     {
         CameraTarget[] targets = FindObjectsOfType<CameraTarget>();
-        targetTransforms.Clear();
+        targetTransforms.RemoveAll(t => t == null);
         foreach(CameraTarget target in targets)
         {
-            targetTransforms.Add(target.transform);
+            if(!targetTransforms.Contains(target.transform)) targetTransforms.Add(target.transform);
         }
         toFollow = targetTransforms.ToArray();
 
@@ -92,6 +98,12 @@ public class SmashCamera : MonoBehaviour
         {
             maxDist.x = Mathf.Max(maxDist.x, Mathf.Abs(toFollow[i].position.x - newCenter.x));
             maxDist.y = Mathf.Max(maxDist.y, Mathf.Abs(toFollow[i].position.y - newCenter.y));
+        }
+
+        if (toFollow.Length <= 0)
+        {
+            newCenter = defaultCenter;
+            maxDist = Vector2.one * Mathf.Infinity;
         }
 
         if (maxDist.x >= zoomOut.x || maxDist.y >= zoomOut.y)
@@ -147,8 +159,14 @@ public class SmashCamera : MonoBehaviour
         center.z = transform.position.z;
 
         //clamp position to within bounds
-        center.x = Mathf.Clamp(center.x, bottomLeft.position.x + size.x / 2, topRight.position.x - size.x / 2);
-        center.y = Mathf.Clamp(center.y, bottomLeft.position.y + size.y / 2, topRight.position.y - size.y / 2);
+        center.x = Mathf.Clamp(
+            center.x,
+            Mathf.Min(bottomLeft.position.x + size.x / 2, defaultCenter.x),
+            Mathf.Max(topRight.position.x - size.x / 2, defaultCenter.x));
+        center.y = Mathf.Clamp(
+            center.y,
+            Mathf.Min(bottomLeft.position.y + size.y / 2, defaultCenter.y),
+            Mathf.Max(topRight.position.y - size.y / 2, defaultCenter.y));
 
 
         //zoom camera to bounds

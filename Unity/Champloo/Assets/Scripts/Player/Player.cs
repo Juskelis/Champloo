@@ -82,6 +82,9 @@ public class Player : NetworkBehaviour
     private float bounceForce = 10f;
 
     [SerializeField]
+    private float klangForce = 10f;
+
+    [SerializeField]
     private float deathForce = 20f;
 
     [Space]
@@ -133,6 +136,8 @@ public class Player : NetworkBehaviour
     private bool manuallyUpdatedDirection = false;
 
     private LocalEventDispatcher dispatcher;
+	
+    private bool stunned = false;
 
     #endregion
 
@@ -241,7 +246,6 @@ public class Player : NetworkBehaviour
     private void Spawn()
     {
         gameObject.SetActive(true);
-        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
         //dead = false;
         OnDeathChanged(false);
         //velocity = Vector3.zero;
@@ -301,6 +305,7 @@ public class Player : NetworkBehaviour
         //dead = true;
         OnDeathChanged(true);
         float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
+        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
         Invoke("Spawn", time);
     }
 
@@ -410,7 +415,7 @@ public class Player : NetworkBehaviour
     {
         if (otherWeapon != null && hitWith == null && PlayerNumber != otherWeapon.PlayerNumber)
         {
-            Player otherPlayer = otherWeapon.GetComponentInParent<Player>();
+            Player otherPlayer = otherWeapon.OurPlayer;
             if (otherPlayer.hitWith != null && otherPlayer.hitWith.PlayerNumber == PlayerNumber)
             {
                 Klang(otherWeapon);
@@ -429,15 +434,12 @@ public class Player : NetworkBehaviour
     {
         if (p != null && p != hitWithProjectile)
         {
-            if (p.PlayerNumber == playerNumber)
+            if (!p.Moving && !weapon.InHand)
             {
-                if (!p.Moving && !weapon.InHand)
-                {
-                    weapon.PickUp();
-                    Destroy(p.gameObject);
-                }
+                weapon.PickUp();
+                Destroy(p.gameObject);
             }
-            else if (p.Moving)
+            else if (p.Moving && p.PlayerNumber != playerNumber)
             {
                 //Score.instance.AddScore(p.PlayerNumber);
                 hitWithProjectile = p;
@@ -452,7 +454,7 @@ public class Player : NetworkBehaviour
     /// </summary>
     public void GetStunned()
     {
-        //TODO: add stun state
+        stunned = true;
     }
 
     void ProcessHit()
@@ -460,7 +462,7 @@ public class Player : NetworkBehaviour
         if (hitWith == null) return;
 
         Score s = Score.instance;//FindObjectOfType<Score>();
-        Player other = hitWith.GetComponentInParent<Player>();
+        Player other = hitWith.OurPlayer;
         if (other == null) Debug.LogError("Get Hit other object is null");
 
         int otherNum = other.PlayerNumber;
@@ -482,13 +484,16 @@ public class Player : NetworkBehaviour
 
     protected void Klang(Weapon other)
     {
+        Player otherPlayer = other.OurPlayer;
         ShakeCamera();
         other.Reset();
         weapon.Reset();
-        other.GetComponentInParent<Player>().CancelHit();
+        otherPlayer.CancelHit();
         CancelHit();
         Vector3 averagePosition = (weapon.transform.position + other.transform.position)/2f;
         Instantiate(spawnOnKlang, averagePosition, Quaternion.identity);
+        ApplyForce((transform.position - averagePosition).normalized * klangForce);
+        otherPlayer.ApplyForce((otherPlayer.transform.position - averagePosition).normalized * otherPlayer.klangForce);
     } 
 
     #endregion
@@ -639,7 +644,12 @@ public class Player : NetworkBehaviour
     {
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
         //if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack) && !movementSpecial.isInUse)
-        if(weapon.AttackState == TimingState.IN_PROGRESS && !(movementState is InAttack))
+        if (stunned)
+        {
+            next = GetComponent<InStun>();
+            stunned = false;
+        }
+        else if(weapon.AttackState == TimingState.IN_PROGRESS && !(movementState is InAttack))
         {
             next = GetComponent<InAttack>();
         }
@@ -721,7 +731,7 @@ public class Player : NetworkBehaviour
         //handle blocking/parrying
         if (hitWith != null)
         {
-            if (!hitWith.isActiveAndEnabled || (weapon.InHand && shield.TakeHit()))
+            if (weapon.InHand && shield.TakeHit())
             {
                 CancelHit();
             }
@@ -735,7 +745,7 @@ public class Player : NetworkBehaviour
             }
             else
             {
-                Player p = hitWith.GetComponentInParent<Player>();
+                Player p = hitWith.OurPlayer;
                 if (p.hitWith != null && p.hitWith.PlayerNumber == PlayerNumber)
                 {
                     Klang(hitWith);

@@ -244,10 +244,11 @@ GameObject:
   - component: {fileID: 114353328121409266}
   - component: {fileID: 114592979247049092}
   - component: {fileID: 114619213716886426}
-  - component: {fileID: 114986284636874590}
+  - component: {fileID: 114043471809597878}
   - component: {fileID: 114821917502314688}
   - component: {fileID: 114048623318915304}
   - component: {fileID: 114031144535157192}
+  - component: {fileID: 114101829842339342}
   - component: {fileID: 96202574160601256}
   - component: {fileID: 50196740923790892}
   - component: {fileID: 95949785917890580}
@@ -401,7 +402,7 @@ Transform:
   m_GameObject: {fileID: 1827202308764298}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.5, y: 1, z: 2}
   m_Children:
   - {fileID: 4230613044234608}
   - {fileID: 4639349557792852}
@@ -926,7 +927,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1006,7 +1007,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1086,7 +1087,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1343,6 +1344,27 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &114043471809597878
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1679150048336280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67fb4a0f1d755d408f6c82984948691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startupTime: 0
+  specialTime: 0.2
+  cooldownTime: 0.1
+  rechargeTime: 0
+  dashForce: 25
+  gravityModifier: 0.5
+  dashLimit: 1
+  nextDashBufferWindow: 0.2
+  dashSound: {fileID: 114003977806225076}
+  dashPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
 --- !u!114 &114048623318915304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1355,6 +1377,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeedToStopTime: 0.5
+--- !u!114 &114101829842339342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1679150048336280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f03eee7916aab4c8f8025da7c3a152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultStunDuration: 0.2
 --- !u!114 &114105332960934092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1422,7 +1456,7 @@ MonoBehaviour:
     type: 2}
   bounceForce: 15
   deathForce: 20
-  maxJumpHeight: 4
+  maxJumpHeight: 5
   minJumpHeight: 2
   Gravity: 50
   hitReactionTime: 0.2
@@ -1437,15 +1471,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff29916317b71e4da09a43e059a80af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startupTime: 0
-  attackTime: 0.1
-  cooldownTime: 0.25
+  startupTime: 0.05
+  attackTime: 0.2
+  cooldownTime: 0.4
   rechargeTime: 0
-  specialStartupTime: 0
+  specialStartupTime: 0.15
   specialTime: 0
   specialCooldownTime: 0
   specialRechargeTime: 0
-  thrownVersion: {fileID: 0}
+  thrownVersion: {fileID: 114811144672456160, guid: 666604262c26fa543801e5b6cfd8983b,
+    type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212045121767493206}
 --- !u!114 &114305203156194238
@@ -1489,10 +1524,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 13
-  stopToMaxSpeedTime: 0.1
-  maxSpeedToStopTime: 0.1
-  fullTurnTime: 0.2
+  maxSpeed: 16
+  stopToMaxSpeedTime: 0.25
+  maxSpeedToStopTime: 0.15
+  fullTurnTime: 0.23
   jumpSound: {fileID: 114639018780518578}
   runSound: {fileID: 114146229077346580}
   analogMovementSpeed: 0
@@ -1569,9 +1604,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 20
-  maxSpeed: 17
-  stopToMaxSpeedTime: 0.25
-  maxSpeedToStopTime: 0.4
+  maxSpeed: 20
+  stopToMaxSpeedTime: 0.3
+  maxSpeedToStopTime: 0.5
   fullTurnTime: 0.75
   analogMovementSpeed: 0
 --- !u!114 &114619213716886426
@@ -1677,26 +1712,6 @@ MonoBehaviour:
     i15: 177
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114986284636874590
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1679150048336280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b07b148acf0f3458b93dacce52bcdc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startupTime: 0
-  specialTime: 0.18
-  cooldownTime: 0.07
-  rechargeTime: 0
-  dashForce: 22
-  gravityModifier: 0.5
-  dashLimit: 3
-  dashSound: {fileID: 114003977806225076}
-  dashPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
 --- !u!198 &198025789431031954
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -4,31 +4,35 @@ using System.Collections;
 public class OnDash : OnMovementSpecial
 {
     [SerializeField]
-    private float dashForce;
+    protected float dashForce;
     public float DashForce { get { return dashForce; } }
 
     //private float timeLeft;
 
     [SerializeField]
-    private float gravityModifier;
+    protected float gravityModifier;
 
     [SerializeField]
-    private int dashLimit;
+    protected int dashLimit;
     public int DashLimit { get { return dashLimit; } }
+
+    [SerializeField]
+    protected float nextDashBufferWindow;
 
     [SerializeField]
     private PlayRandomSource dashSound;
 
     [SerializeField]
-    private Transform dashPuff;
+    protected Transform dashPuff;
     
-    private int currentDashes;
+    protected int currentDashes;
 
     private Vector2 direction;
     private Vector3 dashVelocity;
 
-    private bool earlyAttackInput;
-    private bool earlyDashInput;
+
+    protected bool earlyAttackInput;
+    protected bool hitNextDashInput;
     private bool justStarted;
     TrailRenderer tail;
 
@@ -38,7 +42,7 @@ public class OnDash : OnMovementSpecial
         currentDashes = dashLimit;
         tail = GetComponent<TrailRenderer>();
         earlyAttackInput = false;
-        earlyDashInput = false;
+        hitNextDashInput = false;
     }
 
     public override Vector3 ApplyFriction(Vector3 velocity)
@@ -73,7 +77,7 @@ public class OnDash : OnMovementSpecial
         specialTimeLeft -= Time.deltaTime;
 
         //Buffer for attacks and movement specials done too early
-        if (specialTimeLeft < (specialTime / 5))
+        if (specialTimeLeft < (specialTime * nextDashBufferWindow))
         {
             if (player.InputPlayer.GetButtonDown("Attack"))
             {
@@ -81,7 +85,7 @@ public class OnDash : OnMovementSpecial
             }
             if (player.InputPlayer.GetButtonDown("Movement Special"))
             {
-                earlyDashInput = true;
+                hitNextDashInput = true;
             }
         }
 
@@ -91,7 +95,7 @@ public class OnDash : OnMovementSpecial
             {
                 return GetComponent<InAttack>();
             }
-            else if(earlyDashInput)
+            else if(hitNextDashInput)
             {
                 return GetComponent<OnDash>();
             }
@@ -180,7 +184,7 @@ public class OnDash : OnMovementSpecial
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
         earlyAttackInput = false;
-        earlyDashInput = false;
+        hitNextDashInput = false;
         tail.enabled = false;
     }
     

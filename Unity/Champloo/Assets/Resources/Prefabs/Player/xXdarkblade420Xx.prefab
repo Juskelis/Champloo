@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 114187267148614972}
   - component: {fileID: 114384941653737122}
   - component: {fileID: 114754671075927648}
+  - component: {fileID: 114121970608963264}
   - component: {fileID: 96236306531832762}
   - component: {fileID: 50666197362017918}
   - component: {fileID: 95853521939767262}
@@ -1311,6 +1312,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20b42813b6d317c4a8dd722d27d7eeca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114121970608963264
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162316800763126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f03eee7916aab4c8f8025da7c3a152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultStunDuration: 0.2
 --- !u!114 &114126585807203634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1511,7 +1524,8 @@ MonoBehaviour:
   specialTime: 0
   specialCooldownTime: 0
   specialRechargeTime: 0
-  thrownVersion: {fileID: 0}
+  thrownVersion: {fileID: 114811144672456160, guid: 666604262c26fa543801e5b6cfd8983b,
+    type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
 --- !u!114 &114599821988778560
@@ -1557,6 +1571,7 @@ MonoBehaviour:
   dashForce: 22
   gravityModifier: 0.5
   dashLimit: 3
+  nextDashBufferWindow: 0.2
   dashSound: {fileID: 114126585807203634}
   dashPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
 --- !u!114 &114679085550598218
