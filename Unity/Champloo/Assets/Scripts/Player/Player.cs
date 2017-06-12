@@ -531,6 +531,12 @@ public class Player : NetworkBehaviour
         //FindObjectOfType<Score>().AddScore(playerNumber);
         Score.instance.AddScore(playerNumber);
     }
+
+    private void FireEvent<T>(T e) where T : EventArgs
+    {
+        EventDispatcher.Instance.FireEvent(this, e);
+        dispatcher.FireEvent(this, e);
+    }
     #endregion
 
     #region Data Syncronization
@@ -720,7 +726,7 @@ public class Player : NetworkBehaviour
             OnVelocityChanged(newVelocity);
             OnExternalForceChanged(newExternalForce);
 
-            dispatcher.FireEvent(this, new MovementStateChangedEvent {Next = next, Previous = movementState});
+            FireEvent(new MovementStateChangedEvent {Next = next, Previous = movementState});
 
             movementState = next;
             CmdUpdateMovementState(movementState.GetType().ToString());
