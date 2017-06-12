@@ -134,8 +134,6 @@ public class Player : NetworkBehaviour
     private Projectile hitWithProjectile;
 
     private bool manuallyUpdatedDirection = false;
-
-    private LocalEventDispatcher dispatcher;
 	
     private bool stunned = false;
 
@@ -155,6 +153,8 @@ public class Player : NetworkBehaviour
     private OnMovementSpecial movementSpecial;
 
     private SpriteRenderer currentSprite;
+
+    private LocalEventDispatcher dispatcher;
     #endregion
 
     #endregion
@@ -164,7 +164,7 @@ public class Player : NetworkBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        dispatcher = gameObject.AddComponent<LocalEventDispatcher>();
+        dispatcher = gameObject.GetComponent<LocalEventDispatcher>();
     }
 
     //[ClientCallback]
