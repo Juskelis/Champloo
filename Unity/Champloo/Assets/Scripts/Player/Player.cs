@@ -16,9 +16,7 @@ public class Player : NetworkBehaviour
     {
         get { return dead; }
     }
-
-    //[SerializeField]
-    //[Range(1, 4)]
+    
     private int playerNumber = 1;
     public int PlayerNumber
     {
@@ -73,13 +71,7 @@ public class Player : NetworkBehaviour
     private Transform hitbox;
 
     [SerializeField]
-    private Transform spawnOnDeath;
-
-    [SerializeField]
     private float bounceForce = 10f;
-
-    [SerializeField]
-    private float deathForce = 20f;
 
     [Space]
     [SerializeField]
@@ -278,26 +270,16 @@ public class Player : NetworkBehaviour
     void RpcKilled(Vector3 direction)
     {
         if (dead) return;
-        ShakeCamera();
+        FireEvent(new DeathEvent { deadPlayer = this });
 
-        //velocity = Vector3.zero;
-        //externalForce = Vector3.zero;
         OnVelocityChanged(Vector3.zero);
         OnExternalForceChanged(Vector3.zero);
 
         hitWith = null;
 
-        if (spawnOnDeath != null)
-        {
-            Transform corpse = (Transform)Instantiate(spawnOnDeath, transform.position, transform.rotation);
-            Rigidbody2D corpseBody = corpse.GetComponent<Rigidbody2D>();
-            corpseBody.gravityScale = Gravity / Physics2D.gravity.magnitude;
-            corpseBody.velocity = direction;
-        }
-
         gameObject.SetActive(false);
-        //dead = true;
         OnDeathChanged(true);
+
         float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
         transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
         Invoke("Spawn", time);

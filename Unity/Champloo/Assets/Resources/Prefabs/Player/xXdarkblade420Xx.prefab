@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 114905151845063692}
   - component: {fileID: 114383275711759350}
   - component: {fileID: 114214521122134788}
+  - component: {fileID: 114448704070849810}
   m_Layer: 9
   m_Name: xXdarkblade420Xx
   m_TagString: Player
@@ -1504,6 +1505,25 @@ MonoBehaviour:
   analogMovementSpeed: 0
   dust: {fileID: 114567913374022186}
   jumpPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
+--- !u!114 &114448704070849810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162316800763126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85bb619e81476c1488b95a592f713ad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnOnDeath: {fileID: 487684, guid: f76ffe80673a7004dace221606a3111b, type: 2}
+  shakeSettings:
+    shake: 1
+    magnitude: 10
+    roughness: 10
+    fadeInTime: 0
+    fadeOutTime: 0.5
+  corpsePushFactor: 20
 --- !u!114 &114567913374022186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1556,9 +1576,7 @@ MonoBehaviour:
   - {fileID: 212411269034367586}
   visuals: {fileID: 4715784140289914}
   hitbox: {fileID: 4630137742347486}
-  spawnOnDeath: {fileID: 487684, guid: f76ffe80673a7004dace221606a3111b, type: 2}
   bounceForce: 15
-  deathForce: 20
   maxJumpHeight: 4
   minJumpHeight: 2
   Gravity: 50
