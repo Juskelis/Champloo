@@ -734,6 +734,7 @@ public class Player : NetworkBehaviour
                 //steal weapon like a badass
                 weapon.InHand = true;
                 hitWith.InHand = false;
+                FireEvent(new ParryEvent { Attacker = hitWith.OurPlayer, Parrier = this });
                 CancelHit();
             }
             else
