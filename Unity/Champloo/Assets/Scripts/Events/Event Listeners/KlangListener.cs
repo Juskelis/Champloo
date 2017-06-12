@@ -43,18 +43,6 @@ public class KlangListener : MonoBehaviour
                 shakeSettings.fadeOutTime);
         }
 
-        //reset weapons
-        wA.Reset();
-        wB.Reset();
-
-        //cancel hits
-        pA.CancelHit();
-        pB.CancelHit();
-
-        //pushback
-        pA.ApplyForce((pA.transform.position - centerOfEvent).normalized * klangKnockBack);
-        pB.ApplyForce((pB.transform.position - centerOfEvent).normalized * klangKnockBack);
-
         //create effect
         Instantiate(spawnOnKlang, centerOfEvent, Quaternion.identity);
     }
