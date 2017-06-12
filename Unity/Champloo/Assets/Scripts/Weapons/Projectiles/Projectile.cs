@@ -19,6 +19,7 @@ public class Projectile : MonoBehaviour
     protected Rigidbody2D body;
 
     protected Player player;
+    public Player OurPlayer { get {return player;} }
 
     protected static List<Player> players;
     protected static int destroyableProjectiles;
