@@ -247,6 +247,10 @@ public class Player : NetworkBehaviour
         OnDeathChanged(false);
         //velocity = Vector3.zero;
         //externalForce = Vector3.zero;
+        hitWith = null;
+        hitWithProjectile = null;
+        manuallyUpdatedDirection = false;
+        stunned = false;
         OnVelocityChanged(Vector3.zero);
         OnExternalForceChanged(Vector3.zero);
         Vector3 garbageVelocity;
