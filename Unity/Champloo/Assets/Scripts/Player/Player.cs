@@ -469,18 +469,6 @@ public class Player : NetworkBehaviour
             A = weapon,
             B = other
         });
-        /*
-        Player otherPlayer = other.OurPlayer;
-        ShakeCamera();
-        other.Reset();
-        weapon.Reset();
-        otherPlayer.CancelHit();
-        CancelHit();
-        Vector3 averagePosition = (weapon.transform.position + other.transform.position)/2f;
-        Instantiate(spawnOnKlang, averagePosition, Quaternion.identity);
-        ApplyForce((transform.position - averagePosition).normalized * klangForce);
-        otherPlayer.ApplyForce((otherPlayer.transform.position - averagePosition).normalized * otherPlayer.klangForce);
-        */
     } 
 
     #endregion
