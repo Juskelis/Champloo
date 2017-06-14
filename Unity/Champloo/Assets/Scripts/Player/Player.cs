@@ -25,8 +25,6 @@ public class Player : NetworkBehaviour
     }
 
     private int ourNetworkID;
-
-    private int currentDashes = 0;
     
     private MovementState movementState;
     public MovementState CurrentMovementState
@@ -232,10 +230,11 @@ public class Player : NetworkBehaviour
     private void Spawn()
     {
         gameObject.SetActive(true);
-        //dead = false;
         OnDeathChanged(false);
-        //velocity = Vector3.zero;
-        //externalForce = Vector3.zero;
+        hitWith = null;
+        hitWithProjectile = null;
+        manuallyUpdatedDirection = false;
+        stunned = false;
         OnVelocityChanged(Vector3.zero);
         OnExternalForceChanged(Vector3.zero);
         Vector3 garbageVelocity;
