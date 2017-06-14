@@ -243,10 +243,7 @@ public class Player : NetworkBehaviour
     private void Spawn()
     {
         gameObject.SetActive(true);
-        //dead = false;
         OnDeathChanged(false);
-        //velocity = Vector3.zero;
-        //externalForce = Vector3.zero;
         hitWith = null;
         hitWithProjectile = null;
         manuallyUpdatedDirection = false;
