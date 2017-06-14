@@ -27,8 +27,6 @@ public class Player : NetworkBehaviour
     }
 
     private int ourNetworkID;
-
-    private int currentDashes = 0;
     
     private MovementState movementState;
     public MovementState CurrentMovementState
