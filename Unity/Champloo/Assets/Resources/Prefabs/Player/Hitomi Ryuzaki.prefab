@@ -258,6 +258,8 @@ GameObject:
   - component: {fileID: 114305203156194238}
   - component: {fileID: 114105332960934092}
   - component: {fileID: 114120394542606772}
+  - component: {fileID: 114716227192335664}
+  - component: {fileID: 114885048772830408}
   m_Layer: 9
   m_Name: Hitomi Ryuzaki
   m_TagString: Player
@@ -1451,12 +1453,7 @@ MonoBehaviour:
   - {fileID: 212730462121830650}
   visuals: {fileID: 4489892607494418}
   hitbox: {fileID: 4206746112528752}
-  spawnOnDeath: {fileID: 487684, guid: f76ffe80673a7004dace221606a3111b, type: 2}
-  spawnOnKlang: {fileID: 4014390779768856, guid: f6ddcdb14ffe2df45903ff56fd969b1b,
-    type: 2}
   bounceForce: 15
-  klangForce: 20
-  deathForce: 20
   maxJumpHeight: 5
   minJumpHeight: 2
   Gravity: 50
@@ -1657,6 +1654,17 @@ MonoBehaviour:
   timeToLoseShield: 10
   timeToGainShield: 2
   visuals: {fileID: 212443051725585810}
+--- !u!114 &114716227192335664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1679150048336280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad283fefeaf9b140a9d3b78fe991a13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114746179475856986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1681,6 +1689,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d7340326ba737940b8d5824aa5c067d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114885048772830408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1679150048336280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85bb619e81476c1488b95a592f713ad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnOnDeath: {fileID: 487684, guid: f76ffe80673a7004dace221606a3111b, type: 2}
+  shakeSettings:
+    shake: 1
+    magnitude: 10
+    roughness: 10
+    fadeInTime: 0
+    fadeOutTime: 0.5
+  corpsePushFactor: 20
 --- !u!114 &114944225997718192
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -16,9 +16,7 @@ public class Player : NetworkBehaviour
     {
         get { return dead; }
     }
-
-    //[SerializeField]
-    //[Range(1, 4)]
+    
     private int playerNumber = 1;
     public int PlayerNumber
     {
@@ -73,19 +71,7 @@ public class Player : NetworkBehaviour
     private Transform hitbox;
 
     [SerializeField]
-    private Transform spawnOnDeath;
-
-    [SerializeField]
-    private Transform spawnOnKlang;
-
-    [SerializeField]
     private float bounceForce = 10f;
-
-    [SerializeField]
-    private float klangForce = 10f;
-
-    [SerializeField]
-    private float deathForce = 20f;
 
     [Space]
     [SerializeField]
@@ -134,7 +120,7 @@ public class Player : NetworkBehaviour
     private Projectile hitWithProjectile;
 
     private bool manuallyUpdatedDirection = false;
-
+	
     private bool stunned = false;
 
     #endregion
@@ -153,6 +139,8 @@ public class Player : NetworkBehaviour
     private OnMovementSpecial movementSpecial;
 
     private SpriteRenderer currentSprite;
+
+    private LocalEventDispatcher dispatcher;
     #endregion
 
     #endregion
@@ -162,6 +150,7 @@ public class Player : NetworkBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        dispatcher = gameObject.GetComponent<LocalEventDispatcher>();
     }
 
     //[ClientCallback]
@@ -281,26 +270,16 @@ public class Player : NetworkBehaviour
     void RpcKilled(Vector3 direction)
     {
         if (dead) return;
-        ShakeCamera();
+        FireEvent(new DeathEvent { deadPlayer = this });
 
-        //velocity = Vector3.zero;
-        //externalForce = Vector3.zero;
         OnVelocityChanged(Vector3.zero);
         OnExternalForceChanged(Vector3.zero);
 
         hitWith = null;
 
-        if (spawnOnDeath != null)
-        {
-            Transform corpse = (Transform)Instantiate(spawnOnDeath, transform.position, transform.rotation);
-            Rigidbody2D corpseBody = corpse.GetComponent<Rigidbody2D>();
-            corpseBody.gravityScale = Gravity / Physics2D.gravity.magnitude;
-            corpseBody.velocity = direction;
-        }
-
         gameObject.SetActive(false);
-        //dead = true;
         OnDeathChanged(true);
+
         float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
         transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
         Invoke("Spawn", time);
@@ -335,6 +314,7 @@ public class Player : NetworkBehaviour
             {
                 //kill them!
                 CmdScore();
+                FireEvent(new KillEvent {Killer = this, Victim = otherPlayer});
                 otherPlayer.Kill(Vector3.down);
             }
         }
@@ -344,6 +324,7 @@ public class Player : NetworkBehaviour
             if (otherPlayer.movementState is OnDash && !dead)
             {
                 //they killed us!
+                FireEvent(new KillEvent {Killer = otherPlayer, Victim = this});
                 Kill(Vector3.down);
                 otherPlayer.ApplyForce(Vector3.up * bounceForce);
                 otherPlayer.CmdScore();
@@ -441,7 +422,8 @@ public class Player : NetworkBehaviour
                 //Score.instance.AddScore(p.PlayerNumber);
                 hitWithProjectile = p;
                 Score.instance.CmdScore(p.PlayerNumber);
-                Kill(p.transform.right * deathForce);
+                FireEvent(new KillEvent {Killer = p.OurPlayer, Victim = this});
+                Kill(p.transform.right);
             }
         }
     }
@@ -470,10 +452,11 @@ public class Player : NetworkBehaviour
 
 
         //FindObjectOfType<Score>().AddScore(hitWith.GetComponentInParent<Player>().PlayerNumber);
-        Kill(hitWith.transform.right * deathForce);
+        FireEvent(new KillEvent {Killer = other, Victim = this});
+        Kill(hitWith.transform.right);
     }
 
-    protected void CancelHit()
+    public void CancelHit()
     {
         hitWith = null;
         CancelInvoke("ProcessHit");
@@ -481,16 +464,11 @@ public class Player : NetworkBehaviour
 
     protected void Klang(Weapon other)
     {
-        Player otherPlayer = other.OurPlayer;
-        ShakeCamera();
-        other.Reset();
-        weapon.Reset();
-        otherPlayer.CancelHit();
-        CancelHit();
-        Vector3 averagePosition = (weapon.transform.position + other.transform.position)/2f;
-        Instantiate(spawnOnKlang, averagePosition, Quaternion.identity);
-        ApplyForce((transform.position - averagePosition).normalized * klangForce);
-        otherPlayer.ApplyForce((otherPlayer.transform.position - averagePosition).normalized * otherPlayer.klangForce);
+        FireEvent(new KlangEvent
+        {
+            A = weapon,
+            B = other
+        });
     } 
 
     #endregion
@@ -529,7 +507,7 @@ public class Player : NetworkBehaviour
         //FindObjectOfType<Score>().AddScore(playerNumber);
         Score.instance.AddScore(playerNumber);
     }
-
+	
     private void ChangeMovementState(MovementState next)
     {
         Vector3 newVelocity, newExternalForce;
@@ -541,8 +519,16 @@ public class Player : NetworkBehaviour
         OnVelocityChanged(newVelocity);
         OnExternalForceChanged(newExternalForce);
 
+        FireEvent(new MovementStateChangedEvent {Next = next, Previous = movementState});
+
         movementState = next;
         CmdUpdateMovementState(movementState.GetType().ToString());
+	}
+
+    private void FireEvent<T>(T e) where T : EventArgs
+    {
+        EventDispatcher.Instance.FireEvent(this, e);
+        dispatcher.FireEvent(this, e);
     }
     #endregion
 
@@ -743,6 +729,7 @@ public class Player : NetworkBehaviour
                 //steal weapon like a badass
                 weapon.InHand = true;
                 hitWith.InHand = false;
+                FireEvent(new ParryEvent { Attacker = hitWith.OurPlayer, Parrier = this });
                 CancelHit();
             }
             else
