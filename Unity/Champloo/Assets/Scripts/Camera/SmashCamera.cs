@@ -122,7 +122,7 @@ public class SmashCamera : MonoBehaviour
                 );
                 size.y = size.x/cam.aspect;
             }
-            else if (maxDist.y >= zoomOut.y/2)
+            if (maxDist.y >= zoomOut.y/2)
             {
                 size.y = Median(
                     zoomMin/cam.aspect,
