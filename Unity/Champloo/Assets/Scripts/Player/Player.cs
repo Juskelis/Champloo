@@ -12,9 +12,10 @@ public class Player : NetworkBehaviour
     #region State Variables
     [SyncVar(hook = "OnDeath")]
     private bool dead = false;
+    private bool localDead = false; //used to prevent network race conditions
     public bool Dead
     {
-        get { return dead; }
+        get { return dead || localDead; }
     }
     
     private int playerNumber = 1;
@@ -259,8 +260,9 @@ public class Player : NetworkBehaviour
     //[Client]
     void Kill(Vector3 direction = default(Vector3))
     {
-        if (isLocalPlayer && hasAuthority && !dead)
+        if (isLocalPlayer && hasAuthority && !Dead)
         {
+            localDead = true;
             CmdKill(direction);
         }
     }
@@ -268,7 +270,7 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     void RpcKilled(Vector3 direction)
     {
-        if (dead) return;
+        if (Dead) return;
         FireEvent(new DeathEvent { deadPlayer = this });
 
         OnVelocityChanged(Vector3.zero);
@@ -291,7 +293,7 @@ public class Player : NetworkBehaviour
     void Crushed(object sender, GameObject obj)
     {
         
-        if (obj.GetComponent<Player>() != null) return;
+        if (obj.GetComponent<Player>() != null || Dead) return;
         FindObjectOfType<Score>().SubtractScore(playerNumber);
         Kill();
         
@@ -300,7 +302,7 @@ public class Player : NetworkBehaviour
     void Collided(object sender, GameObject other, Controller2D.CollisionInfo info)
     {
         Player otherPlayer = other.GetComponent<Player>();
-        if (otherPlayer == null) return;
+        if (otherPlayer == null || otherPlayer.Dead || Dead) return;
         
         //This section deals with player collisions
         //This section needs to be changed to not reference dash
@@ -309,7 +311,7 @@ public class Player : NetworkBehaviour
         {
             //bounce off their head no matter what
             ApplyForce(Vector3.up * bounceForce);
-            if (movementState is OnDash && !otherPlayer.dead)
+            if (movementState is OnDash && !otherPlayer.Dead)
             {
                 //kill them!
                 CmdScore();
@@ -320,7 +322,7 @@ public class Player : NetworkBehaviour
         //if another player is above
         else if (info.Above)
         {
-            if (otherPlayer.movementState is OnDash && !dead)
+            if (otherPlayer.movementState is OnDash && !Dead)
             {
                 //they killed us!
                 FireEvent(new KillEvent {Killer = otherPlayer, Victim = this});
@@ -537,6 +539,7 @@ public class Player : NetworkBehaviour
 
     public void OnDeath(bool deathState)
     {
+        localDead = deathState;
         dead = deathState;
     }
 
@@ -556,6 +559,7 @@ public class Player : NetworkBehaviour
 
     public void OnDeathChanged(bool deathState)
     {
+        localDead = deathState;
         CmdDeathChange(deathState);
     }
 
@@ -576,6 +580,7 @@ public class Player : NetworkBehaviour
     [Command]
     public void CmdDeathChange(bool deathState)
     {
+        localDead = deathState;
         dead = deathState;
     }
 
