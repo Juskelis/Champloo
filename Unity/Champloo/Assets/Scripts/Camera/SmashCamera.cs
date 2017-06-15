@@ -84,8 +84,8 @@ public class SmashCamera : MonoBehaviour
         }
         toFollow = targetTransforms.ToArray();
 
-        Vector2 newCenter = Vector2.zero;
-
+        Vector3 newCenter = Vector3.zero;
+        Vector2 centerOfScreen = cam.ViewportToWorldPoint(Vector3.one*0.5f);
         maxDist = Vector2.zero;
 
         for (int i = 0; i < toFollow.Length; i++)
@@ -93,7 +93,11 @@ public class SmashCamera : MonoBehaviour
             newCenter.x += toFollow[i].position.x;
             newCenter.y += toFollow[i].position.y;
         }
-        newCenter = newCenter / (toFollow.Length > 0 ? toFollow.Length : 1);
+
+        newCenter = toFollow.Length > 0
+            ? newCenter / toFollow.Length
+            : defaultCenter;
+
         for (int i = 0; i < toFollow.Length; i++)
         {
             maxDist.x = Mathf.Max(maxDist.x, Mathf.Abs(toFollow[i].position.x - newCenter.x));
@@ -106,7 +110,7 @@ public class SmashCamera : MonoBehaviour
             maxDist = Vector2.one * Mathf.Infinity;
         }
 
-        if (maxDist.x >= zoomOut.x || maxDist.y >= zoomOut.y)
+        if (!pointInRect(maxDist, Vector2.zero, zoomOut/2))
         {
             //zoom out
             if (maxDist.x >= zoomOut.x/2)
@@ -114,28 +118,28 @@ public class SmashCamera : MonoBehaviour
                 size.x = Median(
                     zoomMin,
                     zoomMax,
-                    (Mathf.Pow(zoomOutSpeed, 3) * (maxDist.x - zoomOut.x/2))/2 + size.x
+                    Mathf.Pow(zoomOutSpeed, 3) * (maxDist.x - zoomOut.x/2)/2 + size.x
                 );
                 size.y = size.x/cam.aspect;
             }
-            else if (maxDist.y >= zoomOut.y/2)
+            if (maxDist.y >= zoomOut.y/2)
             {
                 size.y = Median(
                     zoomMin/cam.aspect,
                     zoomMax/cam.aspect,
-                    (Mathf.Pow(zoomOutSpeed, 3) * (maxDist.y - zoomOut.y/2))/2 + size.y
+                    Mathf.Pow(zoomOutSpeed, 3) * (maxDist.y - zoomOut.y/2)/2 + size.y
                 );
                 size.x = size.y*cam.aspect;
             }
         }
-        else if (maxDist.x <= zoomIn.x && maxDist.y <= zoomIn.y)
+        else if (pointInRect(maxDist, Vector2.zero, zoomIn/2))
         {
             if (maxDist.x/(zoomIn.x/2) >= maxDist.y/(zoomIn.y/2))
             {
                 size.x = Median(
                     zoomMin,
                     zoomMax,
-                    (Mathf.Pow(zoomInSpeed, 3) * (maxDist.x - zoomIn.x/2))/2 + size.x
+                    Mathf.Pow(zoomInSpeed, 3) * (maxDist.x - zoomIn.x/2)/2 + size.x
                 );
                 size.y = size.x/cam.aspect;
             }
@@ -144,7 +148,7 @@ public class SmashCamera : MonoBehaviour
                 size.y = Median(
                     zoomMin/cam.aspect,
                     zoomMax/cam.aspect,
-                    (Mathf.Pow(zoomInSpeed, 3) * (maxDist.y - zoomIn.y/2))/2 + size.y
+                    Mathf.Pow(zoomInSpeed, 3) * (maxDist.y - zoomIn.y/2)/2 + size.y
                 );
                 size.x = size.y*cam.aspect;
             }
@@ -158,25 +162,27 @@ public class SmashCamera : MonoBehaviour
         center.y = cubic_lerp(center.y, newCenter.y, panSpeed);
         center.z = transform.position.z;
 
-        //clamp position to within bounds
-        center.x = Mathf.Clamp(
-            center.x,
-            Mathf.Min(bottomLeft.position.x + size.x / 2, defaultCenter.x),
-            Mathf.Max(topRight.position.x - size.x / 2, defaultCenter.x));
-        center.y = Mathf.Clamp(
-            center.y,
-            Mathf.Min(bottomLeft.position.y + size.y / 2, defaultCenter.y),
-            Mathf.Max(topRight.position.y - size.y / 2, defaultCenter.y));
-
-
-        //zoom camera to bounds
-        transform.position = center;
-
         Vector3 camBottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
         Vector3 camTopRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, 0));
         Vector3 camSize = camBottomLeft - camTopRight;
 
         cam.orthographicSize *= size.magnitude/camSize.magnitude;
+
+        center.x = Mathf.Clamp(center.x,
+            Mathf.Min(bottomLeft.position.x + Mathf.Abs(camSize.x / 2), defaultCenter.x),
+            Mathf.Max(topRight.position.x - Mathf.Abs(camSize.x / 2), defaultCenter.x));
+
+        center.y = Mathf.Clamp(center.y,
+            Mathf.Min(bottomLeft.position.y + Mathf.Abs(camSize.y / 2), defaultCenter.y),
+            Mathf.Max(topRight.position.y - Mathf.Abs(camSize.y / 2), defaultCenter.y));
+
+        transform.position = center;
+    }
+
+    bool pointInRect(Vector2 toCheck, Vector2 bottomLeft, Vector2 topRight)
+    {
+        Bounds b = new Bounds((bottomLeft + topRight) / 2, topRight - bottomLeft);
+        return b.Contains(toCheck);
     }
 
     // Update is called once per frame

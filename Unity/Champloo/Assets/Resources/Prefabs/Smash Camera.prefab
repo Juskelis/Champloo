@@ -194,7 +194,7 @@ MonoBehaviour:
   bottomLeft: {fileID: 4600371550015656}
   topRight: {fileID: 4996948966716204}
   panSpeed: 0.6
-  zoomOutSpeed: 6
+  zoomOutSpeed: 0.6
   zoomInSpeed: 0.7
   zoomOutBoundary: 0.64
   zoomInBoundary: 0.4
