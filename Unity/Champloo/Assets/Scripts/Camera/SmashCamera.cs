@@ -106,7 +106,7 @@ public class SmashCamera : MonoBehaviour
             maxDist = Vector2.one * Mathf.Infinity;
         }
 
-        if (maxDist.x >= zoomOut.x || maxDist.y >= zoomOut.y)
+        if (!pointInRect(maxDist, Vector2.zero, zoomOut/2))
         {
             //zoom out
             if (maxDist.x >= zoomOut.x/2)
@@ -128,7 +128,7 @@ public class SmashCamera : MonoBehaviour
                 size.x = size.y*cam.aspect;
             }
         }
-        else if (maxDist.x <= zoomIn.x && maxDist.y <= zoomIn.y)
+        else if (pointInRect(maxDist, Vector2.zero, zoomIn/2))
         {
             if (maxDist.x/(zoomIn.x/2) >= maxDist.y/(zoomIn.y/2))
             {
@@ -177,6 +177,12 @@ public class SmashCamera : MonoBehaviour
         Vector3 camSize = camBottomLeft - camTopRight;
 
         cam.orthographicSize *= size.magnitude/camSize.magnitude;
+    }
+
+    bool pointInRect(Vector2 toCheck, Vector2 bottomLeft, Vector2 topRight)
+    {
+        Bounds b = new Bounds((bottomLeft + topRight) / 2, topRight - bottomLeft);
+        return b.Contains(toCheck);
     }
 
     // Update is called once per frame
