@@ -158,25 +158,21 @@ public class SmashCamera : MonoBehaviour
         center.y = cubic_lerp(center.y, newCenter.y, panSpeed);
         center.z = transform.position.z;
 
-        //clamp position to within bounds
-        center.x = Mathf.Clamp(
-            center.x,
-            Mathf.Min(bottomLeft.position.x + size.x / 2, defaultCenter.x),
-            Mathf.Max(topRight.position.x - size.x / 2, defaultCenter.x));
-        center.y = Mathf.Clamp(
-            center.y,
-            Mathf.Min(bottomLeft.position.y + size.y / 2, defaultCenter.y),
-            Mathf.Max(topRight.position.y - size.y / 2, defaultCenter.y));
-
-
-        //zoom camera to bounds
-        transform.position = center;
-
         Vector3 camBottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
         Vector3 camTopRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, 0));
         Vector3 camSize = camBottomLeft - camTopRight;
 
         cam.orthographicSize *= size.magnitude/camSize.magnitude;
+
+        center.x = Mathf.Clamp(center.x,
+            Mathf.Min(bottomLeft.position.x + Mathf.Abs(camSize.x / 2), defaultCenter.x),
+            Mathf.Max(topRight.position.x - Mathf.Abs(camSize.x / 2), defaultCenter.x));
+
+        center.y = Mathf.Clamp(center.y,
+            Mathf.Min(bottomLeft.position.y + Mathf.Abs(camSize.y / 2), defaultCenter.y),
+            Mathf.Max(topRight.position.y - Mathf.Abs(camSize.y / 2), defaultCenter.y));
+
+        transform.position = center;
     }
 
     bool pointInRect(Vector2 toCheck, Vector2 bottomLeft, Vector2 topRight)
