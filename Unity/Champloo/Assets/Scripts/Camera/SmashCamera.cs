@@ -114,7 +114,7 @@ public class SmashCamera : MonoBehaviour
                 size.x = Median(
                     zoomMin,
                     zoomMax,
-                    (Mathf.Pow(zoomOutSpeed, 3) * (maxDist.x - zoomOut.x/2))/2 + size.x
+                    Mathf.Pow(zoomOutSpeed, 3) * (maxDist.x - zoomOut.x/2)/2 + size.x
                 );
                 size.y = size.x/cam.aspect;
             }
@@ -123,7 +123,7 @@ public class SmashCamera : MonoBehaviour
                 size.y = Median(
                     zoomMin/cam.aspect,
                     zoomMax/cam.aspect,
-                    (Mathf.Pow(zoomOutSpeed, 3) * (maxDist.y - zoomOut.y/2))/2 + size.y
+                    Mathf.Pow(zoomOutSpeed, 3) * (maxDist.y - zoomOut.y/2)/2 + size.y
                 );
                 size.x = size.y*cam.aspect;
             }
@@ -135,7 +135,7 @@ public class SmashCamera : MonoBehaviour
                 size.x = Median(
                     zoomMin,
                     zoomMax,
-                    (Mathf.Pow(zoomInSpeed, 3) * (maxDist.x - zoomIn.x/2))/2 + size.x
+                    Mathf.Pow(zoomInSpeed, 3) * (maxDist.x - zoomIn.x/2)/2 + size.x
                 );
                 size.y = size.x/cam.aspect;
             }
@@ -144,7 +144,7 @@ public class SmashCamera : MonoBehaviour
                 size.y = Median(
                     zoomMin/cam.aspect,
                     zoomMax/cam.aspect,
-                    (Mathf.Pow(zoomInSpeed, 3) * (maxDist.y - zoomIn.y/2))/2 + size.y
+                    Mathf.Pow(zoomInSpeed, 3) * (maxDist.y - zoomIn.y/2)/2 + size.y
                 );
                 size.x = size.y*cam.aspect;
             }
