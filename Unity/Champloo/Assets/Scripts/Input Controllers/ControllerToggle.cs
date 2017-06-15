@@ -10,4 +10,15 @@ public class ControllerToggle : MonoBehaviour {
             player.controllers.maps.SetMapsEnabled(true, categoryName);
         }
     }
+
+    public void DisableAllControllersExcept(int playerControllerNumber)
+    {
+        foreach (Rewired.Player player in ReInput.players.AllPlayers)
+        {
+            if (player.id != playerControllerNumber)
+            {
+                player.controllers.maps.SetAllMapsEnabled(false);
+            }
+        }
+    }
 }

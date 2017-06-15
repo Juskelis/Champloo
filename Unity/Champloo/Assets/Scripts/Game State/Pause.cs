@@ -32,17 +32,23 @@ public class Pause : MonoBehaviour
 
     public void LateUpdate()
     {
+        int controllerID = -1;
         foreach (Rewired.Player player in ReInput.players.Players)
         {
             if (!pressed && (player.GetButtonDown("Pause") || player.GetButtonDown("Resume")))
             {
                 pressed = true;
+                controllerID = player.id;
                 TogglePause();
             }
             else if (pressed && ((paused && player.GetButtonUp("Resume")) || (!paused && player.GetButtonUp("Pause"))))
             {
                 pressed = false;
             }
+        }
+        if (paused && controllerID >= 0)
+        {
+            FindObjectOfType<ControllerToggle>().DisableAllControllersExcept(controllerID);
         }
     }
 }
