@@ -84,8 +84,8 @@ public class SmashCamera : MonoBehaviour
         }
         toFollow = targetTransforms.ToArray();
 
-        Vector2 newCenter = Vector2.zero;
-
+        Vector3 newCenter = Vector3.zero;
+        Vector2 centerOfScreen = cam.ViewportToWorldPoint(Vector3.one*0.5f);
         maxDist = Vector2.zero;
 
         for (int i = 0; i < toFollow.Length; i++)
@@ -93,7 +93,11 @@ public class SmashCamera : MonoBehaviour
             newCenter.x += toFollow[i].position.x;
             newCenter.y += toFollow[i].position.y;
         }
-        newCenter = newCenter / (toFollow.Length > 0 ? toFollow.Length : 1);
+
+        newCenter = toFollow.Length > 0
+            ? newCenter / toFollow.Length
+            : defaultCenter;
+
         for (int i = 0; i < toFollow.Length; i++)
         {
             maxDist.x = Mathf.Max(maxDist.x, Mathf.Abs(toFollow[i].position.x - newCenter.x));
