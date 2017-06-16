@@ -75,8 +75,7 @@ public class Projectile : MonoBehaviour
                 transform.position = follow.position - relativePos;
             }
             //delete if stopped, and too many still ones on screen
-            if (CanBeDestroyed && player.Dead
-                && players.Count - DeadPlayerCount() < destroyableProjectiles)
+            if (CanBeDestroyed && players.Count - DeadPlayerCount() < destroyableProjectiles)
             {
                 Destroy(gameObject);
             }
