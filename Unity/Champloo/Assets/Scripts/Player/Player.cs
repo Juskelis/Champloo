@@ -245,6 +245,7 @@ public class Player : NetworkBehaviour
         movementState.OnEnter(velocity, externalForce, out garbageVelocity, out garbageExternalForces);
         CmdUpdateMovementState(movementState.GetType().ToString());
         weapon.Reset();
+        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
     }
 
     #endregion
@@ -270,7 +271,7 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     void RpcKilled(Vector3 direction)
     {
-        if (Dead) return;
+        if (dead) return;
         FireEvent(new DeathEvent { deadPlayer = this });
 
         OnVelocityChanged(Vector3.zero);

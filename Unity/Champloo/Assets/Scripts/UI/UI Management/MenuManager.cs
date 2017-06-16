@@ -1,11 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
     [SerializeField]
     private Menu CurrentMenu;
 
+    private Stack<Menu> menuHistory;
+
     private bool firstFrame = true;
+
+    private void Awake()
+    {
+        menuHistory = new Stack<Menu>();
+    }
 
     private void LateUpdate()
     {
@@ -39,6 +47,7 @@ public class MenuManager : MonoBehaviour
         if (CurrentMenu != null)
         {
             CurrentMenu.IsOpen = false;
+            menuHistory.Push(CurrentMenu);
         }
 
         CurrentMenu = menu;
@@ -46,6 +55,18 @@ public class MenuManager : MonoBehaviour
         if (menu != null)
         {
             CurrentMenu.IsOpen = true;
+        }
+    }
+
+    public void GoBack()
+    {
+        if (menuHistory.Count <= 0)
+        {
+            LoadDefaultMenu();
+        }
+        else
+        {
+            ShowMenu(menuHistory.Pop());
         }
     }
 }

@@ -24,8 +24,12 @@ public class Menu : MonoBehaviour
 
             if (value && initiallySelected != null)
             {
-                eventSystem = FindObjectOfType<EventSystem>();
+                cgroup.blocksRaycasts = cgroup.interactable = true;
+                eventSystem = EventSystem.current;
+                Selectable selected = initiallySelected.GetComponent<Selectable>();
+                selected.enabled = true;
                 eventSystem.SetSelectedGameObject(initiallySelected);
+                eventSystem.UpdateModules();
             }
         }
     }
@@ -52,7 +56,7 @@ public class Menu : MonoBehaviour
 
     public void Update()
     {
-        cgroup.blocksRaycasts = cgroup.interactable = anim.GetCurrentAnimatorStateInfo(0).IsName("Open");
+        cgroup.blocksRaycasts = cgroup.interactable = IsOpen;
 
         //sometimes network stuff is wonky so reset menu location to make sure things aren't dumb
         rect.offsetMax = rect.offsetMin = Vector2.zero;
