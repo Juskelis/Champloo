@@ -26,6 +26,7 @@ public class OnDash : OnMovementSpecial
     protected Transform dashPuff;
     
     protected int currentDashes;
+    public int DashesRemaining { get { return currentDashes; } }
 
     private Vector2 direction;
     private Vector3 dashVelocity;
