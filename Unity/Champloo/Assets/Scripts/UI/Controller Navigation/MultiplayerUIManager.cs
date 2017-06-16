@@ -123,7 +123,7 @@ public class MultiplayerUIManager : MonoBehaviour
 
         foreach (var player in ReInput.players.Players)
 	    {
-	        if (playersCanJoin && player.GetButtonDown(joinAction) && !ContainsController(player))
+	        if (playersCanJoin && player.GetAnyButtonDown() && !ContainsController(player))
 	        {
 	            //player has joined
                 AddController(player);
