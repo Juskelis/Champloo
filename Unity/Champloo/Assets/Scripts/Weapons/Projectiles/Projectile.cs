@@ -77,6 +77,7 @@ public class Projectile : MonoBehaviour
             //delete if stopped, and too many still ones on screen
             if (CanBeDestroyed && players.Count - DeadPlayerCount() < destroyableProjectiles)
             {
+                CanBeDestroyed = false;
                 Destroy(gameObject);
             }
         }
@@ -106,7 +107,10 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        if (!Moving) destroyableProjectiles--;
+        if (CanBeDestroyed)
+        {
+            CanBeDestroyed = false;
+        }
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D c)
