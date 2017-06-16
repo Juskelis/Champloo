@@ -88,8 +88,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126688}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.63, y: -1.08, z: 0}
-  m_LocalScale: {x: 3, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0, y: 9, z: 0}
+  m_LocalScale: {x: 4, y: 2, z: 1}
   m_Children:
   - {fileID: 408116}
   m_Father: {fileID: 0}
@@ -119,7 +119,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 4096
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -244,18 +244,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea20e894d764f6d439048c9351f31f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalRayCount: 4
-  verticalRayCount: 8
   passengerMask:
     serializedVersion: 2
     m_Bits: 512
-  speed: 2
+  speed: 2.5
   waitTime: 0
   easeAmount: 0
   cyclic: 0
   localWaypoints:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: -12.26, z: 0}
+  - {x: 0, y: -9, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
