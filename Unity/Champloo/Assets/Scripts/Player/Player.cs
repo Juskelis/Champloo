@@ -245,6 +245,7 @@ public class Player : NetworkBehaviour
         movementState.OnEnter(velocity, externalForce, out garbageVelocity, out garbageExternalForces);
         CmdUpdateMovementState(movementState.GetType().ToString());
         weapon.Reset();
+        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
     }
 
     #endregion
