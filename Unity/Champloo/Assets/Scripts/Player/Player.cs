@@ -270,7 +270,7 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     void RpcKilled(Vector3 direction)
     {
-        if (Dead) return;
+        if (dead) return;
         FireEvent(new DeathEvent { deadPlayer = this });
 
         OnVelocityChanged(Vector3.zero);
