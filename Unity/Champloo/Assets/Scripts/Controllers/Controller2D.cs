@@ -30,6 +30,7 @@ public class Controller2D : RaycastController
 
     [SerializeField] private float maxSlopeAngle = 80f;
     [SerializeField] public LayerMask collisionMask;
+    [SerializeField] public LayerMask touchableMask; //things that we can be touching; used for state logic
     [SerializeField] public LayerMask notifyMask; //notify us when we hit it, but don't interact with it directly
     [SerializeField] public LayerMask crushMask;
     [SerializeField] public float touchWidth = 0.05f;
@@ -176,7 +177,7 @@ public class Controller2D : RaycastController
         {
             Vector2 rayOrigin = raycastOrigins.topLeft;
             rayOrigin += Vector2.right * (horizontalRaySpacing * i);
-            RaycastAll(rayOrigin, Vector2.up, skinWidth + touchWidth, collisionMask);
+            RaycastAll(rayOrigin, Vector2.up, skinWidth + touchWidth, touchableMask);
             if(hitsList.Count > 0)
             {
                 collisions.Above = true;
@@ -184,7 +185,7 @@ public class Controller2D : RaycastController
 
             rayOrigin = raycastOrigins.bottomLeft;
             rayOrigin += Vector2.right * (horizontalRaySpacing * i);
-            RaycastAll(rayOrigin, Vector2.down, skinWidth + touchWidth, collisionMask);
+            RaycastAll(rayOrigin, Vector2.down, skinWidth + touchWidth, touchableMask);
             if (hitsList.Count > 0)
             {
                 collisions.Below = true;
@@ -198,7 +199,7 @@ public class Controller2D : RaycastController
         {
             Vector2 rayOrigin = raycastOrigins.bottomLeft;
             rayOrigin += Vector2.up * (verticalRaySpacing * i);
-            RaycastAll(rayOrigin, Vector2.left, skinWidth + touchWidth, collisionMask);
+            RaycastAll(rayOrigin, Vector2.left, skinWidth + touchWidth, touchableMask);
             if (hitsList.Count > 0)
             {
                 collisions.Left = true;
@@ -206,7 +207,7 @@ public class Controller2D : RaycastController
 
             rayOrigin = raycastOrigins.bottomRight;
             rayOrigin += Vector2.up * (verticalRaySpacing * i);
-            RaycastAll(rayOrigin, Vector2.right, skinWidth + touchWidth, collisionMask);
+            RaycastAll(rayOrigin, Vector2.right, skinWidth + touchWidth, touchableMask);
             if(hitsList.Count > 0)
             {
                 collisions.Right = true;
