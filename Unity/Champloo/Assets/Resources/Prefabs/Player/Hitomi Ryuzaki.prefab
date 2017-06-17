@@ -1647,6 +1647,9 @@ MonoBehaviour:
   maxSlopeAngle: 80
   collisionMask:
     serializedVersion: 2
+    m_Bits: 768
+  touchableMask:
+    serializedVersion: 2
     m_Bits: 256
   notifyMask:
     serializedVersion: 2
