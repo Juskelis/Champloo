@@ -515,7 +515,7 @@ Boxing^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Breakdancing^Dance Mix|Dancers
 Bubble
 Bubblegum
-Buddhist
+Buddhist^Indian
 Bungie
 Burger
 Business
@@ -809,11 +809,12 @@ Zombie^Zombies
 ----
 - 2nd Impact
 - 3rd Strike
+- 3rd Strike: Fight for the Future
 1942
 - 25th Anniversary Edition
 2K
 2000
-3000
+300
 3D
 64
 95
@@ -895,7 +896,6 @@ Deluxe
 Demolition
 Derby
 Desperadoes
-Destruction
 Detective
 Diesel
 Disaster
@@ -966,8 +966,6 @@ Horde
 Horror
 Hospital
 House
-Hunt
-Hunter
 II
 III
 Ignition
@@ -1016,14 +1014,12 @@ Mania
 Maniac
 Mansion
 Marines
-Massacre
 Master
 Maxx
 Mayhem
 Melee
 Mission
 Munchers
-Murder
 Nation
 Nightmare
 Nitro
@@ -1046,7 +1042,6 @@ Online
 Onslaught
 Operation
 Operatives
-Oppression
 Orchestra
 Overdrive
 Overload
@@ -1118,8 +1113,6 @@ Siege
 Simulator
 Sisters
 Slam
-Slaughter
-Slayer
 Smackdown
 Smash
 Smuggler
