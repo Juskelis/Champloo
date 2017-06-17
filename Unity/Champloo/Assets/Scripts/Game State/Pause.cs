@@ -13,6 +13,9 @@ public class Pause : MonoBehaviour
     [SerializeField]
     private UnityEvent onResume;
 
+    [SerializeField]
+    private string pauseMenuCategory;
+
     private bool pressed = false;
     private bool paused = false;
 
@@ -48,7 +51,8 @@ public class Pause : MonoBehaviour
         }
         if (paused && controllerID >= 0)
         {
-            FindObjectOfType<ControllerToggle>().DisableAllControllersExcept(controllerID);
+            //FindObjectOfType<ControllerToggle>().DisableAllControllersExcept(controllerID);
+            FindObjectOfType<ControllerToggle>().EnableAfter(pauseMenuCategory, controllerID);
         }
     }
 }
