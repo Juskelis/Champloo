@@ -6769,7 +6769,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1.01
-  m_Text: Super Sicc 2k6
+  m_Text: MODERN MAN CHAMPIONSHIP
 --- !u!222 &1498854449
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6804,8 +6804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9bf45addd675704091d298b6546e6dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontSize: 695
-  dynamic: 1
+  fontSize: 590
+  dynamic: 0
 --- !u!1 &1527554429
 GameObject:
   m_ObjectHideFlags: 0
