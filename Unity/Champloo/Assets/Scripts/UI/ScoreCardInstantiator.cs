@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Prototype.NetworkLobby;
 
 public class ScoreCardInstantiator : MonoBehaviour
 {
 
     [SerializeField] private PlayerScoreCard scoreCardPrefab;
-
-    private Score score;
 
     private bool lateStartDone = false;
 
@@ -14,19 +13,10 @@ public class ScoreCardInstantiator : MonoBehaviour
     {
         if(!lateStartDone)
         {
-            //score = FindObjectOfType<Score>();
-            /*
-            for (int i = 0; i < Score.Scores.Count; i++)
+            foreach (var player in LobbyManager.FindObjectsOfType<Player>())
             {
                 PlayerScoreCard currentPlayerScoreCard = Instantiate(scoreCardPrefab);
-                currentPlayerScoreCard.playerNumber = i;
-                currentPlayerScoreCard.transform.SetParent(transform, false);
-            }
-            */
-            foreach (var pair in Score.Scores)
-            {
-                PlayerScoreCard currentPlayerScoreCard = Instantiate(scoreCardPrefab);
-                currentPlayerScoreCard.playerNumber = pair.Key;
+                currentPlayerScoreCard.playerNumber = player.PlayerNumber;
                 currentPlayerScoreCard.transform.SetParent(transform, false);
             }
             Destroy(this);

@@ -101,6 +101,12 @@ public class Score : NetworkBehaviour
         private set {throw new System.NotSupportedException();}
     }
     private static Dictionary<int, int> scores; //key is NetworkID, val is score
+
+    private static Dictionary<int, int> _Scores
+    {
+        get { return scores ?? (scores = new Dictionary<int, int>()); }
+    }
+
     public static Score instance = null;
 
     [SerializeField]
@@ -128,16 +134,15 @@ public class Score : NetworkBehaviour
     //[Server]
     public static void AddPlayer(int networkID)
     {
-        print("adding player: " + networkID);
-        if(!scores.ContainsKey(networkID))
-            scores.Add(networkID, 0);
+        if(!_Scores.ContainsKey(networkID))
+            _Scores.Add(networkID, 0);
     }
 
     [Server]
     public static void RemovePlayer(int networkID)
     {
-        if(scores.ContainsKey(networkID))
-            scores.Remove(networkID);
+        if(_Scores.ContainsKey(networkID))
+            _Scores.Remove(networkID);
     }
 
     [ServerCallback]
@@ -168,14 +173,14 @@ public class Score : NetworkBehaviour
     [Server]
     public void AddScore(int playerNumber)
     {
-        if (!scores.ContainsKey(playerNumber))
+        if (!_Scores.ContainsKey(playerNumber))
         {
             Debug.LogWarning("Player with Network ID " + playerNumber + " scored w/o being added");
             AddPlayer(playerNumber);
         }
 
-        scores[playerNumber]++;
-        if (scores[playerNumber] >= winScore)
+        _Scores[playerNumber]++;
+        if (_Scores[playerNumber] >= winScore)
         {
             GetComponent<Match>().End();
         }
@@ -184,21 +189,21 @@ public class Score : NetworkBehaviour
     [Server]
     public void SubtractScore(int playerNumber)
     {
-        if (!scores.ContainsKey(playerNumber))
+        if (!_Scores.ContainsKey(playerNumber))
         {
             Debug.LogWarning("Player with Network ID " + playerNumber + " de-scored w/o being added");
             AddPlayer(playerNumber);
         }
 
-        if (scores[playerNumber] > 0)
-            scores[playerNumber]--;
+        if (_Scores[playerNumber] > 0)
+            _Scores[playerNumber]--;
     }
 
     public bool IsTied()
     {
         int max = Scores.Values.Max();
         int shareMax = 0;
-        foreach (int score in scores.Values)
+        foreach (int score in _Scores.Values)
         {
             if (score == max) shareMax++;
         }
@@ -213,8 +218,8 @@ public class Score : NetworkBehaviour
     ///// <returns>The controller number (1 indexed) of the winning player</returns>
     public int FindWinner()
     {
-        int max = scores.Values.Max();
-        foreach (var pair in scores)
+        int max = _Scores.Values.Max();
+        foreach (var pair in _Scores)
         {
             if (pair.Value >= max) return pair.Key;
         }
