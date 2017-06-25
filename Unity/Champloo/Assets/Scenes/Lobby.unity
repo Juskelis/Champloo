@@ -743,9 +743,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 5cac672126fa10741a63c26c32865fc3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 25a3f0d14df89434394fa6df5b9ab37e, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -3633,6 +3633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   option: {fileID: 114599821988778560, guid: 788ae7ffef4800449a05b7d9cc98157c, type: 2}
+  playerPortrait: {fileID: 21300000, guid: c83456f1569a9084fb70361e440ad953, type: 3}
 --- !u!222 &755109973
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4446,9 +4447,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 1a248479b224ed84493db41cbd9e5a4b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6bfd195ab0a598b4883becfb5349f4bc, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -8088,6 +8089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   option: {fileID: 114210435056296970, guid: 650d8f37a976f884cb7016110c7f97b1, type: 2}
+  playerPortrait: {fileID: 21300000, guid: ff8378355292d1f45844f645b2b88f70, type: 3}
 --- !u!222 &1835561518
 CanvasRenderer:
   m_ObjectHideFlags: 0
