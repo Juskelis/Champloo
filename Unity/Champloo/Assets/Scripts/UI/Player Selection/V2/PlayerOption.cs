@@ -13,4 +13,6 @@ public class PlayerOption : MonoBehaviour
                 player => player == option);
         }
     }
+
+    public Sprite playerPortrait;
 }
