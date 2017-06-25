@@ -183,6 +183,7 @@ public class MultiplayerUIManager : MonoBehaviour
                 player.selectedSelectable = actuallySelected ? selected.ToString() : "";
                 //player.activated = controller.hasSelected;
                 player.OnActivationChanged(controller.hasSelected);
+                controller.IndicatorColor = player.playerColor;
             }
         }
     }

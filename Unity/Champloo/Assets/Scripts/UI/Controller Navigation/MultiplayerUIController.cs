@@ -34,6 +34,14 @@ public class MultiplayerUIController : MonoBehaviour
     private Vector2 prev_move = Vector2.zero;
     private int move_count = 0;
 
+    private Image image;
+
+    public Color IndicatorColor
+    {
+        get { return image.color; }
+        set { image.color = value; }
+    }
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -42,6 +50,7 @@ public class MultiplayerUIController : MonoBehaviour
 	    controller = Rewired.ReInput.players.GetPlayer(controllerNumber);
 
 	    GetComponentInChildren<Text>().text = (controllerNumber+1).ToString();
+	    image = GetComponentInChildren<Image>();
 	}
 
     void Update()
