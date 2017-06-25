@@ -133,6 +133,13 @@ public class MultiplayerUIManager : MonoBehaviour
 	            //player has left
                 RemoveController(player);
 	        }
+	        if (player.GetButtonDown("UICycle") && ContainsController(player))
+	        {
+	            foreach (var p in GetLocalPlayers(player.id))
+	            {
+	                p.OnColorClicked();
+	            }
+	        }
 	    }
 
         //check all the controllers
