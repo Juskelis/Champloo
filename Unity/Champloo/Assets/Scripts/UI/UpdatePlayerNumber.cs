@@ -13,6 +13,7 @@ public class UpdatePlayerNumber : MonoBehaviour
         Text ourText = GetComponent<Text>();
         int winnerNumber = Score.instance.FindWinner();
         string name = PlayerSettings.GetSettingsFor(winnerNumber).Name;
-        ourText.text = prefix + " " + name + "(" + winnerNumber + ")";
+        Color color = PlayerSettings.GetSettingsFor(winnerNumber).Color;
+        ourText.text = prefix + " " + "<color=#" + Utility.ColorToHex(color) + ">" + name + "</color>";
     }
 }
