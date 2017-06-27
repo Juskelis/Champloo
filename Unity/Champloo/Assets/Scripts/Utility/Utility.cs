@@ -59,16 +59,16 @@ public class Utility {
 
     public static string ColorToHex(Color color)
     {
-        float red = color.r * 255;
-        float green = color.g * 255;
-        float blue = color.b * 255;
+        int red = Mathf.RoundToInt(color.r * 255);
+        int green = Mathf.RoundToInt(color.g * 255);
+        int blue = Mathf.RoundToInt(color.b * 255);
 
-        string a = GetHex((int)Mathf.Floor(red / 16));
-        string b = GetHex((int)Mathf.Round(red % 16));
-        string c = GetHex((int)Mathf.Floor(green / 16));
-        string d = GetHex((int)Mathf.Round(green % 16));
-        string e = GetHex((int)Mathf.Floor(blue / 16));
-        string f = GetHex((int)Mathf.Round(blue % 16));
+        string a = GetHex((int)Mathf.Floor(red / 16.0f));
+        string b = GetHex((int)Mathf.Round(red % 16.0f));
+        string c = GetHex((int)Mathf.Floor(green / 16.0f));
+        string d = GetHex((int)Mathf.Round(green % 16.0f));
+        string e = GetHex((int)Mathf.Floor(blue / 16.0f));
+        string f = GetHex((int)Mathf.Round(blue % 16.0f));
 
         return a + b + c + d + e + f;
     }
