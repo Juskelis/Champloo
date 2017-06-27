@@ -1447,7 +1447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startupTime: 0
-  specialTime: 0.2
+  specialTime: 0.23
   cooldownTime: 0.1
   rechargeTime: 0
   dashForce: 24
@@ -1559,8 +1559,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startupTime: 0.05
-  attackTime: 0.05
-  cooldownTime: 0.4
+  attackTime: 0.07
+  cooldownTime: 0.41
   rechargeTime: 0
   specialStartupTime: 0.15
   specialTime: 0
@@ -1695,9 +1695,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxFallSpeed: 20
   maxSpeed: 18
-  stopToMaxSpeedTime: 0.3
+  stopToMaxSpeedTime: 0.33
   maxSpeedToStopTime: 0.3
-  fullTurnTime: 0.65
+  fullTurnTime: 0.7
   analogMovementSpeed: 0
 --- !u!114 &114619213716886426
 MonoBehaviour:
