@@ -1450,7 +1450,7 @@ MonoBehaviour:
   specialTime: 0.2
   cooldownTime: 0.1
   rechargeTime: 0
-  dashForce: 25
+  dashForce: 24
   gravityModifier: 0.5
   dashLimit: 1
   nextDashBufferWindow: 0.2
@@ -1559,14 +1559,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startupTime: 0.05
-  attackTime: 0.2
+  attackTime: 0.05
   cooldownTime: 0.4
   rechargeTime: 0
   specialStartupTime: 0.15
   specialTime: 0
   specialCooldownTime: 0
   specialRechargeTime: 0
-  thrownVersion: {fileID: 114811144672456160, guid: 666604262c26fa543801e5b6cfd8983b,
+  thrownVersion: {fileID: 114811144672456160, guid: 4cede2a1fb80fb64598d62cc6850dfe0,
     type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212045121767493206}
@@ -1611,8 +1611,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 16
-  stopToMaxSpeedTime: 0.25
+  maxSpeed: 13
+  stopToMaxSpeedTime: 0.15
   maxSpeedToStopTime: 0.15
   fullTurnTime: 0.23
   jumpSound: {fileID: 114639018780518578}
@@ -1694,10 +1694,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 20
-  maxSpeed: 20
+  maxSpeed: 18
   stopToMaxSpeedTime: 0.3
-  maxSpeedToStopTime: 0.5
-  fullTurnTime: 0.75
+  maxSpeedToStopTime: 0.3
+  fullTurnTime: 0.65
   analogMovementSpeed: 0
 --- !u!114 &114619213716886426
 MonoBehaviour:
