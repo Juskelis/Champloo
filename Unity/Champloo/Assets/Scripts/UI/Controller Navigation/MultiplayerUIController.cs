@@ -42,15 +42,19 @@ public class MultiplayerUIController : MonoBehaviour
         set { image.color = value; }
     }
 
+    void Awake()
+    {
+        eventSystem = FindObjectOfType<EventSystem>();
+        rewiredEventSystem = FindObjectOfType<RewiredStandaloneInputModule>();
+        image = GetComponentInChildren<Image>();
+    }
+
 	// Use this for initialization
 	void Start ()
 	{
-	    eventSystem = FindObjectOfType<EventSystem>();
-	    rewiredEventSystem = FindObjectOfType<RewiredStandaloneInputModule>();
 	    controller = Rewired.ReInput.players.GetPlayer(controllerNumber);
 
 	    GetComponentInChildren<Text>().text = (controllerNumber+1).ToString();
-	    image = GetComponentInChildren<Image>();
 	}
 
     void Update()
