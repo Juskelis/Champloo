@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 114811144672456160}
   - component: {fileID: 114203981874539452}
   m_Layer: 0
-  m_Name: Hitomi Sword Projectile 1
+  m_Name: Hitomi Sword Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
