@@ -21,12 +21,6 @@ public class OnGround : MovementState
     [SerializeField]
     private bool analogMovementSpeed = false;
 
-    [SerializeField]
-    private MovementStateFootDust dust;
-
-    [SerializeField]
-    private Transform jumpPuff;
-
     public float MaxSpeed { get { return maxSpeed; } }
 
     private float jumpVelocity;
@@ -71,7 +65,7 @@ public class OnGround : MovementState
         {
             Jumped = true;
             jumpSound.Play();
-            Instantiate(jumpPuff, dust.transform.position, Quaternion.identity);
+            player.FireEvent(new JumpEvent {Active = this, Direction = Vector3.up});
             outVelocity.y = jumpVelocity;
         }
 
