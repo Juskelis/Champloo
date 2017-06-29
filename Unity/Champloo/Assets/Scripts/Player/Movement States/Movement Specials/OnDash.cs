@@ -21,9 +21,6 @@ public class OnDash : OnMovementSpecial
 
     [SerializeField]
     private PlayRandomSource dashSound;
-
-    [SerializeField]
-    protected Transform dashPuff;
     
     protected int currentDashes;
     public int DashesRemaining { get { return currentDashes; } }
@@ -35,13 +32,11 @@ public class OnDash : OnMovementSpecial
     protected bool earlyAttackInput;
     protected bool hitNextDashInput;
     private bool justStarted;
-    TrailRenderer tail;
 
     protected override void Start()
     {
         base.Start();
         currentDashes = dashLimit;
-        tail = GetComponent<TrailRenderer>();
         earlyAttackInput = false;
         hitNextDashInput = false;
     }
@@ -172,11 +167,6 @@ public class OnDash : OnMovementSpecial
         justStarted = true;
 
         specialTimeLeft = specialTime;
-
-        //set up the dash visual trail
-        tail.enabled = true;
-        tail.Clear();
-        Instantiate(dashPuff, transform.position, Quaternion.identity);
     }
 
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
@@ -186,7 +176,6 @@ public class OnDash : OnMovementSpecial
 
         earlyAttackInput = false;
         hitNextDashInput = false;
-        tail.enabled = false;
     }
     
     //Functions to be called on state changes

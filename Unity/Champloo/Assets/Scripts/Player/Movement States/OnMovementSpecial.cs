@@ -41,6 +41,7 @@ public class OnMovementSpecial : MovementState
     protected virtual IEnumerator TimingCoroutine()
     {
         timingState = TimingState.WARMUP;
+        player.FireEvent(new MovementSpecialTimingEvent { Special = this, Timing = timingState });
         yield return new WaitForSeconds(startupTime);
         OnStart();
         yield return new WaitForSeconds(specialTime);
@@ -58,18 +59,21 @@ public class OnMovementSpecial : MovementState
     protected virtual void OnStart()
     {
         timingState = TimingState.IN_PROGRESS;
+        player.FireEvent(new MovementSpecialTimingEvent {Special = this, Timing = timingState});
     }
 
     //used on the end of the move, before the cooldown
     protected virtual void OnEnd()
     {
         timingState = TimingState.COOLDOWN;
+        player.FireEvent(new MovementSpecialTimingEvent { Special = this, Timing = timingState });
     }
 
     //used at the end of the cooldown period
     protected virtual void OnCooledDown()
     {
         timingState = TimingState.DONE;
+        player.FireEvent(new MovementSpecialTimingEvent { Special = this, Timing = timingState });
     }
 
     //used at the end of the recharge period, when the move is available to be used again
