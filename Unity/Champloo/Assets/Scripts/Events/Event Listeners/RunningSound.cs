@@ -16,6 +16,15 @@ public class RunningSound : MonoBehaviour {
         player = GetComponentInParent<Player>();
     }
 
+    private void OnDestroy()
+    {
+        LocalEventDispatcher dispatcher = GetComponentInParent<LocalEventDispatcher>();
+        if (dispatcher != null)
+        {
+            dispatcher.RemoveListener<MovementStateChangedEvent>(OnTiming);
+        }
+    }
+
     private void OnTiming(object sender, EventArgs args)
     {
         MovementStateChangedEvent e = (MovementStateChangedEvent) args;

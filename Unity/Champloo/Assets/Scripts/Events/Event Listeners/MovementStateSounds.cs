@@ -18,6 +18,15 @@ public class MovementStateSounds : MonoBehaviour
         GetComponentInParent<LocalEventDispatcher>().AddListener<MovementStateChangedEvent>(OnChange);
     }
 
+    void OnDestroy()
+    {
+        LocalEventDispatcher dispatcher = GetComponentInParent<LocalEventDispatcher>();
+        if (dispatcher != null)
+        {
+            dispatcher.RemoveListener<MovementStateChangedEvent>(OnChange);
+        }
+    }
+
     private void OnChange(object sender, EventArgs args)
     {
         MovementStateChangedEvent e = (MovementStateChangedEvent) args;
