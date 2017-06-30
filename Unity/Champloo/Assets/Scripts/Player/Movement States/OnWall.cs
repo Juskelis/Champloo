@@ -22,17 +22,6 @@ public class OnWall : MovementState
     [SerializeField]
     private float allowedMinAngle = 1.16f;
 
-
-    [SerializeField]
-    private PlayRandomSource wallSlideSound;
-    [SerializeField]
-    private PlayRandomSource jumpSound;
-
-    [SerializeField]
-    private MovementStateFootDust dust;
-    [SerializeField]
-    private Transform jumpPuff;
-
     private float timeToWallUnstick;
 
     private bool jumped = false;
@@ -86,8 +75,6 @@ public class OnWall : MovementState
         if (player.InputPlayer.GetButtonDown("Jump"))
         {
             jumped = true;
-            jumpSound.Play();
-            Instantiate(jumpPuff, dust.transform.position, Quaternion.identity);
 
             //PLayer will always jump off of a wall a little bit
             outVelocity.x = (wallJumpVelocity.x / 2) * (-wallDirX);
@@ -115,11 +102,8 @@ public class OnWall : MovementState
                 outVelocity.x = wallJumpVelocity.x * direction.x;
                 outVelocity.y = wallJumpVelocity.y * direction.y;
             }
-        }
 
-        if (!wallSlideSound.Playing)
-        {
-            wallSlideSound.Play();
+            player.FireEvent(new JumpEvent {Active = this, Direction = outVelocity});
         }
 
         if (jumped)
@@ -161,6 +145,5 @@ public class OnWall : MovementState
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         movementSpecial.OnExitWall(inVelocity, inExternalForces);
         jumped = false;
-        wallSlideSound.Stop();
     }
 }

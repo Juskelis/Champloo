@@ -8,18 +8,17 @@ public class MovementStateFootDust : MonoBehaviour
     [ClassExtends(typeof(MovementState))]
     public ClassTypeReference movementState;
 
+    [SerializeField]
+    public Transform jumpPuff;
+
     private ParticleSystem particle;
-    private Player p;
 
     void Start()
     {
         particle = GetComponent<ParticleSystem>();
-        p = GetComponentInParent<Player>();
-        if (p == null)
-        {
-            throw new ArgumentNullException();
-        }
-        GetComponentInParent<LocalEventDispatcher>().AddListener<MovementStateChangedEvent>(OnChange);
+        LocalEventDispatcher dispatcher = GetComponentInParent<LocalEventDispatcher>();
+        dispatcher.AddListener<MovementStateChangedEvent>(OnChange);
+        dispatcher.AddListener<JumpEvent>(OnJump);
     }
 
     void OnDestroy()
@@ -35,6 +34,15 @@ public class MovementStateFootDust : MonoBehaviour
     {
         MovementStateChangedEvent convertedArgs = (MovementStateChangedEvent) args;
         togglePlaying(convertedArgs.Next.GetType() == movementState.Type);
+    }
+
+    private void OnJump(object sender, EventArgs args)
+    {
+        JumpEvent e = (JumpEvent) args;
+        if (e.Active.GetType() == movementState.Type)
+        {
+            Instantiate(jumpPuff, transform.position, Quaternion.identity);
+        }
     }
 
     void togglePlaying(bool playing)

@@ -78,6 +78,7 @@ public class Weapon : MonoBehaviour
     private IEnumerator TimingCoroutine()
     {
         attackingState = TimingState.WARMUP;
+        player.FireEvent(new WeaponAttackTimingEvent { Target = this, Timing = attackingState });
         yield return new WaitForSeconds(startupTime);
         OnStart();
         yield return new WaitForSeconds(attackTime);
@@ -95,16 +96,19 @@ public class Weapon : MonoBehaviour
     protected virtual void OnStart()
     {
         attackingState = TimingState.IN_PROGRESS;
+        player.FireEvent(new WeaponAttackTimingEvent {Target = this, Timing = attackingState});
     }
 
     protected virtual void OnEnd()
     {
         attackingState = TimingState.COOLDOWN;
+        player.FireEvent(new WeaponAttackTimingEvent { Target = this, Timing = attackingState });
     }
 
     public virtual void OnCooledDown()
     {
         attackingState = TimingState.DONE;
+        player.FireEvent(new WeaponAttackTimingEvent { Target = this, Timing = attackingState });
     }
 
     public virtual void OnRecharge()
@@ -124,6 +128,7 @@ public class Weapon : MonoBehaviour
     private IEnumerator SpecialTimingCoroutine()
     {
         specialAttackingState = TimingState.WARMUP;
+        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = attackingState });
         yield return new WaitForSeconds(specialStartupTime);
         OnStartSpecial();
         yield return new WaitForSeconds(specialTime);
@@ -141,16 +146,19 @@ public class Weapon : MonoBehaviour
     protected virtual void OnStartSpecial()
     {
         specialAttackingState = TimingState.IN_PROGRESS;
+        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = attackingState });
     }
 
     protected virtual void OnEndSpecial()
     {
         specialAttackingState = TimingState.COOLDOWN;
+        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = attackingState });
     }
 
     protected virtual void OnCooledDownSpecial()
     {
         specialAttackingState = TimingState.DONE;
+        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = attackingState });
     }
 
     protected virtual void OnRechargeSpecial()

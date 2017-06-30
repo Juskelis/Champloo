@@ -527,7 +527,7 @@ public class Player : NetworkBehaviour
         CmdUpdateMovementState(movementState.GetType().ToString());
 	}
 
-    private void FireEvent<T>(T e) where T : EventArgs
+    public void FireEvent<T>(T e) where T : EventArgs
     {
         EventDispatcher.Instance.FireEvent(this, e);
         dispatcher.FireEvent(this, e);

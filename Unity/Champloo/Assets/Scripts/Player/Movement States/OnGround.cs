@@ -13,19 +13,7 @@ public class OnGround : MovementState
     private float fullTurnTime = 0.2f;
 
     [SerializeField]
-    private PlayRandomSource jumpSound;
-
-    [SerializeField]
-    private PlayRandomSource runSound;
-
-    [SerializeField]
     private bool analogMovementSpeed = false;
-
-    [SerializeField]
-    private MovementStateFootDust dust;
-
-    [SerializeField]
-    private Transform jumpPuff;
 
     public float MaxSpeed { get { return maxSpeed; } }
 
@@ -70,8 +58,7 @@ public class OnGround : MovementState
         if (player.InputPlayer.GetButtonDown("Jump"))
         {
             Jumped = true;
-            jumpSound.Play();
-            Instantiate(jumpPuff, dust.transform.position, Quaternion.identity);
+            player.FireEvent(new JumpEvent {Active = this, Direction = Vector3.up});
             outVelocity.y = jumpVelocity;
         }
 
@@ -84,15 +71,6 @@ public class OnGround : MovementState
                 inVelocity.x,
                 maxSpeed*(analogMovementSpeed?moveX:inputDirection),
                 delta*Time.deltaTime);
-        }
-
-        if (Mathf.Abs(outVelocity.x) >= float.Epsilon && !runSound.Playing)
-        {
-            runSound.Play();
-        }
-        else if (Mathf.Abs(outVelocity.x) < float.Epsilon)
-        {
-            runSound.Stop();
         }
     }
 
@@ -123,7 +101,6 @@ public class OnGround : MovementState
     {
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         movementSpecial.OnExitGround(inVelocity, inExternalForces);
-        runSound.Stop();
         Jumped = false;
     }
 
