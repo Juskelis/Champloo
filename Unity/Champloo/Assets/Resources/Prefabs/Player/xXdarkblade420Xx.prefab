@@ -272,6 +272,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4269065535498184}
+  - component: {fileID: 114059067299277234}
+  - component: {fileID: 114153345692606790}
   m_Layer: 9
   m_Name: Sounds
   m_TagString: Untagged
@@ -1546,6 +1548,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20b42813b6d317c4a8dd722d27d7eeca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114059067299277234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660642038455030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f34ecfc3ecbac4b439a88b6536a02a25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runningSound: {fileID: 114958792587567482}
 --- !u!114 &114121970608963264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1569,6 +1583,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a97b3c48b66c3c48bb9105191dc3a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114153345692606790
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660642038455030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f270ef0081fb1042ba15cbddf9a9685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementState:
+    _classRef: OnWall, Assembly-CSharp
+  sound: {fileID: 114262047935058518}
+  loop: 1
 --- !u!114 &114176932137156722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1745,10 +1774,7 @@ MonoBehaviour:
   maxSpeedToStopTime: 0.1
   fullTurnTime: 0.2
   jumpSound: {fileID: 114196940015131362}
-  runSound: {fileID: 114958792587567482}
   analogMovementSpeed: 0
-  dust: {fileID: 114567913374022186}
-  jumpPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
 --- !u!114 &114448704070849810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1957,8 +1983,6 @@ MonoBehaviour:
   allowedMinAngle: 1.16
   wallSlideSound: {fileID: 114262047935058518}
   jumpSound: {fileID: 114196940015131362}
-  dust: {fileID: 114190614785949070}
-  jumpPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
 --- !u!114 &114852319061618254
 MonoBehaviour:
   m_ObjectHideFlags: 1

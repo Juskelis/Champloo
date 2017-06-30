@@ -21,10 +21,7 @@ public class OnWall : MovementState
 
     [SerializeField]
     private float allowedMinAngle = 1.16f;
-
-
-    [SerializeField]
-    private PlayRandomSource wallSlideSound;
+    
     [SerializeField]
     private PlayRandomSource jumpSound;
 
@@ -113,11 +110,6 @@ public class OnWall : MovementState
             player.FireEvent(new JumpEvent {Active = this, Direction = outVelocity});
         }
 
-        if (!wallSlideSound.Playing)
-        {
-            wallSlideSound.Play();
-        }
-
         if (jumped)
         {
             player.UpdateDirection(wallDirX < 0);
@@ -157,6 +149,5 @@ public class OnWall : MovementState
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         movementSpecial.OnExitWall(inVelocity, inExternalForces);
         jumped = false;
-        wallSlideSound.Stop();
     }
 }

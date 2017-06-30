@@ -16,9 +16,6 @@ public class OnGround : MovementState
     private PlayRandomSource jumpSound;
 
     [SerializeField]
-    private PlayRandomSource runSound;
-
-    [SerializeField]
     private bool analogMovementSpeed = false;
 
     public float MaxSpeed { get { return maxSpeed; } }
@@ -79,15 +76,6 @@ public class OnGround : MovementState
                 maxSpeed*(analogMovementSpeed?moveX:inputDirection),
                 delta*Time.deltaTime);
         }
-
-        if (Mathf.Abs(outVelocity.x) >= float.Epsilon && !runSound.Playing)
-        {
-            runSound.Play();
-        }
-        else if (Mathf.Abs(outVelocity.x) < float.Epsilon)
-        {
-            runSound.Stop();
-        }
     }
 
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
@@ -117,7 +105,6 @@ public class OnGround : MovementState
     {
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         movementSpecial.OnExitGround(inVelocity, inExternalForces);
-        runSound.Stop();
         Jumped = false;
     }
 

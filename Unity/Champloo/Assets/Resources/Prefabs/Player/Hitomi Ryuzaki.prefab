@@ -67,6 +67,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4804139858328386}
+  - component: {fileID: 114509133894560246}
+  - component: {fileID: 114810686032357892}
   m_Layer: 9
   m_Name: Sounds
   m_TagString: Untagged
@@ -1742,8 +1744,6 @@ MonoBehaviour:
   jumpSound: {fileID: 114639018780518578}
   runSound: {fileID: 114146229077346580}
   analogMovementSpeed: 0
-  dust: {fileID: 114566618907394476}
-  jumpPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
 --- !u!114 &114429614063133828
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1793,6 +1793,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20b42813b6d317c4a8dd722d27d7eeca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114509133894560246
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1177211717838926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f270ef0081fb1042ba15cbddf9a9685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementState:
+    _classRef: OnWall, Assembly-CSharp
+  sound: {fileID: 114318839925309246}
+  loop: 1
 --- !u!114 &114523499375445730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1855,8 +1870,6 @@ MonoBehaviour:
   allowedMinAngle: 1.16
   wallSlideSound: {fileID: 114318839925309246}
   jumpSound: {fileID: 114639018780518578}
-  dust: {fileID: 114746179475856986}
-  jumpPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
 --- !u!114 &114639018780518578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1919,6 +1932,18 @@ MonoBehaviour:
   movementState:
     _classRef: OnWall, Assembly-CSharp
   jumpPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
+--- !u!114 &114810686032357892
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1177211717838926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f34ecfc3ecbac4b439a88b6536a02a25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runningSound: {fileID: 114146229077346580}
 --- !u!114 &114821917502314688
 MonoBehaviour:
   m_ObjectHideFlags: 1
