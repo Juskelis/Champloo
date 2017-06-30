@@ -21,9 +21,6 @@ public class OnWall : MovementState
 
     [SerializeField]
     private float allowedMinAngle = 1.16f;
-    
-    [SerializeField]
-    private PlayRandomSource jumpSound;
 
     private float timeToWallUnstick;
 
@@ -78,7 +75,6 @@ public class OnWall : MovementState
         if (player.InputPlayer.GetButtonDown("Jump"))
         {
             jumped = true;
-            jumpSound.Play();
 
             //PLayer will always jump off of a wall a little bit
             outVelocity.x = (wallJumpVelocity.x / 2) * (-wallDirX);

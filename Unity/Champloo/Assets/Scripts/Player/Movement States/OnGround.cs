@@ -13,9 +13,6 @@ public class OnGround : MovementState
     private float fullTurnTime = 0.2f;
 
     [SerializeField]
-    private PlayRandomSource jumpSound;
-
-    [SerializeField]
     private bool analogMovementSpeed = false;
 
     public float MaxSpeed { get { return maxSpeed; } }
@@ -61,7 +58,6 @@ public class OnGround : MovementState
         if (player.InputPlayer.GetButtonDown("Jump"))
         {
             Jumped = true;
-            jumpSound.Play();
             player.FireEvent(new JumpEvent {Active = this, Direction = Vector3.up});
             outVelocity.y = jumpVelocity;
         }

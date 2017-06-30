@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 4269065535498184}
   - component: {fileID: 114059067299277234}
   - component: {fileID: 114153345692606790}
+  - component: {fileID: 114866234387749772}
   m_Layer: 9
   m_Name: Sounds
   m_TagString: Untagged
@@ -1981,7 +1982,6 @@ MonoBehaviour:
   noAngleJumpModifier: {x: 1.25, y: 0}
   towardsWallJumpModifier: {x: 1, y: 0}
   allowedMinAngle: 1.16
-  wallSlideSound: {fileID: 114262047935058518}
   jumpSound: {fileID: 114196940015131362}
 --- !u!114 &114852319061618254
 MonoBehaviour:
@@ -2002,6 +2002,18 @@ MonoBehaviour:
   param3: 
   param4: 
   param5: 
+--- !u!114 &114866234387749772
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660642038455030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1e11f22d05644c4981180b3a2d77a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpSound: {fileID: 114196940015131362}
 --- !u!114 &114885481870937170
 MonoBehaviour:
   m_ObjectHideFlags: 1
