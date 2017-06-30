@@ -37,7 +37,7 @@ public class InAir : MovementState
 
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        float moveX = player.InputPlayer.GetAxis("Move Horizontal");
+        float moveX = inputController.ApplyDeadZone(input.GetAxis("Move Horizontal"));
         if (Mathf.Abs(moveX) <= float.Epsilon)
         {
             //stopping
@@ -57,8 +57,8 @@ public class InAir : MovementState
     {
         base.ApplyInputs(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
-        float moveX = player.InputPlayer.GetAxis("Move Horizontal");
-        float inputDirection = Mathf.Sign(moveX);
+        float moveX = inputController.ApplyDeadZone(input.GetAxis("Move Horizontal"));
+        float inputDirection = Mathf.Abs(moveX) > float.Epsilon ? Mathf.Sign(moveX) : 0f;
         if (Mathf.Abs(moveX) > float.Epsilon)
         {
             float delta = inputDirection != Mathf.Sign(inVelocity.x) ? turningDeceleration : acceleration;

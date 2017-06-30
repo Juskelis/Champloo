@@ -6,176 +6,34 @@ using Rewired;
 
 public class InputController : MonoBehaviour
 {
-    /*
-    public Rewired.Player inputPlayer;
-    private Player player;
+    [SerializeField]
+    private float angleDeadzone;
 
-    public void Start()
+    public float AngleDeadzone
     {
-        player = GetComponent<Player>();
-        print("Player Number: " + player.PlayerNumber);
-        inputPlayer = ReInput.players.GetPlayer(player.PlayerNumber - 1);
-    }
-    */
-    /*
-    private static bool HandleInput = true;
-
-    public static void SetInputs(bool on)
-    {
-        HandleInput = on;
+        get { return angleDeadzone;}
     }
 
-    /// <summary>
-    /// Converts a playerNumber to a GamePad Index
-    /// </summary>
-    /// <param name="playerNumber"> a ONE indexed (starting at 1) player number</param>
-    /// <returns>A conversion to the corresponding gamepad index</returns>
-    public static GamePad.Index ConvertToIndex(int playerNumber)
+    private float xAngleDeadZone;
+    private float yAngleDeadZone;
+
+    private void Start()
     {
-        switch(playerNumber)
-        {
-            case 1:
-                return GamePad.Index.One;
-            case 2:
-                return GamePad.Index.Two;
-            case 3:
-                return GamePad.Index.Three;
-            case 4:
-                return GamePad.Index.Four;
-            default:
-                return GamePad.Index.Any;
-        }
+        xAngleDeadZone = Mathf.Sin(angleDeadzone * Mathf.Deg2Rad);
+        yAngleDeadZone = Mathf.Cos(angleDeadzone * Mathf.Deg2Rad);
     }
 
-    [Serializable]
-    public class ButtonSetting
+    public Vector2 ApplyDeadZone(Vector2 input)
     {
-        private GamePad.Index playerIndex;
-        [SerializeField] private GamePad.Button buttonIndex;
-        [SerializeField] private bool useTrigger = false;
-        [SerializeField] private GamePad.Trigger triggerIndex;
-        [SerializeField] private float triggerThreshold = 0.75f;
-        //private string input;
-
-        private bool isDown;
-        private bool isUp;
-        private bool isPressed;
-
-        private bool triggerPreviouslyPressed = false;
-
-        public bool Down { get { return isDown || onDownTime > 0; } }
-        public bool Up { get { return isUp || onUpTime > 0; } }
-        public bool Pressed { get { return isPressed || onPressedTime > 0; } }
-
-        /// <summary>
-        /// Time (in seconds) to allow down event after it occurs
-        /// </summary>
-        [SerializeField]
-        private float windowDownTime;
-
-        /// <summary>
-        /// Time (in seconds) to allow up event after it occurs
-        /// </summary>
-        [SerializeField]
-        private float windowUpTime;
-
-        /// <summary>
-        /// Time (in seconds) to allow press event after it occurs
-        /// </summary>
-        [SerializeField]
-        private float windowPressedTime;
-
-        private float onDownTime;
-        private float onUpTime;
-        private float onPressedTime;
-
-        //public void Update(GamePad.Index player = GamePad.Index.Any)
-        public void Update(int playerNumber)
-        {
-            playerIndex = InputController.ConvertToIndex(playerNumber);
-
-            isDown = GamePad.GetButtonDown(buttonIndex, playerIndex);//Input.GetButtonDown(input);
-            isUp = GamePad.GetButtonUp(buttonIndex, playerIndex);//Input.GetButtonUp(input);
-            isPressed = GamePad.GetButton(buttonIndex, playerIndex);//Input.GetButton(input);
-            
-            if (useTrigger)
-            {
-                bool triggerPressed = GamePad.GetTrigger(triggerIndex, playerIndex, true) >= triggerThreshold;
-                if (triggerPressed && !triggerPreviouslyPressed)
-                {
-                    isDown = true;
-                }
-                if (!triggerPressed && triggerPreviouslyPressed)
-                {
-                    isUp = true;
-                }
-                triggerPreviouslyPressed = triggerPressed;
-                isPressed = isPressed || triggerPressed;
-            }
-
-            if (isDown) onDownTime = windowDownTime;
-            if (isUp) onUpTime = windowUpTime;
-            if (isPressed) onPressedTime = windowPressedTime;
-
-            onDownTime -= Time.deltaTime;
-            onUpTime -= Time.deltaTime;
-            onPressedTime -= Time.deltaTime;
-        }
-
-        public void ResetTimers()
-        {
-            onDownTime = 0;
-            onUpTime = 0;
-            onPressedTime = 0;
-        }
+        Vector2 normalizedInput = input.normalized;
+        if (Mathf.Abs(normalizedInput.x) < xAngleDeadZone) input.x = 0;
+        if (Mathf.Abs(normalizedInput.y) < yAngleDeadZone) input.y = 0;
+        return input.normalized;
     }
 
-    public ButtonSetting jump;
-    public ButtonSetting attack;
-    public ButtonSetting weaponSpecial;
-    public ButtonSetting movementSpecial;
-
-    public ButtonSetting block;
-    public ButtonSetting parry;
-
-    public ButtonSetting taunt;
-    public ButtonSetting pause;
-
-    [HideInInspector] public Vector2 leftStick;
-    public float leftStickAngle { get { return Vector2AsAngle(leftStick);} }
-    [HideInInspector] public Vector2 rightStick;
-    public float rightStickAngle { get { return Vector2AsAngle(rightStick); } }
-    [HideInInspector] public Vector2 dPad;
-
-    [HideInInspector] public int playerNumber;
-    private GamePad.Index playerIndex;
-
-    private float Vector2AsAngle(Vector2 vec)
+    public float ApplyDeadZone(float axis)
     {
-        if (Mathf.Abs(vec.x) < float.Epsilon) return vec.y > 0 ? 90 : -90;
-        return Mathf.Atan(vec.y/vec.x)*Mathf.Rad2Deg + (vec.x < 0 ? 180 : 0);
+        if (Mathf.Abs(axis) < xAngleDeadZone) return 0f;
+        return axis;
     }
-
-    public void UpdateInputs()
-    {
-        if (!HandleInput) return;
-
-        playerIndex = ConvertToIndex(playerNumber);
-
-        jump.Update(playerNumber);
-        attack.Update(playerNumber);
-        weaponSpecial.Update(playerNumber);
-        movementSpecial.Update(playerNumber);
-
-        block.Update(playerNumber);
-        parry.Update(playerNumber);
-
-        taunt.Update(playerNumber);
-        pause.Update(playerNumber);
-
-        leftStick = GamePad.GetAxis(GamePad.Axis.LeftStick, playerIndex);
-        rightStick = GamePad.GetAxis(GamePad.Axis.RightStick, playerIndex);
-        dPad = GamePad.GetAxis(GamePad.Axis.Dpad, playerIndex);
-    }
-    */
 }
