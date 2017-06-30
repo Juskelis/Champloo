@@ -1566,7 +1566,7 @@ MonoBehaviour:
   specialTime: 0
   specialCooldownTime: 0
   specialRechargeTime: 0
-  thrownVersion: {fileID: 114811144672456160, guid: 4cede2a1fb80fb64598d62cc6850dfe0,
+  thrownVersion: {fileID: 114811144672456160, guid: 2f3c05ac68aebc145b816b0a18d4612f,
     type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212045121767493206}
