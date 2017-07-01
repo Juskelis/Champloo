@@ -72,9 +72,10 @@ public class OnWall : MovementState
         int wallDirX = (controller.collisions.Left) ? -1 : 1;
 
         jumped = false;
-        if (player.InputPlayer.GetButtonDown("Jump"))
+        if (player.InputPlayer.GetButtonDown("Jump") && !inputController.IsConsumed("Jump"))
         {
             jumped = true;
+            inputController.ConsumeButton("Jump");
 
             //PLayer will always jump off of a wall a little bit
             outVelocity.x = (wallJumpVelocity.x / 2) * (-wallDirX);

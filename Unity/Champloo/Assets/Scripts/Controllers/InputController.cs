@@ -1,11 +1,14 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using GamepadInput;
 using Rewired;
 
 public class InputController : MonoBehaviour
 {
+    private Rewired.Player inputPlayer;
+
     [SerializeField]
     private float angleDeadzone;
 
@@ -17,10 +20,28 @@ public class InputController : MonoBehaviour
     private float xAngleDeadZone;
     private float yAngleDeadZone;
 
+    private Dictionary<String, bool> consumedActions;
+
     private void Start()
     {
         xAngleDeadZone = Mathf.Sin(angleDeadzone * Mathf.Deg2Rad);
         yAngleDeadZone = Mathf.Cos(angleDeadzone * Mathf.Deg2Rad);
+
+        consumedActions = new Dictionary<string, bool>();
+
+        inputPlayer = GetComponentInParent<Player>().InputPlayer;
+    }
+
+    private void LateUpdate()
+    {
+        //unconsume non-pressed buttons
+        foreach (KeyValuePair<string, bool> pair in consumedActions)
+        {
+            if (!inputPlayer.GetButton(pair.Key))
+            {
+                consumedActions[pair.Key] = false;
+            }
+        }
     }
 
     public Vector2 ApplyDeadZone(Vector2 input)
@@ -35,5 +56,18 @@ public class InputController : MonoBehaviour
     {
         if (Mathf.Abs(axis) < xAngleDeadZone) return 0f;
         return axis;
+    }
+
+    public bool IsConsumed(String actionName)
+    {
+        return consumedActions.ContainsKey(actionName) && consumedActions[actionName];
+    }
+
+    public void ConsumeButton(String actionName)
+    {
+        if (inputPlayer.GetButton(actionName))
+        {
+            consumedActions[actionName] = true;
+        }
     }
 }

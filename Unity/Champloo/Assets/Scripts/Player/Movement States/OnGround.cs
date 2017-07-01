@@ -55,9 +55,10 @@ public class OnGround : MovementState
         base.ApplyInputs(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
         Jumped = false;
-        if (input.GetButtonDown("Jump"))
+        if (input.GetButtonDown("Jump") && !inputController.IsConsumed("Jump"))
         {
             Jumped = true;
+            inputController.ConsumeButton("Jump");
             player.FireEvent(new JumpEvent {Active = this, Direction = Vector3.up});
             outVelocity.y = jumpVelocity;
         }
