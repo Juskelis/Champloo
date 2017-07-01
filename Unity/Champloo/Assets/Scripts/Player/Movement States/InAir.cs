@@ -70,7 +70,7 @@ public class InAir : MovementState
 
         //if the player releases the jump button and is is moving up
         //if (player.InputPlayer.GetButtonUp("Jump") && inVelocity.y > 0 && !hasShortened)
-        if (player.InputPlayer.GetButtonUp("Jump") && !hasShortened)
+        if (player.InputPlayer.GetButtonUp("Jump") && !hasShortened && inputController.IsConsumed("Jump"))
         {
             outVelocity.y = inVelocity.y / 2;
             hasShortened = true;
