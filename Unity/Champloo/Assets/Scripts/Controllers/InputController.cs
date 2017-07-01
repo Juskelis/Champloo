@@ -22,6 +22,8 @@ public class InputController : MonoBehaviour
 
     private Dictionary<String, bool> consumedActions;
 
+    List<String> releasedKeys;
+
     private void Start()
     {
         xAngleDeadZone = Mathf.Sin(angleDeadzone * Mathf.Deg2Rad);
@@ -30,17 +32,24 @@ public class InputController : MonoBehaviour
         consumedActions = new Dictionary<string, bool>();
 
         inputPlayer = GetComponentInParent<Player>().InputPlayer;
+        releasedKeys = new List<String>();
     }
 
     private void LateUpdate()
     {
         //unconsume non-pressed buttons
+        releasedKeys.Clear();
         foreach (KeyValuePair<string, bool> pair in consumedActions)
         {
             if (!inputPlayer.GetButton(pair.Key))
             {
-                consumedActions[pair.Key] = false;
+                releasedKeys.Add(pair.Key);
             }
+        }
+
+        foreach (String key in releasedKeys)
+        {
+            consumedActions[key] = false;
         }
     }
 
