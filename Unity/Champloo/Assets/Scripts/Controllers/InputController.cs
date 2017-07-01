@@ -41,7 +41,7 @@ public class InputController : MonoBehaviour
         releasedKeys.Clear();
         foreach (KeyValuePair<string, bool> pair in consumedActions)
         {
-            if (!inputPlayer.GetButton(pair.Key))
+            if (!inputPlayer.GetButtonDown(pair.Key))
             {
                 releasedKeys.Add(pair.Key);
             }
