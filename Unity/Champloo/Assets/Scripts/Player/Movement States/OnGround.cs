@@ -40,7 +40,7 @@ public class OnGround : MovementState
 
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        float moveX = player.InputPlayer.GetAxis("Move Horizontal");
+        float moveX = inputController.ApplyDeadZone(input.GetAxis("Move Horizontal"));
         if (Mathf.Abs(moveX) <= float.Epsilon)
         {
             //stopping
@@ -55,21 +55,21 @@ public class OnGround : MovementState
         base.ApplyInputs(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
         Jumped = false;
-        if (player.InputPlayer.GetButtonDown("Jump"))
+        if (input.GetButtonDown("Jump"))
         {
             Jumped = true;
             player.FireEvent(new JumpEvent {Active = this, Direction = Vector3.up});
             outVelocity.y = jumpVelocity;
         }
 
-        float moveX = player.InputPlayer.GetAxis("Move Horizontal");
-        float inputDirection = Mathf.Sign(moveX);
+        float moveX = inputController.ApplyDeadZone(input.GetAxis("Move Horizontal"));
+        float inputDirection = Mathf.Abs(moveX) > float.Epsilon ? Mathf.Sign(moveX) : 0f;
         if (Mathf.Abs(moveX) >= float.Epsilon)
         {
             float delta = inputDirection != Mathf.Sign(inVelocity.x) ? turningDeceleration : acceleration;
             outVelocity.x = Mathf.MoveTowards(
                 inVelocity.x,
-                maxSpeed*(analogMovementSpeed?moveX:inputDirection),
+                maxSpeed*(analogMovementSpeed ? moveX : inputDirection),
                 delta*Time.deltaTime);
         }
     }

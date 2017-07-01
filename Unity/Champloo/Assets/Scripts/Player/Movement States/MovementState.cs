@@ -7,6 +7,7 @@ public class MovementState : NetworkBehaviour
 {
     protected Player player;
     protected Rewired.Player input;
+    protected InputController inputController;
     protected Controller2D controller;
     protected OnMovementSpecial movementSpecial;
     protected float externalForceDecay = 1f;
@@ -14,7 +15,8 @@ public class MovementState : NetworkBehaviour
     protected virtual void Start()
     {
         player = GetComponent<Player>();
-        input = player.InputPlayer;//GetComponent<InputController>();
+        input = player.InputPlayer;
+        inputController = GetComponent<InputController>();
         controller = GetComponent<Controller2D>();
         movementSpecial = GetComponent<OnMovementSpecial>();
     }
