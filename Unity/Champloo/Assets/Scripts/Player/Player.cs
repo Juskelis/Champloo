@@ -259,7 +259,7 @@ public class Player : NetworkBehaviour
     }
 
     //[Client]
-    void Kill(Vector3 direction = default(Vector3))
+    private void Kill(Vector3 direction = default(Vector3))
     {
         if (isLocalPlayer && hasAuthority && !Dead)
         {
@@ -285,6 +285,13 @@ public class Player : NetworkBehaviour
         float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
         transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
         Invoke("Spawn", time);
+    }
+
+    public void Suicide()
+    {
+        if (Dead) return;
+        FindObjectOfType<Score>().SubtractScore(playerNumber);
+        Kill();
     }
 
     #endregion
