@@ -391,7 +391,8 @@ public class Player : NetworkBehaviour
     /// Triggers the process of getting hit with a weapon
     /// </summary>
     /// <param name="otherWeapon">The weapon that hit us</param>
-    public void GetHit(Weapon otherWeapon)
+    /// <param name="processInstantly">Whether the hit should kill instantly or not</param>
+    public void GetHit(Weapon otherWeapon, bool processInstantly = false)
     {
         if (otherWeapon != null && hitWith == null && PlayerNumber != otherWeapon.PlayerNumber)
         {
@@ -402,8 +403,16 @@ public class Player : NetworkBehaviour
                 return;
             }
             hitWith = otherWeapon;
-            Invoke("ProcessHit", hitReactionTime);
             FireEvent(new HitEvent {Attacker = otherPlayer, Hit = this});
+
+            if (processInstantly)
+            {
+                ProcessHit();
+            }
+            else
+            {
+                Invoke("ProcessHit", hitReactionTime);
+            }
         }
     }
 
