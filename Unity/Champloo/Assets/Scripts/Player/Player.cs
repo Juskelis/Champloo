@@ -478,14 +478,8 @@ public class Player : NetworkBehaviour
     #region Helpers
     public void ApplyForce(Vector3 force)
     {
-        //velocity = force;
-        float threshold = 0.25f;
-        Vector3 newVelocity = velocity;
-        if (Mathf.Abs(force.x) > threshold) newVelocity.x = force.x;
-        if (Mathf.Abs(force.y) > threshold) newVelocity.y = force.y;
-        if (Mathf.Abs(force.z) > threshold) newVelocity.z = force.z;
         ChangeMovementState(GetComponent<InAir>());
-        OnVelocityChanged(newVelocity);
+        OnVelocityChanged(force);
     }
 
     /// <summary>
