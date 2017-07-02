@@ -403,6 +403,7 @@ public class Player : NetworkBehaviour
             }
             hitWith = otherWeapon;
             Invoke("ProcessHit", hitReactionTime);
+            FireEvent(new HitEvent {Attacker = otherPlayer, Hit = this});
         }
     }
 
