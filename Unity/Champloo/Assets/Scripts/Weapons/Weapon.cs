@@ -128,7 +128,7 @@ public class Weapon : MonoBehaviour
     private IEnumerator SpecialTimingCoroutine()
     {
         specialAttackingState = TimingState.WARMUP;
-        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = attackingState });
+        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = specialAttackingState });
         yield return new WaitForSeconds(specialStartupTime);
         OnStartSpecial();
         yield return new WaitForSeconds(specialTime);
@@ -146,19 +146,19 @@ public class Weapon : MonoBehaviour
     protected virtual void OnStartSpecial()
     {
         specialAttackingState = TimingState.IN_PROGRESS;
-        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = attackingState });
+        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = specialAttackingState });
     }
 
     protected virtual void OnEndSpecial()
     {
         specialAttackingState = TimingState.COOLDOWN;
-        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = attackingState });
+        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = specialAttackingState });
     }
 
     protected virtual void OnCooledDownSpecial()
     {
         specialAttackingState = TimingState.DONE;
-        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = attackingState });
+        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = specialAttackingState });
     }
 
     protected virtual void OnRechargeSpecial()

@@ -259,7 +259,7 @@ public class Player : NetworkBehaviour
     }
 
     //[Client]
-    void Kill(Vector3 direction = default(Vector3))
+    private void Kill(Vector3 direction = default(Vector3))
     {
         if (isLocalPlayer && hasAuthority && !Dead)
         {
@@ -285,6 +285,13 @@ public class Player : NetworkBehaviour
         float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
         transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
         Invoke("Spawn", time);
+    }
+
+    public void Suicide()
+    {
+        if (Dead) return;
+        FindObjectOfType<Score>().SubtractScore(playerNumber);
+        Kill();
     }
 
     #endregion
@@ -391,7 +398,8 @@ public class Player : NetworkBehaviour
     /// Triggers the process of getting hit with a weapon
     /// </summary>
     /// <param name="otherWeapon">The weapon that hit us</param>
-    public void GetHit(Weapon otherWeapon)
+    /// <param name="processInstantly">Whether the hit should kill instantly or not</param>
+    public void GetHit(Weapon otherWeapon, bool processInstantly = false)
     {
         if (otherWeapon != null && hitWith == null && PlayerNumber != otherWeapon.PlayerNumber)
         {
@@ -402,7 +410,16 @@ public class Player : NetworkBehaviour
                 return;
             }
             hitWith = otherWeapon;
-            Invoke("ProcessHit", hitReactionTime);
+            FireEvent(new HitEvent {Attacker = otherPlayer, Hit = this});
+
+            if (processInstantly)
+            {
+                ProcessHit();
+            }
+            else
+            {
+                Invoke("ProcessHit", hitReactionTime);
+            }
         }
     }
 
