@@ -495,7 +495,7 @@ public class Player : NetworkBehaviour
     #region Helpers
     public void ApplyForce(Vector3 force)
     {
-        if (!(CurrentMovementState is InBlock))
+        if (CurrentMovementState is InAttack)
         {
             ChangeMovementState(GetComponent<InAir>());
         }
