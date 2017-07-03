@@ -495,7 +495,10 @@ public class Player : NetworkBehaviour
     #region Helpers
     public void ApplyForce(Vector3 force)
     {
-        ChangeMovementState(GetComponent<InAir>());
+        if (CurrentMovementState is InAttack)
+        {
+            ChangeMovementState(GetComponent<InAir>());
+        }
         OnVelocityChanged(force);
     }
 
@@ -737,6 +740,7 @@ public class Player : NetworkBehaviour
         {
             if (weapon.InHand && shield.TakeHit())
             {
+                FireEvent(new BlockEvent {Attacker = hitWith.OurPlayer, Blocker = this});
                 CancelHit();
             }
             //else if (!weapon.InHand && inputs.parry.Down)
