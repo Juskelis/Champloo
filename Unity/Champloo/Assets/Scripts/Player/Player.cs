@@ -737,6 +737,7 @@ public class Player : NetworkBehaviour
         {
             if (weapon.InHand && shield.TakeHit())
             {
+                FireEvent(new BlockEvent {Attacker = hitWith.OurPlayer, Blocker = this});
                 CancelHit();
             }
             //else if (!weapon.InHand && inputs.parry.Down)
