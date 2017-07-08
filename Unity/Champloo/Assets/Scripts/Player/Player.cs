@@ -122,6 +122,8 @@ public class Player : NetworkBehaviour
 	
     private bool stunned = false;
 
+    private bool invincible = false;
+
     #endregion
 
     #region Component Variables
@@ -236,6 +238,7 @@ public class Player : NetworkBehaviour
         hitWithProjectile = null;
         manuallyUpdatedDirection = false;
         stunned = false;
+        invincible = false;
         OnVelocityChanged(Vector3.zero);
         OnExternalForceChanged(Vector3.zero);
         Vector3 garbageVelocity;
@@ -401,7 +404,7 @@ public class Player : NetworkBehaviour
     /// <param name="processInstantly">Whether the hit should kill instantly or not</param>
     public void GetHit(Weapon otherWeapon, bool processInstantly = false)
     {
-        if (otherWeapon != null && hitWith == null && PlayerNumber != otherWeapon.PlayerNumber)
+        if (!invincible && otherWeapon != null && hitWith == null && PlayerNumber != otherWeapon.PlayerNumber)
         {
             Player otherPlayer = otherWeapon.OurPlayer;
             if (otherPlayer.hitWith != null && otherPlayer.hitWith.PlayerNumber == PlayerNumber)
@@ -429,7 +432,7 @@ public class Player : NetworkBehaviour
     /// <param name="p"></param>
     public void GetHit(Projectile p)
     {
-        if (p != null && p != hitWithProjectile)
+        if (!invincible && p != null && p != hitWithProjectile)
         {
             if (!p.Moving && !weapon.InHand)
             {
@@ -588,6 +591,11 @@ public class Player : NetworkBehaviour
         CmdExternalForceChange(newExternalForce);
     }
 
+    public void OnInvicibleChanged(bool invincible)
+    {
+        CmdInvincibilityChange(invincible);
+    }
+
     #endregion
 
     #region Commands
@@ -609,6 +617,12 @@ public class Player : NetworkBehaviour
     public void CmdExternalForceChange(Vector3 newExternalForce)
     {
         externalForce = newExternalForce;
+    }
+
+    [Command]
+    public void CmdInvincibilityChange(bool invincible)
+    {
+        this.invincible = invincible;
     }
 
     #endregion
