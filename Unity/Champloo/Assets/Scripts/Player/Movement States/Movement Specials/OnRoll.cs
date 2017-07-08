@@ -6,11 +6,17 @@ public class OnRoll : OnMovementSpecial
 {
     [SerializeField]
     private float rollSpeed = 1f;
+
     [SerializeField]
-    private LayerMask passthroughMask;
+    private LayerMask rollingCollisionMask;
+    [SerializeField]
+    private LayerMask rollingCrushMask;
+    [SerializeField]
+    private LayerMask rollingNotifyMask;
 
     private LayerMask originalCollisionMask;
     private LayerMask originalCrushMask;
+    private LayerMask originalNotifyMask;
 
     private bool goingRight = true;
 
@@ -36,7 +42,7 @@ public class OnRoll : OnMovementSpecial
     public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-        goingRight = inVelocity.x > 0;
+        goingRight = player.AimDirection.x > 0;
     }
 
     protected override void OnStart()
@@ -45,9 +51,13 @@ public class OnRoll : OnMovementSpecial
 
         originalCollisionMask = controller.collisionMask;
         originalCrushMask = controller.crushMask;
+        originalNotifyMask = controller.notifyMask;
 
-        controller.collisionMask = passthroughMask;
-        controller.crushMask = passthroughMask;
+        controller.collisionMask = rollingCollisionMask;
+        controller.crushMask = rollingCrushMask;
+        controller.notifyMask = rollingNotifyMask;
+
+        player.OnInvicibleChanged(true);
     }
 
     protected override void OnEnd()
@@ -55,5 +65,8 @@ public class OnRoll : OnMovementSpecial
         base.OnEnd();
         controller.collisionMask = originalCollisionMask;
         controller.crushMask = originalCrushMask;
+        controller.notifyMask = originalNotifyMask;
+
+        player.OnInvicibleChanged(false);
     }
 }
