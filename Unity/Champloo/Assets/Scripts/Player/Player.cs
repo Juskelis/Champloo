@@ -699,7 +699,9 @@ public class Player : NetworkBehaviour
         }   
 
         //else if(inputs.movementSpecial.Down && !(movementState is OnDash) && currentDashes > 0)
-        else if(InputPlayer.GetButtonDown("Movement Special") && !(movementState is OnMovementSpecial) && !movementSpecial.isDisabled)
+        else if(InputPlayer.GetButtonDown("Movement Special")
+            && !(InputPlayer.GetButtonDown("Attack") || InputPlayer.GetButtonDown("Weapon Special"))
+            && !(movementState is OnMovementSpecial) && !movementSpecial.isDisabled)
         {
             next = GetComponentInChildren<OnMovementSpecial>();
         }
@@ -737,8 +739,6 @@ public class Player : NetworkBehaviour
 
         MovementState next = movementState.DecideNextState(velocity, externalForce);
 
-        ChooseNextState(ref next);
-
         if (InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !movementSpecial.isInUse)
         {
             CmdAttack();
@@ -747,6 +747,8 @@ public class Player : NetworkBehaviour
         {
             CmdSpecialAttack();
         }
+
+        ChooseNextState(ref next);
 
         if (next != null)
         {
