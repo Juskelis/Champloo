@@ -6,12 +6,29 @@ public class WineBottleProjectile : Projectile {
     [SerializeField]
     private GameObject explosion;
 
+    [SerializeField]
+    private float stunTime = 1f;
+
+    protected override void Update()
+    {
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            Quaternion.Euler(0, 0, -90f),
+            45f * Time.deltaTime);
+
+        base.Update();
+    }
+
     protected override void ProcessHitPlayer(GameObject g)
     {
         Player p = g.gameObject.GetComponent<Player>()
                    ?? g.gameObject.GetComponentInParent<Player>();
-        if (p == null) return;
-        p.GetHit(this);
+        if (p == null || p.PlayerNumber == PlayerNumber) return;
+        p.GetStunned(stunTime);
+
+        Instantiate(explosion, transform.position, transform.rotation);
+
+        Destroy(gameObject);
     }
 
     protected override void ProcessHitObstacle(Collider2D c)
