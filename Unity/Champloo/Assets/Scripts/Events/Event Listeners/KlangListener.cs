@@ -10,6 +10,9 @@ public class KlangListener : MonoBehaviour
     private Transform spawnOnKlang;
 
     [SerializeField]
+    private PlayRandomSource klangSound;
+
+    [SerializeField]
     private CamerShakeSettings shakeSettings;
 
     void Start()
@@ -42,6 +45,8 @@ public class KlangListener : MonoBehaviour
                 shakeSettings.fadeInTime,
                 shakeSettings.fadeOutTime);
         }
+
+        klangSound.Play();
 
         //reset weapons
         wA.Reset();
