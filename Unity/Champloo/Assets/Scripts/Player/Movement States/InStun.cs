@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InStun : MovementState
 {
+    public override bool AttackAllowed { get { return false; } }
 
     private MovementState getSimulatedState()
     {

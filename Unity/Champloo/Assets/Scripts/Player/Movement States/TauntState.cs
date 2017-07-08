@@ -6,6 +6,8 @@ public class TauntState : MovementState {
     private float tauntDuration;
     private float tauntTimer;
 
+    public override bool AttackAllowed { get { return false; } }
+
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
         return Vector3.zero;

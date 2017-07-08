@@ -9,7 +9,9 @@ public class OnInfiniteDash : OnDash
         base.Start();
         hitDashEarly = false;
     }
-    
+
+    public override bool AttackAllowed { get { return true; } }
+
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
     {
         specialTimeLeft -= Time.deltaTime;

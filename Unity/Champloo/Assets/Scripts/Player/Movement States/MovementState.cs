@@ -12,6 +12,8 @@ public class MovementState : NetworkBehaviour
     protected OnMovementSpecial movementSpecial;
     protected float externalForceDecay = 1f;
 
+    public virtual bool AttackAllowed { get { return true; } }
+
     protected virtual void Start()
     {
         player = GetComponent<Player>();

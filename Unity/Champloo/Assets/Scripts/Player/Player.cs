@@ -739,11 +739,11 @@ public class Player : NetworkBehaviour
 
         MovementState next = movementState.DecideNextState(velocity, externalForce);
 
-        if (InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !movementSpecial.isInUse)
+        if (InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && movementState.AttackAllowed)
         {
             CmdAttack();
         }
-        else if (InputPlayer.GetButtonDown("Weapon Special"))
+        else if (InputPlayer.GetButtonDown("Weapon Special") && weapon.CanSpecialAttack && movementState.AttackAllowed)
         {
             CmdSpecialAttack();
         }
