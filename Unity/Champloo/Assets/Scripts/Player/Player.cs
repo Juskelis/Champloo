@@ -33,6 +33,9 @@ public class Player : NetworkBehaviour
         get { return movementState; }
     }
 
+    private bool stunned = false;
+    public bool Stunned { get { return stunned; } }
+
     public int HorizontalDirection
     {
         get { return (int)visuals.localScale.x; }
@@ -119,8 +122,6 @@ public class Player : NetworkBehaviour
     private Projectile hitWithProjectile;
 
     private bool manuallyUpdatedDirection = false;
-	
-    private bool stunned = false;
 
     private bool invincible = false;
 
@@ -453,9 +454,15 @@ public class Player : NetworkBehaviour
     /// <summary>
     /// Triggers the process of being stunned
     /// </summary>
-    public void GetStunned()
+    public void GetStunned(float stunTime)
     {
         stunned = true;
+        Invoke("EndStun", stunTime);
+    }
+
+    private void EndStun()
+    {
+        stunned = false;
     }
 
     void ProcessHit()
@@ -676,10 +683,9 @@ public class Player : NetworkBehaviour
     {
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
         //if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack) && !movementSpecial.isInUse)
-        if (stunned)
+        if (stunned && !(movementState is InStun))
         {
             next = GetComponent<InStun>();
-            stunned = false;
         }
         else if(weapon.AttackState == TimingState.IN_PROGRESS && !(movementState is InAttack))
         {
