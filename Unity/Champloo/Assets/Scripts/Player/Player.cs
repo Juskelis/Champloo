@@ -33,6 +33,9 @@ public class Player : NetworkBehaviour
         get { return movementState; }
     }
 
+    private bool stunned = false;
+    public bool Stunned { get { return stunned; } }
+
     public int HorizontalDirection
     {
         get { return (int)visuals.localScale.x; }
@@ -119,8 +122,8 @@ public class Player : NetworkBehaviour
     private Projectile hitWithProjectile;
 
     private bool manuallyUpdatedDirection = false;
-	
-    private bool stunned = false;
+
+    private bool invincible = false;
 
     #endregion
 
@@ -236,6 +239,7 @@ public class Player : NetworkBehaviour
         hitWithProjectile = null;
         manuallyUpdatedDirection = false;
         stunned = false;
+        invincible = false;
         OnVelocityChanged(Vector3.zero);
         OnExternalForceChanged(Vector3.zero);
         Vector3 garbageVelocity;
@@ -401,7 +405,7 @@ public class Player : NetworkBehaviour
     /// <param name="processInstantly">Whether the hit should kill instantly or not</param>
     public void GetHit(Weapon otherWeapon, bool processInstantly = false)
     {
-        if (otherWeapon != null && hitWith == null && PlayerNumber != otherWeapon.PlayerNumber)
+        if (!invincible && otherWeapon != null && hitWith == null && PlayerNumber != otherWeapon.PlayerNumber)
         {
             Player otherPlayer = otherWeapon.OurPlayer;
             if (otherPlayer.hitWith != null && otherPlayer.hitWith.PlayerNumber == PlayerNumber)
@@ -429,7 +433,7 @@ public class Player : NetworkBehaviour
     /// <param name="p"></param>
     public void GetHit(Projectile p)
     {
-        if (p != null && p != hitWithProjectile)
+        if (!invincible && p != null && p != hitWithProjectile)
         {
             if (!p.Moving && !weapon.InHand)
             {
@@ -450,9 +454,15 @@ public class Player : NetworkBehaviour
     /// <summary>
     /// Triggers the process of being stunned
     /// </summary>
-    public void GetStunned()
+    public void GetStunned(float stunTime)
     {
         stunned = true;
+        Invoke("EndStun", stunTime);
+    }
+
+    private void EndStun()
+    {
+        stunned = false;
     }
 
     void ProcessHit()
@@ -588,6 +598,11 @@ public class Player : NetworkBehaviour
         CmdExternalForceChange(newExternalForce);
     }
 
+    public void OnInvicibleChanged(bool invincible)
+    {
+        CmdInvincibilityChange(invincible);
+    }
+
     #endregion
 
     #region Commands
@@ -609,6 +624,12 @@ public class Player : NetworkBehaviour
     public void CmdExternalForceChange(Vector3 newExternalForce)
     {
         externalForce = newExternalForce;
+    }
+
+    [Command]
+    public void CmdInvincibilityChange(bool invincible)
+    {
+        this.invincible = invincible;
     }
 
     #endregion
@@ -662,10 +683,9 @@ public class Player : NetworkBehaviour
     {
         //if(inputs.attack.Down && weapon.CanAttack && !(movementState is InAttack))
         //if(InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !(movementState is InAttack) && !movementSpecial.isInUse)
-        if (stunned)
+        if (stunned && !(movementState is InStun))
         {
             next = GetComponent<InStun>();
-            stunned = false;
         }
         else if(weapon.AttackState == TimingState.IN_PROGRESS && !(movementState is InAttack))
         {
@@ -679,7 +699,9 @@ public class Player : NetworkBehaviour
         }   
 
         //else if(inputs.movementSpecial.Down && !(movementState is OnDash) && currentDashes > 0)
-        else if(InputPlayer.GetButtonDown("Movement Special") && !(movementState is OnMovementSpecial) && !movementSpecial.isDisabled)
+        else if(InputPlayer.GetButtonDown("Movement Special")
+            && !(InputPlayer.GetButtonDown("Attack") || InputPlayer.GetButtonDown("Weapon Special"))
+            && !(movementState is OnMovementSpecial) && !movementSpecial.isDisabled)
         {
             next = GetComponentInChildren<OnMovementSpecial>();
         }
@@ -717,16 +739,16 @@ public class Player : NetworkBehaviour
 
         MovementState next = movementState.DecideNextState(velocity, externalForce);
 
-        ChooseNextState(ref next);
-
-        if (InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && !movementSpecial.isInUse)
+        if (InputPlayer.GetButtonDown("Attack") && weapon.CanAttack && movementState.AttackAllowed)
         {
             CmdAttack();
         }
-        else if (InputPlayer.GetButtonDown("Weapon Special"))
+        else if (InputPlayer.GetButtonDown("Weapon Special") && weapon.CanSpecialAttack && movementState.AttackAllowed)
         {
             CmdSpecialAttack();
         }
+
+        ChooseNextState(ref next);
 
         if (next != null)
         {

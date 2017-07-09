@@ -20,6 +20,8 @@ public class InBlock : MovementState
         ourShield = GetComponentInChildren<Shield>();
     }
 
+    public override bool AttackAllowed { get { return false; } }
+
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
         velocity.x = Mathf.MoveTowards(velocity.x, 0f, deceleration * Time.deltaTime);

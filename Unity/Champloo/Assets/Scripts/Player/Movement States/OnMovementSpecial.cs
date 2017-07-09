@@ -38,6 +38,8 @@ public class OnMovementSpecial : MovementState
         StartCoroutine(TimingCoroutine());
     }
 
+    public override bool AttackAllowed { get { return false; } }
+
     protected virtual IEnumerator TimingCoroutine()
     {
         timingState = TimingState.WARMUP;

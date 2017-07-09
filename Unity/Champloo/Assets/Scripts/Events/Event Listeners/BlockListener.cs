@@ -7,6 +7,9 @@ public class BlockListener : MonoBehaviour {
     private float blockKnockback;
 
     [SerializeField]
+    private PlayRandomSource blockSound;
+
+    [SerializeField]
     private CamerShakeSettings shakeSettings;
 
     void Start()
@@ -34,6 +37,8 @@ public class BlockListener : MonoBehaviour {
                 shakeSettings.fadeInTime,
                 shakeSettings.fadeOutTime);
         }
+
+        blockSound.Play();
 
         Vector3 attackerPos = e.Attacker.transform.position;
         Vector3 defenderPos = e.Blocker.transform.position;
