@@ -4,25 +4,33 @@ using System.Collections;
 public class OnInfiniteDash : OnDash
 {
     private bool hitDashEarly;
+    private bool attackAllowed;
+
+    [SerializeField]
+    private float attackBufferWindow;
+    
     protected override void Start()
     {
         base.Start();
         hitDashEarly = false;
+        attackAllowed = false;
     }
 
-    public override bool AttackAllowed { get { return true; } }
+    public override bool AttackAllowed { get { return attackAllowed; } }
 
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
     {
         specialTimeLeft -= Time.deltaTime;
         //Buffer for attacks and movement specials done too early
+
+        if (specialTimeLeft < (specialTime * attackBufferWindow) && player.InputPlayer.GetButtonDown("Attack"))
+        {
+            attackAllowed = true;
+        }
+
         if (specialTimeLeft < (specialTime * nextDashBufferWindow))
         {
-            if (player.InputPlayer.GetButtonDown("Attack"))
-            {
-                earlyAttackInput = true;
-            }
-            else if (player.InputPlayer.GetButtonDown("Movement Special") && !hitDashEarly)
+            if (player.InputPlayer.GetButtonDown("Movement Special") && !hitDashEarly)
             {
                 hitNextDashInput = true;
                 currentDashes++;
@@ -36,8 +44,9 @@ public class OnInfiniteDash : OnDash
         if (isDisabled || timingState == TimingState.DONE)
         {
             hitDashEarly = false;
-            if (earlyAttackInput)
+            if (attackAllowed)
             {
+                attackAllowed = false;
                 return GetComponent<InAttack>();
             }
             else if (hitNextDashInput)
@@ -62,5 +71,12 @@ public class OnInfiniteDash : OnDash
     //remove functionality of OnDash's OnEnterWall
     public override void OnEnterWall(Vector3 velocity, Vector3 externalForces)
     {
+    }
+
+    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
+        out Vector3 outVelocity, out Vector3 outExternalForces)
+    {
+        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+        attackAllowed = false;
     }
 }
