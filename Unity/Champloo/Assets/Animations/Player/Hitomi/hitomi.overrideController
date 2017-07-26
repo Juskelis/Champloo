@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: hitomi
+  m_Controller: {fileID: 9100000, guid: 2253d4963ab795e4ebf09bcb6490387a, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 7c3e74ee4f6400b4692de313c4858670, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b784ab468e15abe4a8ae5c0d94833735, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 422e99e46d45a1946b9fa9906def5596, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 830f3321f2bc06646a0210c700e495e3, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: fb7a523187b355f49a46b7ece4bce0a5, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 02474c5a34f43e84cb3675d635e1726d, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f7508b6c4ce2ca54cb9d1e563c623d7d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9d016930b818def47b8218e9e6cad060, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 93858b68f0d646b4097c853e641778df, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 80274c0058eb828419bffb90396de5b6, type: 2}

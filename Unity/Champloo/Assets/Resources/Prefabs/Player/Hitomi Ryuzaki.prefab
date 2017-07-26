@@ -1396,7 +1396,7 @@ Animator:
   m_GameObject: {fileID: 1679150048336280}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2253d4963ab795e4ebf09bcb6490387a, type: 2}
+  m_Controller: {fileID: 22100000, guid: 01055886f3bfb47478254b90854bc751, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1594,7 +1594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f03eee7916aab4c8f8025da7c3a152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultStunDuration: 0.2
 --- !u!114 &114105332960934092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1743,7 +1742,6 @@ MonoBehaviour:
   stopToMaxSpeedTime: 0.15
   maxSpeedToStopTime: 0.15
   fullTurnTime: 0.23
-  jumpSound: {fileID: 114639018780518578}
   analogMovementSpeed: 0
 --- !u!114 &114429614063133828
 MonoBehaviour:
@@ -1882,7 +1880,6 @@ MonoBehaviour:
   noAngleJumpModifier: {x: 1.25, y: 0}
   towardsWallJumpModifier: {x: 1, y: 0}
   allowedMinAngle: 1.16
-  jumpSound: {fileID: 114639018780518578}
 --- !u!114 &114639018780518578
 MonoBehaviour:
   m_ObjectHideFlags: 1
