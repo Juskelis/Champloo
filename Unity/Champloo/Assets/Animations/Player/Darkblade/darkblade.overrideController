@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: darkblade
+  m_Controller: {fileID: 9100000, guid: 2253d4963ab795e4ebf09bcb6490387a, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 7c3e74ee4f6400b4692de313c4858670, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 81d4ff317424bf24bbf4e4b142b9cf2e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 422e99e46d45a1946b9fa9906def5596, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 893ea191f1171c045a5a69e1826c1b29, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: fb7a523187b355f49a46b7ece4bce0a5, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b1a0b6a2abf93c542a22546d151cbcaa, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f7508b6c4ce2ca54cb9d1e563c623d7d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ccff05fca25aae041a5bef31594e8d98, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 93858b68f0d646b4097c853e641778df, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: cd4ea99f0571c29448d9327d783d0638, type: 2}
