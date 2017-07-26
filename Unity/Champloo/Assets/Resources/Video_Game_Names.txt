@@ -191,7 +191,6 @@ Inappropriate
 Inbred
 Incomprehensible
 Incredible
-Indian
 Inept
 Infinite
 Ingenious
@@ -292,7 +291,6 @@ Omega
 Orbital
 Pagan
 Panzer
-Papal
 Paranoid
 Pathetic
 Peaceful
@@ -604,14 +602,12 @@ Helicopter
 Hillbilly
 Hippo
 Hitman^Man
-Hobo
 Hockey
 Hoedown^Beatdown|Showdown|Smackdown|Takedown
 Hovercraft
 Horse Racing^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Ice
 Ice Cream
-Indian
 Insect
 Internet
 Jackhammer
