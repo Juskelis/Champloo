@@ -57,14 +57,12 @@ Caesar's
 Canadian
 Cantankerous
 Caribbean
-Catholic
 Celebrity
 Celtic
 Children of the
 Chillin'
 Chinese
 Chocolate
-Christian
 Claustrophobic
 College
 Colonial
@@ -177,7 +175,6 @@ Hidden
 Hideous
 High-Speed^Speed
 Hillbilly
-Hindu
 Hip-Hop^Hippo
 History of the
 Ho-Hum
@@ -211,12 +208,10 @@ Irish
 Iron
 Irresistible
 Irritating
-Islamic
 Italian
 It's a Mad, Mad^Madness
 Jamaican
 Japanese
-Jedi
 Jewish
 Kabuki
 Kamikaze
@@ -409,8 +404,6 @@ The Infernal
 The Last
 The Quest for the^Quest
 The Secret Weapon of the
-The Simpsons'
-The Sims:
 The Six Million Dollar
 Third-World
 Throbbing
@@ -515,7 +508,6 @@ Boxing^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Breakdancing^Dance Mix|Dancers
 Bubble
 Bubblegum
-Buddhist^Indian
 Bungie
 Burger
 Business
@@ -695,7 +687,6 @@ Platypus
 Plumber
 Plunger
 Pogo
-Pokemon
 Police
 Polka
 Pony
@@ -764,7 +755,6 @@ Sword
 Tank
 Techno
 Tennis
-Terrorist
 Tetris
 Theme Park^Park
 Thief
