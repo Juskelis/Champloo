@@ -5,7 +5,22 @@ using System.Collections.Generic;
 
 public class Weapon : MonoBehaviour
 {
-    public bool InHand { get; set; }
+    private bool inHand = false;
+    public bool InHand {
+        get {
+            return inHand;
+        }
+        set {
+            inHand = value;
+            if(player != null)
+            {
+                player.FireEvent<WeaponInHandEvent>(new WeaponInHandEvent
+                {
+                    Target = this
+                });
+            }
+        }
+    }
 
     protected TimingState attackingState = TimingState.DONE;
     public TimingState AttackState { get { return attackingState; } }
