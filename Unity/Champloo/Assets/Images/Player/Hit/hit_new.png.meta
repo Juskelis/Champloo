@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a2a9526519889e146864ca32ef6d5736
-timeCreated: 1468913939
+timeCreated: 1501547015
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,12 +8,12 @@ TextureImporter:
     21300002: hit_new_1
     21300004: hit_new_2
     21300006: hit_new_3
-  serializedVersion: 2
+  serializedVersion: 4
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -25,10 +25,8 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 7
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 2048
@@ -39,9 +37,7 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
@@ -49,138 +45,94 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 32
+  alphaUsage: 1
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
-  buildTargetSettings: []
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: hit_new_0
+    - serializedVersion: 2
+      name: hit_new_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 3
         y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 26
+        height: 29
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -6, y: -7}
-        - {x: -9, y: -10}
-        - {x: -9, y: -15}
-        - {x: -8, y: -16}
-        - {x: 10, y: -16}
-        - {x: 12, y: -13}
-        - {x: 12, y: -8}
-        - {x: 11, y: -7}
-      - - {x: 4, y: 13}
-        - {x: -5, y: 13}
-        - {x: -8, y: 9}
-        - {x: -8, y: 0}
-        - {x: -3, y: -4}
-        - {x: 3, y: -4}
-        - {x: 8, y: 0}
-        - {x: 8, y: 10}
-    - name: hit_new_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: hit_new_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 35
         y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 26
+        height: 29
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -9, y: -9}
-        - {x: -9, y: -14}
-        - {x: -8, y: -16}
-        - {x: -1, y: -16}
-        - {x: 2, y: -13}
-        - {x: 2, y: -9}
-      - - {x: 7, y: -8}
-        - {x: 2, y: -10}
-        - {x: 2, y: -12}
-        - {x: 6, y: -15}
-        - {x: 9, y: -15}
-        - {x: 12, y: -12}
-        - {x: 12, y: -10}
-        - {x: 10, y: -8}
-      - - {x: -5, y: 13}
-        - {x: -8, y: 9}
-        - {x: -8, y: 0}
-        - {x: -4, y: -3}
-        - {x: -3, y: -4}
-        - {x: 4, y: -4}
-        - {x: 8, y: -2}
-        - {x: 8, y: 10}
-        - {x: 4, y: 13}
-    - name: hit_new_2
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: hit_new_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 67
         y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 26
+        height: 29
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -9, y: -12}
-        - {x: -9, y: -14}
-        - {x: -7, y: -16}
-        - {x: -1, y: -16}
-        - {x: 2, y: -13}
-        - {x: 1, y: -10}
-        - {x: -7, y: -10}
-      - - {x: 4, y: -11}
-        - {x: 4, y: -13}
-        - {x: 6, y: -15}
-        - {x: 9, y: -15}
-        - {x: 12, y: -12}
-        - {x: 11, y: -9}
-        - {x: 6, y: -9}
-      - - {x: -4, y: 13}
-        - {x: -8, y: 9}
-        - {x: -8, y: 0}
-        - {x: -3, y: -4}
-        - {x: 7, y: -4}
-        - {x: 8, y: -2}
-        - {x: 8, y: 11}
-        - {x: 3, y: 13}
-    - name: hit_new_3
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: hit_new_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 99
         y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 26
+        height: 29
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -9, y: -9}
-        - {x: -9, y: -14}
-        - {x: -8, y: -16}
-        - {x: -1, y: -16}
-        - {x: 2, y: -13}
-        - {x: 2, y: -9}
-      - - {x: 3, y: -9}
-        - {x: 2, y: -11}
-        - {x: 2, y: -14}
-        - {x: 5, y: -15}
-        - {x: 11, y: -15}
-        - {x: 12, y: -12}
-        - {x: 12, y: -10}
-        - {x: 10, y: -8}
-      - - {x: -3, y: 13}
-        - {x: -8, y: 9}
-        - {x: -8, y: 0}
-        - {x: -7, y: -4}
-        - {x: 6, y: -4}
-        - {x: 8, y: -3}
-        - {x: 8, y: 8}
-        - {x: 7, y: 13}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: 
   userData: 
