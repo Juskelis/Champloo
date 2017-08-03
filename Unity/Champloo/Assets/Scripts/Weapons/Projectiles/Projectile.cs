@@ -41,16 +41,19 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    protected Collider2D hitbox;
+
     protected virtual void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        hitbox = GetComponent<Collider2D>();
         if(players == null) players = new List<Player>(FindObjectsOfType<Player>());
     }
 
     protected virtual void Start()
     {
         //check collisions
-        foreach (var col in Physics2D.OverlapBoxAll(transform.position, transform.localScale, transform.rotation.eulerAngles.z, obstacleMask))
+        foreach (var col in Physics2D.OverlapBoxAll(transform.position, hitbox.bounds.size, transform.rotation.eulerAngles.z, obstacleMask))
         {
             OnTriggerEnter2D(col);
         }
