@@ -285,6 +285,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224577703847839472}
+  - component: {fileID: 114741831596742822}
   m_Layer: 5
   m_Name: Weapon Indicator
   m_TagString: Untagged
@@ -304,7 +305,7 @@ GameObject:
   - component: {fileID: 114052077281718990}
   - component: {fileID: 114112535581945956}
   m_Layer: 5
-  m_Name: UN
+  m_Name: UNARMED
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -320,6 +321,7 @@ GameObject:
   - component: {fileID: 224809631174074444}
   - component: {fileID: 222221878589046688}
   - component: {fileID: 114631226113917144}
+  - component: {fileID: 114379206577848576}
   m_Layer: 5
   m_Name: ARMED
   m_TagString: Untagged
@@ -351,7 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.78431374, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -359,19 +361,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 77af58177dc76d3499b130f92df65b6d, type: 3}
+    m_Font: {fileID: 12800000, guid: b76dc554990017a4d94b0fd91ee58222, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 2
-    m_MaxSize: 40
+    m_MaxSize: 300
     m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: UN
+  m_Text: <color=#C80000FF>UN</color>ARMED
 --- !u!114 &114112535581945956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -384,6 +386,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inverseIndicator: 1
+  isOnPlayer: 0
+--- !u!114 &114379206577848576
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1688456606653930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffec30ae03252e243b2842fed522d444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inverseIndicator: 0
   isOnPlayer: 0
 --- !u!114 &114631226113917144
 MonoBehaviour:
@@ -405,19 +420,33 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 77af58177dc76d3499b130f92df65b6d, type: 3}
+    m_Font: {fileID: 12800000, guid: b76dc554990017a4d94b0fd91ee58222, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 2
-    m_MaxSize: 40
-    m_Alignment: 3
+    m_MaxSize: 300
+    m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: ARMED
+--- !u!114 &114741831596742822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1007966814740704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2516f43560a19bc4bb1d84bf75ec6335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toSync:
+  - {fileID: 114052077281718990}
+  - {fileID: 114631226113917144}
 --- !u!222 &222221878589046688
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -444,7 +473,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.4, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -481,7 +510,7 @@ RectTransform:
   m_Father: {fileID: 224577703847839472}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.4, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
