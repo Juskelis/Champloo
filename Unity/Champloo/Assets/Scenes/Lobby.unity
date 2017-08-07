@@ -2478,9 +2478,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constrainHeight: 1
   constrainWidth: 1
-  minSize: {x: 480, y: 180}
+  minSize: {x: 480, y: 0}
   maxSize: {x: 600, y: 250}
-  shrinkHeight: 0
+  shrinkHeight: 1
   shrinkWidth: 0
 --- !u!114 &492253949
 MonoBehaviour:
