@@ -24,7 +24,7 @@ public class InAttack : MovementState
 
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
     {
-        if (!playerWeapon.IsAttacking)
+        if (!playerWeapon.IsAttacking && !playerWeapon.IsSpecialAttacking)
         {
             if (controller.collisions.Below)
             {

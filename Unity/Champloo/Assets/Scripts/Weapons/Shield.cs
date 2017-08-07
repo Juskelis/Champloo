@@ -74,9 +74,10 @@ public class Shield : MonoBehaviour {
         visuals.enabled = up;
     }
 
-    public bool TakeHit()
+    public bool TakeHit(Weapon w)
     {
         if (!Up) return false;
+        if (w != null && w.IsSpecialAttacking && w is Axe) return false;
 
         percentLeft -= percentPerHit;
         return percentLeft >= 0;

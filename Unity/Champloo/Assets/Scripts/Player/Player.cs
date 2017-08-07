@@ -315,40 +315,57 @@ public class Player : NetworkBehaviour
     {
         Player otherPlayer = other.GetComponent<Player>();
         if (otherPlayer == null || otherPlayer.Dead || Dead) return;
-        
-        //This section deals with player collisions
-        //This section needs to be changed to not reference dash
-        //If another player is below 
-        if (info.Below)
+
+        bool killThem = false;
+        bool killUs = false;
+
+        if (movementState is OnKillerDash && !(otherPlayer.movementState is OnKillerDash))
         {
-            //bounce off their head no matter what
-            ApplyForce(Vector3.up * bounceForce);
+            killThem = true;
+        }
+        else if (otherPlayer.movementState is OnKillerDash && !(movementState is OnKillerDash))
+        {
+            killUs = true;
+        }
+        else if (info.Below)
+        {
+            ApplyForce(
+                (transform.position - otherPlayer.transform.position).normalized * bounceForce);
             if (movementState is OnDash && !otherPlayer.Dead)
             {
-                //kill them!
-                CmdScore();
-                FireEvent(new KillEvent {Killer = this, Victim = otherPlayer});
-                otherPlayer.Kill(Vector3.down);
+                killThem = true;
             }
         }
         //if another player is above
         else if (info.Above)
         {
+            otherPlayer.ApplyForce(
+                (otherPlayer.transform.position - transform.position).normalized * otherPlayer.bounceForce);
             if (otherPlayer.movementState is OnDash && !Dead)
             {
-                //they killed us!
-                FireEvent(new KillEvent {Killer = otherPlayer, Victim = this});
-                Kill(Vector3.down);
-                otherPlayer.ApplyForce(Vector3.up * bounceForce);
-                otherPlayer.CmdScore();
+                killUs = true;
             }
         }
-        //if another player is to the side
-        else if (info.Left || info.Right)
+        else
         {
-            //bounce away
-            float dir = Mathf.Sign(transform.position.x - other.transform.position.x);
-            ApplyForce(Vector3.right * dir * bounceForce);
+            //apply forces no matter what
+            ApplyForce(
+                (transform.position - otherPlayer.transform.position).normalized * bounceForce);
+            otherPlayer.ApplyForce(
+                (otherPlayer.transform.position - transform.position).normalized * otherPlayer.bounceForce);
+        }
+
+        if (killThem)
+        {
+            FireEvent(new KillEvent { Killer = this, Victim = otherPlayer });
+            otherPlayer.Kill(Vector3.down);
+            CmdScore();
+        }
+        if (killUs)
+        {
+            FireEvent(new KillEvent { Killer = otherPlayer, Victim = this });
+            Kill(Vector3.down);
+            otherPlayer.CmdScore();
         }
     }
 
@@ -687,7 +704,7 @@ public class Player : NetworkBehaviour
         {
             next = GetComponent<InStun>();
         }
-        else if(weapon.AttackState == TimingState.IN_PROGRESS && !(movementState is InAttack))
+        else if((weapon.IsAttacking || weapon.IsSpecialAttacking) && !(movementState is InAttack))
         {
             next = GetComponent<InAttack>();
         }
@@ -760,7 +777,7 @@ public class Player : NetworkBehaviour
         //handle blocking/parrying
         if (hitWith != null)
         {
-            if (weapon.InHand && shield.TakeHit())
+            if (weapon.InHand && shield.TakeHit(hitWith))
             {
                 FireEvent(new BlockEvent {Attacker = hitWith.OurPlayer, Blocker = this});
                 CancelHit();
