@@ -5,6 +5,7 @@ public class OnInfiniteDash : OnDash
 {
     private bool hitDashEarly;
     private bool attackAllowed;
+    private bool attackButtonHit;
 
     [SerializeField]
     private float attackBufferWindow;
@@ -14,6 +15,7 @@ public class OnInfiniteDash : OnDash
         base.Start();
         hitDashEarly = false;
         attackAllowed = false;
+        attackButtonHit = false;
     }
 
     public override bool AttackAllowed { get { return attackAllowed; } }
@@ -23,9 +25,17 @@ public class OnInfiniteDash : OnDash
         specialTimeLeft -= Time.deltaTime;
         //Buffer for attacks and movement specials done too early
 
-        if (specialTimeLeft < (specialTime * attackBufferWindow) && player.InputPlayer.GetButtonDown("Attack"))
+        if (specialTimeLeft < (specialTime * attackBufferWindow))
         {
             attackAllowed = true;
+            if (player.InputPlayer.GetButtonDown("Attack"))
+            {
+                attackButtonHit = true;
+            }
+        }
+        else
+        {
+            attackAllowed = false;
         }
 
         if (specialTimeLeft < (specialTime * nextDashBufferWindow))
@@ -44,12 +54,7 @@ public class OnInfiniteDash : OnDash
         if (isDisabled || timingState == TimingState.DONE)
         {
             hitDashEarly = false;
-            if (attackAllowed)
-            {
-                attackAllowed = false;
-                return GetComponent<InAttack>();
-            }
-            else if (hitNextDashInput)
+            if (hitNextDashInput)
             {
                 hitNextDashInput = false;
                 return GetComponent<OnInfiniteDash>();
@@ -72,6 +77,7 @@ public class OnInfiniteDash : OnDash
     public override void OnEnterWall(Vector3 velocity, Vector3 externalForces)
     {
     }
+    
 
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
         out Vector3 outVelocity, out Vector3 outExternalForces)
