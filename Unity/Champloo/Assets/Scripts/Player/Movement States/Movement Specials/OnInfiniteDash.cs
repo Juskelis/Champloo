@@ -22,14 +22,7 @@ public class OnInfiniteDash : OnDash
         specialTimeLeft -= Time.deltaTime;
         //Buffer for attacks and movement specials done too early
 
-        if (specialTimeLeft < (specialTime * attackBufferWindow))
-        {
-            attackAllowed = true;
-        }
-        else
-        {
-            attackAllowed = false;
-        }
+        attackAllowed = specialTimeLeft < (specialTime * attackBufferWindow);
 
         if (specialTimeLeft < (specialTime * nextDashBufferWindow))
         {
