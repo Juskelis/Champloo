@@ -5,17 +5,14 @@ public class OnInfiniteDash : OnDash
 {
     private bool hitDashEarly;
     private bool attackAllowed;
-    private bool attackButtonHit;
-
     [SerializeField]
     private float attackBufferWindow;
-    
+
     protected override void Start()
     {
         base.Start();
         hitDashEarly = false;
         attackAllowed = false;
-        attackButtonHit = false;
     }
 
     public override bool AttackAllowed { get { return attackAllowed; } }
@@ -28,10 +25,6 @@ public class OnInfiniteDash : OnDash
         if (specialTimeLeft < (specialTime * attackBufferWindow))
         {
             attackAllowed = true;
-            if (player.InputPlayer.GetButtonDown("Attack"))
-            {
-                attackButtonHit = true;
-            }
         }
         else
         {
