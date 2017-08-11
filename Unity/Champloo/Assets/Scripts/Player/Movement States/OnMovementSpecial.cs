@@ -31,7 +31,7 @@ public class OnMovementSpecial : MovementState
         isDisabled = false;
     }
 
-    //Used on the entering of the movement special
+    //Used on the entering of the movement special, before the warmup
     public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
