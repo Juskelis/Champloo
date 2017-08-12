@@ -27,7 +27,8 @@ public class ConsistentTextSize : MonoBehaviour
 	    }
 	    foreach (Text text in toSync)
 	    {
-	        text.fontSize = minSize;
+            //for some reason the size is sometimes one too high
+	        text.fontSize = Mathf.Max(minSize - 1, 1);
 	        text.resizeTextForBestFit = false;
 	    }
     }
