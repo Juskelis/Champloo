@@ -1594,10 +1594,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startupTime: 0
-  specialTime: 0.23
+  specialTime: 0.245
   cooldownTime: 0.1
   rechargeTime: 0
-  dashForce: 24
+  dashForce: 23
   gravityModifier: 0.5
   dashLimit: 1
   nextDashBufferWindow: 0.2
