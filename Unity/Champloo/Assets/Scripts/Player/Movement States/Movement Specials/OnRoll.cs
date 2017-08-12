@@ -5,7 +5,7 @@ using UnityEngine;
 public class OnRoll : OnMovementSpecial
 {
     [SerializeField]
-    private float rollSpeed = 1f;
+    private Vector2 rollSpeed;
 
     [SerializeField]
     private LayerMask rollingCollisionMask;
@@ -19,6 +19,8 @@ public class OnRoll : OnMovementSpecial
     private LayerMask originalNotifyMask;
 
     private bool goingRight = true;
+    private bool canAirRoll = true;
+
 
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
@@ -26,8 +28,9 @@ public class OnRoll : OnMovementSpecial
         {
             return GetSimulatedState().ApplyFriction(velocity);
         }
-
-        return (goingRight ? Vector3.right : Vector3.left) * rollSpeed;
+        Vector3 retVector = (goingRight ? Vector3.right : Vector3.left) * rollSpeed.x;
+        retVector.y = rollSpeed.y;
+        return retVector;
     }
 
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
@@ -41,6 +44,22 @@ public class OnRoll : OnMovementSpecial
 
     public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
     {
+        //short out
+        if(GetSimulatedState() is InAir)
+        {
+            if(canAirRoll)
+            {
+                canAirRoll = false;
+            }
+            else 
+            {
+                timingState = TimingState.DONE;
+                outVelocity = inVelocity;
+                outExternalForces = inExternalForces;
+                return;
+            }
+        }
+
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         goingRight = player.AimDirection.x > 0;
     }
@@ -69,4 +88,13 @@ public class OnRoll : OnMovementSpecial
 
         player.OnInvicibleChanged(false);
     }
+    public override void OnEnterGround(Vector3 velocity, Vector3 externalForces)
+    {
+        canAirRoll = true;
+    }
+    public override void OnEnterWall(Vector3 velocity, Vector3 externalForces)
+    {
+        canAirRoll = true;
+    }
+
 }

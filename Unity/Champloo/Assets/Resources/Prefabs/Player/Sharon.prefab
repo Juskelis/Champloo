@@ -1713,7 +1713,7 @@ MonoBehaviour:
   specialTime: 0.1
   cooldownTime: 0
   rechargeTime: 0
-  rollSpeed: 27
+  rollSpeed: {x: 27, y: -12}
   rollingCollisionMask:
     serializedVersion: 2
     m_Bits: 256
