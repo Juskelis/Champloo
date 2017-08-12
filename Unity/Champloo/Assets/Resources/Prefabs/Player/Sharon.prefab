@@ -715,8 +715,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1932597975936502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 0.5, z: 2}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalScale: {x: 1.75, y: 0.4, z: 2}
   m_Children:
   - {fileID: 4301296420252498}
   - {fileID: 4274930042504948}
@@ -1628,10 +1628,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 13
-  stopToMaxSpeedTime: 0.1
+  maxSpeed: 16
+  stopToMaxSpeedTime: 0.085
   maxSpeedToStopTime: 0.1
-  fullTurnTime: 0.2
+  fullTurnTime: 0.15
   analogMovementSpeed: 0
 --- !u!114 &114315539733933918
 MonoBehaviour:
@@ -1713,7 +1713,7 @@ MonoBehaviour:
   specialTime: 0.1
   cooldownTime: 0
   rechargeTime: 0
-  rollSpeed: 30
+  rollSpeed: 27
   rollingCollisionMask:
     serializedVersion: 2
     m_Bits: 256
@@ -1806,7 +1806,7 @@ MonoBehaviour:
   visuals: {fileID: 4673471404154968}
   hitbox: {fileID: 4546982628671640}
   bounceForce: 15
-  maxJumpHeight: 4
+  maxJumpHeight: 3
   minJumpHeight: 2
   Gravity: 50
   hitReactionTime: 0.2
@@ -1821,7 +1821,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f03eee7916aab4c8f8025da7c3a152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultStunDuration: 0.2
 --- !u!114 &114571998451438434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1990,9 +1989,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 20
-  maxSpeed: 17
+  maxSpeed: 13
   stopToMaxSpeedTime: 0.25
-  maxSpeedToStopTime: 0.4
+  maxSpeedToStopTime: 0.5
   fullTurnTime: 0.75
   analogMovementSpeed: 0
 --- !u!114 &114837754033567326
