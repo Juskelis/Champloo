@@ -62,7 +62,18 @@ public class Axe : Weapon
 
         visuals.enabled = true;
         col.enabled = true;
+        Vector2 aim = OurPlayer.AimDirection;
+        Projectile temp = (Projectile)Instantiate(
+            thrownVersion,
+            transform.position,
+            Quaternion.AngleAxis(
+                Utility.Vector2AsAngle(aim),//input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
+                transform.parent.forward
+                )
+            );
+        temp.PlayerNumber = OurPlayer.PlayerNumber;
     }
+    
 
     protected override void OnEndSpecial()
     {
