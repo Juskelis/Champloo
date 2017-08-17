@@ -1605,22 +1605,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 95
-    i1: 204
-    i2: 70
-    i3: 67
-    i4: 110
-    i5: 76
-    i6: 12
-    i7: 164
-    i8: 234
-    i9: 147
-    i10: 30
-    i11: 64
-    i12: 9
-    i13: 156
-    i14: 172
-    i15: 21
+    i0: 116
+    i1: 249
+    i2: 104
+    i3: 84
+    i4: 10
+    i5: 174
+    i6: 97
+    i7: 244
+    i8: 123
+    i9: 3
+    i10: 62
+    i11: 121
+    i12: 219
+    i13: 253
+    i14: 196
+    i15: 169
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
 --- !u!114 &114183448363921924
@@ -1775,9 +1775,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 13
-  stopToMaxSpeedTime: 0.1
-  maxSpeedToStopTime: 0.1
+  maxSpeed: 10
+  stopToMaxSpeedTime: 0.15
+  maxSpeedToStopTime: 0.2
   fullTurnTime: 0.2
   analogMovementSpeed: 0
 --- !u!114 &114434379867403634
@@ -1984,7 +1984,7 @@ MonoBehaviour:
   specialTime: 0
   specialCooldownTime: 0
   specialRechargeTime: 0
-  thrownVersion: {fileID: 114650963420332838, guid: 64808d4b28ab1534caba8f3b29c691f9,
+  thrownVersion: {fileID: 114957719135722112, guid: 7e31e33e980bea84fb6062c80c5318e8,
     type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
