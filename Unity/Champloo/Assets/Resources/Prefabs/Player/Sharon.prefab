@@ -1840,6 +1840,8 @@ MonoBehaviour:
     fadeInTime: 0
     fadeOutTime: 0.5
   corpsePushFactor: 20
+  bloodSpurt: {fileID: 4938746179884528, guid: 75b856bc50bcec94a892c2f96789562f, type: 2}
+  alignToDirection: 1
 --- !u!114 &114592585550955520
 MonoBehaviour:
   m_ObjectHideFlags: 1
