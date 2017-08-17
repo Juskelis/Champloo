@@ -785,11 +785,13 @@ public class Player : NetworkBehaviour
             //else if (!weapon.InHand && inputs.parry.Down)
             else if (!weapon.InHand && InputPlayer.GetButtonDown("Parry"))
             {
+                /*
                 //steal weapon like a badass
                 weapon.InHand = true;
                 hitWith.InHand = false;
                 FireEvent(new ParryEvent { Attacker = hitWith.OurPlayer, Parrier = this });
                 CancelHit();
+                */
             }
             else
             {
