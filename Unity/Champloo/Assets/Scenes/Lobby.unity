@@ -4286,7 +4286,7 @@ MonoBehaviour:
   - {fileID: 114599821988778560, guid: 788ae7ffef4800449a05b7d9cc98157c, type: 2}
   - {fileID: 114210435056296970, guid: 650d8f37a976f884cb7016110c7f97b1, type: 2}
   - {fileID: 114488454442619276, guid: 49af555cb5ea6d845b02292ce8eeb19d, type: 2}
-  - {fileID: 114599821988778560, guid: 5fcc46436e4c0ca4ea931e40099cac15, type: 2}
+  - {fileID: 0}
   OnAllConfirmed:
     m_PersistentCalls:
       m_Calls: []
@@ -8157,7 +8157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac5b52bc50a2cf74da1181fa6329459a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  option: {fileID: 114599821988778560, guid: 5fcc46436e4c0ca4ea931e40099cac15, type: 2}
+  option: {fileID: 0}
   playerPortrait: {fileID: 21300000, guid: c83456f1569a9084fb70361e440ad953, type: 3}
 --- !u!95 &1653919581
 Animator:
