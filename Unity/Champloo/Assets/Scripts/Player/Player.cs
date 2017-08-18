@@ -331,6 +331,7 @@ public class Player : NetworkBehaviour
         {
             ApplyForce(
                 (transform.position - otherPlayer.transform.position).normalized * bounceForce);
+            FireEvent(new BounceEvent { A = this, B = otherPlayer });
             if (movementState is OnDash && !otherPlayer.Dead)
             {
                 killThem = true;
@@ -341,6 +342,7 @@ public class Player : NetworkBehaviour
         {
             otherPlayer.ApplyForce(
                 (otherPlayer.transform.position - transform.position).normalized * otherPlayer.bounceForce);
+            FireEvent(new BounceEvent { A = this, B = otherPlayer });
             if (otherPlayer.movementState is OnDash && !Dead)
             {
                 killUs = true;
@@ -353,6 +355,7 @@ public class Player : NetworkBehaviour
                 (transform.position - otherPlayer.transform.position).normalized * bounceForce);
             otherPlayer.ApplyForce(
                 (otherPlayer.transform.position - transform.position).normalized * otherPlayer.bounceForce);
+            FireEvent(new BounceEvent { A = this, B = otherPlayer });
         }
 
         if (killThem)
@@ -785,11 +788,13 @@ public class Player : NetworkBehaviour
             //else if (!weapon.InHand && inputs.parry.Down)
             else if (!weapon.InHand && InputPlayer.GetButtonDown("Parry"))
             {
+                /*
                 //steal weapon like a badass
                 weapon.InHand = true;
                 hitWith.InHand = false;
                 FireEvent(new ParryEvent { Attacker = hitWith.OurPlayer, Parrier = this });
                 CancelHit();
+                */
             }
             else
             {

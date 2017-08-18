@@ -1671,6 +1671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toFollow: {fileID: 212898140743543084}
+  offset: {x: 0, y: 0, z: 0}
 --- !u!114 &114196940015131362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1798,6 +1799,8 @@ MonoBehaviour:
     fadeInTime: 0
     fadeOutTime: 0.5
   corpsePushFactor: 20
+  bloodSpurt: {fileID: 4938746179884528, guid: 75b856bc50bcec94a892c2f96789562f, type: 2}
+  alignToDirection: 1
 --- !u!114 &114456711464106426
 MonoBehaviour:
   m_ObjectHideFlags: 1

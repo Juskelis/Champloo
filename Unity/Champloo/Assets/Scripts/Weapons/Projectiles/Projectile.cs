@@ -133,6 +133,7 @@ public class Projectile : MonoBehaviour
                    ?? g.gameObject.GetComponentInParent<Player>();
         if (p == null) return;
         p.GetHit(this);
+        EventDispatcher.Instance.FireEvent(this, new ProjectileHitEvent { HitPlayer = p, HitGameObject = g });
     }
     
     protected virtual void ProcessHitObstacle(Collider2D c)
@@ -145,5 +146,7 @@ public class Projectile : MonoBehaviour
         EZCameraShake.CameraShaker.Instance.ShakeOnce(5, 5, 0, 0.5f);
 
         GetComponent<TrailRenderer>().enabled = false;
+
+        EventDispatcher.Instance.FireEvent(this, new ProjectileHitEvent { HitPlayer = null, HitGameObject = c.gameObject});
     }
 }
