@@ -85,7 +85,7 @@ public class OnDash : OnMovementSpecial
             }
         }
 
-        if (isDisabled || timingState == TimingState.DONE)
+        if (isDisabled || timingState == TimingState.RECHARGE || timingState == TimingState.DONE)
         {
             if(earlyAttackInput)
             {

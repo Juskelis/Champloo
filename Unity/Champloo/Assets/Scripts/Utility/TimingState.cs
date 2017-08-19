@@ -3,5 +3,6 @@
     WARMUP,
     IN_PROGRESS,
     COOLDOWN,
+    RECHARGE,
     DONE
 }

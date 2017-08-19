@@ -50,6 +50,8 @@ public class OnMovementSpecial : MovementState
         OnEnd();
         yield return new WaitForSeconds(cooldownTime);
         OnCooledDown();
+        yield return new WaitForSeconds(rechargeTime);
+        OnRecharge();
     }
 
     protected virtual IEnumerator RechargeCoroutine()
@@ -74,14 +76,15 @@ public class OnMovementSpecial : MovementState
     //used at the end of the cooldown period
     protected virtual void OnCooledDown()
     {
-        timingState = TimingState.DONE;
+        timingState = TimingState.RECHARGE;
         player.FireEvent(new MovementSpecialTimingEvent { Special = this, Timing = timingState });
     }
 
     //used at the end of the recharge period, when the move is available to be used again
     protected virtual void OnRecharge()
     {
-
+        timingState = TimingState.DONE;
+        player.FireEvent(new MovementSpecialTimingEvent { Special = this, Timing = timingState });
     }
 
     //gets the current state the player object would be in if not in OnMovementSpecial
