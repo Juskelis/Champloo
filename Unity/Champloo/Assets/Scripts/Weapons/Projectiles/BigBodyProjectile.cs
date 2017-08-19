@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class BigBodyProjectile : Projectile
 {
+
+    [SerializeField]
+    private float timer = 1f;
+    protected override void Update()
+    {
+        base.Update();
+        timer -= Time.deltaTime;
+        if (timer < 0)
+            Destroy(gameObject);
+    }
+
     protected override void ProcessHitPlayer(GameObject g)
     {
         Player p = g.GetComponent<Player>()

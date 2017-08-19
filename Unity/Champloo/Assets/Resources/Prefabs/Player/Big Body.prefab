@@ -1605,22 +1605,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 116
-    i1: 249
-    i2: 104
-    i3: 84
-    i4: 10
-    i5: 174
-    i6: 97
-    i7: 244
-    i8: 123
-    i9: 3
-    i10: 62
-    i11: 121
-    i12: 219
-    i13: 253
-    i14: 196
-    i15: 169
+    i0: 132
+    i1: 15
+    i2: 160
+    i3: 211
+    i4: 120
+    i5: 191
+    i6: 241
+    i7: 228
+    i8: 184
+    i9: 148
+    i10: 55
+    i11: 224
+    i12: 187
+    i13: 36
+    i14: 117
+    i15: 91
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
 --- !u!114 &114183448363921924
@@ -1982,9 +1982,9 @@ MonoBehaviour:
   rechargeTime: 0
   specialStartupTime: 0
   specialTime: 0
-  specialCooldownTime: 0
+  specialCooldownTime: 1
   specialRechargeTime: 0
-  thrownVersion: {fileID: 114957719135722112, guid: 7e31e33e980bea84fb6062c80c5318e8,
+  thrownVersion: {fileID: 114637456102746930, guid: b66538311627c8e47b5af08b3de5d7ea,
     type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
