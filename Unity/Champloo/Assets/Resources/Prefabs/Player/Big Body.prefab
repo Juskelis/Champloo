@@ -1775,7 +1775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
+  maxSpeed: 7
   stopToMaxSpeedTime: 0.15
   maxSpeedToStopTime: 0.2
   fullTurnTime: 0.2
@@ -1792,10 +1792,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startupTime: 0
-  specialTime: 0.18
-  cooldownTime: 0.7
-  rechargeTime: 0
-  dashForce: 30
+  specialTime: 0.08
+  cooldownTime: 0.2
+  rechargeTime: 0.6
+  dashForce: 15
   gravityModifier: 0.5
   dashLimit: 1
   nextDashBufferWindow: 0
@@ -1888,7 +1888,7 @@ MonoBehaviour:
   visuals: {fileID: 4715784140289914}
   hitbox: {fileID: 4630137742347486}
   bounceForce: 15
-  maxJumpHeight: 4
+  maxJumpHeight: 3.5
   minJumpHeight: 2
   Gravity: 50
   hitReactionTime: 0.2
@@ -1943,7 +1943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 20
-  maxSpeed: 17
+  maxSpeed: 10
   stopToMaxSpeedTime: 0.25
   maxSpeedToStopTime: 0.4
   fullTurnTime: 0.75
@@ -1961,8 +1961,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxFallSpeed: 8
   wallStickTime: 0.2
-  wallJumpVelocity: {x: 20, y: 20}
-  noAngleJumpModifier: {x: 1.25, y: 0}
+  wallJumpVelocity: {x: 15, y: 20}
+  noAngleJumpModifier: {x: 1, y: 0}
   towardsWallJumpModifier: {x: 1, y: 0}
   allowedMinAngle: 1.16
 --- !u!114 &114849532675118652
@@ -1977,9 +1977,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startupTime: 0
-  attackTime: 0.1
+  attackTime: 0.5
   cooldownTime: 0.25
-  rechargeTime: 0
+  rechargeTime: 0.25
   specialStartupTime: 0
   specialTime: 0
   specialCooldownTime: 1
@@ -1988,7 +1988,7 @@ MonoBehaviour:
     type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
-  swingAngle: 90
+  swingAngle: 95
 --- !u!114 &114852319061618254
 MonoBehaviour:
   m_ObjectHideFlags: 1
