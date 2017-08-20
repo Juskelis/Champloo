@@ -15,10 +15,15 @@ public class ProjectileHitParticles : MonoBehaviour {
     {
         Projectile proj = (Projectile)sender;
         ProjectileHitEvent projectileHitEvent = (ProjectileHitEvent) args;
-        if (projectileHitEvent.HitPlayer == null
-            || proj.OurPlayer.PlayerNumber != projectileHitEvent.HitPlayer.PlayerNumber)
+        if (proj.Moving && (projectileHitEvent.HitPlayer == null
+            || proj.OurPlayer.PlayerNumber != projectileHitEvent.HitPlayer.PlayerNumber))
         {
-            Instantiate(effect, proj.transform.position, proj.transform.rotation);
+            Instantiate(
+                effect,
+                projectileHitEvent.HitPlayer == null
+                    ? proj.transform.position
+                    : projectileHitEvent.HitPlayer.transform.position,
+                proj.transform.rotation);
         }
     }
 }
