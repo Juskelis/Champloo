@@ -19,6 +19,12 @@ public class PlayerScoreCard : MonoBehaviour
     [SerializeField]
     private Sprite filledScoreIndicator;
 
+    [SerializeField]
+    private Text scoreText;
+
+    [SerializeField]
+    private Image background;
+
     public int playerNumber = 0;
 
     private List<Image> scores = new List<Image>();
@@ -38,6 +44,14 @@ public class PlayerScoreCard : MonoBehaviour
         PlayerSettings settings = PlayerSettings.GetSettingsFor(playerNumber);
         playerNameText.text = settings != null ? settings.Name : "Name";
 
+	    if (settings != null)
+        {
+            Color backgroundColor = settings.Color;
+            backgroundColor.a = background.color.a;
+            background.color = backgroundColor;
+	    }
+
+	    /*
         for (int i = 0; i < maxScore; i++)
 	    {
 	        GameObject g = new GameObject(i.ToString());
@@ -48,14 +62,7 @@ public class PlayerScoreCard : MonoBehaviour
 	        g.transform.SetParent(indicatorParent, false);
             scores.Add(im);
         }
-
-	    /*
-	    PlayerSettings settings = FindObjectOfType<PlayerSettings>();
-        if(settings == null) print("settings is null!");
-	    string playerName = settings.GetPlayerName(playerNumber + 1);
-	    playerNameText.text = playerName;
         */
-	    //playerNameText.text = FindObjectOfType<PlayerSettings>().GetPlayerName(playerNumber + 1);
 	}
 	
 	// Update is called once per frame
@@ -66,10 +73,6 @@ public class PlayerScoreCard : MonoBehaviour
             return;
         }
 	    score = Score.Scores[playerNumber];
-
-	    for (int i = 0; i < maxScore; i++)
-	    {
-	        scores[i].sprite = i < score ? filledScoreIndicator : emptyScoreIndicator;
-	    }
+	    scoreText.text = score + "/" + Score.instance.WinScore;
 	}
 }
