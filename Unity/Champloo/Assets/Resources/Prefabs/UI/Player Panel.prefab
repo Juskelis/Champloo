@@ -180,6 +180,7 @@ MonoBehaviour:
   emptyScoreIndicator: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   filledScoreIndicator: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   scoreText: {fileID: 114818837933737090}
+  background: {fileID: 11401150}
   playerNumber: 0
 --- !u!114 &11482620
 MonoBehaviour:
