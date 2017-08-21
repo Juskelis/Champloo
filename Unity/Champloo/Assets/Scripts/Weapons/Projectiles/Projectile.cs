@@ -47,11 +47,11 @@ public class Projectile : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         hitbox = GetComponent<Collider2D>();
-        if(players == null) players = new List<Player>(FindObjectsOfType<Player>());
     }
 
     protected virtual void Start()
     {
+        players = new List<Player>(FindObjectsOfType<Player>());
         //check collisions
         foreach (var col in Physics2D.OverlapBoxAll(transform.position, hitbox.bounds.size, transform.rotation.eulerAngles.z, obstacleMask))
         {
@@ -60,7 +60,7 @@ public class Projectile : MonoBehaviour
         player = FindPlayer();
         if (player == null)
         {
-            Debug.LogError("Could not find player!");
+            Debug.LogError("Could not find player with PlayerNumber " + PlayerNumber);
         }
     }
 
@@ -138,6 +138,7 @@ public class Projectile : MonoBehaviour
     
     protected virtual void ProcessHitObstacle(Collider2D c)
     {
+        EventDispatcher.Instance.FireEvent(this, new ProjectileHitEvent { HitPlayer = null, HitGameObject = c.gameObject });
         follow = c.transform;
         relativePos = follow.position - transform.position;
         moving = false;
@@ -146,7 +147,5 @@ public class Projectile : MonoBehaviour
         EZCameraShake.CameraShaker.Instance.ShakeOnce(5, 5, 0, 0.5f);
 
         GetComponent<TrailRenderer>().enabled = false;
-
-        EventDispatcher.Instance.FireEvent(this, new ProjectileHitEvent { HitPlayer = null, HitGameObject = c.gameObject});
     }
 }
