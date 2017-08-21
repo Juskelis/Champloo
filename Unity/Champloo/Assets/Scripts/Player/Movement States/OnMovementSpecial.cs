@@ -50,7 +50,10 @@ public class OnMovementSpecial : MovementState
         OnEnd();
         yield return new WaitForSeconds(cooldownTime);
         OnCooledDown();
-        yield return new WaitForSeconds(rechargeTime);
+        if (rechargeTime > 0)
+        {
+            yield return new WaitForSeconds(rechargeTime);
+        }
         OnRecharge();
     }
 
