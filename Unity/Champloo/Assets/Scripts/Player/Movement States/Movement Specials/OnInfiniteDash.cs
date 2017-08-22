@@ -40,7 +40,7 @@ public class OnInfiniteDash : OnDash
             hitDashEarly = true;
         }
 
-        if (isDisabled || timingState == TimingState.DONE)
+        if (isDisabled || timingState == TimingState.RECHARGE || timingState == TimingState.DONE)
         {
             hitDashEarly = false;
             if (hitNextDashInput)

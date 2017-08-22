@@ -35,7 +35,7 @@ public class OnRoll : OnMovementSpecial
 
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
     {
-        if (timingState == TimingState.DONE)
+        if (timingState == TimingState.RECHARGE ||  timingState == TimingState.DONE)
         {
             return GetSimulatedState();
         }
