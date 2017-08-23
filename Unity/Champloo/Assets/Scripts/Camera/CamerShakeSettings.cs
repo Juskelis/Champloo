@@ -6,4 +6,16 @@ public struct CamerShakeSettings
     public float roughness;
     public float fadeInTime;
     public float fadeOutTime;
+
+    public void Shake()
+    {
+        if (shake)
+        {
+            EZCameraShake.CameraShaker.Instance.ShakeOnce(
+                magnitude,
+                roughness,
+                fadeInTime,
+                fadeOutTime);
+        }
+    }
 }
