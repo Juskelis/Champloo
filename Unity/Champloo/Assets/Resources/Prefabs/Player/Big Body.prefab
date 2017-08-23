@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 96993052552272412}
   - component: {fileID: 114583826864239000}
   - component: {fileID: 114469000994252816}
+  - component: {fileID: 114323138353395156}
   m_Layer: 9
   m_Name: Big Body
   m_TagString: Player
@@ -1736,6 +1737,25 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &114323138353395156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162316800763126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c07af38f6075574da3ecc36952578f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocityMagnitude: 0
+  neededDirection: 0
+  shakeSettings:
+    shake: 1
+    magnitude: 5
+    roughness: 3
+    fadeInTime: 0
+    fadeOutTime: 0.2
 --- !u!114 &114383275711759350
 MonoBehaviour:
   m_ObjectHideFlags: 1
