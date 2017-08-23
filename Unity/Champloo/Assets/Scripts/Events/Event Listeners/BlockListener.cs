@@ -29,14 +29,7 @@ public class BlockListener : MonoBehaviour {
     {
         BlockEvent e = (BlockEvent) args;
 
-        if (shakeSettings.shake)
-        {
-            EZCameraShake.CameraShaker.Instance.ShakeOnce(
-                shakeSettings.magnitude,
-                shakeSettings.roughness,
-                shakeSettings.fadeInTime,
-                shakeSettings.fadeOutTime);
-        }
+        shakeSettings.Shake();
 
         blockSound.Play();
 

@@ -52,14 +52,8 @@ public class CorpseSpawner : MonoBehaviour {
     private void OnDeath(object sender, EventArgs args)
     {
         DeathEvent e = (DeathEvent) args;
-        if (shakeSettings.shake)
-        {
-            EZCameraShake.CameraShaker.Instance.ShakeOnce(
-                shakeSettings.magnitude,
-                shakeSettings.roughness,
-                shakeSettings.fadeInTime,
-                shakeSettings.fadeOutTime);
-        }
+
+        shakeSettings.Shake();
 
         corpse = (Transform)Instantiate(spawnOnDeath, transform.position, transform.rotation);
         Rigidbody2D corpseBody = corpse.GetComponent<Rigidbody2D>();

@@ -37,14 +37,8 @@ public class KlangListener : MonoBehaviour
         Player pA = wA.OurPlayer;
         Player pB = wB.OurPlayer;
         Vector3 centerOfEvent = (wA.transform.position + wB.transform.position)/2;
-        if (shakeSettings.shake)
-        {
-            EZCameraShake.CameraShaker.Instance.ShakeOnce(
-                shakeSettings.magnitude,
-                shakeSettings.roughness,
-                shakeSettings.fadeInTime,
-                shakeSettings.fadeOutTime);
-        }
+
+        shakeSettings.Shake();
 
         klangSound.Play();
 
