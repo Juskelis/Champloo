@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6127024}
   - component: {fileID: 9683930}
   - component: {fileID: 114203981874539452}
-  - component: {fileID: 114637456102746930}
+  - component: {fileID: 114168133414632582}
   m_Layer: 0
   m_Name: BigBody Projectile
   m_TagString: Untagged
@@ -212,6 +212,22 @@ Transform:
   m_Father: {fileID: 480426}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &114168133414632582
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95bf970cb82c6e049a4b7f71c32d18b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 256
+  speed: 5
+  timer: 1
 --- !u!114 &114203981874539452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -223,22 +239,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441716ec3c3c935489d6644eafbc13ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114637456102746930
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 187214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e23566df7dae4c44b0786d499c68db4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 256
-  speed: 5
-  timer: 1
 --- !u!212 &212003549059143196
 SpriteRenderer:
   m_ObjectHideFlags: 1

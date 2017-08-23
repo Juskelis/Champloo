@@ -1984,7 +1984,7 @@ MonoBehaviour:
   specialTime: 0
   specialCooldownTime: 1
   specialRechargeTime: 0
-  thrownVersion: {fileID: 114637456102746930, guid: b66538311627c8e47b5af08b3de5d7ea,
+  thrownVersion: {fileID: 114168133414632582, guid: 8fc873c39188b18459ac55a6386aa847,
     type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
