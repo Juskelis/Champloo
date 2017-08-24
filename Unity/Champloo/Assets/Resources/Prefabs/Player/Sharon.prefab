@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 114344248670475558}
   - component: {fileID: 114738584123182124}
   - component: {fileID: 114438403265248890}
+  - component: {fileID: 114152197129498046}
   m_Layer: 9
   m_Name: Sharon
   m_TagString: Player
@@ -1568,6 +1569,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a97b3c48b66c3c48bb9105191dc3a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114152197129498046
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1715462144188328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a90085626be2984087c3e16607c0e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect: {fileID: 4528916862352772, guid: c78b6f3a2f3d9f84cbf33be2ab06403a, type: 2}
 --- !u!114 &114169080862847376
 MonoBehaviour:
   m_ObjectHideFlags: 1

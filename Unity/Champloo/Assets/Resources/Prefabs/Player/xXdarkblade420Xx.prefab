@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 96993052552272412}
   - component: {fileID: 114583826864239000}
   - component: {fileID: 114469000994252816}
+  - component: {fileID: 114068588622811210}
   m_Layer: 9
   m_Name: xXdarkblade420Xx
   m_TagString: Player
@@ -1554,6 +1555,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runningSound: {fileID: 114958792587567482}
+--- !u!114 &114068588622811210
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162316800763126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a90085626be2984087c3e16607c0e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect: {fileID: 4528916862352772, guid: c78b6f3a2f3d9f84cbf33be2ab06403a, type: 2}
 --- !u!114 &114121970608963264
 MonoBehaviour:
   m_ObjectHideFlags: 1

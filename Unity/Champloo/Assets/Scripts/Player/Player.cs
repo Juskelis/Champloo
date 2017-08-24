@@ -465,7 +465,7 @@ public class Player : NetworkBehaviour
                 //Score.instance.AddScore(p.PlayerNumber);
                 hitWithProjectile = p;
                 Score.instance.CmdScore(p.PlayerNumber);
-                FireEvent(new KillEvent {Killer = p.OurPlayer, Victim = this});
+                FireEvent(new KillEvent {Killer = p.OurPlayer, Victim = this, MurderProjectile = p});
                 Kill(p.transform.right);
             }
         }
@@ -501,7 +501,7 @@ public class Player : NetworkBehaviour
 
 
         //FindObjectOfType<Score>().AddScore(hitWith.GetComponentInParent<Player>().PlayerNumber);
-        FireEvent(new KillEvent {Killer = other, Victim = this});
+        FireEvent(new KillEvent {Killer = other, Victim = this, MurderWeapon = hitWith});
         Kill(hitWith.transform.right);
     }
 
