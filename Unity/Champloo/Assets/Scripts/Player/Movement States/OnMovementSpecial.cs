@@ -46,9 +46,15 @@ public class OnMovementSpecial : MovementState
         player.FireEvent(new MovementSpecialTimingEvent { Special = this, Timing = timingState });
         yield return new WaitForSeconds(startupTime);
         OnStart();
-        yield return new WaitForSeconds(specialTime);
+        if (specialTime > 0)
+        {
+            yield return new WaitForSeconds(specialTime);
+        }
         OnEnd();
-        yield return new WaitForSeconds(cooldownTime);
+        if (cooldownTime > 0)
+        {
+            yield return new WaitForSeconds(cooldownTime);
+        }
         OnCooledDown();
         if (rechargeTime > 0)
         {
