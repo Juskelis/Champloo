@@ -698,7 +698,7 @@ Transform:
   m_GameObject: {fileID: 1189329903580832}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.1, z: 2}
   m_Children: []
   m_Father: {fileID: 4541434677656754}
   m_RootOrder: 0
@@ -711,7 +711,7 @@ Transform:
   m_GameObject: {fileID: 1020537621002656}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 4715784140289914}
   m_RootOrder: 0
@@ -724,7 +724,7 @@ Transform:
   m_GameObject: {fileID: 1899614623133174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 4715784140289914}
   m_RootOrder: 1
@@ -1808,10 +1808,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 7
-  stopToMaxSpeedTime: 0.15
-  maxSpeedToStopTime: 0.2
-  fullTurnTime: 0.2
+  maxSpeed: 8
+  stopToMaxSpeedTime: 0.3
+  maxSpeedToStopTime: 0.4
+  fullTurnTime: 0.35
   analogMovementSpeed: 0
 --- !u!114 &114434379867403634
 MonoBehaviour:
@@ -1828,7 +1828,7 @@ MonoBehaviour:
   specialTime: 0.08
   cooldownTime: 0.2
   rechargeTime: 0.6
-  dashForce: 15
+  dashForce: 17
   gravityModifier: 0.5
   dashLimit: 1
   nextDashBufferWindow: 0
@@ -1976,10 +1976,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 20
-  maxSpeed: 10
-  stopToMaxSpeedTime: 0.25
-  maxSpeedToStopTime: 0.4
-  fullTurnTime: 0.75
+  maxSpeed: 8
+  stopToMaxSpeedTime: 0.3
+  maxSpeedToStopTime: 0.45
+  fullTurnTime: 0.7
   analogMovementSpeed: 0
 --- !u!114 &114835231177880446
 MonoBehaviour:
@@ -2009,14 +2009,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687380da1f74e4d478ab6120f2f24581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startupTime: 0
-  attackTime: 0.5
-  cooldownTime: 0.25
-  rechargeTime: 0.25
+  startupTime: 0.12
+  attackTime: 0.35
+  cooldownTime: 0.32
+  rechargeTime: 0.28
   specialStartupTime: 0
   specialTime: 0
   specialCooldownTime: 1
-  specialRechargeTime: 0
+  specialRechargeTime: 0.6
   thrownVersion: {fileID: 114168133414632582, guid: 8fc873c39188b18459ac55a6386aa847,
     type: 2}
   alwaysVisible: 0
@@ -2180,7 +2180,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 2119289606
+  randomSeed: 1617109570
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4625,7 +4625,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 998769217
+  randomSeed: -109919052
   InitialModule:
     serializedVersion: 3
     enabled: 1

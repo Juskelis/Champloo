@@ -226,8 +226,8 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256
-  speed: 5
-  timer: 1
+  speed: 7
+  timer: 0.8
 --- !u!114 &114203981874539452
 MonoBehaviour:
   m_ObjectHideFlags: 1
