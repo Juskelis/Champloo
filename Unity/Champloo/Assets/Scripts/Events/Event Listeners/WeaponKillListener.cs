@@ -17,6 +17,9 @@ public class WeaponKillListener : MonoBehaviour
     {
         KillEvent e = (KillEvent)args;
 
+        //don't spawn unless its a weapon kill
+        if (e.MurderWeapon == null) return;
+
         Vector3 dirToKiller = (e.Killer.transform.position - e.Victim.transform.position).normalized;
         Instantiate(
             effect,
