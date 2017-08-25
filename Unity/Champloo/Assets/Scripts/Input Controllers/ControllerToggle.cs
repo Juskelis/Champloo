@@ -42,7 +42,7 @@ public class ControllerToggle : MonoBehaviour {
         CancelInvoke();
         DisableAllControllers();
         catergoryToEnable = category;
-        Invoke("TimedEnableAll", enableDelay);
+        Invoker.Instance.InvokeUnscaled(TimedEnableAll, enableDelay);
     }
 
     public void EnableAfter(string catergory, int controllerNumber)
@@ -51,7 +51,7 @@ public class ControllerToggle : MonoBehaviour {
         DisableAllControllers();
         catergoryToEnable = catergory;
         controllerToEnable = controllerNumber;
-        Invoke("TimedEnable", enableDelay);
+        Invoker.Instance.InvokeUnscaled(TimedEnable, enableDelay);
     }
 
     private void TimedEnableAll()
