@@ -24,11 +24,19 @@ public class Pause : MonoBehaviour
         if (!paused)
         {
             onPause.Invoke();
+            if (GlobalPause)
+            {
+                Time.timeScale = 0;
+            }
             paused = true;
         }
         else
         {
             onResume.Invoke();
+            if (GlobalPause)
+            {
+                Time.timeScale = 1;
+            }
             paused = false;
         }
     }
@@ -53,6 +61,14 @@ public class Pause : MonoBehaviour
         {
             //FindObjectOfType<ControllerToggle>().DisableAllControllersExcept(controllerID);
             FindObjectOfType<ControllerToggle>().EnableAfter(pauseMenuCategory, controllerID);
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (GlobalPause)
+        {
+            Time.timeScale = 1;
         }
     }
 }
