@@ -237,7 +237,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256
-  speed: 30
+  speed: 20
 --- !u!212 &212003549059143196
 SpriteRenderer:
   m_ObjectHideFlags: 1

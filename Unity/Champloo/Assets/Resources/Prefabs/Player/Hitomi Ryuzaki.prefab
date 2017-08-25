@@ -1595,10 +1595,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startupTime: 0
-  specialTime: 0.245
+  specialTime: 0.25
   cooldownTime: 0.1
   rechargeTime: 0
-  dashForce: 23
+  dashForce: 21
   gravityModifier: 0.5
   dashLimit: 1
   nextDashBufferWindow: 0.2
@@ -1771,8 +1771,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 13
-  stopToMaxSpeedTime: 0.15
+  maxSpeed: 12
+  stopToMaxSpeedTime: 0.2
   maxSpeedToStopTime: 0.15
   fullTurnTime: 0.23
   analogMovementSpeed: 0
@@ -1903,7 +1903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 20
-  maxSpeed: 18
+  maxSpeed: 16
   stopToMaxSpeedTime: 0.33
   maxSpeedToStopTime: 0.3
   fullTurnTime: 0.7
@@ -1935,7 +1935,7 @@ MonoBehaviour:
   maxFallSpeed: 8
   wallStickTime: 0.2
   wallJumpVelocity: {x: 20, y: 20}
-  noAngleJumpModifier: {x: 1.25, y: 0}
+  noAngleJumpModifier: {x: 1.15, y: 0}
   towardsWallJumpModifier: {x: 1, y: 0}
   allowedMinAngle: 1.16
 --- !u!114 &114639018780518578
