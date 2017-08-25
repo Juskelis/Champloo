@@ -1481,7 +1481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb49a7a056cc7746b31ef50e31a0bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalPause: 0
+  GlobalPause: 1
   onPause:
     m_PersistentCalls:
       m_Calls:
