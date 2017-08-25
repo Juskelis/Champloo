@@ -1726,7 +1726,7 @@ MonoBehaviour:
   specialTime: 0.1
   cooldownTime: 0
   rechargeTime: 0
-  rollSpeed: {x: 27, y: -12}
+  rollSpeed: {x: 25, y: -15}
   rollingCollisionMask:
     serializedVersion: 2
     m_Bits: 256
@@ -2004,7 +2004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 20
-  maxSpeed: 13
+  maxSpeed: 12
   stopToMaxSpeedTime: 0.25
   maxSpeedToStopTime: 0.5
   fullTurnTime: 0.75
@@ -2049,7 +2049,7 @@ MonoBehaviour:
   maxFallSpeed: 8
   wallStickTime: 0.2
   wallJumpVelocity: {x: 20, y: 20}
-  noAngleJumpModifier: {x: 1.25, y: 0}
+  noAngleJumpModifier: {x: 1.2, y: 0}
   towardsWallJumpModifier: {x: 1, y: 0}
   allowedMinAngle: 1.16
 --- !u!114 &114884456222421112
