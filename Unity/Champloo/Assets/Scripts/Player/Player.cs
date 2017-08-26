@@ -864,9 +864,9 @@ public class Player : NetworkBehaviour
         Vector2 newOffset = Vector2.zero;
         newOffset.x = Mathf.Sign(visuals.localScale.x)
             * SpriteXOffset()
-            * (box.bounds.extents.x - currentSprite.sprite.bounds.extents.x);
+            * Mathf.Abs(box.bounds.extents.x - currentSprite.bounds.extents.x);
 
-        newOffset.y = currentSprite.sprite.bounds.extents.y - box.bounds.extents.y;
+        newOffset.y = currentSprite.bounds.extents.y - box.bounds.extents.y;
         hitbox_collider.offset = newOffset;
     }
 
