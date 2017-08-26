@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 5081994}
   - component: {fileID: 58678540746127078}
   - component: {fileID: 11420428}
+  - component: {fileID: 114980570482847204}
   m_Layer: 2
   m_Name: Corpse
   m_TagString: Untagged
@@ -248,3 +249,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &114980570482847204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2909c77d7d7c5b449399a31deaaea56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crushMask:
+    serializedVersion: 2
+    m_Bits: 256
+  spawnOnCrush: {fileID: 4938569645011376, guid: f3dd590fac6425f45839b0cf8821159c,
+    type: 2}
