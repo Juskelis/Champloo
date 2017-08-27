@@ -21,23 +21,33 @@ public class CorpseSpawner : MonoBehaviour {
 
     private Transform corpse;
     private Transform spurt;
+    private Vector3 dirToAttacker;
 
     void Start()
     {
         LocalEventDispatcher dispatcher = GetComponentInParent<LocalEventDispatcher>();
         dispatcher.AddListener<DeathEvent>(OnDeath);
         dispatcher.AddListener<KillEvent>(OnKill);
+        dispatcher.AddListener<HitEvent>(OnHit);
+    }
+
+    private void OnHit(object sender, EventArgs args)
+    {
+        HitEvent hit = (HitEvent)args;
+
+        dirToAttacker = (hit.Attacker.transform.position - hit.Hit.transform.position).normalized;
     }
 
     private void OnKill(object sender, EventArgs args)
     {
         KillEvent e = (KillEvent)args;
-
-        Vector3 dirToKiller = (e.Killer.transform.position - e.Victim.transform.position).normalized;
+        Vector3 dirToSpawn = e.MurderProjectile == null && dirToAttacker.sqrMagnitude > float.Epsilon
+            ? dirToAttacker
+            : (e.Killer.transform.position - e.Victim.transform.position).normalized;
         spurt = Instantiate(bloodSpurt, e.Victim.transform.position,
             alignToDirection
                 ? Quaternion.AngleAxis(
-                    Utility.Vector2AsAngle(dirToKiller),
+                    Utility.Vector2AsAngle(dirToSpawn),
                     transform.forward)
                 : transform.rotation);
         if (corpse != null)

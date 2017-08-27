@@ -1768,7 +1768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a90085626be2984087c3e16607c0e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effect: {fileID: 4528916862352772, guid: c78b6f3a2f3d9f84cbf33be2ab06403a, type: 2}
+  killEffect: {fileID: 4528916862352772, guid: c78b6f3a2f3d9f84cbf33be2ab06403a, type: 2}
 --- !u!114 &114383275711759350
 MonoBehaviour:
   m_ObjectHideFlags: 1
