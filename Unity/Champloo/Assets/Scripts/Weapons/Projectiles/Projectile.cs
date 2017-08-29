@@ -8,13 +8,25 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] protected LayerMask obstacleMask;
 
-    [SerializeField] protected float speed = 1f;
+    [SerializeField] protected AnimationCurve velocityOverTime;
+
+    [SerializeField] protected float minVelocity = 0f;
+    [SerializeField] protected float maxVelocity = 1f;
+
+    [SerializeField] protected float velocityAnimationTime = 1f;
+
+    protected float Speed
+    {
+        get { return minVelocity + velocityOverTime.Evaluate((Time.time - startTime)/velocityAnimationTime)*(maxVelocity - minVelocity); }
+    }
 
     private bool moving = true;
     public bool Moving { get { return moving; } }
 
     private Transform follow;
     private Vector3 relativePos;
+
+    private float startTime;
 
     protected Rigidbody2D body;
 
@@ -51,6 +63,7 @@ public class Projectile : MonoBehaviour
 
     protected virtual void Start()
     {
+        startTime = Time.time;
         players = new List<Player>(FindObjectsOfType<Player>());
         //check collisions
         foreach (var col in Physics2D.OverlapBoxAll(transform.position, hitbox.bounds.size, transform.rotation.eulerAngles.z, obstacleMask))
@@ -70,7 +83,7 @@ public class Projectile : MonoBehaviour
         if (moving)
         {
             //transform.Translate(Vector2.right*speed*Time.deltaTime);
-            body.velocity = transform.TransformVector(Vector2.right*speed);
+            body.velocity = transform.TransformVector(Vector2.right*Speed);
         }
         else {
             if (follow != null)
