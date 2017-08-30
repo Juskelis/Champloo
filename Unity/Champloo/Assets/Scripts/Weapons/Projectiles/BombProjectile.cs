@@ -21,7 +21,7 @@ public class BombProjectile : Projectile {
 
     protected override void Update()
     {
-        speed = Mathf.Max(0, speed - Time.deltaTime);
+        //Speed = Mathf.Max(0, Speed - Time.deltaTime);
         transform.rotation = Quaternion.RotateTowards(
             transform.rotation,
             Quaternion.Euler(0, 0, -90f),
