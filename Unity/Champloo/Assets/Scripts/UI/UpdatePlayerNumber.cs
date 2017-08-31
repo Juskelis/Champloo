@@ -16,4 +16,12 @@ public class UpdatePlayerNumber : MonoBehaviour
         Color color = PlayerSettings.GetSettingsFor(winnerNumber).Color;
         ourText.text = prefix + " " + "<color=#" + Utility.ColorToHex(color) + ">" + name + "</color>";
     }
+
+    public void UpdateText(int winnerNumber)
+    {
+        Text ourText = GetComponent<Text>();
+        string name = PlayerSettings.GetSettingsFor(winnerNumber).Name;
+        Color color = PlayerSettings.GetSettingsFor(winnerNumber).Color;
+        ourText.text = prefix + " " + "<color=#" + Utility.ColorToHex(color) + ">" + name + "</color>";
+    }
 }
