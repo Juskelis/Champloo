@@ -1,7 +1,7 @@
 ﻿using Rewired;
 using UnityEngine;
 using UnityEngine.Events;
-using Player = Rewired.Player;
+using UnityEngine.UI;
 
 public class Pause : MonoBehaviour
 {
@@ -15,6 +15,9 @@ public class Pause : MonoBehaviour
 
     [SerializeField]
     private string pauseMenuCategory;
+
+    [SerializeField]
+    private UpdatePlayerNumber pauseName;
 
     private bool pressed = false;
     private bool paused = false;
@@ -61,6 +64,8 @@ public class Pause : MonoBehaviour
         {
             //FindObjectOfType<ControllerToggle>().DisableAllControllersExcept(controllerID);
             FindObjectOfType<ControllerToggle>().EnableAfter(pauseMenuCategory, controllerID);
+            int pausingPlayerNumber = FindPlayerNumberFromController(controllerID);
+            pauseName.UpdateText(pausingPlayerNumber);
         }
     }
 
@@ -70,5 +75,17 @@ public class Pause : MonoBehaviour
         {
             Time.timeScale = 1;
         }
+    }
+
+    int FindPlayerNumberFromController(int controllerNumber)
+    {
+        foreach (var player in FindObjectsOfType<Player>())
+        {
+            if (player.InputPlayer.id == controllerNumber)
+            {
+                return player.PlayerNumber;
+            }
+        }
+        return -1;
     }
 }
