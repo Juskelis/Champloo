@@ -49,6 +49,14 @@ public class MovementState : NetworkBehaviour
         outExternalForces = inExternalForces;
     }
 
+    //gets the current state the player object would be in if not in OnMovementSpecial
+    protected virtual MovementState GetSimulatedState()
+    {
+        if (controller.collisions.Below) return GetComponent<OnGround>();
+        if (controller.collisions.Left || controller.collisions.Right) return GetComponent<OnWall>();
+        return GetComponent<InAir>();
+    }
+
     /// <summary>
     /// Decays the Vector3 passed in and then returns the result
     /// </summary>
