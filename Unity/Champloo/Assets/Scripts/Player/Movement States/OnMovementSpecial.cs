@@ -96,14 +96,6 @@ public class OnMovementSpecial : MovementState
         player.FireEvent(new MovementSpecialTimingEvent { Special = this, Timing = timingState });
     }
 
-    //gets the current state the player object would be in if not in OnMovementSpecial
-    protected virtual MovementState GetSimulatedState()
-    {
-        if (controller.collisions.Below) return GetComponent<OnGround>();
-        if (controller.collisions.Left || controller.collisions.Right) return GetComponent<OnWall>();
-        return GetComponent<InAir>();
-    }
-
     /*
         Functions to be called on state changes if necessary
         Shouldn't modify state. If necessary, do so through player.OnVelocityChanged(newVelocity)
