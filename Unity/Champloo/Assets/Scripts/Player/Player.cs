@@ -334,7 +334,7 @@ public class Player : NetworkBehaviour
             FireEvent(new BounceEvent { A = this, B = otherPlayer });
             if (movementState is OnDash && !otherPlayer.Dead)
             {
-                killThem = true;
+                //killThem = true;
             }
         }
         //if another player is above
@@ -345,7 +345,7 @@ public class Player : NetworkBehaviour
             FireEvent(new BounceEvent { A = this, B = otherPlayer });
             if (otherPlayer.movementState is OnDash && !Dead)
             {
-                killUs = true;
+                //killUs = true;
             }
         }
         else

@@ -236,7 +236,27 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256
-  speed: 20
+  velocityOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  minVelocity: 0
+  maxVelocity: 15
+  velocityAnimationTime: 1
   explosion: {fileID: 1247608760536596, guid: cb2ced342a269d043a2308854254aad2, type: 2}
   stunTime: 1
 --- !u!114 &114795690851259450

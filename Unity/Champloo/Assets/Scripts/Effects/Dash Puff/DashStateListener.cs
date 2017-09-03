@@ -21,9 +21,26 @@ public class DashStateListener : MonoBehaviour
         else
         {
             d.AddListener<MovementSpecialTimingEvent>(DashTimingChanged);
+            d.AddListener<MovementStateChangedEvent>(MovementStateChanged);
         }
 
         trail = GetComponent<TrailRenderer>();
+    }
+
+    private void MovementStateChanged(object sender, EventArgs args)
+    {
+        MovementStateChangedEvent e = (MovementStateChangedEvent) args;
+        if (e.Next.GetType() != typeof(OnMovementSpecial))
+        {
+            trail.enabled = false;
+            trail.Clear();
+        }
+    }
+
+    void Start()
+    {
+        trail.enabled = false;
+        trail.Clear();
     }
 
     private void DashTimingChanged(object sender, EventArgs args)
