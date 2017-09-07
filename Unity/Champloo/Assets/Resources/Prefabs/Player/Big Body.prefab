@@ -1924,7 +1924,7 @@ MonoBehaviour:
   maxJumpHeight: 3.5
   minJumpHeight: 2
   Gravity: 50
-  hitReactionTime: 0.2
+  hitReactionTime: 0.05
 --- !u!114 &114679085550598218
 MonoBehaviour:
   m_ObjectHideFlags: 1

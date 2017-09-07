@@ -33,9 +33,6 @@ public class Projectile : MonoBehaviour
     protected Player player;
     public Player OurPlayer { get {return player;} }
 
-    protected static List<Player> players;
-    protected static int destroyableProjectiles;
-
     private bool destroyable_doNotModifyDirectly = false;
     protected bool CanBeDestroyed
     {
@@ -45,10 +42,6 @@ public class Projectile : MonoBehaviour
         }
         set
         {
-            if (destroyable_doNotModifyDirectly != value)
-            {
-                destroyableProjectiles += value ? 1 : -1;
-            }
             destroyable_doNotModifyDirectly = value;
         }
     }
@@ -64,7 +57,6 @@ public class Projectile : MonoBehaviour
     protected virtual void Start()
     {
         startTime = Time.time;
-        players = new List<Player>(FindObjectsOfType<Player>());
         //check collisions
         foreach (var col in Physics2D.OverlapBoxAll(transform.position, hitbox.bounds.size, transform.rotation.eulerAngles.z, obstacleMask))
         {
@@ -91,7 +83,7 @@ public class Projectile : MonoBehaviour
                 transform.position = follow.position - relativePos;
             }
             //delete if stopped, and too many still ones on screen
-            if (CanBeDestroyed && players.Count - DeadPlayerCount() < destroyableProjectiles)
+            if (CanBeDestroyed && CharactersWithoutWeapon() < CullableProjectiles())
             {
                 CanBeDestroyed = false;
                 Destroy(gameObject);
@@ -99,19 +91,32 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private int DeadPlayerCount()
+    private int CharactersWithoutWeapon()
     {
         int ret = 0;
-        foreach (var p in players)
+        foreach (Weapon weapon in FindObjectsOfType<Weapon>())
         {
-            if (p.Dead) ret++;
+            if (!weapon.InHand)
+            {
+                ret++;
+            }
+        }
+        return ret;
+    }
+
+    private int CullableProjectiles()
+    {
+        int ret = 0;
+        foreach (Projectile projectile in FindObjectsOfType<Projectile>())
+        {
+            if (projectile.CanBeDestroyed) ret++;
         }
         return ret;
     }
 
     private Player FindPlayer()
     {
-        foreach (var p in players)
+        foreach (var p in FindObjectsOfType<Player>())
         {
             if (p.PlayerNumber == PlayerNumber)
             {
