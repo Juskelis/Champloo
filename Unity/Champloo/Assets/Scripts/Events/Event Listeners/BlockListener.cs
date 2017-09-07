@@ -12,6 +12,9 @@ public class BlockListener : MonoBehaviour {
     [SerializeField]
     private CamerShakeSettings shakeSettings;
 
+    [SerializeField]
+    private Vector2 knockbackAmount;
+
     void Start()
     {
         EventDispatcher.Instance.AddListener<BlockEvent>(OnBlock);
@@ -36,6 +39,9 @@ public class BlockListener : MonoBehaviour {
         Vector3 attackerPos = e.Attacker.transform.position;
         Vector3 defenderPos = e.Blocker.transform.position;
 
-        e.Attacker.ApplyForce((attackerPos - defenderPos).normalized * blockKnockback);
+        Vector3 knockbackDir = (attackerPos - defenderPos).normalized;
+        knockbackDir.x *= knockbackAmount.x;
+        knockbackDir.y *= knockbackAmount.y;
+        e.Attacker.ApplyForce(knockbackDir);
     }
 }
