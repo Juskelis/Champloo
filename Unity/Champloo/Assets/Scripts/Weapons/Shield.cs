@@ -12,7 +12,6 @@ public class Shield : MonoBehaviour {
     private float timeToGainShield = 2f;
 
     private float grow;
-    private float decay;
 
     [SerializeField]
     private SpriteRenderer visuals;
@@ -40,7 +39,6 @@ public class Shield : MonoBehaviour {
 
         percentPerHit = 1/((float)MaxHits);
         up = percentLeft > 0;
-        decay = 1/timeToLoseShield;
         grow = 1/timeToGainShield;
 
         canActivate = false;
@@ -53,14 +51,13 @@ public class Shield : MonoBehaviour {
 
     private void Update()
     {
-        if (up)
+        if (!up)
         {
-            percentLeft -= decay*Time.deltaTime;
-            if (percentLeft <= 0) up = false;
+            percentLeft += grow * Time.deltaTime;
         }
-        else
+        else if (percentLeft <= 0)
         {
-            percentLeft += grow*Time.deltaTime;
+            up = false;
         }
         
         if(!canActivate && percentLeft >= 1f)
