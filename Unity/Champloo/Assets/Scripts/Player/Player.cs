@@ -713,7 +713,7 @@ public class Player : NetworkBehaviour
         }
         //else if (inputs.block.Down && weapon.InHand && shield.CanActivate && !(movementState is InBlock || movementState is InAttack))
         else if (InputPlayer.GetButtonDown("Block") && weapon.InHand && shield.CanActivate && 
-            !(movementState is InBlock || movementState is InAttack || movementState is OnMovementSpecial))
+            !(movementState is InBlock || movementState is InAttack || movementState is OnMovementSpecial || movementState is InStun))
         {
             next = GetComponent<InBlock>();
         }   
