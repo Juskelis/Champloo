@@ -131,16 +131,17 @@ public class PlayerSpawner : MonoBehaviour {
 
         while(attempts < maxAttempts && !valid)
         {
-            zone = spawnZones[UnityEngine.Random.Range(0, spawnZones.Length)];
+            zone = bestZone();
             test.x = UnityEngine.Random.Range(zone.topLeft.x, zone.bottomRight.x);
             test.y = UnityEngine.Random.Range(zone.bottomRight.y, zone.topLeft.y);
-
-            //if(!CollisionChecking.Place.Meeting(col, test, 0f))
+            
             Collider2D[] cols = Physics2D.OverlapBoxAll(test, col.size * sizeMultiplier, 0f);
             if (cols == null || cols.Length <= 0)
             {
                 valid = true;
             }
+
+            attempts++;
         }
 
         if(attempts > maxAttempts)
@@ -148,5 +149,41 @@ public class PlayerSpawner : MonoBehaviour {
             return transform.position;
         }
         return test;
+    }
+
+    private SpawnZone bestZone()
+    {
+        SpawnZone farthestSpawn = spawnZones[0];
+        float maxDist = distanceFromPlayers(farthestSpawn);
+        foreach (SpawnZone spawnZone in spawnZones)
+        {
+            float distance = distanceFromPlayers(spawnZone);
+            if (distance > maxDist)
+            {
+                farthestSpawn = spawnZone;
+                maxDist = distance;
+            }
+        }
+        return farthestSpawn;
+    }
+
+    /// <summary>
+    /// Gets the distance to the nearest player
+    /// </summary>
+    private float distanceFromPlayers(SpawnZone zone)
+    {
+        Vector3 center = (zone.bottomRight + zone.topLeft)/2;
+        float minDistance = float.MaxValue;
+        foreach (Player player in FindObjectsOfType<Player>())
+        {
+            if (player.Dead) continue;
+
+            float sqrDistance = Vector3.SqrMagnitude(player.transform.position - center);
+            if (sqrDistance < minDistance)
+            {
+                minDistance = sqrDistance;
+            }
+        }
+        return minDistance;
     }
 }

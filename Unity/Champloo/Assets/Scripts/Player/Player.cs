@@ -233,6 +233,7 @@ public class Player : NetworkBehaviour
 
     private void Spawn()
     {
+        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
         gameObject.SetActive(true);
         OnDeathChanged(false);
         hitWith = null;
@@ -249,7 +250,6 @@ public class Player : NetworkBehaviour
         movementState.OnEnter(velocity, externalForce, out garbageVelocity, out garbageExternalForces);
         CmdUpdateMovementState(movementState.GetType().ToString());
         weapon.Reset();
-        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
     }
 
     #endregion
@@ -287,7 +287,6 @@ public class Player : NetworkBehaviour
         OnDeathChanged(true);
 
         float time = FindObjectOfType<PlayerSpawner>().SpawnTime;
-        transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
         Invoke("Spawn", time);
     }
 
