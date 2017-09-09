@@ -96,9 +96,15 @@ public class Weapon : MonoBehaviour
         player.FireEvent(new WeaponAttackTimingEvent { Target = this, Timing = attackingState });
         yield return new WaitForSeconds(startupTime);
         OnStart();
-        yield return new WaitForSeconds(attackTime);
+        if (attackTime > 0)
+        {
+            yield return new WaitForSeconds(attackTime);
+        }
         OnEnd();
-        yield return new WaitForSeconds(cooldownTime);
+        if (cooldownTime > 0)
+        {
+            yield return new WaitForSeconds(cooldownTime);
+        }
         OnCooledDown();
         yield return null;
     }
@@ -146,10 +152,22 @@ public class Weapon : MonoBehaviour
         player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = specialAttackingState });
         yield return new WaitForSeconds(specialStartupTime);
         OnStartSpecial();
-        yield return new WaitForSeconds(specialTime);
+        if (specialTime > 0)
+        {
+            yield return new WaitForSeconds(specialTime);
+        }
         OnEndSpecial();
-        yield return new WaitForSeconds(specialCooldownTime);
+        if (specialCooldownTime > 0)
+        {
+            yield return new WaitForSeconds(specialCooldownTime);
+        }
         OnCooledDownSpecial();
+        if (specialRechargeTime > 0)
+        {
+            yield return new WaitForSeconds(specialRechargeTime);
+        }
+        OnRechargeSpecial();
+
         yield return null;
     }
 
@@ -172,13 +190,15 @@ public class Weapon : MonoBehaviour
 
     protected virtual void OnCooledDownSpecial()
     {
-        specialAttackingState = TimingState.DONE;
+        specialAttackingState = TimingState.RECHARGE;
         player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = specialAttackingState });
     }
 
     protected virtual void OnRechargeSpecial()
     {
-        
+
+        specialAttackingState = TimingState.DONE;
+        player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = specialAttackingState });
     }
 
     public virtual void PickUp()
