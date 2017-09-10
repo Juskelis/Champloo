@@ -26,6 +26,8 @@ public class Match : NetworkBehaviour
 
     [SerializeField]
     private float secondsToLeave;
+
+    [SerializeField] private float menuDelay = 1f;
     
     [ServerCallback]
     public void Start()
@@ -64,18 +66,20 @@ public class Match : NetworkBehaviour
 
     public void End()
     {
-        onEnd.Invoke();
+        Time.timeScale = 0;
+        global::Invoker.Instance.InvokeUnscaled(() => {
+            onEnd.Invoke();
 
-        if (GetComponent<Score>().IsTied())
-        {
-            onTie.Invoke();
-        }
-        else
-        {
-            onWin.Invoke();
-        }
-
-        Invoke("Leave", secondsToLeave);
+            if (GetComponent<Score>().IsTied())
+            {
+                onTie.Invoke();
+            }
+            else
+            {
+                onWin.Invoke();
+            }
+            Invoke("Leave", secondsToLeave);
+        }, menuDelay);
     }
 
     public void Leave()
