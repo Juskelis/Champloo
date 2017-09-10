@@ -15,6 +15,9 @@ public class BlockListener : MonoBehaviour {
     [SerializeField]
     private Vector2 knockbackAmount;
 
+    [SerializeField]
+    private float stunTime;
+
     void Start()
     {
         EventDispatcher.Instance.AddListener<BlockEvent>(OnBlock);
@@ -43,5 +46,7 @@ public class BlockListener : MonoBehaviour {
         knockbackDir.x *= knockbackAmount.x;
         knockbackDir.y *= knockbackAmount.y;
         e.Attacker.ApplyForce(knockbackDir);
+
+        e.Attacker.GetStunned(stunTime);
     }
 }
