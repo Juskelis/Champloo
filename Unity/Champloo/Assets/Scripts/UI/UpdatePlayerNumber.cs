@@ -12,8 +12,15 @@ public class UpdatePlayerNumber : MonoBehaviour
     {
         Text ourText = GetComponent<Text>();
         int winnerNumber = Score.instance.FindWinner();
-        string name = PlayerSettings.GetSettingsFor(winnerNumber).Name;
-        Color color = PlayerSettings.GetSettingsFor(winnerNumber).Color;
+        PlayerSettings winningSettings = PlayerSettings.GetSettingsFor(winnerNumber);
+        if (winningSettings == null)
+        {
+            ourText.text = "Tie";
+            return;
+        }
+
+        string name = winningSettings.Name;
+        Color color = winningSettings.Color;
         ourText.text = prefix + " " + "<color=#" + Utility.ColorToHex(color) + ">" + name + "</color>";
     }
 

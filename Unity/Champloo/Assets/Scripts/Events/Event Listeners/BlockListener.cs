@@ -2,10 +2,7 @@
 using UnityEngine;
 
 public class BlockListener : MonoBehaviour {
-
-    [SerializeField]
-    private float blockKnockback;
-
+    
     [SerializeField]
     private PlayRandomSource blockSound;
 
@@ -14,6 +11,9 @@ public class BlockListener : MonoBehaviour {
 
     [SerializeField]
     private Vector2 knockbackAmount;
+
+    [SerializeField]
+    private float stunTime;
 
     void Start()
     {
@@ -43,5 +43,7 @@ public class BlockListener : MonoBehaviour {
         knockbackDir.x *= knockbackAmount.x;
         knockbackDir.y *= knockbackAmount.y;
         e.Attacker.ApplyForce(knockbackDir);
+
+        e.Attacker.GetStunned(stunTime);
     }
 }

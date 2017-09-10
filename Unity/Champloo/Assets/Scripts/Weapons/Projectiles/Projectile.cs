@@ -157,6 +157,9 @@ public class Projectile : MonoBehaviour
     protected virtual void ProcessHitObstacle(Collider2D c)
     {
         EventDispatcher.Instance.FireEvent(this, new ProjectileHitEvent { HitPlayer = null, HitGameObject = c.gameObject });
+
+        transform.position = PointOnBoundingBox(c.bounds, transform.position, transform.TransformVector(Vector2.right));
+
         follow = c.transform;
         relativePos = follow.position - transform.position;
         moving = false;
@@ -165,5 +168,40 @@ public class Projectile : MonoBehaviour
         EZCameraShake.CameraShaker.Instance.ShakeOnce(5, 5, 0, 0.5f);
 
         GetComponent<TrailRenderer>().enabled = false;
+    }
+
+    private Vector3 PointOnBoundingBox(Bounds b, Vector3 point, Vector3 forward)
+    {
+        if (b.Contains(point))
+        {
+            Vector3 topRight = b.max;
+            Vector3 topLeft = new Vector3(b.min.x, b.max.y);
+            Vector3 bottomRight = new Vector3(b.max.x, b.min.y);
+            Vector3 bottomLeft = b.min;
+
+            Vector2 intersectionPoint = Vector2.zero;
+            if (Utility.RayLineSegmentIntersection2D(point, -forward, topRight, topLeft, ref intersectionPoint))
+            {
+                return intersectionPoint;
+            }
+            if (Utility.RayLineSegmentIntersection2D(point, -forward, topLeft, bottomLeft, ref intersectionPoint))
+            {
+                return intersectionPoint;
+            }
+            if (Utility.RayLineSegmentIntersection2D(point, -forward, bottomRight, bottomLeft, ref intersectionPoint))
+            {
+                return intersectionPoint;
+            }
+            if (Utility.RayLineSegmentIntersection2D(point, -forward, topRight, bottomRight, ref intersectionPoint))
+            {
+                return intersectionPoint;
+            }
+            Debug.LogError("Unable to find appropriate edge");
+            return point;
+        }
+        else
+        {
+            return b.ClosestPoint(point);
+        }
     }
 }
