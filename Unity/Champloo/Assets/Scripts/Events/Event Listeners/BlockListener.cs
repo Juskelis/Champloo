@@ -2,10 +2,7 @@
 using UnityEngine;
 
 public class BlockListener : MonoBehaviour {
-
-    [SerializeField]
-    private float blockKnockback;
-
+    
     [SerializeField]
     private PlayRandomSource blockSound;
 
