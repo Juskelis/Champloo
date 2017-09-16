@@ -1745,7 +1745,7 @@ MonoBehaviour:
   rollSpeed: {x: 25, y: -15}
   rollingCollisionMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
   rollingCrushMask:
     serializedVersion: 2
     m_Bits: 256
