@@ -62,9 +62,14 @@ public class Player : NetworkBehaviour
 
     [SerializeField]
     private Color playerColor = Color.white;
+    public Color PlayerColor { get { return playerColor; } }
 
     [SerializeField]
     private SpriteRenderer[] coloredSprites;
+    public SpriteRenderer[] ColoredSprites
+    {
+        get { return coloredSprites; }
+    }
 
     [SerializeField]
     private Transform visuals;
@@ -811,7 +816,7 @@ public class Player : NetworkBehaviour
             float velMag = Mathf.Abs(velocity.x);
             anim.SetFloat("HorizontalSpeed", velMag);
             anim.SetBool("OnGround", movementState is OnGround);
-            anim.SetBool("OnDash", movementState is OnDash);
+            anim.SetBool("OnDash", movementState is OnMovementSpecial);
             anim.SetBool("OnWall", movementState is OnWall);
             anim.SetBool("InAttack", movementState is InAttack);
             anim.SetBool("InAir", movementState is InAir);
