@@ -77,6 +77,11 @@ public class OnRoll : OnMovementSpecial
         controller.notifyMask = rollingNotifyMask;
 
         player.OnInvicibleChanged(true);
+
+        foreach (SpriteRenderer sprite in player.ColoredSprites)
+        {
+            sprite.color = Color.white;
+        }
     }
 
     protected override void OnEnd()
@@ -87,6 +92,11 @@ public class OnRoll : OnMovementSpecial
         controller.notifyMask = originalNotifyMask;
 
         player.OnInvicibleChanged(false);
+
+        foreach (SpriteRenderer sprite in player.ColoredSprites)
+        {
+            sprite.color = player.PlayerColor;
+        }
     }
     public override void OnEnterGround(Vector3 velocity, Vector3 externalForces)
     {
