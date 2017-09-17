@@ -742,8 +742,8 @@ MonoBehaviour:
     roughness: 5
     fadeInTime: 0
     fadeOutTime: 0.25
-  knockbackAmount: {x: 50, y: 20}
-  stunTime: 5
+  knockbackAmount: {x: 40, y: 20}
+  stunTime: 0.25
 --- !u!114 &114938059894197210
 MonoBehaviour:
   m_ObjectHideFlags: 1
