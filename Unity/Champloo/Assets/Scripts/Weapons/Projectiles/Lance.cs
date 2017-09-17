@@ -42,6 +42,17 @@ public class Lance : Projectile {
         transform.localScale = localscale;
     }
 
+    protected override void ProcessHitPlayer(GameObject g)
+    {
+        Player p = g.GetComponent<Player>()
+                   ?? g.GetComponentInParent<Player>();
+        if (p == null) return;
+        if (!Moving || p.PlayerNumber == PlayerNumber || !(p.CurrentMovementState is InBlock))
+        {
+            base.ProcessHitPlayer(g);
+        }
+    }
+
     protected override void ProcessHitObstacle(Collider2D c)
     {
         //do nothing on purpose
