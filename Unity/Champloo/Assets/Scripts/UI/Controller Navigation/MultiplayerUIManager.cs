@@ -121,18 +121,21 @@ public class MultiplayerUIManager : MonoBehaviour
             lp.ToggleJoinButton(lp.playerControllerNumber < 0);
         }
 
+        bool playerLeftOrJoined = false;
         foreach (var player in ReInput.players.Players)
 	    {
 	        if (playersCanJoin && player.GetAnyButtonDown() && !ContainsController(player))
 	        {
 	            //player has joined
                 AddController(player);
+	            playerLeftOrJoined = true;
 	        }
 	        if (player.GetButtonDown(leaveAction) && ContainsController(player))
 	        {
 	            //player has left
                 RemoveController(player);
-	        }
+	            playerLeftOrJoined = true;
+            }
 	        if (player.GetButtonDown("UICycle") && ContainsController(player))
 	        {
 	            foreach (var p in GetLocalPlayers(player.id))
@@ -141,6 +144,12 @@ public class MultiplayerUIManager : MonoBehaviour
 	            }
 	        }
 	    }
+
+        //short out if the controllers have changed, so that other systems can catch up
+        if (playerLeftOrJoined)
+        {
+            return;
+        }
 
         //check all the controllers
 	    bool noneSelected = true;
