@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour
         get { return minVelocity + velocityOverTime.Evaluate((Time.time - startTime)/velocityAnimationTime)*(maxVelocity - minVelocity); }
     }
 
-    private bool moving = true;
+    protected bool moving = true;
     public bool Moving { get { return moving; } }
 
     private Transform follow;
