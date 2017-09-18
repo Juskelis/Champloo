@@ -29,6 +29,7 @@ public class OnMovementSpecial : MovementState
     {
         base.Start();
         isDisabled = false;
+        timingState = TimingState.DONE; 
     }
 
     //Used on the entering of the movement special, before the warmup
