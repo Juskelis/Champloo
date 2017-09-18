@@ -60,7 +60,7 @@ public class Lance : Projectile {
 
     void Finish()
     {
-        moving = false;
-        OurPlayer.GetHit(this);
+        OurPlayer.GetComponentInChildren<Weapon>().PickUp();
+        Destroy(gameObject);
     }
 }
