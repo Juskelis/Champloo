@@ -616,6 +616,7 @@ public class Player : NetworkBehaviour
     public void OnVelocityChanged(Vector3 newVelocity)
     {
         CmdVelocityChange(newVelocity);
+        velocity = newVelocity;
     }
 
     public void OnExternalForceChanged(Vector3 newExternalForce)
