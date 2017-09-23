@@ -481,6 +481,7 @@ public class Player : NetworkBehaviour
     public void GetStunned(float stunTime)
     {
         stunned = true;
+        ChangeMovementState(GetComponent<InStun>());
         Invoke("EndStun", stunTime);
     }
 
