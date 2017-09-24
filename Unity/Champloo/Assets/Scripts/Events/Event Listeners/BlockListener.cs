@@ -30,6 +30,7 @@ public class BlockListener : MonoBehaviour {
 
     private void OnBlock(object sender, EventArgs args)
     {
+
         BlockEvent e = (BlockEvent) args;
 
         shakeSettings.Shake();
@@ -42,8 +43,8 @@ public class BlockListener : MonoBehaviour {
         Vector3 knockbackDir = (attackerPos - defenderPos).normalized;
         knockbackDir.x *= knockbackAmount.x;
         knockbackDir.y *= knockbackAmount.y;
-        e.Attacker.ApplyForce(knockbackDir);
-
         e.Attacker.GetStunned(stunTime);
+
+        e.Attacker.ApplyForce(knockbackDir);
     }
 }

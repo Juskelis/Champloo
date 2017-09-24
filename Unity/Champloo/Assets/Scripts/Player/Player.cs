@@ -481,6 +481,7 @@ public class Player : NetworkBehaviour
     public void GetStunned(float stunTime)
     {
         stunned = true;
+        ChangeMovementState(GetComponent<InStun>());
         Invoke("EndStun", stunTime);
     }
 
@@ -615,6 +616,7 @@ public class Player : NetworkBehaviour
     public void OnVelocityChanged(Vector3 newVelocity)
     {
         CmdVelocityChange(newVelocity);
+        velocity = newVelocity;
     }
 
     public void OnExternalForceChanged(Vector3 newExternalForce)
