@@ -16,6 +16,7 @@ public class MovementStateFootDust : MonoBehaviour
     void Start()
     {
         particle = GetComponent<ParticleSystem>();
+        togglePlaying(false);
         LocalEventDispatcher dispatcher = GetComponentInParent<LocalEventDispatcher>();
         dispatcher.AddListener<MovementStateChangedEvent>(OnChange);
         dispatcher.AddListener<JumpEvent>(OnJump);
