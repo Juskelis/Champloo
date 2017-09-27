@@ -29,6 +29,25 @@ public class VotingManager : MonoBehaviour
 
     public VotingEvent OnElected;
 
+    public UnityEvent OnVotingTimeout;
+
+    public bool hasVotingTimeout = false;
+
+    public float votingTimeout = 10f;
+
+    public float VotingTimeLeft
+    {
+        get { return votingStarted && hasVotingTimeout ? votingTimeout - (Time.time - votingStartTime) : 0f; }
+    }
+
+    private bool votingStarted = false;
+    private float votingStartTime = 0;
+
+    private void Start()
+    {
+        votingStarted = false;
+    }
+
     private Option TallyVotes()
     {
         Option mostVotes = null;
@@ -64,6 +83,12 @@ public class VotingManager : MonoBehaviour
 
     public void OnVote(MultiplayerSelectable selected, MultiplayerUIController controller)
     {
+        if (!votingStarted && hasVotingTimeout)
+        {
+            votingStarted = true;
+            votingStartTime = Time.time;
+            Invoke("ForceVote", votingTimeout);
+        }
         //on an individual vote
         Option prevElectedOption = electedOption;
         electedOption = TallyVotes();
@@ -87,8 +112,16 @@ public class VotingManager : MonoBehaviour
             return;
         }
 
+        CancelInvoke("ForceVote");
+
         //do things
         electedOption = TallyVotes();
         OnElected.Invoke(electedOption);
+    }
+
+    private void ForceVote()
+    {
+        AllSelectedCallback();
+        OnVotingTimeout.Invoke();
     }
 }
