@@ -67,8 +67,11 @@ public class CorpseSpawner : MonoBehaviour {
 
         corpse = (Transform)Instantiate(spawnOnDeath, transform.position, transform.rotation);
         Rigidbody2D corpseBody = corpse.GetComponent<Rigidbody2D>();
-        corpseBody.gravityScale = e.deadPlayer.Gravity / Physics2D.gravity.magnitude;
-        corpseBody.velocity = e.corpsePushDirection * corpsePushFactor;
+        if (corpseBody != null)
+        {
+            corpseBody.gravityScale = e.deadPlayer.Gravity/Physics2D.gravity.magnitude;
+            corpseBody.velocity = e.corpsePushDirection*corpsePushFactor;
+        }
         if (spurt != null)
         {
             spurt.SetParent(corpse);
