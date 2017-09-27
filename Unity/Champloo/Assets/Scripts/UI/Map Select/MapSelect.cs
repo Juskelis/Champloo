@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using Prototype.NetworkLobby;
+using UnityEngine.SceneManagement;
 
 public class MapSelect : MonoBehaviour {
     public void SetMap(VotingManager.Option electedMap)
@@ -14,5 +16,10 @@ public class MapSelect : MonoBehaviour {
         {
             Debug.LogError("Selectable does not have a MapOption");
         }
+    }
+
+    public void SetMap(String mapName)
+    {
+        LobbyManager.s_Singleton.playScene = mapName;
     }
 }
