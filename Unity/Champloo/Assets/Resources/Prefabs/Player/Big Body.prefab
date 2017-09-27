@@ -1845,7 +1845,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85bb619e81476c1488b95a592f713ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnOnDeath: {fileID: 487684, guid: f76ffe80673a7004dace221606a3111b, type: 2}
+  spawnOnDeath: {fileID: 4841421353042992, guid: a06ae8eee22548d41b06736832107d61,
+    type: 2}
   shakeSettings:
     shake: 1
     magnitude: 10
