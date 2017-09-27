@@ -7946,8 +7946,8 @@ MonoBehaviour:
   constrainWidth: 0
   minSize: {x: 0, y: 0}
   maxSize: {x: 0, y: 0}
-  shrinkHeight: 0
-  shrinkWidth: 0
+  shrinkHeight: 1
+  shrinkWidth: 1
 --- !u!1 &1473333832
 GameObject:
   m_ObjectHideFlags: 0
