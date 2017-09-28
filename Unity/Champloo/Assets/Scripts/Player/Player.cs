@@ -238,6 +238,7 @@ public class Player : NetworkBehaviour
 
     private void Spawn()
     {
+        CancelInvoke("Spawn");
         transform.position = FindObjectOfType<PlayerSpawner>().FindValidSpawn(this);
         gameObject.SetActive(true);
         OnDeathChanged(false);
