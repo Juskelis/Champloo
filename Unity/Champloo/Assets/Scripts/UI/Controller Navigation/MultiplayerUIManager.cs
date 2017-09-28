@@ -317,4 +317,9 @@ public class MultiplayerUIManager : MonoBehaviour
             playersJoined = false;
         }
     }
+
+    public void ForceAllSelected()
+    {
+        OnAllSelected.Invoke();
+    }
 }
