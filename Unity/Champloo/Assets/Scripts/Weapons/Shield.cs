@@ -5,70 +5,65 @@ public class Shield : MonoBehaviour {
 
     [SerializeField]
     private int MaxHits = 3;
-
-    [SerializeField]
-    private float timeToLoseShield = 2f;
+    
     [SerializeField]
     private float timeToGainShield = 2f;
-
-    private float grow;
 
     [SerializeField]
     private SpriteRenderer visuals;
 
+    public bool CanActivate { get; private set; }
+
+    public bool Up { get; private set; }
+
+    private int hitsLeft;
+    private float rechargeStartTime = 0f;
+    private float rechargeStepTime = 0f;
+
     private float spriteMaxScale;
 
-    private float percentLeft = 1;
-
-    private float percentPerHit;
-
-    private bool canActivate = true;
-    public bool CanActivate {  get { return canActivate; } }
-
-    private bool up = false;
-    public bool Up { get { return up; } }
-
-    public void Start()
+    private void Start()
     {
+        hitsLeft = MaxHits;
+        rechargeStepTime = timeToGainShield/MaxHits;
+
         spriteMaxScale = visuals.transform.localScale.x;
-    }
-
-    public void ActivateShield()
-    {
-        if (!canActivate) return;
-
-        percentPerHit = 1/((float)MaxHits);
-        up = percentLeft > 0;
-        grow = 1/timeToGainShield;
-
-        canActivate = false;
-    }
-
-    public void DeactivateShield()
-    {
-        up = false;
     }
 
     private void Update()
     {
-        if (!up)
+        if (!Up)
         {
-            percentLeft += grow * Time.deltaTime;
-        }
-        else if (percentLeft <= 0)
-        {
-            up = false;
-        }
-        
-        if(!canActivate && percentLeft >= 1f)
-        {
-            canActivate = true;
+            if (Time.time - rechargeStartTime >= rechargeStepTime)
+            {
+                hitsLeft = Mathf.Min(hitsLeft + 1, MaxHits);
+                rechargeStartTime = Time.time;
+            }
+
+            if (hitsLeft == MaxHits)
+            {
+                CanActivate = true;
+            }
         }
 
-        percentLeft = Mathf.Clamp01(percentLeft);
+        float percentLeft = ((float)hitsLeft)/MaxHits;
 
-        visuals.transform.localScale = Vector3.one*spriteMaxScale*percentLeft;
-        visuals.enabled = up;
+        visuals.transform.localScale = Vector3.one * spriteMaxScale * percentLeft;
+        visuals.enabled = Up;
+    }
+
+    public void ActivateShield()
+    {
+        if (!CanActivate) return;
+
+        CanActivate = false;
+        Up = true;
+    }
+
+    public void DeactivateShield()
+    {
+        Up = false;
+        rechargeStartTime = Time.time;
     }
 
     public bool TakeHit(Weapon w)
@@ -76,7 +71,13 @@ public class Shield : MonoBehaviour {
         if (!Up) return false;
         if (w != null && w.IsSpecialAttacking && w is Axe) return false;
 
-        percentLeft -= percentPerHit;
-        return percentLeft >= 0;
+        hitsLeft--;
+        if (hitsLeft == 0)
+        {
+            DeactivateShield();
+            EventDispatcher.Instance.FireEvent(this, new ShieldBreakEvent {OurShield = this});
+            GetComponentInParent<LocalEventDispatcher>().FireEvent(this, new ShieldBreakEvent {OurShield = this});
+        }
+        return hitsLeft >= 0;
     }
 }
