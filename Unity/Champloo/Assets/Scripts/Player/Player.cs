@@ -728,7 +728,7 @@ public class Player : NetworkBehaviour
         //else if(inputs.movementSpecial.Down && !(movementState is OnDash) && currentDashes > 0)
         else if(InputPlayer.GetButtonDown("Movement Special")
             && !(InputPlayer.GetButtonDown("Attack") || InputPlayer.GetButtonDown("Weapon Special"))
-            && !(movementState is OnMovementSpecial) && !movementSpecial.isDisabled)
+            && !(movementState is OnMovementSpecial) && !movementSpecial.isDisabled && movementSpecial.canUse)
         {
             next = GetComponentInChildren<OnMovementSpecial>();
         }

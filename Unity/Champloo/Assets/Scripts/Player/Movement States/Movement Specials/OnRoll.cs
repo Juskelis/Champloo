@@ -21,6 +21,11 @@ public class OnRoll : OnMovementSpecial
     private bool goingRight = true;
     private bool canAirRoll = true;
 
+    public override bool canUse
+    {
+        get { return base.canUse && (!(GetSimulatedState() is InAir) || canAirRoll); }
+    }
+
 
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
