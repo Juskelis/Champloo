@@ -72,6 +72,12 @@ public class Shield : MonoBehaviour {
         if (w != null && w.IsSpecialAttacking && w is Axe) return false;
 
         hitsLeft--;
+        if (hitsLeft == 0)
+        {
+            DeactivateShield();
+            EventDispatcher.Instance.FireEvent(this, new ShieldBreakEvent {OurShield = this});
+            GetComponentInParent<LocalEventDispatcher>().FireEvent(this, new ShieldBreakEvent {OurShield = this});
+        }
         return hitsLeft >= 0;
     }
 }
