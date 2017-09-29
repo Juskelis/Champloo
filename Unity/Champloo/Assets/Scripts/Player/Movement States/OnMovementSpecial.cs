@@ -20,9 +20,9 @@ public class OnMovementSpecial : MovementState
     protected float cooldownTimeLeft;
 
     //bools for determining current state
-    public bool canUse { get { return !isDisabled && timingState == TimingState.DONE; } }
-    public bool isInUse { get { return timingState == TimingState.IN_PROGRESS; } }
-    public bool isDisabled { get; set; }
+    public virtual bool canUse { get { return !isDisabled && timingState == TimingState.DONE; } }
+    public virtual bool isInUse { get { return timingState == TimingState.IN_PROGRESS; } }
+    public virtual bool isDisabled { get; set; }
 
     //Used On the start of the player object
     protected override void Start()
