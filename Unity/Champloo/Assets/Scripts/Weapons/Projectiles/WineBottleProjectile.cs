@@ -9,12 +9,15 @@ public class WineBottleProjectile : Projectile {
     [SerializeField]
     private float stunTime = 1f;
 
+    [SerializeField]
+    private float degreesPerSecond = 45f;
+
     protected override void Update()
     {
         transform.rotation = Quaternion.RotateTowards(
             transform.rotation,
             Quaternion.Euler(0, 0, -90f),
-            45f * Time.deltaTime);
+            degreesPerSecond * Time.deltaTime);
 
         base.Update();
     }
