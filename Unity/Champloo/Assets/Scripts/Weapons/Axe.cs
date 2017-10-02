@@ -10,6 +10,9 @@ public class Axe : Weapon
     [SerializeField]
     private float swingAngle = 90f;
 
+    [SerializeField]
+    private AnimationCurve angleOverTime;
+
     private float startAngle;
     private float endAngle;
     private float startTime;
@@ -96,7 +99,8 @@ public class Axe : Weapon
         }
         if (IsAttacking)
         {
-            float lerpedAngle = Mathf.LerpAngle(startAngle, endAngle, (Time.time - startTime) / attackTime);
+            float percentThrough = angleOverTime.Evaluate((Time.time - startTime) / attackTime);
+            float lerpedAngle = Mathf.LerpAngle(startAngle, endAngle, percentThrough);
             transform.parent.rotation = Quaternion.Euler(0, 0, lerpedAngle);
         }
     }

@@ -2024,6 +2024,24 @@ MonoBehaviour:
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
   swingAngle: 95
+  angleOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114852319061618254
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2080,7 +2098,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHits: 3
-  timeToLoseShield: 10
   timeToGainShield: 2
   visuals: {fileID: 212807695656849650}
 --- !u!114 &114905151845063692
