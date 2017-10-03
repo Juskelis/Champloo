@@ -43,8 +43,9 @@ public class VotingManager : MonoBehaviour
     private bool votingStarted = false;
     private float votingStartTime = 0;
 
-    private void Start()
+    public void Reset()
     {
+        CancelInvoke("ForceVote");
         votingStarted = false;
     }
 

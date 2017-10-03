@@ -49,6 +49,9 @@ public class MultiplayerUIManager : MonoBehaviour
     [SerializeField]
     private UnityEvent OnEnabled;
 
+    [SerializeField]
+    private UnityEvent OnDisabled;
+
     private List<MultiplayerUIController> activeControllers;
 
     private static Dictionary<Rewired.Player, bool> hasJoinedDictionary;
@@ -95,6 +98,7 @@ public class MultiplayerUIManager : MonoBehaviour
             Destroy(controller.gameObject);
         }
         activeControllers.Clear();
+        OnDisabled.Invoke();
     }
 
     private void ReInputOnControllerPreDisconnectEvent(ControllerStatusChangedEventArgs controllerStatusChangedEventArgs)
