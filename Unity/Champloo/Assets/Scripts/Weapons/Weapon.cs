@@ -21,6 +21,9 @@ public class Weapon : MonoBehaviour
             }
         }
     }
+    
+    private bool attackCoroutineRunning = false;
+    private bool specialAttackCoroutineRunning = false;
 
     protected TimingState attackingState = TimingState.DONE;
     public TimingState AttackState { get { return attackingState; } }
@@ -31,7 +34,7 @@ public class Weapon : MonoBehaviour
     public bool IsAttacking { get { return attackingState == TimingState.IN_PROGRESS; } }
     
     public bool CanSpecialAttack { get { return InHand && specialAttackingState == TimingState.DONE; } }
-    public bool IsSpecialAttacking { get { return specialAttackingState == TimingState.IN_PROGRESS; } }
+    public virtual bool IsSpecialAttacking { get { return specialAttackingState == TimingState.IN_PROGRESS; } }
 
     private int playerNumber;
     public int PlayerNumber { get {return playerNumber;} }
@@ -87,14 +90,22 @@ public class Weapon : MonoBehaviour
         {
             return;
         }
-        StartCoroutine(TimingCoroutine());
+
+        if (!attackCoroutineRunning)
+        {
+            attackCoroutineRunning = true;
+            StartCoroutine(TimingCoroutine());
+        }
     }
 
     private IEnumerator TimingCoroutine()
     {
         attackingState = TimingState.WARMUP;
         player.FireEvent(new WeaponAttackTimingEvent { Target = this, Timing = attackingState });
-        yield return new WaitForSeconds(startupTime);
+        if (startupTime > 0)
+        {
+            yield return new WaitForSeconds(startupTime);
+        }
         OnStart();
         if (attackTime > 0)
         {
@@ -106,6 +117,8 @@ public class Weapon : MonoBehaviour
             yield return new WaitForSeconds(cooldownTime);
         }
         OnCooledDown();
+
+        attackCoroutineRunning = false;
         yield return null;
     }
 
@@ -143,7 +156,11 @@ public class Weapon : MonoBehaviour
         {
             return;
         }
-        StartCoroutine(SpecialTimingCoroutine());
+        if (!specialAttackCoroutineRunning)
+        {
+            specialAttackCoroutineRunning = true;
+            StartCoroutine(SpecialTimingCoroutine());
+        }
     }
 
     private IEnumerator SpecialTimingCoroutine()
@@ -168,6 +185,7 @@ public class Weapon : MonoBehaviour
         }
         OnRechargeSpecial();
 
+        specialAttackCoroutineRunning = false;
         yield return null;
     }
 

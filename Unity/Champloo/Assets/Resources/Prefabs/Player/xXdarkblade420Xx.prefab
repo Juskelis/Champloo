@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 4258109406082424}
   - component: {fileID: 61155339888234124}
   - component: {fileID: 50922442951208444}
-  - component: {fileID: 114490889723496604}
+  - component: {fileID: 114928937434895830}
   m_Layer: 11
   m_Name: Physical Sword
   m_TagString: Untagged
@@ -2081,29 +2081,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 114456711464106426}
---- !u!114 &114490889723496604
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1713829817018404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ff29916317b71e4da09a43e059a80af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startupTime: 0
-  attackTime: 0.1
-  cooldownTime: 0.25
-  rechargeTime: 0
-  specialStartupTime: 0
-  specialTime: 0
-  specialCooldownTime: 0
-  specialRechargeTime: 0
-  thrownVersion: {fileID: 114928179134425380, guid: 4a102099dd8f3f24186e1863bf442368,
-    type: 2}
-  alwaysVisible: 0
-  visuals: {fileID: 212953766577189390}
 --- !u!114 &114567913374022186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2301,7 +2278,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHits: 3
-  timeToLoseShield: 10
   timeToGainShield: 2
   visuals: {fileID: 212807695656849650}
 --- !u!114 &114905151845063692
@@ -2323,6 +2299,29 @@ MonoBehaviour:
   m_MovementThreshold: 0.001
   m_InterpolateRotation: 0.5
   m_InterpolateMovement: 0.5
+--- !u!114 &114928937434895830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1713829817018404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f560d78798a53dc439400f267553c011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startupTime: 0
+  attackTime: 0.1
+  cooldownTime: 0.25
+  rechargeTime: 0
+  specialStartupTime: 0.25
+  specialTime: 0.25
+  specialCooldownTime: 0
+  specialRechargeTime: 0
+  thrownVersion: {fileID: 0}
+  alwaysVisible: 0
+  visuals: {fileID: 212953766577189390}
+  superSwordSize: 2
 --- !u!114 &114958792587567482
 MonoBehaviour:
   m_ObjectHideFlags: 1
