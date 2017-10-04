@@ -148,6 +148,8 @@ namespace Prototype.NetworkLobby
                 CmdNameChanged("Select a player");
             }
 
+            playerPortrait.enabled = false;
+
             //we switch from simple name display to name input
             //colorButton.interactable = true;
             //nameInput.interactable = true;
