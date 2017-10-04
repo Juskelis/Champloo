@@ -100,9 +100,16 @@ public class MultiplayerSelectable : Selectable
         MultiplayerUIController[] children = transform.GetComponentsInChildren<MultiplayerUIController>();
         for(sortIndex = 0; sortIndex < children.Length && sortR > children[sortIndex].ControllerNumber; sortIndex++)
         { }
-
-        r.SetParent(playerContainer.transform, false);
-        r.SetSiblingIndex(sortIndex);
+        
+        if (playerContainer.transform.GetComponent<GridLayoutGroup>() != null)
+        {
+            r.SetParent(playerContainer.transform.GetChild(sortR), false);
+        }
+        else
+        {
+            r.SetParent(playerContainer.transform, false);
+            //r.SetSiblingIndex(sortIndex);
+        }
 
         OnHover.Invoke(this, r.GetComponent<MultiplayerUIController>());
     }
