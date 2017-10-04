@@ -43,6 +43,7 @@ public class PlayerSelectManager : MonoBehaviour
                 if(player != null && player.isLocalPlayer && player.playerControllerNumber == controller.ControllerNumber)
                 {
                     player.OnPrefabChanged(selectedOption.playerPrefabIndex);
+                    player.playerPortrait.enabled = true;
                     player.playerPortrait.sprite = selectedOption.playerPortrait;
                 }
             }
