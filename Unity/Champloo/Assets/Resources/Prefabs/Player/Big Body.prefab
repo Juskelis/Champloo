@@ -2023,22 +2023,34 @@ MonoBehaviour:
     type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
-  swingAngle: 95
+  swingAngle: 135
   angleOverTime:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0
+      time: -0.002364066
       value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.49407446
+      value: 0.1137026
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.85
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
     - serializedVersion: 2
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
