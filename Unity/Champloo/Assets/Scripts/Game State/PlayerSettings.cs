@@ -5,6 +5,8 @@ using System.Collections;
 
 public class PlayerSettings : MonoBehaviour
 {
+    public static bool TimerEnabled { get; set; }
+
     public Color Color;
     public string Name;
     public int LocaInputPlayerID;
