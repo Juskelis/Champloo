@@ -229,7 +229,7 @@ namespace Prototype.NetworkLobby
         public void OnMyControllerNumber(int newNumber)
         {
             playerControllerNumber = newNumber;
-            playerNumberText.text = newNumber.ToString();
+            playerNumberText.text = (newNumber + 1).ToString();
         }
 
         public void OnMyPrefab(int newPrefab)
