@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 114816192349633596}
   - component: {fileID: 114835231177880446}
   - component: {fileID: 114434379867403634}
-  - component: {fileID: 114187267148614972}
   - component: {fileID: 114384941653737122}
   - component: {fileID: 114754671075927648}
   - component: {fileID: 114121970608963264}
@@ -113,6 +112,7 @@ GameObject:
   - component: {fileID: 114469000994252816}
   - component: {fileID: 114323138353395156}
   - component: {fileID: 114371463023729314}
+  - component: {fileID: 114379007015029104}
   m_Layer: 9
   m_Name: Big Body
   m_TagString: Player
@@ -1637,17 +1637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441716ec3c3c935489d6644eafbc13ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114187267148614972
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1162316800763126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d7340326ba737940b8d5824aa5c067d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114190614785949070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1770,6 +1759,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   killEffect: {fileID: 4528916862352772, guid: c78b6f3a2f3d9f84cbf33be2ab06403a, type: 2}
+--- !u!114 &114379007015029104
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162316800763126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f50fa27e35005542b6b20d6830878ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundFriction: 1.25
 --- !u!114 &114383275711759350
 MonoBehaviour:
   m_ObjectHideFlags: 1
