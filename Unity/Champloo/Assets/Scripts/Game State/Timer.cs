@@ -23,6 +23,10 @@ public class Timer : NetworkBehaviour {
 
     void Start()
     {
+        if (!PlayerSettings.TimerEnabled)
+        {
+            enabled = false;
+        }
         timerDone = false;
         timer = levelSeconds;
     }
