@@ -13,6 +13,8 @@ public class InBlock : MovementState
 
     private Shield ourShield;
 
+    private Vector3 prevVelocity;
+
     protected override void Start()
     {
         base.Start();
@@ -24,13 +26,16 @@ public class InBlock : MovementState
 
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        velocity.x = Mathf.MoveTowards(velocity.x, 0f, deceleration * Time.deltaTime);
+        float newVelocityX = Mathf.MoveTowards(velocity.x, 0f, deceleration*Time.deltaTime);
+        velocity.x = Mathf.Abs(prevVelocity.x) < Mathf.Abs(newVelocityX) ? prevVelocity.x : newVelocityX;
 
         if (controller.collisions.Above && velocity.y > 0) velocity.y = 0;
 
         velocity.y -= player.Gravity * Time.deltaTime;
 
         if (velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
+
+        prevVelocity = velocity;
         return velocity;
     }
 
@@ -66,6 +71,8 @@ public class InBlock : MovementState
         deceleration = GetComponent<OnGround>().MaxSpeed/maxSpeedToStopTime;
         maxFallSpeed = GetComponent<InAir>().MaxFallSpeed;
         ourShield.ActivateShield();
+
+        prevVelocity = inVelocity;
     }
 
     public override void OnExit(
