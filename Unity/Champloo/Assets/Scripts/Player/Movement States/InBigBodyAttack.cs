@@ -8,26 +8,22 @@ public class InBigBodyAttack : InAttack
     private float groundFriction;
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
-        return GetSimulatedState().ApplyFriction(velocity);
-    }
-
-    public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
-    {
-        base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         if (GetSimulatedState() is OnGround)
         {
-            outVelocity.x = Mathf.MoveTowards(outVelocity.x, 0, groundFriction * Time.deltaTime);
+            velocity.x = Mathf.MoveTowards(velocity.x, 0, groundFriction * Time.deltaTime);
+            return velocity;
+        }
+        else
+        {
+            return GetSimulatedState().ApplyFriction(velocity);
         }
     }
+    
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
         out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         movementSpecial.OnExitAttack(inVelocity, inExternalForces);
         outVelocity = inVelocity;
-        if(GetSimulatedState() is OnGround)
-        {
-            outVelocity.x = Mathf.MoveTowards(outVelocity.x, 0, groundFriction * Time.deltaTime);
-        }
         outExternalForces = inExternalForces;
     }
 }
