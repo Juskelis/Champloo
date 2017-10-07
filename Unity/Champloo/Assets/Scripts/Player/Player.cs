@@ -714,7 +714,7 @@ public class Player : NetworkBehaviour
         {
             next = GetComponent<InStun>();
         }
-        else if((weapon.IsAttacking || weapon.IsSpecialAttacking) && !(movementState is InAttack))
+        else if((weapon.IsAttacking || weapon.IsSpecialAttacking) && !(movementState is InAttack || movementState is OnMovementSpecial))
         {
             next = GetComponent<InAttack>();
         }

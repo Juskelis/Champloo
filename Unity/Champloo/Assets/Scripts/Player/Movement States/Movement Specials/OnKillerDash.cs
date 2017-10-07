@@ -32,4 +32,29 @@ public class OnKillerDash : OnDash
         currentDashes = 1;
         base.OnCooledDown();
     }
+
+
+    public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
+    {
+        specialTimeLeft -= Time.deltaTime;
+
+        if (isDisabled || timingState == TimingState.RECHARGE || timingState == TimingState.DONE)
+        {
+            if (hitNextDashInput)
+            {
+                return GetComponent<OnDash>();
+            }
+            else if (controller.collisions.Below)
+            {
+                return GetComponent<OnGround>();
+            }
+            else if (controller.collisions.Left || controller.collisions.Right)
+            {
+                return GetComponent<OnWall>();
+            }
+            return GetComponent<InAir>();
+        }
+
+        return null;
+    }
 }
