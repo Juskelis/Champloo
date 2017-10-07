@@ -16,7 +16,7 @@ public class InBigBodyAttack : InAttack
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         if (GetSimulatedState() is OnGround)
         {
-            outVelocity.x /= groundFriction;
+            outVelocity.x = Mathf.MoveTowards(outVelocity.x, 0, groundFriction * Time.deltaTime);
         }
     }
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
@@ -26,7 +26,7 @@ public class InBigBodyAttack : InAttack
         outVelocity = inVelocity;
         if(GetSimulatedState() is OnGround)
         {
-            outVelocity.x /= groundFriction;
+            outVelocity.x = Mathf.MoveTowards(outVelocity.x, 0, groundFriction * Time.deltaTime);
         }
         outExternalForces = inExternalForces;
     }
