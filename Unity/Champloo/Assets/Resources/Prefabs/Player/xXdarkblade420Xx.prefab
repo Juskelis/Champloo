@@ -2328,8 +2328,8 @@ MonoBehaviour:
   attackTime: 0.1
   cooldownTime: 0.25
   rechargeTime: 0
-  specialStartupTime: 0.5
-  specialTime: 0.25
+  specialStartupTime: 0.25
+  specialTime: 0.18
   specialCooldownTime: 0
   specialRechargeTime: 0
   thrownVersion: {fileID: 0}
