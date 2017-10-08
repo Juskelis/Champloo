@@ -3,6 +3,8 @@ using System.Collections;
 
 public class InAttack : MovementState
 {
+    [SerializeField] private float slowdownLerp;
+
     Weapon playerWeapon;
     Vector3 initialVelocity;
 
@@ -14,6 +16,13 @@ public class InAttack : MovementState
 
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
+        if (playerWeapon.IsSpecialAttacking && playerWeapon.SpecialAttackState == TimingState.WARMUP)
+        {
+            return Vector3.Lerp(
+                velocity,
+                Vector3.zero,
+                slowdownLerp);
+        }
         return Vector3.zero;
     }
 
