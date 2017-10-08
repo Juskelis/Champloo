@@ -230,6 +230,9 @@ public class Weapon : MonoBehaviour
     public virtual void Reset()
     {
         InHand = true;
+        StopAllCoroutines();
+        attackCoroutineRunning = false;
+        specialAttackCoroutineRunning = false;
         specialAttackingState = TimingState.DONE;
         attackingState = TimingState.DONE;
     }
