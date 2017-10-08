@@ -5,7 +5,12 @@ using System.Collections;
 
 public class PlayerSettings : MonoBehaviour
 {
-    public static bool TimerEnabled { get; set; }
+    private static bool timerEnabled = true;
+    public static bool TimerEnabled
+    {
+        get { return timerEnabled; }
+        set { timerEnabled = value; }
+    }
 
     public Color Color;
     public string Name;
