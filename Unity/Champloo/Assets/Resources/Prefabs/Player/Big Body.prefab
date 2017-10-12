@@ -2000,6 +2000,8 @@ MonoBehaviour:
   wallJumpVelocity: {x: 15, y: 20}
   noAngleJumpModifier: {x: 1, y: 0}
   towardsWallJumpModifier: {x: 1, y: 0}
+  noAngleJumpModifier: {x: 1, y: 1}
+  towardsWallJumpModifier: {x: 0.85, y: 1.1}
   allowedMinAngle: 1.16
 --- !u!114 &114849532675118652
 MonoBehaviour:
