@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 114469000994252816}
   - component: {fileID: 114323138353395156}
   - component: {fileID: 114371463023729314}
-  - component: {fileID: 114379007015029104}
+  - component: {fileID: 114764726951849654}
   m_Layer: 9
   m_Name: Big Body
   m_TagString: Player
@@ -597,7 +597,7 @@ Transform:
   m_GameObject: {fileID: 1414592692947770}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.5, y: 2, z: 2}
   m_Children:
   - {fileID: 4817007161896130}
   - {fileID: 4258109406082424}
@@ -1759,18 +1759,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   killEffect: {fileID: 4528916862352772, guid: c78b6f3a2f3d9f84cbf33be2ab06403a, type: 2}
---- !u!114 &114379007015029104
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1162316800763126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f50fa27e35005542b6b20d6830878ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundFriction: 1.25
 --- !u!114 &114383275711759350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1826,10 +1814,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5f236e400dc9c47a659f027098a894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startupTime: 0
-  specialTime: 0.08
+  startupTime: 0.02
+  specialTime: 0.03
   cooldownTime: 0.2
-  rechargeTime: 0.6
+  rechargeTime: 1.1
   dashForce: 17
   gravityModifier: 0.5
   dashLimit: 1
@@ -1924,7 +1912,7 @@ MonoBehaviour:
   visuals: {fileID: 4715784140289914}
   hitbox: {fileID: 4630137742347486}
   bounceForce: 15
-  maxJumpHeight: 3.5
+  maxJumpHeight: 4.5
   minJumpHeight: 2
   Gravity: 50
   hitReactionTime: 0.05
@@ -1967,6 +1955,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tauntDuration: 1
+--- !u!114 &114764726951849654
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162316800763126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c01e2f01a6f6e841872f6c5ad591452, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundFriction: 20
 --- !u!114 &114816192349633596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1998,8 +1998,8 @@ MonoBehaviour:
   maxFallSpeed: 8
   wallStickTime: 0.2
   wallJumpVelocity: {x: 15, y: 20}
-  noAngleJumpModifier: {x: 1, y: 0}
-  towardsWallJumpModifier: {x: 1, y: 0}
+  noAngleJumpModifier: {x: 1, y: 1}
+  towardsWallJumpModifier: {x: 0.85, y: 1.1}
   allowedMinAngle: 1.16
 --- !u!114 &114849532675118652
 MonoBehaviour:
@@ -2012,10 +2012,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687380da1f74e4d478ab6120f2f24581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startupTime: 0.12
-  attackTime: 0.35
+  startupTime: 0.16
+  attackTime: 0.25
   cooldownTime: 0.32
-  rechargeTime: 0.28
+  rechargeTime: 0.25
   specialStartupTime: 0
   specialTime: 0
   specialCooldownTime: 1
@@ -2024,7 +2024,7 @@ MonoBehaviour:
     type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
-  swingAngle: 135
+  swingAngle: 125
   angleOverTime:
     serializedVersion: 2
     m_Curve:
