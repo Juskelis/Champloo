@@ -3,8 +3,9 @@ using System.Collections;
 
 public class InAttack : MovementState
 {
-    Weapon playerWeapon;
-    Vector3 initialVelocity;
+
+    protected Weapon playerWeapon;
+    protected Vector3 initialVelocity;
 
     protected override void Start()
     {

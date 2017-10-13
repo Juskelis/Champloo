@@ -10,7 +10,7 @@ public class AnimeSword : Weapon {
     private SpriteRenderer visuals;
 
     [SerializeField]
-    private float superSwordSize = 1;
+    private Vector2 superSwordSize = Vector2.one;
 
     private Vector3 defaultTransformScale;
 
@@ -63,7 +63,7 @@ public class AnimeSword : Weapon {
     {
         base.OnStartSpecial();
 
-        transform.parent.localScale = defaultTransformScale * superSwordSize;
+        transform.parent.localScale = Vector2.Scale(defaultTransformScale, superSwordSize);
 
         visuals.enabled = true;
         col.enabled = true;
