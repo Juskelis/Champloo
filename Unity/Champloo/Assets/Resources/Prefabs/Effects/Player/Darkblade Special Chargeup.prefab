@@ -217,10 +217,10 @@ ParticleSystem:
       minGradient:
         key0:
           serializedVersion: 2
-          rgba: 4294967295
+          rgba: 0
         key1:
           serializedVersion: 2
-          rgba: 4294967295
+          rgba: 4291348680
         key2:
           serializedVersion: 2
           rgba: 0
@@ -260,7 +260,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
       minColor: {r: 1, g: 1, b: 1, a: 1}
       maxColor: {r: 1, g: 1, b: 1, a: 1}
-      minMaxState: 1
+      minMaxState: 3
     startSize:
       scalar: 0.05
       maxCurve:
