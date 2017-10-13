@@ -90,7 +90,8 @@ public class OnWall : MovementState
             //if the input is pointed towards the wall or slightly away and up
             else if (Mathf.Abs(wallDirX - direction.x) < 0.5f || ((Mathf.Abs(wallDirX - direction.x) < allowedMinAngle) && (Mathf.Abs(1 - direction.y) < .25)))
             {
-                outVelocity.y = wallJumpVelocity.y;
+                outVelocity.y = wallJumpVelocity.y * towardsWallJumpModifier.y;
+                outVelocity.x *= towardsWallJumpModifier.x;
             }
             //if the input is down and slightly away
             else if (Mathf.Abs(wallDirX - direction.x) < allowedMinAngle && Mathf.Abs(1 - direction.y) > .25)

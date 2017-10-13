@@ -1937,7 +1937,7 @@ MonoBehaviour:
   wallStickTime: 0.2
   wallJumpVelocity: {x: 20, y: 20}
   noAngleJumpModifier: {x: 1.15, y: 0}
-  towardsWallJumpModifier: {x: 1, y: 0}
+  towardsWallJumpModifier: {x: 1, y: 1}
   allowedMinAngle: 1.16
 --- !u!114 &114639018780518578
 MonoBehaviour:
