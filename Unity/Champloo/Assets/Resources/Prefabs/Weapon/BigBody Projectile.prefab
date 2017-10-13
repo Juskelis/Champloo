@@ -247,7 +247,7 @@ MonoBehaviour:
   minVelocity: 0
   maxVelocity: 7
   velocityAnimationTime: 0.4
-  timer: 0.8
+  timer: 1.2
 --- !u!114 &114203981874539452
 MonoBehaviour:
   m_ObjectHideFlags: 1
