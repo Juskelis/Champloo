@@ -259,7 +259,7 @@ MonoBehaviour:
   maxVelocity: 40
   velocityAnimationTime: 0.2
   maxColliderSize: {x: 2, y: 2}
-  growthTime: 5
+  growthTime: 2
 --- !u!212 &212747936110658586
 SpriteRenderer:
   m_ObjectHideFlags: 1
