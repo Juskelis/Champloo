@@ -550,7 +550,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Crossroads
+  m_Text: 2/3rds Crush
 --- !u!222 &71434214
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1971,7 +1971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb30a25aa9129449813588bb5a497ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapName: PagodaSmall
+  mapName: 3-4ths Crush
 --- !u!95 &272847729
 Animator:
   serializedVersion: 3
@@ -12409,7 +12409,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Pagoda Small
+  m_Text: 3/4ths Crush
 --- !u!222 &1477860019
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14036,7 +14036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb30a25aa9129449813588bb5a497ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapName: crossroads
+  mapName: 2-3rds Crush
 --- !u!95 &1589117099
 Animator:
   serializedVersion: 3
