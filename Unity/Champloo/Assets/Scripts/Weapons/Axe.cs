@@ -17,6 +17,13 @@ public class Axe : Weapon
     private float endAngle;
     private float startTime;
 
+    public override void Reset()
+    {
+        base.Reset();
+        if (col != null) col.enabled = false;
+        if (visuals != null) visuals.enabled = alwaysVisible;
+    }
+
     protected override void Start()
     {
         base.Start();
