@@ -2729,6 +2729,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 114010622292561428, guid: 03ef9bc4c2bd92a42b6d42c306599640,
     type: 2}
+  playerPrefabs:
+  - {fileID: 114599821988778560, guid: 788ae7ffef4800449a05b7d9cc98157c, type: 2}
+  - {fileID: 114210435056296970, guid: 650d8f37a976f884cb7016110c7f97b1, type: 2}
+  - {fileID: 114488454442619276, guid: 49af555cb5ea6d845b02292ce8eeb19d, type: 2}
+  - {fileID: 114599821988778560, guid: 840fa0d378bff1e4b89437e0bb24755b, type: 2}
+  cardPrefabs:
+  - {fileID: 114010622292561428, guid: 03ef9bc4c2bd92a42b6d42c306599640, type: 2}
+  - {fileID: 114010622292561428, guid: 03ef9bc4c2bd92a42b6d42c306599640, type: 2}
+  - {fileID: 114010622292561428, guid: 03ef9bc4c2bd92a42b6d42c306599640, type: 2}
+  - {fileID: 114010622292561428, guid: 03ef9bc4c2bd92a42b6d42c306599640, type: 2}
 --- !u!114 &114554149468919692
 MonoBehaviour:
   m_ObjectHideFlags: 1
