@@ -27,7 +27,8 @@ public class InBlock : MovementState
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
         float newVelocityX = Mathf.MoveTowards(velocity.x, 0f, deceleration*Time.deltaTime);
-        velocity.x = Mathf.Abs(prevVelocity.x) < Mathf.Abs(newVelocityX) ? prevVelocity.x : newVelocityX;
+        //velocity.x = Mathf.Abs(prevVelocity.x) < Mathf.Abs(newVelocityX) ? prevVelocity.x : newVelocityX;
+        velocity.x = newVelocityX;
 
         if (controller.collisions.Above && velocity.y > 0) velocity.y = 0;
 
