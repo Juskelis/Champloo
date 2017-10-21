@@ -96,7 +96,7 @@ public class Axe : Weapon
     protected override void Update()
     {
         base.Update();
-        if (CanAttack && CanSpecialAttack)
+        if (CanAttack || CanSpecialAttack)
         {
             Vector2 aim = OurPlayer.AimDirection;
             transform.parent.rotation = Quaternion.AngleAxis(

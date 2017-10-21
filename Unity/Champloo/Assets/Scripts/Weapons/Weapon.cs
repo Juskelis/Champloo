@@ -29,11 +29,11 @@ public class Weapon : MonoBehaviour
     public TimingState AttackState { get { return attackingState; } }
     protected TimingState specialAttackingState = TimingState.DONE;
     public TimingState SpecialAttackState { get { return specialAttackingState; } }
+
+    public virtual bool CanAttack { get { return InHand && attackingState == TimingState.DONE; } }
+    public virtual bool IsAttacking { get { return attackingState == TimingState.IN_PROGRESS; } }
     
-    public bool CanAttack { get { return InHand && attackingState == TimingState.DONE; } }
-    public bool IsAttacking { get { return attackingState == TimingState.IN_PROGRESS; } }
-    
-    public bool CanSpecialAttack { get { return InHand && specialAttackingState == TimingState.DONE; } }
+    public virtual bool CanSpecialAttack { get { return InHand && specialAttackingState == TimingState.DONE; } }
     public virtual bool IsSpecialAttacking { get { return specialAttackingState == TimingState.IN_PROGRESS; } }
 
     private int playerNumber;
@@ -84,9 +84,10 @@ public class Weapon : MonoBehaviour
         if (!isLocalPlayer) return;
     }
 
+    #region Attacking
     public virtual void Attack()
     {
-        if (!CanAttack || !CanSpecialAttack)
+        if (!CanAttack || !(specialAttackingState == TimingState.DONE || specialAttackingState == TimingState.RECHARGE))
         {
             return;
         }
@@ -149,10 +150,12 @@ public class Weapon : MonoBehaviour
     {
         
     }
+    #endregion
 
+    #region Special Attacking
     public virtual void Special()
     {
-        if (!CanAttack || !CanSpecialAttack)
+        if (!CanSpecialAttack || !(attackingState == TimingState.DONE || attackingState == TimingState.RECHARGE))
         {
             return;
         }
@@ -218,6 +221,7 @@ public class Weapon : MonoBehaviour
         specialAttackingState = TimingState.DONE;
         player.FireEvent(new WeaponSpecialTimingEvent() { Target = this, Timing = specialAttackingState });
     }
+    #endregion
 
     public virtual void PickUp()
     {

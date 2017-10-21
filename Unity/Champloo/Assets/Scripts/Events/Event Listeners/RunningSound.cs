@@ -33,7 +33,7 @@ public class RunningSound : MonoBehaviour {
 
     private void Update()
     {
-        if (inState && player.Velocity.magnitude > 0)
+        if (inState && Mathf.Abs(player.Velocity.x) > 0)
         {
             runningSound.PlayLooped();
         }
