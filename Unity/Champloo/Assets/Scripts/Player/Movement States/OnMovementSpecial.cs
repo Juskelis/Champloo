@@ -30,6 +30,7 @@ public class OnMovementSpecial : MovementState
         base.Start();
         isDisabled = false;
         timingState = TimingState.DONE; 
+        StopAllCoroutines();
     }
 
     //Used on the entering of the movement special, before the warmup
@@ -37,6 +38,13 @@ public class OnMovementSpecial : MovementState
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         StartCoroutine(TimingCoroutine());
+    }
+
+    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
+    {
+        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+        timingState = TimingState.DONE;
+        StopAllCoroutines();
     }
 
     public override bool AttackAllowed { get { return false; } }
