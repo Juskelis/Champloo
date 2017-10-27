@@ -2143,6 +2143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildupEffect: {fileID: 4367624687107466, guid: 09bd7d34718199d42b8549e2007a451e,
     type: 2}
+  fireEffect: {fileID: 4657305669223354, guid: 1a9978be9e639774ab1885d4f9a017ef, type: 2}
 --- !u!114 &114662547228443520
 MonoBehaviour:
   m_ObjectHideFlags: 1
