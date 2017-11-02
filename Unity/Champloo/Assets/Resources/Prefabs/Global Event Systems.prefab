@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 4760986396933132}
   - component: {fileID: 114038010893931816}
   m_Layer: 0
-  m_Name: Shield Break
+  m_Name: Shield State
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -809,6 +809,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breakSound: {fileID: 114698608730132100}
   breakEffect: {fileID: 4723969983297202, guid: e266a6a3319291741b02e82d719d4f41,
+    type: 2}
+  rechargeSound: {fileID: 114698608730132100}
+  rechargeEffect: {fileID: 4807578499306730, guid: 6680cc9a931c3ff40ae1de7cffa0e832,
     type: 2}
 --- !u!114 &114286173702630048
 MonoBehaviour:
