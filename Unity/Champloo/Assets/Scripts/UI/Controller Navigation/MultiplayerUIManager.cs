@@ -128,7 +128,7 @@ public class MultiplayerUIManager : MonoBehaviour
         bool playerLeftOrJoined = false;
         foreach (var player in ReInput.players.Players)
 	    {
-	        if (playersCanJoin && player.GetAnyButtonDown() && !ContainsController(player))
+	        if (playersCanJoin && player.GetAnyButtonDown() && !player.GetButtonDown(leaveAction) && !ContainsController(player))
 	        {
 	            //player has joined
                 AddController(player);
