@@ -2110,9 +2110,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5075281e3df222946a9bd9ae40259c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHits: 3
-  timeToGainShield: 2
+  MaxHits: 2
+  timeToGainShield: 3
   visuals: {fileID: 212807695656849650}
+  canBlink: 0
+  blinkTime: 0.5
 --- !u!114 &114905151845063692
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -599,7 +599,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1414592692947770}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.125, z: 0}
   m_LocalScale: {x: 2.15, y: 1, z: 2}
   m_Children:
   - {fileID: 4817007161896130}
@@ -739,7 +739,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1859121369719268}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.125, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4664066807589154}
@@ -1685,7 +1685,7 @@ TrailRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9a4f49f8d8fea9f4db2d4e9197a6e431, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2292,9 +2292,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5075281e3df222946a9bd9ae40259c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHits: 3
-  timeToGainShield: 2
+  MaxHits: 2
+  timeToGainShield: 3
   visuals: {fileID: 212807695656849650}
+  canBlink: 0
+  blinkTime: 0.5
 --- !u!114 &114905151845063692
 MonoBehaviour:
   m_ObjectHideFlags: 1
