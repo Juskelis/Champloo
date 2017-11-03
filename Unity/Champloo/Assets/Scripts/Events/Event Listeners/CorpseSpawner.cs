@@ -35,7 +35,7 @@ public class CorpseSpawner : MonoBehaviour {
     {
         HitEvent hit = (HitEvent)args;
 
-        dirToAttacker = (hit.Attacker.transform.position - hit.Hit.transform.position).normalized;
+        dirToAttacker = (hit.Attacker.CenterOfSprite - hit.Hit.CenterOfSprite).normalized;
     }
 
     private void OnKill(object sender, EventArgs args)
@@ -43,7 +43,7 @@ public class CorpseSpawner : MonoBehaviour {
         KillEvent e = (KillEvent)args;
         Vector3 dirToSpawn = e.MurderProjectile == null && dirToAttacker.sqrMagnitude > float.Epsilon
             ? dirToAttacker
-            : (e.Killer.transform.position - e.Victim.transform.position).normalized;
+            : (e.Killer.CenterOfSprite - e.Victim.CenterOfSprite).normalized;
         spurt = Instantiate(bloodSpurt, e.Victim.transform.position,
             alignToDirection
                 ? Quaternion.AngleAxis(

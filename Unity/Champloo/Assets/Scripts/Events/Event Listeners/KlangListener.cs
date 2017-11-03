@@ -51,8 +51,8 @@ public class KlangListener : MonoBehaviour
         pB.CancelHit();
 
         //pushback
-        pA.ApplyForce((pA.transform.position - centerOfEvent).normalized * klangKnockBack);
-        pB.ApplyForce((pB.transform.position - centerOfEvent).normalized * klangKnockBack);
+        pA.ApplyForce((pA.CenterOfSprite - centerOfEvent).normalized * klangKnockBack);
+        pB.ApplyForce((pB.CenterOfSprite - centerOfEvent).normalized * klangKnockBack);
 
         //create effect
         Instantiate(spawnOnKlang, centerOfEvent, Quaternion.identity);

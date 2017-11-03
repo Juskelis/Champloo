@@ -352,7 +352,7 @@ public class Player : NetworkBehaviour
         else if (info.Below)
         {
             ApplyForce(
-                (transform.position - otherPlayer.transform.position).normalized * bounceForce);
+                (CenterOfPlayer - otherPlayer.CenterOfPlayer).normalized * bounceForce);
             FireEvent(new BounceEvent { A = this, B = otherPlayer });
             if (movementState is OnDash && !otherPlayer.Dead)
             {
@@ -363,7 +363,7 @@ public class Player : NetworkBehaviour
         else if (info.Above)
         {
             otherPlayer.ApplyForce(
-                (otherPlayer.transform.position - transform.position).normalized * otherPlayer.bounceForce);
+                (otherPlayer.CenterOfPlayer - CenterOfPlayer).normalized * otherPlayer.bounceForce);
             FireEvent(new BounceEvent { A = this, B = otherPlayer });
             if (otherPlayer.movementState is OnDash && !Dead)
             {
@@ -374,9 +374,9 @@ public class Player : NetworkBehaviour
         {
             //apply forces no matter what
             ApplyForce(
-                (transform.position - otherPlayer.transform.position).normalized * bounceForce);
+                (CenterOfPlayer - otherPlayer.CenterOfPlayer).normalized * bounceForce);
             otherPlayer.ApplyForce(
-                (otherPlayer.transform.position - transform.position).normalized * otherPlayer.bounceForce);
+                (otherPlayer.CenterOfPlayer - CenterOfPlayer).normalized * otherPlayer.bounceForce);
             FireEvent(new BounceEvent { A = this, B = otherPlayer });
         }
 

@@ -178,7 +178,7 @@ public class PlayerSpawner : MonoBehaviour {
         {
             if (player.Dead) continue;
 
-            float sqrDistance = Vector3.SqrMagnitude(player.transform.position - center);
+            float sqrDistance = Vector3.SqrMagnitude(player.CenterOfPlayer - center);
             if (sqrDistance < minDistance)
             {
                 minDistance = sqrDistance;

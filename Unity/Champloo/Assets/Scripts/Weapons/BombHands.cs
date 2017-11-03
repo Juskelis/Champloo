@@ -21,7 +21,7 @@ public class BombHands : Weapon
             e.Hit.CancelHit();
             e.Attacker.GetHit(this, true);
             bombOut = false;
-            Instantiate(explosion, e.Attacker.transform.position, transform.rotation);
+            Instantiate(explosion, e.Attacker.CenterOfSprite, transform.rotation);
             OnEndSpecial();
         }
     }

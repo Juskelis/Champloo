@@ -22,7 +22,7 @@ public class ProjectileHitParticles : MonoBehaviour {
                 effect,
                 projectileHitEvent.HitPlayer == null
                     ? proj.transform.position
-                    : projectileHitEvent.HitPlayer.transform.position,
+                    : projectileHitEvent.HitPlayer.CenterOfSprite,
                 proj.transform.rotation);
         }
     }

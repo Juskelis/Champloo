@@ -11,6 +11,8 @@ public class DashStateListener : MonoBehaviour
 
     private TrailRenderer trail;
 
+    private Player p;
+
     void Awake()
     {
         LocalEventDispatcher d = GetComponentInParent<LocalEventDispatcher>();
@@ -25,6 +27,7 @@ public class DashStateListener : MonoBehaviour
         }
 
         trail = GetComponent<TrailRenderer>();
+        p = GetComponentInParent<Player>();
     }
 
     private void MovementStateChanged(object sender, EventArgs args)
@@ -48,7 +51,7 @@ public class DashStateListener : MonoBehaviour
         MovementSpecialTimingEvent e = (MovementSpecialTimingEvent) args;
         if (e.Special is OnDash && e.Timing == TimingState.IN_PROGRESS)
         {
-            Instantiate(dashPuff, transform.position, transform.rotation);
+            Instantiate(dashPuff, p.CenterOfSprite, transform.rotation);
             dashSound.Play();
             trail.enabled = true;
             trail.Clear();
