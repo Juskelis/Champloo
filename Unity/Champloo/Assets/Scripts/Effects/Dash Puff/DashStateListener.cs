@@ -9,6 +9,7 @@ public class DashStateListener : MonoBehaviour
     [SerializeField]
     private PlayRandomSource dashSound;
 
+    [SerializeField]
     private TrailRenderer trail;
 
     private Player p;
@@ -25,8 +26,6 @@ public class DashStateListener : MonoBehaviour
             d.AddListener<MovementSpecialTimingEvent>(DashTimingChanged);
             d.AddListener<MovementStateChangedEvent>(MovementStateChanged);
         }
-
-        trail = GetComponent<TrailRenderer>();
         p = GetComponentInParent<Player>();
     }
 
