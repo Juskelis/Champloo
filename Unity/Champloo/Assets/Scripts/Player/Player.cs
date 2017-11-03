@@ -75,6 +75,9 @@ public class Player : NetworkBehaviour
     private Transform visuals;
 
     [SerializeField]
+    private Transform centerOfSprite;
+
+    [SerializeField]
     private Transform hitbox;
 
     [SerializeField]
@@ -129,6 +132,16 @@ public class Player : NetworkBehaviour
     private bool manuallyUpdatedDirection = false;
 
     private bool invincible = false;
+
+    public Vector3 CenterOfSprite
+    {
+        get { return centerOfSprite.position; }
+    }
+
+    public Vector3 CenterOfPlayer
+    {
+        get { return transform.position; }
+    }
 
     #endregion
 
