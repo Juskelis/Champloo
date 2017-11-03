@@ -43,6 +43,15 @@ public class DashStateListener : MonoBehaviour
     {
         trail.enabled = false;
         trail.Clear();
+
+        GradientColorKey[] colorKeys = trail.colorGradient.colorKeys;
+        for (var i = 0; i < colorKeys.Length; i++)
+        {
+            colorKeys[i].color = p.PlayerColor;
+        }
+        Gradient g = trail.colorGradient;
+        g.SetKeys(colorKeys, trail.colorGradient.alphaKeys);
+        trail.colorGradient = g;
     }
 
     private void DashTimingChanged(object sender, EventArgs args)
