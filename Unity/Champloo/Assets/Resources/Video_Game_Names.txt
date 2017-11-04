@@ -5,13 +5,12 @@ Action
 Advanced^Advance
 Adventures of the^Adventure
 Aero
-African^in Africa
 Alcoholic
 Alien
 Allied
 All-American
 All-Night
-All-Star^Star|Starring Mickey Mouse|Stars|Superstar
+All-Star^Star|Stars|Superstar
 Almighty
 Amateur
 Amazing
@@ -27,7 +26,6 @@ Aquatic
 Arcane
 Armored
 Art of
-Asian
 Astral
 Attack of the^Attack
 Atomic^Nuclear
@@ -49,9 +47,7 @@ Bling Bling
 Blissful
 Blocky
 Bloody^Blood|Bloodbath|of the Blood God
-Boring
 Bouncin'
-Brain-Damaged
 British
 Caesar's
 Canadian
@@ -61,7 +57,6 @@ Celebrity
 Celtic
 Children of the
 Chillin'
-Chinese
 Chocolate
 Claustrophobic
 College
@@ -75,7 +70,6 @@ Cosmic
 Crazy
 Create Your Own^Creator
 Creepy
-Crossdressing
 Curse of the
 Custom
 Cute
@@ -89,6 +83,7 @@ Deadly^Death|Deathmatch|of Death|of the Dead
 Death-Defying^Death|Deathmatch|of Death|of the Dead
 Deep Space^of the Deep
 Def Jam
+Def Jux
 Demonic
 Depressing
 Deranged
@@ -109,12 +104,10 @@ Elderly
 Electric
 Elegant
 Elite
-Emo
 Endless
 Enormous
 Enraged
 Epic
-Erotic
 Escape from the
 Eternal
 European
@@ -150,8 +143,6 @@ Future
 Galactic
 Generic
 Geriatric
-German
-Ghetto
 Giant
 Glowing
 Go Go
@@ -188,7 +179,6 @@ In Search of the
 In the Lost Kingdom of^in the Magic Kingdom|in the Salad Kingdom|Kingdom
 In Your Face
 Inappropriate
-Inbred
 Incomprehensible
 Incredible
 Inept
@@ -209,8 +199,6 @@ Irresistible
 Irritating
 Italian
 It's a Mad, Mad^Madness
-Jamaican
-Japanese
 Kabuki
 Kamikaze
 Killer
@@ -220,7 +208,6 @@ Kinky
 Kosher
 Kung-fu
 Lair of the
-Latino
 Lazy
 Legacy of
 Legend of^Legend|Legends
@@ -247,16 +234,13 @@ Medieval
 Mega
 Merciless
 Metal
-Mexican
 Micro
-Middle-Eastern^in the Middle East
 Mighty
 Mind-Bending
-Miniature^Dwarf|Gnome|Midget
+Miniature^Dwarf|Gnome
 Miracle
 Monster^Monster Truck
 Morbid
-Morbidly Obese
 Mr.
 Muppet
 Musical^DJ|Music
@@ -295,7 +279,6 @@ Paranoid
 Pathetic
 Peaceful
 Perfect
-Perverted
 Pixellated
 Planet of the^Planet
 Political
@@ -354,7 +337,7 @@ Sexy^Sex
 Shadow of the^Shadow
 Shady
 Shameful
-Shrunken^Dwarf|Gnome|Midget
+Shrunken^Dwarf|Gnome
 Silent
 Silly
 Sim^Simulator
@@ -370,7 +353,7 @@ Spectral^Ghost
 Spirit of the
 Spooky
 Spunky
-Star^All-Stars|Starring Mickey Mouse|Stars|Superstar
+Star^All-Stars|Stars|Superstar
 Stealth
 Stoic
 Strategic
@@ -404,7 +387,7 @@ The Secret Weapon of the
 The Six Million Dollar
 Third-World
 Throbbing
-Tiny^Midget
+Tiny
 Topsy-Turvy
 Toxic
 Trendy
@@ -454,7 +437,6 @@ Zombie^Zombies
 3D
 Acid
 Aerobics
-Afro
 Alien
 Alligator
 Amish
@@ -462,6 +444,7 @@ Android
 Animal
 Arcade
 Architecture
+Aerial
 Army
 Assault
 Axe
@@ -473,8 +456,8 @@ Banana
 Banjo
 Barbarian
 Barcode
-Baseball^Base|Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
-Basketball^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Baseball^Base|Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Basketball^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Bass
 Batman^Man
 Battle^Battalion
@@ -500,8 +483,8 @@ Bong
 Bongo
 Booty
 Bow Hunter^Hunt|Hunter
-Bowling^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
-Boxing^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Bowling^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Boxing^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Breakdancing^Dance Mix|Dancers
 Bubble
 Bubblegum
@@ -533,8 +516,8 @@ Conga
 Cookie
 Cooking
 Cowboy
-Cricket^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
-Croquet^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Cricket^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Croquet^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Crossdressing
 Crowbar
 Crystal
@@ -549,7 +532,7 @@ Desert^in the Desert
 Devil
 Dinosaur
 Disco
-Dodgeball^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Dodgeball^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Dog
 Donkey
 Dragon
@@ -566,10 +549,10 @@ Farm^Farmer
 Fencing
 Fighter^Fight|Fight Club
 Fire
-Fishing^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Fishing^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Flatulence
 Florist
-Football^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Football^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Forklift
 Frisbee
 Frog
@@ -599,13 +582,12 @@ Hardware
 Harpoon
 Harvest
 Helicopter
-Hillbilly
 Hippo
 Hitman^Man
 Hockey
 Hoedown^Beatdown|Showdown|Smackdown|Takedown
 Hovercraft
-Horse Racing^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Horse Racing^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Ice
 Ice Cream
 Insect
@@ -615,7 +597,6 @@ Janitor
 Jazz
 Jetpack
 Jetski
-Juggalo
 Jungle
 Kabuki
 Kangaroo
@@ -625,7 +606,7 @@ Kart
 Katana
 Kitchen
 Kung-fu
-Lacrosse^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Lacrosse^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Landmine
 Laser
 Lawnmower
@@ -672,11 +653,11 @@ Office
 Ostrich
 Outlaw
 Pachinko
-Paintball^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Paintball^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Penguin
 Piano
-Pinball^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
-Ping Pong^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Pinball^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Ping Pong^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Pirate
 Platypus
 Plumber
@@ -703,8 +684,8 @@ River
 Robot
 Rocket
 Rodeo
-Rollerball^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
-Rugby^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Rollerball^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Rugby^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Sailboat
 Sailor
 Samurai^Samurai
@@ -712,7 +693,6 @@ Sandwich
 Scooter
 Scorched Earth
 Sewer
-Sex
 Shadow
 Shark
 Shaving
@@ -771,7 +751,7 @@ Vegetarian
 Vigilante
 Viking
 Vocabulary
-Volleyball^Baseball|Basketball|Boxing|Football|Paintbrawl|Pinball|Polo
+Volleyball^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Wagon
 Walrus
 Wedding
@@ -792,6 +772,7 @@ Yoga
 Zamboni
 Zombie^Zombies
 ----
+- The Next Generation
 - 2nd Impact
 - 3rd Strike
 - 3rd Strike: Fight for the Future
@@ -829,6 +810,7 @@ Battalion
 Base
 Baseball
 Basketball
+BASEketball
 Beatdown
 Beta
 Blast
@@ -954,15 +936,12 @@ House
 II
 III
 Ignition
-in Africa
 in Busytown
 in Crazyland
 in My Pocket
 in Space
 in the Bayou
 in the Dark
-in the Desert
-in the Hood
 in the Outback
 in the Salad Kingdom
 in the Sky
