@@ -17,8 +17,8 @@ public class BounceListener : MonoBehaviour
     {
         BounceEvent e = (BounceEvent) args;
 
-        Vector3 pos = (e.A.transform.position + e.B.transform.position)/2;
-        Vector3 dir = (e.A.transform.position - e.B.transform.position).normalized;
+        Vector3 pos = (e.A.CenterOfSprite + e.B.CenterOfSprite) /2;
+        Vector3 dir = (e.A.CenterOfSprite - e.B.CenterOfSprite).normalized;
         Instantiate(toSpawn, pos, Quaternion.AngleAxis(Utility.Vector2AsAngle(dir), transform.forward));
     }
 }

@@ -52,7 +52,7 @@ public class BombProjectile : Projectile {
         //go through all players and push them away
         foreach (Player player in FindObjectsOfType<Player>())
         {
-            Vector3 pushDir = (player.transform.position - transform.position).normalized;
+            Vector3 pushDir = (player.CenterOfPlayer - transform.position).normalized;
             player.ApplyForce(pushDir * explosionForce);
         }
 

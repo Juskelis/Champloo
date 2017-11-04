@@ -9,7 +9,10 @@ public class DashStateListener : MonoBehaviour
     [SerializeField]
     private PlayRandomSource dashSound;
 
+    [SerializeField]
     private TrailRenderer trail;
+
+    private Player p;
 
     void Awake()
     {
@@ -23,8 +26,7 @@ public class DashStateListener : MonoBehaviour
             d.AddListener<MovementSpecialTimingEvent>(DashTimingChanged);
             d.AddListener<MovementStateChangedEvent>(MovementStateChanged);
         }
-
-        trail = GetComponent<TrailRenderer>();
+        p = GetComponentInParent<Player>();
     }
 
     private void MovementStateChanged(object sender, EventArgs args)
@@ -41,6 +43,15 @@ public class DashStateListener : MonoBehaviour
     {
         trail.enabled = false;
         trail.Clear();
+
+        GradientColorKey[] colorKeys = trail.colorGradient.colorKeys;
+        for (var i = 0; i < colorKeys.Length; i++)
+        {
+            colorKeys[i].color = p.PlayerColor;
+        }
+        Gradient g = trail.colorGradient;
+        g.SetKeys(colorKeys, trail.colorGradient.alphaKeys);
+        trail.colorGradient = g;
     }
 
     private void DashTimingChanged(object sender, EventArgs args)
@@ -48,7 +59,7 @@ public class DashStateListener : MonoBehaviour
         MovementSpecialTimingEvent e = (MovementSpecialTimingEvent) args;
         if (e.Special is OnDash && e.Timing == TimingState.IN_PROGRESS)
         {
-            Instantiate(dashPuff, transform.position, transform.rotation);
+            Instantiate(dashPuff, p.CenterOfSprite, transform.rotation);
             dashSound.Play();
             trail.enabled = true;
             trail.Clear();

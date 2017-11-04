@@ -17,8 +17,8 @@ public class HitListener : MonoBehaviour
     {
         HitEvent hit = (HitEvent) args;
 
-        Vector3 dirToAttacker = (hit.Attacker.transform.position - hit.Hit.transform.position).normalized;
-        Instantiate(toSpawn, hit.Hit.transform.position,
+        Vector3 dirToAttacker = (hit.Attacker.CenterOfSprite - hit.Hit.CenterOfSprite).normalized;
+        Instantiate(toSpawn, hit.Hit.CenterOfSprite,
             Quaternion.AngleAxis(Utility.Vector2AsAngle(dirToAttacker), transform.forward));
     }
 }

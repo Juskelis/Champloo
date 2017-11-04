@@ -23,7 +23,7 @@ public class WeaponKillListener : MonoBehaviour
         HitEvent hit = (HitEvent)args;
 
 
-        dirToAttacker = (hit.Attacker.transform.position - hit.Hit.transform.position).normalized;
+        dirToAttacker = (hit.Attacker.CenterOfSprite - hit.Hit.CenterOfSprite).normalized;
         killingWeaponPlayerId = hit.Attacker.PlayerNumber;
     }
 
@@ -37,10 +37,10 @@ public class WeaponKillListener : MonoBehaviour
         if (e.MurderWeapon.PlayerNumber != killingWeaponPlayerId)
         {
             killingWeaponPlayerId = -1;
-            Vector3 dirToKiller = (e.Killer.transform.position - e.Victim.transform.position).normalized;
+            Vector3 dirToKiller = (e.Killer.CenterOfSprite - e.Victim.CenterOfSprite).normalized;
             Instantiate(
                 killEffect,
-                e.Victim.transform.position,
+                e.Victim.CenterOfSprite,
                 Quaternion.AngleAxis(
                     Utility.Vector2AsAngle(dirToKiller),
                     transform.forward));
@@ -49,7 +49,7 @@ public class WeaponKillListener : MonoBehaviour
         {
             Instantiate(
                 killEffect,
-                e.Victim.transform.position,
+                e.Victim.CenterOfSprite,
                 Quaternion.AngleAxis(
                     Utility.Vector2AsAngle(dirToAttacker),
                     transform.forward));

@@ -37,8 +37,8 @@ public class BlockListener : MonoBehaviour {
 
         blockSound.Play();
 
-        Vector3 attackerPos = e.Attacker.transform.position;
-        Vector3 defenderPos = e.Blocker.transform.position;
+        Vector3 attackerPos = e.Attacker.CenterOfPlayer;
+        Vector3 defenderPos = e.Blocker.CenterOfPlayer;
 
         Vector3 knockbackDir = (attackerPos - defenderPos).normalized;
         knockbackDir.x *= knockbackAmount.x;

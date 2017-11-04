@@ -22,7 +22,7 @@ public class Lance : Projectile {
     protected override void Start()
     {
         base.Start();
-        transform.position = OurPlayer.transform.position;
+        transform.position = OurPlayer.CenterOfSprite;
         transform.SetParent(OurPlayer.transform, true);
         Invoke("Finish", duration);
     }

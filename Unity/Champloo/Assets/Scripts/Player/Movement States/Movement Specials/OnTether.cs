@@ -66,7 +66,7 @@ public class OnTether : OnMovementSpecial
 
         //find the direction between the player and the stopped weapon
         //then pull the player continuously towards the tether
-        Vector2 pullDirection = (temp.transform.position - player.transform.position).normalized;
+        Vector2 pullDirection = (temp.transform.position - player.CenterOfPlayer).normalized;
         velocity = pullDirection*tetherForce;
 
         if ((controller.collisions.Left && direction.x < 0) || (controller.collisions.Right && direction.x > 0))
