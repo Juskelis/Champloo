@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WineBottleProjectile : Projectile {
+public class WineBottleProjectile : Projectile
+{
     [SerializeField]
     private GameObject explosion;
 
@@ -11,6 +12,9 @@ public class WineBottleProjectile : Projectile {
 
     [SerializeField]
     private float degreesPerSecond = 45f;
+
+    [SerializeField]
+    private Vector3 offset;
 
     protected override void Update()
     {
@@ -39,5 +43,11 @@ public class WineBottleProjectile : Projectile {
         Instantiate(explosion, transform.position, transform.rotation);
 
         Destroy(gameObject);
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        transform.position += offset;
     }
 }
