@@ -1826,10 +1826,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 8
-  stopToMaxSpeedTime: 0.3
-  maxSpeedToStopTime: 0.4
-  fullTurnTime: 0.35
+  maxSpeed: 10
+  stopToMaxSpeedTime: 0.2
+  maxSpeedToStopTime: 0.2
+  fullTurnTime: 0.4
   analogMovementSpeed: 0
 --- !u!114 &114434379867403634
 MonoBehaviour:
@@ -1997,10 +1997,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 20
-  maxSpeed: 8
-  stopToMaxSpeedTime: 0.3
-  maxSpeedToStopTime: 0.45
-  fullTurnTime: 0.7
+  maxSpeed: 12
+  stopToMaxSpeedTime: 0.25
+  maxSpeedToStopTime: 0.4
+  fullTurnTime: 0.75
   analogMovementSpeed: 0
 --- !u!114 &114835231177880446
 MonoBehaviour:
