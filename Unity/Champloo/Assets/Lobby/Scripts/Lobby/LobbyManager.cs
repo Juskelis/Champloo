@@ -100,7 +100,11 @@ namespace Prototype.NetworkLobby
                     }
                     else
                     {
-                        if (conn.playerControllers[0].unetView.isClient)
+                        if (conn.playerControllers.Count <= 0)
+                        {
+                            Debug.LogError("No players for this connection!");
+                        }
+                        else if (conn.playerControllers[0].unetView.isClient)
                         {
                             backDelegate = StopHostClbk;
                         }
