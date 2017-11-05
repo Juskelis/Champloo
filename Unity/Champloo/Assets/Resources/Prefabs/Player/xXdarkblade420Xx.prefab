@@ -92,9 +92,9 @@ GameObject:
   - component: {fileID: 114031016057284732}
   - component: {fileID: 114432283423344390}
   - component: {fileID: 114816192349633596}
+  - component: {fileID: 114984199019586526}
   - component: {fileID: 114835231177880446}
   - component: {fileID: 114662547228443520}
-  - component: {fileID: 114187267148614972}
   - component: {fileID: 114384941653737122}
   - component: {fileID: 114754671075927648}
   - component: {fileID: 114121970608963264}
@@ -1921,17 +1921,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441716ec3c3c935489d6644eafbc13ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114187267148614972
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1162316800763126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d7340326ba737940b8d5824aa5c067d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114190614785949070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2395,6 +2384,19 @@ MonoBehaviour:
   singleIndicator: {fileID: 4894125257136814, guid: f104d7ff763f1a9448161892206c70eb,
     type: 2}
   spacing: 1
+--- !u!114 &114984199019586526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162316800763126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d071e9c78342d4189957df343fd3c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStopTime: 0.3125
+  exitSpeedMultiplier: 0
 --- !u!198 &198596117821233690
 ParticleSystem:
   m_ObjectHideFlags: 1
