@@ -5,14 +5,19 @@ using UnityEngine;
 public class InDarkbladeAttack : InAttack
 {
     [SerializeField]
-    [Tooltip("Time it takes from InAir's max speed to stopped")]
+    [Tooltip("Time it takes from InAir's max speed to stopped, tied to Weapon's special startup time")]
     private float maxStopTime;
+
+    [SerializeField]
+    private float exitSpeedMultiplier = 1f;
 
     private InAir inAirState;
     private float inAirMaxSpeed;
 
     private float specialFriction;
     private float inAirSpecialFriction;
+
+    private bool isSpecial = false;
 
     protected override void Start()
     {
@@ -29,14 +34,31 @@ public class InDarkbladeAttack : InAttack
         {
             return Vector3.MoveTowards(velocity, Vector3.zero, specialFriction*Time.deltaTime);
         }
+
+        if (playerWeapon.IsSpecialAttacking)
+        {
+            isSpecial = true;
+        }
+
         return base.ApplyFriction(velocity);
+    }
+
+    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
+    {
+        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+
+        if (isSpecial)
+        {
+            outVelocity = outVelocity*exitSpeedMultiplier;
+        }
     }
 
     public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces, out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
+        isSpecial = false;
         specialFriction = inVelocity.sqrMagnitude > inAirMaxSpeed*inAirMaxSpeed
             ? inVelocity.magnitude/maxStopTime
-            : inAirSpecialFriction;
+            : inAirMaxSpeed / maxStopTime;
     }
 }
