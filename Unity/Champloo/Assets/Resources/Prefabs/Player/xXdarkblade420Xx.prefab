@@ -2266,7 +2266,7 @@ MonoBehaviour:
   wallStickTime: 0.2
   wallJumpVelocity: {x: 20, y: 20}
   noAngleJumpModifier: {x: 1.25, y: 0}
-  towardsWallJumpModifier: {x: 1, y: 1}
+  towardsWallJumpModifier: {x: 0.9, y: 1}
   allowedMinAngle: 1.16
 --- !u!114 &114852319061618254
 MonoBehaviour:
@@ -2362,14 +2362,14 @@ MonoBehaviour:
   attackTime: 0.1
   cooldownTime: 0.25
   rechargeTime: 0
-  specialStartupTime: 0.25
+  specialStartupTime: 0.3125
   specialTime: 0.18
-  specialCooldownTime: 0
+  specialCooldownTime: 1
   specialRechargeTime: 0
   thrownVersion: {fileID: 0}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
-  superSwordSize: {x: 1, y: 1}
+  superSwordSize: {x: 2, y: 1.25}
 --- !u!114 &114958792587567482
 MonoBehaviour:
   m_ObjectHideFlags: 1
