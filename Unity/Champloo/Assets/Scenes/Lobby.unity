@@ -4402,7 +4402,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 6bfd195ab0a598b4883becfb5349f4bc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 25a3f0d14df89434394fa6df5b9ab37e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -8147,7 +8147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb30a25aa9129449813588bb5a497ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapName: Pagoda
+  mapName: 5-6ths Training Stage
 --- !u!95 &897013343
 Animator:
   serializedVersion: 3
@@ -10391,7 +10391,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Pagoda
+  m_Text: 5-6ths Training Stage
 --- !u!222 &1165483595
 CanvasRenderer:
   m_ObjectHideFlags: 0
