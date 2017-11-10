@@ -62,6 +62,12 @@ public class Shield : MonoBehaviour {
 
     }
 
+    public void Reset()
+    {
+        Up = false;
+        hitsLeft = MaxHits;
+    }
+
     private void Update()
     {
         if (!Up)
@@ -100,11 +106,6 @@ public class Shield : MonoBehaviour {
         {
             shieldLevels[i].enabled = i < hitsLeft && Up;
         }
-        /*
-        float percentLeft = ((float)hitsLeft)/MaxHits;
-        visuals.transform.localScale = Vector3.one * spriteMaxScale * percentLeft;
-        visuals.enabled = Up;
-        */
     }
 
     public void ActivateShield()
