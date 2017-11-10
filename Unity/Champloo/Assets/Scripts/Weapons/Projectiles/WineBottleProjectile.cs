@@ -30,7 +30,7 @@ public class WineBottleProjectile : Projectile
     {
         Player p = g.gameObject.GetComponent<Player>()
                    ?? g.gameObject.GetComponentInParent<Player>();
-        if (p == null || p.PlayerNumber == PlayerNumber) return;
+        if (p == null || p.PlayerNumber == PlayerNumber || p.CurrentMovementState is InBlock) return;
         p.GetStunned(stunTime);
 
         Instantiate(explosion, transform.position, transform.rotation);
