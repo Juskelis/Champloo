@@ -6,6 +6,7 @@ public class InDarkbladeAttack : InAttack
 {
     [SerializeField]
     [Tooltip("Time it takes from InAir's max speed to stopped, tied to Weapon's special startup time")]
+    [Range(0,1)]
     private float maxStopTime;
 
     [SerializeField]
@@ -15,7 +16,6 @@ public class InDarkbladeAttack : InAttack
     private float inAirMaxSpeed;
 
     private float specialFriction;
-    private float inAirSpecialFriction;
 
     private bool isSpecial = false;
 
@@ -24,8 +24,6 @@ public class InDarkbladeAttack : InAttack
         base.Start();
         inAirState = GetComponent<InAir>();
         inAirMaxSpeed = inAirState.MaxFallSpeed;
-        specialFriction = inAirMaxSpeed/maxStopTime;
-        inAirSpecialFriction = specialFriction;
     }
 
     public override Vector3 ApplyFriction(Vector3 velocity)
@@ -58,7 +56,7 @@ public class InDarkbladeAttack : InAttack
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         isSpecial = false;
         specialFriction = inVelocity.sqrMagnitude > inAirMaxSpeed*inAirMaxSpeed
-            ? inVelocity.magnitude/maxStopTime
-            : inAirMaxSpeed / maxStopTime;
+            ? inVelocity.magnitude/(maxStopTime*playerWeapon.SpecialStartupTime)
+            : inAirMaxSpeed / (maxStopTime * playerWeapon.SpecialStartupTime);
     }
 }

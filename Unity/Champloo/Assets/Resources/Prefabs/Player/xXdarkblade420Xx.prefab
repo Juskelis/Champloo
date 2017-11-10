@@ -2395,7 +2395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d071e9c78342d4189957df343fd3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStopTime: 0.3125
+  maxStopTime: 1
   exitSpeedMultiplier: 0
 --- !u!198 &198596117821233690
 ParticleSystem:
