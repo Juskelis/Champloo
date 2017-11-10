@@ -51,6 +51,11 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     protected float rechargeTime;
 
+    public float StartupTime { get { return startupTime; } }
+    public float AttackTime { get { return attackTime; } }
+    public float CooldownTime { get { return cooldownTime; } }
+    public float RechargeTime { get { return rechargeTime; } }
+
     [SerializeField]
     protected float specialStartupTime;
     [SerializeField]
@@ -59,6 +64,11 @@ public class Weapon : MonoBehaviour
     protected float specialCooldownTime;
     [SerializeField]
     protected float specialRechargeTime;
+    
+    public float SpecialStartupTime { get { return specialStartupTime; } }
+    public float SpecialTime { get { return specialTime; } }
+    public float SpecialCooldownTime { get { return specialCooldownTime; } }
+    public float SpecialRechargeTime { get { return specialRechargeTime; } }
 
     [SerializeField]
     protected Projectile thrownVersion;
