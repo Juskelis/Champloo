@@ -25,6 +25,11 @@ public class MovementState : NetworkBehaviour
 
     private void Update() { } //prevent children from using this
 
+    public virtual void Reset()
+    {
+
+    }
+
     /// <summary>
     /// Called when entering a state 
     /// </summary>
