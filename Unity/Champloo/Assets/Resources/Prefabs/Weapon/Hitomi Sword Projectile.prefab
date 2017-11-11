@@ -255,8 +255,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  minVelocity: 10
-  maxVelocity: 40
+  minVelocity: 30
+  maxVelocity: 30
   velocityAnimationTime: 0.2
   maxColliderSize: {x: 2, y: 2}
   growthTime: 2
