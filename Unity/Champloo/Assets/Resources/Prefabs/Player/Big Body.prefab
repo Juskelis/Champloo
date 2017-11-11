@@ -2010,7 +2010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 20
-  maxSpeed: 12
+  maxSpeed: 13
   stopToMaxSpeedTime: 0.25
   maxSpeedToStopTime: 0.4
   fullTurnTime: 0.75
@@ -2029,7 +2029,7 @@ MonoBehaviour:
   maxFallSpeed: 8
   wallStickTime: 0.2
   wallJumpVelocity: {x: 15, y: 20}
-  noAngleJumpModifier: {x: 1, y: 1}
+  noAngleJumpModifier: {x: 1.2, y: 1}
   towardsWallJumpModifier: {x: 0.85, y: 1.1}
   allowedMinAngle: 1.16
 --- !u!114 &114849532675118652
