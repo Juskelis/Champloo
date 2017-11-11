@@ -20,9 +20,8 @@ public class BigBodyProjectile : Projectile
         Player p = g.GetComponent<Player>()
                    ?? g.GetComponentInParent<Player>();
         if (p == null) return;
-
-        //deliberately not checking for blocking state from opponent
-        if (p.PlayerNumber != PlayerNumber)
+        
+        if (p.PlayerNumber != PlayerNumber && !(p.CurrentMovementState is InBlock))
         {
             base.ProcessHitPlayer(g);
             Destroy(gameObject);
