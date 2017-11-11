@@ -2358,7 +2358,7 @@ MonoBehaviour:
   thrownVersion: {fileID: 0}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
-  superSwordSize: {x: 2, y: 1.25}
+  superSwordSize: {x: 2, y: 1.5}
 --- !u!114 &114958792587567482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2396,7 +2396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxStopTime: 1
-  exitSpeedMultiplier: 0
+  exitSpeedMultiplier: 0.5
 --- !u!198 &198596117821233690
 ParticleSystem:
   m_ObjectHideFlags: 1
