@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 114469000994252816}
   - component: {fileID: 114323138353395156}
   - component: {fileID: 114371463023729314}
+  - component: {fileID: 114796342813154934}
   m_Layer: 9
   m_Name: Big Body
   m_TagString: Player
@@ -1826,9 +1827,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
+  maxSpeed: 11
   stopToMaxSpeedTime: 0.2
-  maxSpeedToStopTime: 0.2
+  maxSpeedToStopTime: 0.3
   fullTurnTime: 0.4
   analogMovementSpeed: 0
 --- !u!114 &114434379867403634
@@ -1985,6 +1986,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tauntDuration: 1
+--- !u!114 &114796342813154934
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162316800763126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32184c1dae44eca44b8a63fd66a0ca27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundFriction: 30
 --- !u!114 &114816192349633596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2036,8 +2049,8 @@ MonoBehaviour:
   rechargeTime: 0.25
   specialStartupTime: 0
   specialTime: 0
-  specialCooldownTime: 1
-  specialRechargeTime: 0.6
+  specialCooldownTime: 0
+  specialRechargeTime: 1.5
   thrownVersion: {fileID: 114168133414632582, guid: 8fc873c39188b18459ac55a6386aa847,
     type: 2}
   alwaysVisible: 0
