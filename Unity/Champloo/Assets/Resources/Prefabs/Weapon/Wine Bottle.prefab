@@ -258,7 +258,7 @@ MonoBehaviour:
   maxVelocity: 30
   velocityAnimationTime: 1
   explosion: {fileID: 1247608760536596, guid: cb2ced342a269d043a2308854254aad2, type: 2}
-  stunTime: 1
+  stunTime: 0.75
   degreesPerSecond: 10
   offset: {x: 0, y: 0.35, z: 0}
 --- !u!114 &114795690851259450
