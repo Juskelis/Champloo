@@ -23,15 +23,16 @@ public class OnWall : MovementState
     private float allowedMinAngle = 1.16f;
 
     private float timeToWallUnstick;
+    
+    public bool Jumped { get; private set; }
 
-    private bool jumped = false;
-
+    private int previousWallDirX;
 
     public override Vector3 ApplyFriction(Vector3 velocity)
     {
         int wallDirX = (controller.collisions.Left) ? -1 : 1;
         float moveX = player.InputPlayer.GetAxis("Move Horizontal");
-        if (jumped)
+        if (Jumped)
         {
             return velocity;
         }
@@ -62,6 +63,55 @@ public class OnWall : MovementState
         return velocity;
     }
 
+    public Vector3 OnJump()
+    {
+        Vector2 direction = player.AimDirection.normalized;
+
+        int wallDirX = previousWallDirX;
+        if (controller.collisions.Left)
+        {
+            wallDirX = -1;
+        } else if (controller.collisions.Right)
+        {
+            wallDirX = 1;
+        }
+
+        Vector3 outVelocity = Vector3.zero;
+        Jumped = true;
+        inputController.ConsumeButton("Jump");
+
+        //PLayer will always jump off of a wall a little bit
+        outVelocity.x = (wallJumpVelocity.x / 2) * (-wallDirX);
+
+        //if player has no input
+        //Player defaults no input to direction player is facing
+        if (Mathf.Abs(direction.x) == 1 && direction.y == 0)
+        {
+            outVelocity.x = -wallDirX * wallJumpVelocity.x * noAngleJumpModifier.x;
+            outVelocity.y = wallJumpVelocity.y;
+        }
+        //if the input is pointed towards the wall or slightly away and up
+        else if (Mathf.Abs(wallDirX - direction.x) < 0.5f || ((Mathf.Abs(wallDirX - direction.x) < allowedMinAngle) && (Mathf.Abs(1 - direction.y) < .25)))
+        {
+            outVelocity.y = wallJumpVelocity.y * towardsWallJumpModifier.y;
+            outVelocity.x *= towardsWallJumpModifier.x;
+        }
+        //if the input is down and slightly away
+        else if (Mathf.Abs(wallDirX - direction.x) < allowedMinAngle && Mathf.Abs(1 - direction.y) > .25)
+        {
+            outVelocity.y = -wallJumpVelocity.y;
+        }
+        //If player has other directional input
+        else
+        {
+            outVelocity.x = wallJumpVelocity.x * direction.x;
+            outVelocity.y = wallJumpVelocity.y * direction.y;
+        }
+
+        player.FireEvent(new JumpEvent { Active = this, Direction = outVelocity });
+        return outVelocity;
+    }
+
     public override void ApplyInputs(Vector3 inVelocity, Vector3 inExternalForces,
         out Vector3 outVelocity, out Vector3 outExternalForces)
     {
@@ -71,44 +121,13 @@ public class OnWall : MovementState
         Vector2 direction = player.AimDirection.normalized;
         int wallDirX = (controller.collisions.Left) ? -1 : 1;
 
-        jumped = false;
         if (player.InputPlayer.GetButtonDown("Jump") && !inputController.IsConsumed("Jump"))
+        Jumped = false;
         {
-            jumped = true;
-            inputController.ConsumeButton("Jump");
-
-            //PLayer will always jump off of a wall a little bit
-            outVelocity.x = (wallJumpVelocity.x / 2) * (-wallDirX);
-
-            //if player has no input
-            //Player defaults no input to direction player is facing
-            if (Mathf.Abs(direction.x) == 1 && direction.y == 0)
-            {
-                outVelocity.x = -wallDirX * wallJumpVelocity.x * noAngleJumpModifier.x;
-                outVelocity.y = wallJumpVelocity.y;
-            }
-            //if the input is pointed towards the wall or slightly away and up
-            else if (Mathf.Abs(wallDirX - direction.x) < 0.5f || ((Mathf.Abs(wallDirX - direction.x) < allowedMinAngle) && (Mathf.Abs(1 - direction.y) < .25)))
-            {
-                outVelocity.y = wallJumpVelocity.y * towardsWallJumpModifier.y;
-                outVelocity.x *= towardsWallJumpModifier.x;
-            }
-            //if the input is down and slightly away
-            else if (Mathf.Abs(wallDirX - direction.x) < allowedMinAngle && Mathf.Abs(1 - direction.y) > .25)
-            {
-                outVelocity.y = -wallJumpVelocity.y;
-            }
-            //If player has other directional input
-            else
-            {
-                outVelocity.x = wallJumpVelocity.x * direction.x;
-                outVelocity.y = wallJumpVelocity.y * direction.y;
-            }
-
-            player.FireEvent(new JumpEvent {Active = this, Direction = outVelocity});
+            outVelocity = OnJump();
         }
 
-        if (jumped)
+        if (Jumped)
         {
             player.UpdateDirection(wallDirX < 0);
         }
@@ -116,6 +135,8 @@ public class OnWall : MovementState
         {
             player.UpdateDirection(wallDirX > 0);
         }
+
+        previousWallDirX = wallDirX;
     }
 
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
@@ -125,7 +146,7 @@ public class OnWall : MovementState
             return GetComponent<OnGround>();
         }
 
-        if (jumped || !(controller.collisions.Left || controller.collisions.Right))
+        if (Jumped || !(controller.collisions.Left || controller.collisions.Right))
         {
             return GetComponent<InAir>();
         }
@@ -139,6 +160,7 @@ public class OnWall : MovementState
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         timeToWallUnstick = wallStickTime;
         movementSpecial.OnEnterWall(inVelocity, inExternalForces);
+        Jumped = false;
     }
 
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
@@ -146,6 +168,5 @@ public class OnWall : MovementState
     {
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         movementSpecial.OnExitWall(inVelocity, inExternalForces);
-        jumped = false;
     }
 }
