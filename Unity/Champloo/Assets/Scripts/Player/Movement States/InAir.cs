@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using Rewired;
 
@@ -20,10 +21,17 @@ public class InAir : MovementState
     [SerializeField]
     private bool analogMovementSpeed = false;
 
+    [SerializeField]
+    [Tooltip("How long into entering air can we still jump?")]
+    private float coyoteTime = 0.2f;
+
     private float acceleration;
     private float deceleration;
     private float turningDeceleration;
     private bool hasShortened;
+
+    private float onGroundExitTime = Mathf.NegativeInfinity;
+    private float onWallExitTime = Mathf.NegativeInfinity;
 
     protected override void Start()
     {
@@ -33,6 +41,21 @@ public class InAir : MovementState
         acceleration = maxSpeed / stopToMaxSpeedTime;
         deceleration = maxSpeed / maxSpeedToStopTime;
         turningDeceleration = (maxSpeed * 2) / fullTurnTime;
+
+        GetComponentInParent<LocalEventDispatcher>().AddListener<MovementStateChangedEvent>(OnMovementStateChanged);
+    }
+
+    private void OnMovementStateChanged(object sender, EventArgs args)
+    {
+        MovementStateChangedEvent evt = (MovementStateChangedEvent) args;
+        if (evt.Previous.GetType() == typeof(OnGround) && !((OnGround)evt.Previous).Jumped)
+        {
+            onGroundExitTime = Time.time;
+        }
+        if (evt.Previous.GetType() == typeof(OnWall) && !((OnWall)evt.Previous).Jumped)
+        {
+            onWallExitTime = Time.time;
+        }
     }
 
     public override Vector3 ApplyFriction(Vector3 velocity)
@@ -69,11 +92,24 @@ public class InAir : MovementState
         }
 
         //if the player releases the jump button and is is moving up
-        //if (player.InputPlayer.GetButtonUp("Jump") && inVelocity.y > 0 && !hasShortened)
-        if (player.InputPlayer.GetButtonUp("Jump") && !hasShortened && inputController.IsConsumed("Jump"))
+        if (player.InputPlayer.GetButtonUp("Jump") && !hasShortened  && inVelocity.y > 0 && !inputController.IsDown("Jump"))
         {
             outVelocity.y = inVelocity.y / 2;
             hasShortened = true;
+        }
+
+        if (onGroundExitTime > 0 && Time.time - onGroundExitTime <= coyoteTime && inputController.IsDown("Jump"))
+        {
+            //coyote jump!
+            hasShortened = false;
+            outVelocity = GetComponentInParent<OnGround>().OnJump(outVelocity);
+        }
+
+        if (onWallExitTime > 0 && Time.time - onWallExitTime <= coyoteTime && inputController.IsDown("Jump"))
+        {
+            //coyote jump!
+            hasShortened = false;
+            outVelocity = GetComponentInParent<OnWall>().OnJump();
         }
     }
 
