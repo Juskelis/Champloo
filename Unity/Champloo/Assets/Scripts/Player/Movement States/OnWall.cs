@@ -121,8 +121,8 @@ public class OnWall : MovementState
         Vector2 direction = player.AimDirection.normalized;
         int wallDirX = (controller.collisions.Left) ? -1 : 1;
 
-        if (player.InputPlayer.GetButtonDown("Jump") && !inputController.IsConsumed("Jump"))
         Jumped = false;
+        if (inputController.IsDown("Jump"))
         {
             outVelocity = OnJump();
         }

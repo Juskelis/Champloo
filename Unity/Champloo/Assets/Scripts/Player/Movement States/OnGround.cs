@@ -66,7 +66,7 @@ public class OnGround : MovementState
         base.ApplyInputs(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
         Jumped = false;
-        if (input.GetButtonDown("Jump") && !inputController.IsConsumed("Jump"))
+        if (inputController.IsDown("Jump"))
         {
             outVelocity = OnJump();
         }
