@@ -4,6 +4,9 @@ using System.Collections;
 public class OnGround : MovementState
 {
     [SerializeField]
+    private float jumpWindow = 0.1f;
+
+    [SerializeField]
     private float maxSpeed = 6;
     [SerializeField]
     private float stopToMaxSpeedTime = 0.1f;
@@ -66,7 +69,7 @@ public class OnGround : MovementState
         base.ApplyInputs(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
         Jumped = false;
-        if (inputController.IsDown("Jump"))
+        if (inputController.IsDown("Jump", jumpWindow))
         {
             outVelocity = OnJump();
         }

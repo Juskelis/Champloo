@@ -4,6 +4,9 @@ using System.Collections;
 public class OnWall : MovementState
 {
     [SerializeField]
+    private float jumpWindow = 0.1f;
+
+    [SerializeField]
     private float maxFallSpeed = 10f;
 
     [SerializeField]
@@ -122,7 +125,7 @@ public class OnWall : MovementState
         int wallDirX = (controller.collisions.Left) ? -1 : 1;
 
         Jumped = false;
-        if (inputController.IsDown("Jump"))
+        if (inputController.IsDown("Jump", jumpWindow))
         {
             outVelocity = OnJump();
         }
