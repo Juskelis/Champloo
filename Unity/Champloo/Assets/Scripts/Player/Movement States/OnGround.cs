@@ -4,6 +4,9 @@ using System.Collections;
 public class OnGround : MovementState
 {
     [SerializeField]
+    private float jumpWindow = 0.1f;
+
+    [SerializeField]
     private float maxSpeed = 6;
     [SerializeField]
     private float stopToMaxSpeedTime = 0.1f;
@@ -18,12 +21,13 @@ public class OnGround : MovementState
     public float MaxSpeed { get { return maxSpeed; } }
 
     private float jumpVelocity;
+    public float JumpVelocity { get {return jumpVelocity; } }
 
     private float acceleration;
     private float deceleration;
     private float turningDeceleration;
 
-    public bool Jumped { get; set; }
+    public bool Jumped { get; private set; }
 
     protected override void Start()
     {
@@ -49,18 +53,25 @@ public class OnGround : MovementState
         return velocity;
     }
 
+    public Vector3 OnJump(Vector3 inVelocity = default(Vector3))
+    {
+        Vector3 outVelocity = inVelocity;
+        Jumped = true;
+        inputController.ConsumeButton("Jump");
+        player.FireEvent(new JumpEvent { Active = this, Direction = Vector3.up });
+        outVelocity.y = jumpVelocity;
+        return outVelocity;
+    }
+
     public override void ApplyInputs(Vector3 inVelocity, Vector3 inExternalForces,
         out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.ApplyInputs(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
 
         Jumped = false;
-        if (input.GetButtonDown("Jump") && !inputController.IsConsumed("Jump"))
+        if (inputController.IsDown("Jump", jumpWindow))
         {
-            Jumped = true;
-            inputController.ConsumeButton("Jump");
-            player.FireEvent(new JumpEvent {Active = this, Direction = Vector3.up});
-            outVelocity.y = jumpVelocity;
+            outVelocity = OnJump();
         }
 
         float moveX = inputController.ApplyDeadZone(input.GetAxis("Move Horizontal"));
@@ -95,6 +106,7 @@ public class OnGround : MovementState
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         movementSpecial.OnEnterGround(inVelocity, inExternalForces);
         outVelocity.y = 0;
+        Jumped = false;
     }
 
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
@@ -102,7 +114,6 @@ public class OnGround : MovementState
     {
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         movementSpecial.OnExitGround(inVelocity, inExternalForces);
-        Jumped = false;
     }
 
 }

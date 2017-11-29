@@ -20,36 +20,34 @@ public class InputController : MonoBehaviour
     private float xAngleDeadZone;
     private float yAngleDeadZone;
 
-    private Dictionary<String, bool> consumedActions;
-
-    List<String> releasedKeys;
+    //private Dictionary<String, float> timeSinceLastPress;
+    private List<String> actions;
+    private List<float> times;
 
     private void Start()
     {
         xAngleDeadZone = Mathf.Sin(angleDeadzone * Mathf.Deg2Rad);
         yAngleDeadZone = Mathf.Cos(angleDeadzone * Mathf.Deg2Rad);
 
-        consumedActions = new Dictionary<string, bool>();
-
         inputPlayer = GetComponentInParent<Player>().InputPlayer;
-        releasedKeys = new List<String>();
+        
+        actions = new List<string>();
+        times = new List<float>();
+        foreach (InputAction action in Rewired.ReInput.mapping.Actions)
+        {
+            actions.Add(action.name);
+            times.Add(-1f);
+        }
     }
 
     private void LateUpdate()
     {
-        //unconsume non-pressed buttons
-        releasedKeys.Clear();
-        foreach (KeyValuePair<string, bool> pair in consumedActions)
+        for (int i = 0; i < actions.Count; i++)
         {
-            if (!inputPlayer.GetButtonDown(pair.Key))
+            if (inputPlayer.GetButtonDown(actions[i]))
             {
-                releasedKeys.Add(pair.Key);
+                times[i] = Time.time;
             }
-        }
-
-        foreach (String key in releasedKeys)
-        {
-            consumedActions[key] = false;
         }
     }
 
@@ -67,16 +65,23 @@ public class InputController : MonoBehaviour
         return axis;
     }
 
-    public bool IsConsumed(String actionName)
+    public bool IsDown(string actionName, float timeWindow = 0.2f)
     {
-        return consumedActions.ContainsKey(actionName) && consumedActions[actionName];
+        if (!actions.Contains(actionName))
+        {
+            return false;
+        }
+        int index = actions.FindIndex(s => s == actionName);
+        return times[index] >= 0
+               && Time.time - times[index] < timeWindow;
     }
 
     public void ConsumeButton(String actionName)
     {
-        if (inputPlayer.GetButton(actionName))
+        if (actions.Contains(actionName))
         {
-            consumedActions[actionName] = true;
+            int index = actions.FindIndex(s => s == actionName);
+            times[index] = -1f;
         }
     }
 }

@@ -1940,6 +1940,7 @@ MonoBehaviour:
   maxSpeedToStopTime: 0.3
   fullTurnTime: 0.7
   analogMovementSpeed: 0
+  coyoteTime: 0.1
 --- !u!114 &114594103772620728
 MonoBehaviour:
   m_ObjectHideFlags: 1
