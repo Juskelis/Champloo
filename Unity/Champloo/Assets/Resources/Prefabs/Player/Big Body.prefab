@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 114323138353395156}
   - component: {fileID: 114371463023729314}
   - component: {fileID: 114796342813154934}
+  - component: {fileID: 114713644129775278}
   m_Layer: 9
   m_Name: Big Body
   m_TagString: Player
@@ -1974,6 +1975,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   touchWidth: 0.05
+--- !u!114 &114713644129775278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162316800763126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ccfe115f4e68124fb1eee2220e00643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toSpawnOnStart: {fileID: 4775348494856078, guid: febef57b6e2730b42907e6ad2dba7ba0,
+    type: 2}
+  offset: {x: 0, y: 1, z: 0}
+  toSpawnOnEnd: {fileID: 0}
 --- !u!114 &114754671075927648
 MonoBehaviour:
   m_ObjectHideFlags: 1
