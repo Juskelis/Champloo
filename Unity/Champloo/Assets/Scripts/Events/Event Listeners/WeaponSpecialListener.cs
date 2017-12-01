@@ -28,12 +28,14 @@ public class WeaponSpecialListener : MonoBehaviour {
         WeaponSpecialTimingEvent e = (WeaponSpecialTimingEvent)args;
         if (e.Timing == TimingState.WARMUP)
         {
-            Transform t = Instantiate(buildupEffect, transform, false);
+            Transform t = Instantiate(buildupEffect, transform.position, weapon.transform.rotation);
+            t.SetParent(weapon.transform, true);
             SetColor(t);
         }
         else if (e.Timing == TimingState.IN_PROGRESS)
         {
             Transform t = Instantiate(fireEffect, transform.position, weapon.transform.rotation);
+            t.SetParent(transform, true);
             SetColor(t);
         }
     }
