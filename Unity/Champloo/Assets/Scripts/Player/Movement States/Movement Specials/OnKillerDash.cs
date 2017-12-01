@@ -8,6 +8,13 @@ public class OnKillerDash : OnDash
         base.Start();
         timingState = TimingState.DONE;
     }
+
+    public override void Reset()
+    {
+        base.Reset();
+        currentDashes = 1;
+    }
+
     public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces,
         out Vector3 outVelocity, out Vector3 outExternalForces)
     {
