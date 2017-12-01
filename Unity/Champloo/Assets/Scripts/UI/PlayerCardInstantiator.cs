@@ -18,7 +18,10 @@ public class PlayerCardInstantiator : MonoBehaviour
     {
         if(!lateStartDone)
         {
-            foreach (var player in LobbyManager.FindObjectsOfType<Player>())
+            List<Player> players = new List<Player>(LobbyManager.FindObjectsOfType<Player>());
+            players.Sort((player, player1) => player.InputPlayer.id.CompareTo(player1.InputPlayer.id));
+
+            foreach (var player in players)
             {
                 int index = playerPrefabs.FindIndex(player1 => 
                     player1.name.Contains(player.name) || player.name.Contains(player1.name));
@@ -33,6 +36,7 @@ public class PlayerCardInstantiator : MonoBehaviour
                 currentPlayerCard.PlayerNumber = player.PlayerNumber;
                 currentPlayerCard.transform.SetParent(transform, false);
             }
+
             Destroy(this);
         }
         lateStartDone = true;
