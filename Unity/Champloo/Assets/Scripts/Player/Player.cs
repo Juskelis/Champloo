@@ -49,7 +49,7 @@ public class Player : NetworkBehaviour
             if (aim.sqrMagnitude <= 0)
             {
                 //default to forward
-                aim.x = HorizontalDirection;
+                aim.x = movementState is OnWall ? -HorizontalDirection : HorizontalDirection;
                 aim.y = 0;
             }
             return aim;
