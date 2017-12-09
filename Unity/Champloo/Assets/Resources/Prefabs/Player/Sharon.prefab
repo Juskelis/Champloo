@@ -1686,6 +1686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpWindow: 0.1
   maxSpeed: 16
   stopToMaxSpeedTime: 0.085
   maxSpeedToStopTime: 0.1
@@ -2097,10 +2098,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5f74ccf61df5c4b88ba6ad02c943b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpWindow: 0.1
   maxFallSpeed: 8
   wallStickTime: 0.2
   wallJumpVelocity: {x: 20, y: 21.5}
-  noAngleJumpModifier: {x: 1.2, y: 0}
+  noAngleJumpModifier: {x: 1, y: 0}
   towardsWallJumpModifier: {x: 0.625, y: 1}
   allowedMinAngle: 1.16
 --- !u!114 &114884456222421112
