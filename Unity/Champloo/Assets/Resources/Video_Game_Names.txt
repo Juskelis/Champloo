@@ -333,7 +333,6 @@ Screaming
 Search for the
 Secret of the
 Sensual
-Sexy^Sex
 Shadow of the^Shadow
 Shady
 Shameful
@@ -364,7 +363,6 @@ Subatomic
 Subterranean^Underground|Underworld
 Summer
 Super
-Super Sexy^Sex
 Supreme
 Surprise
 Tactical^Tactics
@@ -666,7 +664,6 @@ Pogo
 Police
 Polka
 Pony
-Porn
 Princess
 Prison
 Programming
