@@ -3,8 +3,22 @@ using UnityEngine;
 using Rewired;
 using UnityEngine.Networking;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Utility {
+
+    public static Transform[] FindAll(Transform parent, String childName)
+    {
+        List<Transform> ret = new List<Transform>();
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            if (parent.GetChild(i).name.Contains(childName))
+            {
+                ret.Add(parent.GetChild(i));
+            }
+        }
+        return ret.ToArray();
+    }
 
     public static T CopyComponent<T>(T original, GameObject destination) where T : Component
     {

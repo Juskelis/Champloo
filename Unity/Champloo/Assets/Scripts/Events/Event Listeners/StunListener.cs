@@ -17,6 +17,16 @@ public class StunListener : MonoBehaviour
     void Start()
     {
         GetComponent<LocalEventDispatcher>().AddListener<MovementStateChangedEvent>(OnTiming);
+        GetComponent<LocalEventDispatcher>().AddListener<DeathEvent>(OnDeath);
+    }
+
+    private void OnDeath(object sender, EventArgs args)
+    {
+        foreach (Transform t in Utility.FindAll(transform, toSpawnOnStart.name))
+        {
+            Destroy(t.gameObject);
+        }
+        spawnedStunEffect = null;
     }
 
     private void OnTiming(object sender, EventArgs args)
