@@ -2052,6 +2052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2391eb7fc7ac1b9488d0da0a102c0b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpWindow: 0.1
   maxSpeed: 13
   stopToMaxSpeedTime: 0.1
   maxSpeedToStopTime: 0.1
@@ -2256,7 +2257,8 @@ MonoBehaviour:
   maxSpeedToStopTime: 0.4
   fullTurnTime: 0.75
   analogMovementSpeed: 0
-  coyoteTime: 0.1
+  onGroundCoyoteTime: 0.06
+  onWallCoyoteTime: 0.08
 --- !u!114 &114835231177880446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2268,8 +2270,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5f74ccf61df5c4b88ba6ad02c943b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpWindow: 0.1
   maxFallSpeed: 8
-  wallStickTime: 0.2
+  wallStickTime: 0.18
   wallJumpVelocity: {x: 20, y: 20}
   noAngleJumpModifier: {x: 1.25, y: 0}
   towardsWallJumpModifier: {x: 0.9, y: 1}

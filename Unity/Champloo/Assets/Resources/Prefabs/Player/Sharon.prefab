@@ -2060,7 +2060,8 @@ MonoBehaviour:
   maxSpeedToStopTime: 0.5
   fullTurnTime: 0.75
   analogMovementSpeed: 0
-  coyoteTime: 0.1
+  onGroundCoyoteTime: 0.06
+  onWallCoyoteTime: 0.08
 --- !u!114 &114837754033567326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2100,7 +2101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpWindow: 0.1
   maxFallSpeed: 8
-  wallStickTime: 0.2
+  wallStickTime: 0.18
   wallJumpVelocity: {x: 20, y: 21.5}
   noAngleJumpModifier: {x: 1, y: 0}
   towardsWallJumpModifier: {x: 0.625, y: 1}
