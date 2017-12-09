@@ -330,6 +330,7 @@ GameObject:
   - component: {fileID: 114297313169966108}
   - component: {fileID: 114523499375445730}
   - component: {fileID: 114471115569385360}
+  - component: {fileID: 114209194271337192}
   - component: {fileID: 114911132901231832}
   m_Layer: 9
   m_Name: Hitomi Ryuzaki
@@ -1704,6 +1705,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a97b3c48b66c3c48bb9105191dc3a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114209194271337192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1679150048336280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9499a18c1710c54885c0709548d4f8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildupEffect: {fileID: 4846391594707630, guid: f8fc4682a0fa51846b5f9a6226d34672,
+    type: 2}
+  fireEffect: {fileID: 4657305669223354, guid: 1a9978be9e639774ab1885d4f9a017ef, type: 2}
 --- !u!114 &114210435056296970
 MonoBehaviour:
   m_ObjectHideFlags: 1
