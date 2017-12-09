@@ -13,6 +13,7 @@ public class OnKillerDash : OnDash
     {
         base.Reset();
         currentDashes = 1;
+        timingState = TimingState.DONE;
     }
 
     public override void OnEnter(Vector3 inVelocity, Vector3 inExternalForces,

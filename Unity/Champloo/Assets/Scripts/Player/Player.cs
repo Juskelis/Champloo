@@ -264,7 +264,10 @@ public class Player : NetworkBehaviour
         OnExternalForceChanged(Vector3.zero);
         Vector3 garbageVelocity;
         Vector3 garbageExternalForces;
-        movementState.Reset();
+        foreach (MovementState state in GetComponentsInChildren<MovementState>())
+        {
+            state.Reset();
+        }
         movementState.OnExit(velocity, externalForce, out garbageVelocity, out garbageExternalForces);
         movementState = GetComponent<OnGround>();
         movementState.OnEnter(velocity, externalForce, out garbageVelocity, out garbageExternalForces);
