@@ -41,7 +41,14 @@ public class OnWall : MovementState
         }
         if (timeToWallUnstick > 0)
         {
-            velocity.x = 0;
+            if (wallDirX < 0 && velocity.x < 0)
+            {
+                velocity.x = 0;
+            }
+            if (wallDirX > 0 && velocity.x > 0)
+            {
+                velocity.x = 0;
+            }
 
             if (moveX != 0 && Mathf.Sign(moveX) != Mathf.Sign(wallDirX))
             {
