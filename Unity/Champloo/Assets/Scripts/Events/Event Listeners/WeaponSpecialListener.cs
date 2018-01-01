@@ -15,12 +15,34 @@ public class WeaponSpecialListener : MonoBehaviour {
     void Awake()
     {
         GetComponentInParent<LocalEventDispatcher>().AddListener<WeaponSpecialTimingEvent>(OnSpecial);
+        GetComponentInParent<LocalEventDispatcher>().AddListener<DeathEvent>(OnDeath);
         weapon = GetComponentInChildren<Weapon>();
     }
 
     void Start()
     {
         playerColor = GetComponentInParent<Player>().PlayerColor;
+    }
+
+    private void OnDeath(object sender, EventArgs args)
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Transform temp = transform.GetChild(i);
+            if (temp.name.Contains(buildupEffect.name) || temp.name.Contains(fireEffect.name))
+            {
+                Destroy(temp.gameObject);
+            }
+        }
+
+        for (int i = weapon.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform temp = weapon.transform.GetChild(i);
+            if (temp.name.Contains(buildupEffect.name) || temp.name.Contains(fireEffect.name))
+            {
+                Destroy(temp.gameObject);
+            }
+        }
     }
 
     private void OnSpecial(object sender, EventArgs args)
