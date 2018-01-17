@@ -346,11 +346,22 @@ public class Player : NetworkBehaviour
         bool killThem = false;
         bool killUs = false;
 
-        if (movementState is OnKillerDash && !(otherPlayer.movementState is OnKillerDash))
+        bool usInKillerDash = movementState is OnKillerDash &&
+            movementSpecial.Progress == TimingState.IN_PROGRESS;
+        bool themInKillerDash = otherPlayer.movementState is OnKillerDash &&
+            otherPlayer.movementSpecial.Progress == TimingState.IN_PROGRESS;
+
+        bool usBlocking = movementState is InBlock;
+        bool themBlocking = otherPlayer.movementState is InBlock;
+
+        bool usInvulnerable = invincible;
+        bool themInvulnerable = otherPlayer.invincible;
+
+        if (usInKillerDash && !themInKillerDash && !themBlocking && !themInvulnerable)
         {
             killThem = true;
         }
-        else if (otherPlayer.movementState is OnKillerDash && !(movementState is OnKillerDash))
+        else if (themInKillerDash && !usInKillerDash && !usBlocking && !usInvulnerable)
         {
             killUs = true;
         }
