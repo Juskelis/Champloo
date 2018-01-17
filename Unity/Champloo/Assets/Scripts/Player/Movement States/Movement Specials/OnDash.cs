@@ -18,9 +18,7 @@ public class OnDash : OnMovementSpecial
 
     [SerializeField]
     protected float nextDashBufferWindow;
-
-    [SerializeField]
-    private PlayRandomSource dashSound;
+    
     
     protected int currentDashes;
     public int DashesRemaining { get { return currentDashes; } }
@@ -157,7 +155,6 @@ public class OnDash : OnMovementSpecial
 		//direction = inVelocity + dashVector;
 		
         direction = direction * DashForce;
-        dashSound.Play();
         justStarted = false;
     }
 
