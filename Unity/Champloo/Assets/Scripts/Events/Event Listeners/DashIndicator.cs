@@ -1,47 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DashIndicator : MonoBehaviour
 {
     [SerializeField]
-    private Transform singleIndicator;
+    private Image singleIndicator;
 
     [SerializeField]
-    private float spacing = 1f;
+    private Sprite availableSprite;
+
+    [SerializeField]
+    private Sprite unavailableSprite;
+
+    [SerializeField]
+    private Transform container;
 
     private OnDash dashState;
 
-    private List<Transform> indicators;
+    private List<Image> indicators;
+
+    private int playerNumber;
     
     void Start()
     {
-        GetComponentInParent<LocalEventDispatcher>().AddListener<MovementStateChangedEvent>(OnChange);
-        dashState = GetComponentInParent<OnDash>();
+        if (!container) container = transform;
+
+        playerNumber = GetComponentInParent<PlayerScoreCard>().playerNumber;
+
+        EventDispatcher.Instance.AddListener<MovementStateChangedEvent>(OnChange);
+
+        foreach (Player player in FindObjectsOfType<Player>())
+        {
+            if (player.PlayerNumber == playerNumber)
+            {
+                dashState = player.GetComponentInChildren<OnDash>();
+            }
+        }
         if (dashState == null)
         {
             Debug.LogError("DashIndicator could not find OnDash component");
         }
 
         //create all indicators
-        indicators = new List<Transform>();
+        indicators = new List<Image>();
         for (int i = 0; i < dashState.DashLimit; i++)
         {
-            Transform toAdd = Instantiate(singleIndicator);
-            Vector3 pos = toAdd.position;
-            pos.x = ((dashState.DashLimit*spacing)/2f)*(i-Mathf.Floor(dashState.DashLimit/2f));
-            toAdd.position = pos;
-            toAdd.SetParent(transform, false);
+            Image toAdd = Instantiate(singleIndicator);
+            toAdd.transform.SetParent(container, false);
             indicators.Add(toAdd);
-        }
-    }
-
-    void OnDestroy()
-    {
-        LocalEventDispatcher dispatcher = GetComponentInParent<LocalEventDispatcher>();
-        if (dispatcher != null)
-        {
-            dispatcher.RemoveListener<MovementStateChangedEvent>(OnChange);
         }
     }
 
@@ -49,7 +57,7 @@ public class DashIndicator : MonoBehaviour
     {
         for (var i = 0; i < indicators.Count; i++)
         {
-            indicators[i].gameObject.SetActive(i < dashState.DashesRemaining);
+            indicators[i].sprite = (i < dashState.DashesRemaining) ? availableSprite : unavailableSprite;
         }
     }
 }
