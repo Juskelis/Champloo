@@ -103,13 +103,13 @@ public class OnRoll : OnMovementSpecial
             sprite.color = player.PlayerColor;
         }
     }
-    public override void OnEnterGround(Vector3 velocity, Vector3 externalForces)
-    {
-        canAirRoll = true;
-    }
-    public override void OnEnterWall(Vector3 velocity, Vector3 externalForces)
-    {
-        canAirRoll = true;
-    }
 
+    protected override void OnStateChange(object sender, EventArgs args)
+    {
+        MovementStateChangedEvent e = (MovementStateChangedEvent) args;
+        if (e.Next is OnGround || e.Next is OnWall)
+        {
+            canAirRoll = true;
+        }
+    }
 }

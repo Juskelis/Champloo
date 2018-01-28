@@ -104,16 +104,8 @@ public class OnGround : MovementState
         out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-        movementSpecial.OnEnterGround(inVelocity, inExternalForces);
         outVelocity.y = 0;
         Jumped = false;
-    }
-
-    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
-        out Vector3 outVelocity, out Vector3 outExternalForces)
-    {
-        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-        movementSpecial.OnExitGround(inVelocity, inExternalForces);
     }
 
 }
