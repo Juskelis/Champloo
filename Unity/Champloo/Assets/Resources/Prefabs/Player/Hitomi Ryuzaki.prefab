@@ -1627,13 +1627,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startupTime: 0
   specialTime: 0.25
-  cooldownTime: 0.1
+  cooldownTime: 0.02
   rechargeTime: 0
   dashForce: 21
   gravityModifier: 0.5
   dashLimit: 1
   nextDashBufferWindow: 0.2
-  dashSound: {fileID: 114003977806225076}
   attackBufferWindow: 0.5
 --- !u!114 &114048623318915304
 MonoBehaviour:
@@ -1957,8 +1956,7 @@ MonoBehaviour:
   maxSpeedToStopTime: 0.3
   fullTurnTime: 0.7
   analogMovementSpeed: 0
-  onGroundCoyoteTime: 0.06
-  onWallCoyoteTime: 0.08
+  coyoteTime: 0.1
 --- !u!114 &114594103772620728
 MonoBehaviour:
   m_ObjectHideFlags: 1
