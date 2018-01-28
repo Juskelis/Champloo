@@ -215,6 +215,11 @@ public class MultiplayerUIManager : MonoBehaviour
 
     private void AddController(Rewired.Player p, bool startupAdd = false)
     {
+        if (activeControllers.Count >= LobbyManager.s_Singleton.maxPlayersPerConnection)
+        {
+            return;
+        }
+
         MultiplayerUIController controller = Instantiate(controllerPrefab);
         controller.ControllerNumber = p.id;
         controller.ChangeSelected(firstSelected);
