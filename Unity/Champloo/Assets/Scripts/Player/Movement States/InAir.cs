@@ -130,14 +130,6 @@ public class InAir : MovementState
         out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-        movementSpecial.OnEnterAir(inVelocity, inExternalForces);
         hasShortened = false;
-    }
-
-    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
-        out Vector3 outVelocity, out Vector3 outExternalForces)
-    {
-        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-        movementSpecial.OnExitAir(inVelocity, inExternalForces);
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class OnInfiniteDash : OnDash
@@ -62,9 +63,13 @@ public class OnInfiniteDash : OnDash
         return null;
     }
 
-    //remove functionality of OnDash's OnEnterWall
-    public override void OnEnterWall(Vector3 velocity, Vector3 externalForces)
+    protected override void OnStateChange(object sender, EventArgs args)
     {
+        MovementStateChangedEvent e = (MovementStateChangedEvent) args;
+        if (e.Next is OnGround)
+        {
+            currentDashes = DashLimit;
+        }
     }
 
     protected override void OnStart()

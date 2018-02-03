@@ -67,8 +67,7 @@ public class InBlock : MovementState
         out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-
-        movementSpecial.OnEnterBlock(inVelocity, inExternalForces);
+        
         deceleration = GetComponent<OnGround>().MaxSpeed/maxSpeedToStopTime;
         maxFallSpeed = GetComponent<InAir>().MaxFallSpeed;
         ourShield.ActivateShield();
@@ -81,8 +80,7 @@ public class InBlock : MovementState
         out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-
-        movementSpecial.OnExitBlock(inVelocity, inExternalForces);
+        
         ourShield.DeactivateShield();
     }
 }

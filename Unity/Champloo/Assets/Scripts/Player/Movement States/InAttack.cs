@@ -45,14 +45,12 @@ public class InAttack : MovementState
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         initialVelocity = inVelocity;
-        movementSpecial.OnEnterAttack(inVelocity, inExternalForces);
     }
 
     public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
         out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-        movementSpecial.OnExitAttack(inVelocity, inExternalForces);
         outVelocity = initialVelocity; 
     }
 }

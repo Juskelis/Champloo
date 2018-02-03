@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class OnDash : OnMovementSpecial
@@ -174,19 +175,14 @@ public class OnDash : OnMovementSpecial
         earlyAttackInput = false;
         hitNextDashInput = false;
     }
-    
-    //Functions to be called on state changes
 
-    //ground state changes
-    public override void OnEnterGround(Vector3 velocity, Vector3 externalForces)
+    protected override void OnStateChange(object sender, EventArgs args)
     {
-        currentDashes = DashLimit;
-    }
-
-    //wallride state changes
-    public override void OnEnterWall(Vector3 velocity, Vector3 externalForces)
-    {
-        if (currentDashes < 1)
+        MovementStateChangedEvent e = (MovementStateChangedEvent) args;
+        if (e.Next is OnGround)
+        {
+            currentDashes = DashLimit;
+        } else if (currentDashes < 1 && e.Next is OnWall)
         {
             currentDashes = 1;
         }
