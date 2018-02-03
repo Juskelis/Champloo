@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ public class OnRoll : OnMovementSpecial
     private bool goingRight = true;
     private bool canAirRoll = true;
 
+    private bool firstFrame = false;
+
     public override bool canUse
     {
         get { return base.canUse && (!(GetSimulatedState() is InAir) || canAirRoll); }
@@ -33,7 +36,11 @@ public class OnRoll : OnMovementSpecial
         {
             return GetSimulatedState().ApplyFriction(velocity);
         }
-        Vector3 retVector = (goingRight ? Vector3.right : Vector3.left) * rollSpeed.x;
+
+        Vector3 retVector = ((firstFrame && goingRight) || player.HorizontalDirection > 0 
+            ? Vector3.right 
+            : Vector3.left) * rollSpeed.x;
+        firstFrame = false;
         retVector.y = rollSpeed.y;
         return retVector;
     }
@@ -67,6 +74,7 @@ public class OnRoll : OnMovementSpecial
 
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         goingRight = player.AimDirection.x > 0;
+        firstFrame = true;
     }
 
     protected override void OnStart()
@@ -97,6 +105,7 @@ public class OnRoll : OnMovementSpecial
         controller.notifyMask = originalNotifyMask;
 
         player.OnInvicibleChanged(false);
+        firstFrame = false;
 
         foreach (SpriteRenderer sprite in player.ColoredSprites)
         {
