@@ -107,10 +107,18 @@ public class SmashCamera : MonoBehaviour
         if (toFollow.Length <= 0)
         {
             newCenter = defaultCenter;
-            maxDist = Vector2.one * Mathf.Infinity;
+            maxDist = Vector2.one*Mathf.Infinity;
         }
-
-        if (!pointInRect(maxDist, Vector2.zero, zoomOut/2))
+        else if(toFollow.Length == 1)
+        {
+            //make the zoom halfway
+            size.x = Median(
+                zoomMin,
+                zoomMin + (zoomMax - zoomMin)/2,
+                Mathf.Pow(zoomOutSpeed, 3)*1/2 + size.x);
+            size.y = size.x/cam.aspect;
+        }
+        else if (!pointInRect(maxDist, Vector2.zero, zoomOut/2))
         {
             //zoom out
             if (maxDist.x >= zoomOut.x/2)
