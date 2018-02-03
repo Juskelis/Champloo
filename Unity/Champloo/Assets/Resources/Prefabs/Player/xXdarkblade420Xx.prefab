@@ -2200,7 +2200,6 @@ MonoBehaviour:
   gravityModifier: 0.5
   dashLimit: 3
   nextDashBufferWindow: 0.2
-  dashSound: {fileID: 114126585807203634}
 --- !u!114 &114679085550598218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2257,8 +2256,7 @@ MonoBehaviour:
   maxSpeedToStopTime: 0.4
   fullTurnTime: 0.75
   analogMovementSpeed: 0
-  onGroundCoyoteTime: 0.06
-  onWallCoyoteTime: 0.08
+  coyoteTime: 0.1
 --- !u!114 &114835231177880446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2401,9 +2399,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d36851d97e1a4b49a6c5b7f565570fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  singleIndicator: {fileID: 4894125257136814, guid: f104d7ff763f1a9448161892206c70eb,
-    type: 2}
-  spacing: 1
+  singleIndicator: {fileID: 0}
+  availableSprite: {fileID: 0}
+  unavailableSprite: {fileID: 0}
+  container: {fileID: 0}
 --- !u!114 &114984199019586526
 MonoBehaviour:
   m_ObjectHideFlags: 1
