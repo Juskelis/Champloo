@@ -41,13 +41,5 @@ public class TauntState : MovementState {
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         tauntTimer = tauntDuration;
-        movementSpecial.OnEnterTaunt(inVelocity, inExternalForces);
-    }
-
-    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
-        out Vector3 outVelocity, out Vector3 outExternalForces)
-    {
-        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-        movementSpecial.OnExitTaunt(inVelocity, inExternalForces);
     }
 }
