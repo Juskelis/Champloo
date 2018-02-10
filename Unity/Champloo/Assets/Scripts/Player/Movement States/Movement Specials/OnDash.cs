@@ -182,7 +182,7 @@ public class OnDash : OnMovementSpecial
         if (e.Next is OnGround)
         {
             currentDashes = DashLimit;
-        } else if (currentDashes < 1 && e.Next is OnWall)
+        } else if (currentDashes <= 1 && e.Next is OnWall)
         {
             currentDashes = 1;
         }
