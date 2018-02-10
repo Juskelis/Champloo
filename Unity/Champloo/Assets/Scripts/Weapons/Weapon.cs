@@ -71,6 +71,9 @@ public class Weapon : MonoBehaviour
     public float SpecialRechargeTime { get { return specialRechargeTime; } }
 
     [SerializeField]
+    protected float projectileOffset;
+
+    [SerializeField]
     protected Projectile thrownVersion;
 
     public Projectile ThrownVersion { get { return thrownVersion; } }
