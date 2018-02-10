@@ -72,10 +72,11 @@ public class Axe : Weapon
 
         visuals.enabled = true;
         col.enabled = true;
-        Vector2 aim = OurPlayer.AimDirection;
+        Vector2 aim = OurPlayer.DeadzoneAimDirection;
+        Vector3 aimAlt = new Vector3(aim.x, aim.y);
         Projectile temp = (Projectile)Instantiate(
             thrownVersion,
-            transform.position,
+            OurPlayer.CenterOfSprite + aimAlt.normalized * projectileOffset,
             Quaternion.AngleAxis(
                 Utility.Vector2AsAngle(aim),//input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
                 transform.parent.forward
