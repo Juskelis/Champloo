@@ -169,14 +169,6 @@ public class OnWall : MovementState
     {
         base.OnEnter(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
         timeToWallUnstick = wallStickTime;
-        movementSpecial.OnEnterWall(inVelocity, inExternalForces);
         Jumped = false;
-    }
-
-    public override void OnExit(Vector3 inVelocity, Vector3 inExternalForces,
-        out Vector3 outVelocity, out Vector3 outExternalForces)
-    {
-        base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-        movementSpecial.OnExitWall(inVelocity, inExternalForces);
     }
 }

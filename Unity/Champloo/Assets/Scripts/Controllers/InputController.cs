@@ -10,9 +10,9 @@ public class InputController : MonoBehaviour
     private Rewired.Player inputPlayer;
 
     [SerializeField]
-    private float angleDeadzone;
+    private Vector2 angleDeadzone;
 
-    public float AngleDeadzone
+    public Vector2 AngleDeadzone
     {
         get { return angleDeadzone;}
     }
@@ -26,9 +26,6 @@ public class InputController : MonoBehaviour
 
     private void Start()
     {
-        xAngleDeadZone = Mathf.Sin(angleDeadzone * Mathf.Deg2Rad);
-        yAngleDeadZone = Mathf.Cos(angleDeadzone * Mathf.Deg2Rad);
-
         inputPlayer = GetComponentInParent<Player>().InputPlayer;
         
         actions = new List<string>();
@@ -42,6 +39,9 @@ public class InputController : MonoBehaviour
 
     private void LateUpdate()
     {
+        xAngleDeadZone = Mathf.Sin(angleDeadzone.x * Mathf.Deg2Rad);
+        yAngleDeadZone = Mathf.Cos(angleDeadzone.y * Mathf.Deg2Rad);
+
         for (int i = 0; i < actions.Count; i++)
         {
             if (inputPlayer.GetButtonDown(actions[i]))
@@ -53,10 +53,7 @@ public class InputController : MonoBehaviour
 
     public Vector2 ApplyDeadZone(Vector2 input)
     {
-        Vector2 normalizedInput = input.normalized;
-        if (Mathf.Abs(normalizedInput.x) < xAngleDeadZone) input.x = 0;
-        if (Mathf.Abs(normalizedInput.y) < yAngleDeadZone) input.y = 0;
-        return input.normalized;
+        return new Vector2(ApplyDeadZone(input.x), ApplyDeadZone(input.y));
     }
 
     public float ApplyDeadZone(float axis)

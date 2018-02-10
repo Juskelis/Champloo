@@ -21,3 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/3-4ths Crush.unity
   - enabled: 1
     path: Assets/Scenes/5-6ths Training Stage.unity
+  - enabled: 1
+    path: Assets/Scenes/hallway.unity
+  - enabled: 1
+    path: Assets/Scenes/darkbladeLevel.unity

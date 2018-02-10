@@ -49,6 +49,11 @@ public class Pause : MonoBehaviour
         int controllerID = -1;
         foreach (Rewired.Player player in ReInput.players.Players)
         {
+            if (FindPlayerNumberFromController(player.id) < 0)
+            {
+                continue;
+            }
+
             if (!pressed && (player.GetButtonDown("Pause") || player.GetButtonDown("Resume")))
             {
                 pressed = true;

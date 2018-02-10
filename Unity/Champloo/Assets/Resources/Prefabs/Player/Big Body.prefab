@@ -107,12 +107,12 @@ GameObject:
   - component: {fileID: 114383275711759350}
   - component: {fileID: 114214521122134788}
   - component: {fileID: 114448704070849810}
-  - component: {fileID: 114583826864239000}
   - component: {fileID: 114469000994252816}
   - component: {fileID: 114323138353395156}
   - component: {fileID: 114371463023729314}
-  - component: {fileID: 114796342813154934}
   - component: {fileID: 114713644129775278}
+  - component: {fileID: 114746323823870526}
+  - component: {fileID: 114104767840458046}
   m_Layer: 9
   m_Name: Big Body
   m_TagString: Player
@@ -510,7 +510,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1162316800763126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.12, y: 0, z: 0}
+  m_LocalPosition: {x: -4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4715784140289914}
@@ -1573,7 +1573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20b42813b6d317c4a8dd722d27d7eeca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angleDeadzone: 10
+  angleDeadzone: {x: 10, y: 60}
 --- !u!114 &114059067299277234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1586,6 +1586,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runningSound: {fileID: 114958792587567482}
+--- !u!114 &114104767840458046
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162316800763126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba80af84a7dcfe4288592e90e836f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toSpawnOnStart: {fileID: 4734567019436616, guid: 656bf8506aec77a4fb38a2a516f183d5,
+    type: 2}
+  toSpawnOnEnd: {fileID: 0}
+  type:
+    _classRef: OnKillerDash, Assembly-CSharp
 --- !u!114 &114121970608963264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1853,7 +1869,6 @@ MonoBehaviour:
   gravityModifier: 0.5
   dashLimit: 1
   nextDashBufferWindow: 0
-  dashSound: {fileID: 114126585807203634}
 --- !u!114 &114448704070849810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1913,20 +1928,6 @@ MonoBehaviour:
   movementState:
     _classRef: OnGround, Assembly-CSharp
   jumpPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
---- !u!114 &114583826864239000
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1162316800763126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fae114515e9074428ca9e7a3fb35adc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashPuff: {fileID: 4457774349027272, guid: cbdf4b4e71a62b94fbccfa003e863859, type: 2}
-  dashSound: {fileID: 114126585807203634}
-  trail: {fileID: 96776735345837960}
 --- !u!114 &114599821988778560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1991,6 +1992,19 @@ MonoBehaviour:
     type: 2}
   offset: {x: 0, y: 1, z: 0}
   toSpawnOnEnd: {fileID: 0}
+--- !u!114 &114746323823870526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162316800763126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3201f08834e311544afdcc5f56dbda7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 2.5
+  lerpSpeed: 0.4
 --- !u!114 &114754671075927648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2003,18 +2017,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tauntDuration: 1
---- !u!114 &114796342813154934
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1162316800763126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32184c1dae44eca44b8a63fd66a0ca27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundFriction: 30
 --- !u!114 &114816192349633596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2032,8 +2034,7 @@ MonoBehaviour:
   maxSpeedToStopTime: 0.4
   fullTurnTime: 0.75
   analogMovementSpeed: 0
-  onGroundCoyoteTime: 0.06
-  onWallCoyoteTime: 0.08
+  coyoteTime: 0.1
 --- !u!114 &114835231177880446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2064,42 +2065,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startupTime: 0.16
-  attackTime: 0.25
+  attackTime: 0.4
   cooldownTime: 0.32
   rechargeTime: 0.25
   specialStartupTime: 0
   specialTime: 0
   specialCooldownTime: 0
   specialRechargeTime: 1.5
+  projectileOffset: 0.5
   thrownVersion: {fileID: 114168133414632582, guid: 8fc873c39188b18459ac55a6386aa847,
     type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212953766577189390}
-  swingAngle: 125
+  swingAngle: 180
+  startAngleOffset: 0
   angleOverTime:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: -0.002364066
-      value: 0
+      time: 0
+      value: 0.0056022406
+      inSlope: Infinity
+      outSlope: 0.09723064
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.2016632
+      value: 0.025210083
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.49407446
-      value: 0.1137026
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      time: 0.334158
+      value: 0.019607842
+      inSlope: -0.04228272
+      outSlope: Infinity
+      tangentMode: 101
     - serializedVersion: 2
-      time: 0.85
+      time: 0.4
       value: 1
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+    - serializedVersion: 2
+      time: 0.666
+      value: 0
+      inSlope: Infinity
+      outSlope: 0
+      tangentMode: 7
+    - serializedVersion: 2
+      time: 0.8773389
+      value: -0.014005601
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 1
     - serializedVersion: 2
       time: 1
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2207,9 +2228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d36851d97e1a4b49a6c5b7f565570fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  singleIndicator: {fileID: 4894125257136814, guid: f104d7ff763f1a9448161892206c70eb,
-    type: 2}
-  spacing: 1
+  singleIndicator: {fileID: 0}
+  availableSprite: {fileID: 0}
+  unavailableSprite: {fileID: 0}
+  container: {fileID: 0}
 --- !u!198 &198596117821233690
 ParticleSystem:
   m_ObjectHideFlags: 1
