@@ -134,12 +134,19 @@ public class MultiplayerUIManager : MonoBehaviour
                 AddController(player);
 	            playerLeftOrJoined = true;
 	        }
-	        if (player.GetButtonDown(leaveAction) && ContainsController(player))
+	        if (player.GetButtonDown(leaveAction))
 	        {
-	            //player has left
-                RemoveController(player);
-	            playerLeftOrJoined = true;
-            }
+	            if (ContainsController(player))
+	            {
+	                //player has left
+	                RemoveController(player);
+	                playerLeftOrJoined = true;
+	            } else if (activeControllers.Count <= 0)
+	            {
+                    //all players "left"!
+                    OnAllPlayersLeave.Invoke();
+                }
+	        }
 	        if (player.GetButtonDown("UICycle") && ContainsController(player))
 	        {
 	            foreach (var p in GetLocalPlayers(player.id))
