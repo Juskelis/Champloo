@@ -56,6 +56,11 @@ public class Player : NetworkBehaviour
         }
     }
 
+    public Vector2 DeadzoneAimDirection
+    {
+        get { return inputs.ApplyDeadZone(AimDirection); }
+    }
+
     #endregion
 
     #region Customization Variables
@@ -152,6 +157,8 @@ public class Player : NetworkBehaviour
     private BoxCollider2D hitbox_collider;
     private Controller2D controller;
     private Animator anim;
+
+  
 
     private Weapon weapon;
     private Shield shield;

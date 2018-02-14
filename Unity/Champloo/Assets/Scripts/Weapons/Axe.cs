@@ -11,6 +11,9 @@ public class Axe : Weapon
     private float swingAngle = 90f;
 
     [SerializeField]
+    private float startAngleOffset = 45f;
+
+    [SerializeField]
     private AnimationCurve angleOverTime;
 
     private float startAngle;
@@ -44,13 +47,13 @@ public class Axe : Weapon
         if (Mathf.Cos(transform.parent.rotation.eulerAngles.z * Mathf.Deg2Rad) > 0)
         {
             //we're attacking to the right
-            startAngle = transform.parent.rotation.eulerAngles.z + swingAngle / 2;
+            startAngle = transform.parent.rotation.eulerAngles.z + startAngleOffset;
             endAngle = startAngle - swingAngle;
         }
         else
         {
             //we're attacking to the left
-            startAngle = transform.parent.rotation.eulerAngles.z - swingAngle / 2;
+            startAngle = transform.parent.rotation.eulerAngles.z - startAngleOffset;
             endAngle = startAngle + swingAngle;
         }
         startTime = Time.time;
@@ -72,10 +75,11 @@ public class Axe : Weapon
 
         visuals.enabled = true;
         col.enabled = true;
-        Vector2 aim = OurPlayer.AimDirection;
+        Vector2 aim = OurPlayer.DeadzoneAimDirection;
+        Vector3 aimAlt = new Vector3(aim.x, aim.y);
         Projectile temp = (Projectile)Instantiate(
             thrownVersion,
-            transform.position,
+            OurPlayer.CenterOfSprite + aimAlt.normalized * projectileOffset,
             Quaternion.AngleAxis(
                 Utility.Vector2AsAngle(aim),//input.leftStickAngle,//transform.parent.parent.localScale.x < 0 ? 180 - input.leftStickAngle : input.leftStickAngle,
                 transform.parent.forward
