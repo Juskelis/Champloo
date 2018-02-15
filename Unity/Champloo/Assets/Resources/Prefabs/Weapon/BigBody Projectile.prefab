@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 187214}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 3.5, z: 1}
   m_Children:
   - {fileID: 4923382682748208}
   m_Father: {fileID: 0}
@@ -245,9 +245,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   minVelocity: 0
-  maxVelocity: 9
+  maxVelocity: 6
   velocityAnimationTime: 0.4
-  timer: 1.2
+  timer: 3
 --- !u!114 &114203981874539452
 MonoBehaviour:
   m_ObjectHideFlags: 1
