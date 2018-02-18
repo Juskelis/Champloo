@@ -1611,9 +1611,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1210884832}
-        m_MethodName: OnClickPlayLocal
-        m_Mode: 1
+      - m_Target: {fileID: 492253950}
+        m_MethodName: SetSinglePlayer
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1622,9 +1622,9 @@ MonoBehaviour:
           m_StringArgument: combat_test
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 492253950}
-        m_MethodName: SetSinglePlayer
-        m_Mode: 6
+      - m_Target: {fileID: 1210884832}
+        m_MethodName: OnClickPlayLocal
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

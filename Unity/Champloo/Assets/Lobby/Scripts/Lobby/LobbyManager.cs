@@ -226,6 +226,8 @@ namespace Prototype.NetworkLobby
                 StopHost();
             }
 
+            //clear out the lobbySlots so that we can change maxPlayers at runtime and have it work
+            lobbySlots = new NetworkLobbyPlayer[0];
             
             ChangeTo(mainMenuPanel);
         }
