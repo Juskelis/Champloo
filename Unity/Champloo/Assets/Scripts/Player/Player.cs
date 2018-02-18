@@ -159,7 +159,7 @@ public class Player : NetworkBehaviour
     private Animator anim;
 
   
-
+    public Weapon Weapon { get { return weapon; } set { } }
     private Weapon weapon;
     private Shield shield;
 
