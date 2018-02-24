@@ -41,6 +41,11 @@ public class OnInfiniteDash : OnDash
             hitDashEarly = true;
         }
 
+        if(attackAllowed && player.Weapon.IsAttacking)
+        {
+            return GetComponent<InAttack>();
+        }
+
         if (isDisabled || timingState == TimingState.RECHARGE || timingState == TimingState.DONE)
         {
             hitDashEarly = false;
