@@ -49,7 +49,18 @@ public class OnMovementSpecial : MovementState
         StartCoroutine(TimingCoroutine());
     }
 
-    public override bool AttackAllowed { get { return false; } }
+    public override bool AttackAllowed
+    {
+        get
+        {
+            return false;
+        }
+
+        protected set
+        {
+            base.AttackAllowed = value;
+        }
+    }
 
     protected virtual IEnumerator TimingCoroutine()
     {
