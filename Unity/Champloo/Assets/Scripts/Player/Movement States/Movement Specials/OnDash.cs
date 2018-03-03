@@ -27,16 +27,27 @@ public class OnDash : OnMovementSpecial
     private Vector2 direction;
     private Vector3 dashVelocity;
 
+    [SerializeField]
+    protected float attackBufferWindow;
 
     protected bool earlyAttackInput;
     protected bool hitNextDashInput;
     private bool justStarted;
 
+    protected bool onStartCalled;
+
+    private bool childAttackAllowed = true;
+    public override bool AttackAllowed
+    {
+        get { return childAttackAllowed; }
+        protected set { childAttackAllowed = value; }
+    }
+
     protected override void Start()
     {
         base.Start();
         currentDashes = dashLimit;
-        earlyAttackInput = false;
+        AttackAllowed = false;
         hitNextDashInput = false;
     }
 
@@ -74,23 +85,21 @@ public class OnDash : OnMovementSpecial
         //Buffer for attacks and movement specials done too early
         if (specialTimeLeft < (specialTime * nextDashBufferWindow))
         {
-            if (player.InputPlayer.GetButtonDown("Attack"))
-            {
-                earlyAttackInput = true;
-            }
             if (player.InputPlayer.GetButtonDown("Movement Special"))
             {
                 hitNextDashInput = true;
             }
         }
 
+        AttackAllowed = (attackBufferWindow > 0 && specialTimeLeft < (specialTime * attackBufferWindow) && onStartCalled);
+
+        if (AttackAllowed && player.Weapon.IsAttacking)
+        {
+            return GetComponent<InAttack>();
+        }
         if (isDisabled || timingState == TimingState.RECHARGE || timingState == TimingState.DONE)
         {
-            if(earlyAttackInput)
-            {
-                return GetComponent<InAttack>();
-            }
-            else if(hitNextDashInput)
+            if(hitNextDashInput)
             {
                 return GetComponent<OnDash>();
             }
@@ -163,7 +172,7 @@ public class OnDash : OnMovementSpecial
     {
         base.OnStart();
         justStarted = true;
-
+        onStartCalled = true;
         specialTimeLeft = specialTime;
     }
 
@@ -171,9 +180,9 @@ public class OnDash : OnMovementSpecial
         out Vector3 outVelocity, out Vector3 outExternalForces)
     {
         base.OnExit(inVelocity, inExternalForces, out outVelocity, out outExternalForces);
-
-        earlyAttackInput = false;
+        AttackAllowed = false;
         hitNextDashInput = false;
+        onStartCalled = false;
     }
 
     protected override void OnStateChange(object sender, EventArgs args)

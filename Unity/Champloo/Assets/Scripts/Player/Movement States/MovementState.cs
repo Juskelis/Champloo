@@ -12,7 +12,12 @@ public class MovementState : NetworkBehaviour
     protected OnMovementSpecial movementSpecial;
     protected float externalForceDecay = 1f;
 
-    public virtual bool AttackAllowed { get { return true; } }
+
+    private bool attackAllowed = true;
+    public virtual bool AttackAllowed {
+        get { return attackAllowed; }
+        protected set { attackAllowed = value; }
+    }
 
     protected virtual void Start()
     {

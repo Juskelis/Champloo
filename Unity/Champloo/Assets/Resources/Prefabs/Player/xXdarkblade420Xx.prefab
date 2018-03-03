@@ -2200,6 +2200,7 @@ MonoBehaviour:
   gravityModifier: 0.5
   dashLimit: 3
   nextDashBufferWindow: 0.2
+  attackBufferWindow: 0
 --- !u!114 &114679085550598218
 MonoBehaviour:
   m_ObjectHideFlags: 1
