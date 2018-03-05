@@ -20,6 +20,16 @@ public class MultiplayerUIManager : MonoBehaviour
 
     [SerializeField]
     private int minPlayersToAdvance = 0;
+    public int MinPlayersToAdvance {
+        get
+        {
+            return minPlayersToAdvance;
+        }
+        set
+        {
+            minPlayersToAdvance = value;
+        }
+    }
 
     [SerializeField]
     private MultiplayerSelectable firstSelected;
