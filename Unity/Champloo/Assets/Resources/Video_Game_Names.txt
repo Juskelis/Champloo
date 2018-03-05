@@ -513,7 +513,6 @@ Cooking
 Cowboy
 Cricket^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
 Croquet^Baseball|Basketball|BASEketball|Boxing|Football|Paintbrawl|Pinball|Polo
-Crossdressing
 Crowbar
 Crystal
 Cyborg
