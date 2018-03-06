@@ -9,9 +9,16 @@ public class SinglePlayerConfigurer : MonoBehaviour
 
     private LobbyManager manager;
 
+    private MultiplayerUIManager[] uiManagers;
+
     void Start()
     {
         manager = LobbyManager.s_Singleton ?? FindObjectOfType<LobbyManager>();
+        uiManagers = FindObjectsOfType<MultiplayerUIManager>();
+        foreach(MultiplayerUIManager manager in uiManagers)
+        {
+            manager.MinPlayersToAdvance = 2;
+        }
         defaultMinPlayers = manager.minPlayers;
         defaultMaxPlayers = manager.maxPlayers;
     }
@@ -22,5 +29,16 @@ public class SinglePlayerConfigurer : MonoBehaviour
         manager.maxPlayers = singlePlayer ? 1 : defaultMaxPlayers;
         manager.maxPlayersPerConnection = singlePlayer ? 1 : defaultMaxPlayers;
         PlayerSettings.TimerEnabled = !singlePlayer && PlayerSettings.TimerEnabled;
+
+        foreach (MultiplayerUIManager manager in uiManagers)
+        {
+            if(singlePlayer)
+            {
+                manager.MinPlayersToAdvance = 1;
+            } else
+            {
+                manager.MinPlayersToAdvance = 2;
+            }
+        }
     }
 }

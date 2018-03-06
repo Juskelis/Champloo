@@ -28,14 +28,21 @@ public class Menu : MonoBehaviour
                 eventSystem = EventSystem.current;
                 Selectable selected = initiallySelected.GetComponent<Selectable>();
                 selected.enabled = true;
-                eventSystem.SetSelectedGameObject(initiallySelected);
+                eventSystem.SetSelectedGameObject(previouslySelected??initiallySelected);
                 eventSystem.UpdateModules();
+            }
+
+            if (!value)
+            {
+                previouslySelected = EventSystem.current.currentSelectedGameObject;
             }
         }
     }
 
     [SerializeField]
     private GameObject initiallySelected;
+
+    private GameObject previouslySelected;
 
     private MultiplayerUIManager UIManager;
 
