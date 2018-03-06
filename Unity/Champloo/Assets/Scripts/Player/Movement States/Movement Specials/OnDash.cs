@@ -25,6 +25,7 @@ public class OnDash : OnMovementSpecial
     public int DashesRemaining { get { return currentDashes; } }
 
     private Vector2 direction;
+    public Vector2 Direction { get { return direction; } }
     private Vector3 dashVelocity;
 
     [SerializeField]

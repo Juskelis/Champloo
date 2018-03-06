@@ -207,6 +207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4522541131206112}
   - component: {fileID: 212730462121830650}
+  - component: {fileID: 114104655636961950}
   m_Layer: 9
   m_Name: Colored Bits
   m_TagString: Untagged
@@ -290,6 +291,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4064482578557812}
   - component: {fileID: 212380495233864454}
+  - component: {fileID: 114251278160126744}
   m_Layer: 9
   m_Name: Base
   m_TagString: Untagged
@@ -1658,6 +1660,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   friction: 80
+--- !u!114 &114104655636961950
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1424691189467730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ebe0f42c79db847b0708829e18853f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateAround: {fileID: 4160946923785122}
 --- !u!114 &114105332960934092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1764,6 +1778,18 @@ MonoBehaviour:
     type: 2}
   alwaysVisible: 0
   visuals: {fileID: 212045121767493206}
+--- !u!114 &114251278160126744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1615746449696776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ebe0f42c79db847b0708829e18853f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateAround: {fileID: 4160946923785122}
 --- !u!114 &114297313169966108
 MonoBehaviour:
   m_ObjectHideFlags: 1
