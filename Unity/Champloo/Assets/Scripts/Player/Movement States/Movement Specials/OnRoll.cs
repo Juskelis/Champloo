@@ -37,12 +37,19 @@ public class OnRoll : OnMovementSpecial
             return GetSimulatedState().ApplyFriction(velocity);
         }
 
-        Vector3 retVector = ((firstFrame && goingRight) || player.HorizontalDirection > 0 
-            ? Vector3.right 
-            : Vector3.left) * rollSpeed.x;
-        firstFrame = false;
-        retVector.y = rollSpeed.y;
-        return retVector;
+        if (firstFrame)
+        {
+            firstFrame = false;
+            Vector3 retVector = goingRight ? Vector3.right : Vector3.left;
+            retVector.x *= rollSpeed.x;
+            retVector.y = rollSpeed.y;
+            return retVector;
+        }
+
+        Vector3 modifiedVector = velocity.x > 0 ? Vector3.right : Vector3.left;
+        modifiedVector.x *= rollSpeed.x;
+        modifiedVector.y = rollSpeed.y;
+        return modifiedVector;
     }
 
     public override MovementState DecideNextState(Vector3 velocity, Vector3 externalForces)
