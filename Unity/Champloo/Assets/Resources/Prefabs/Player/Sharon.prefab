@@ -1907,7 +1907,7 @@ MonoBehaviour:
   attackTime: 0.1
   cooldownTime: 0.25
   rechargeTime: 0
-  specialStartupTime: 0
+  specialStartupTime: 0.15
   specialTime: 0
   specialCooldownTime: 0
   specialRechargeTime: 1
